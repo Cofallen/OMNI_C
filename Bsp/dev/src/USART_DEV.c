@@ -15,6 +15,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 int fputc(int ch, FILE *f)
 {
-    HAL_UART_Transmit_IT(&huart4, (uint8_t *)&ch, 1);
+    HAL_UART_Transmit_IT(&huart5, (uint8_t *)&ch, 1);
     return ch;
 }
