@@ -1,0 +1,24 @@
+#include "main.h"
+
+#include "GIMBAL.h"
+#include "DEFINE.h"
+#include "DBUS.h"
+#include "PID.h"
+
+void GIMBAL_F_Cal(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
+{
+    MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += -(float)DBUS->REMOTE.CH2_int16 * 0.002f;
+    MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += (float)DBUS->REMOTE.CH3_int16 * 0.002f;
+
+    if (MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM > 6500)
+    {
+        MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = 6500;
+    }
+    else if (MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM < 4500)
+    {
+        MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = 4500;
+    }
+
+    PID_F_AS(&MOTOR[MOTOR_D_GIMBAL_YAW]);
+    PID_F_AS(&MOTOR[MOTOR_D_GIMBAL_PIT]);
+}
