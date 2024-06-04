@@ -13,8 +13,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     }
 }
 
-int fputc(int ch, FILE *f)
+int fputc(int ch, FILE *f) // VOFA 的重定向
 {
-    HAL_UART_Transmit_IT(&huart5, (uint8_t *)&ch, 1);
+    HAL_UART_Transmit_IT(&huart1, (uint8_t *)&ch, 1);
     return ch;
 }
