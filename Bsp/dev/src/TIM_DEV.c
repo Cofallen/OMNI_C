@@ -16,6 +16,8 @@ TYPEDEF_MOTOR MOTOR_V_CHASSIS[4] = {0}; // 底盘数据
 TYPEDEF_MOTOR MOTOR_V_GIMBAL[2] = {0};  // 云台数据
 TYPEDEF_MOTOR MOTOR_V_ATTACK[3] = {0};  // 拨弹数据
 
+int PARAM = 0;
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim->Instance == TIM2) // 底盘 1ms
@@ -36,7 +38,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     }
     if (htim->Instance == TIM6) // 不知道 1ms
     {
-        /* code */
+        PARAM = sizeof(DBUS_V_UNION.GET_DATA);
     }
     if (htim->Instance == TIM9) // 离线监测 1ms
     {
