@@ -35,3 +35,18 @@
 	- [ ] freertos代替定时器
 	- [ ] 仿真ros/matlab
 	- [ ] 网线通信/can
+
+## 合并PR
+
+```shell
+git checkout -b rtos
+```
+
+创建并切换到 `rtos` 分支。
+
+```shell
+git pull --allow-unrelated-histories origin rtos
+```
+使用 `git pull` 命令的 `--allow-unrelated-histories` 选项来强制 `Git` 合并两个不相关的分支。这样，你的本地分支将合并远程分支的历史，从而使得它们相关.
+
+以后正常提交即可。
