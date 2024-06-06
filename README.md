@@ -36,7 +36,11 @@
 	- [ ] 仿真ros/matlab
 	- [ ] 网线通信/can
 
-## 合并PR
+## 提交到代码方式
+
+### PR 方式
+
+####  你的要求
 
 ```shell
 git checkout -b rtos
@@ -49,4 +53,24 @@ git pull --allow-unrelated-histories origin rtos
 ```
 使用 `git pull` 命令的 `--allow-unrelated-histories` 选项来强制 `Git` 合并两个不相关的分支。这样，你的本地分支将合并远程分支的历史，从而使得它们相关.
 
-以后正常提交即可。
+以后正常提交即可。注意，需要
+
+```shell
+git push origin rtos
+```
+
+指明推送分支。创建合并请求时需要选对分支（你的，我的）！！！
+
+#### 我的要求
+
+* 创建新的测试分支
+* 接收合并请求
+* 测试后，合并分支
+* 关联到本地仓库
+
+仅指出第四步代码
+
+```shell
+git fetch origin
+git merge origin/main
+```
