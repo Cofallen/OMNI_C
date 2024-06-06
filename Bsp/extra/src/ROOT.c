@@ -66,5 +66,3 @@ void ROOT_F_Init()
 
     MOTOR_V_ATTACK[MOTOR_D_GIMBAL_PIT].DATA.AIM = 4500;
 }
-
-
