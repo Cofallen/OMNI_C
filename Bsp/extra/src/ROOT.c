@@ -13,6 +13,7 @@ uint8_t ROOT_V_MONITOR_DBUS = 0; // 离线判断参数
 void ROOT_F_MONITOR_DBUS(TYPEDEF_DBUS *DBUS)
 {
     ROOT_V_MONITOR_DBUS++;
+
     if (ROOT_V_MONITOR_DBUS >= 50)
     {
         memset(&DBUS_V_DATA, 0, sizeof(DBUS_V_DATA));

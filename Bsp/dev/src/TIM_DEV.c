@@ -30,7 +30,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     }
     if (htim->Instance == TIM4) // 云台 1ms
     {
-        GIMBAL_F_Cal(MOTOR_V_GIMBAL, &DBUS_V_DATA);
+        GIMBAL_F_Ctl(MOTOR_V_GIMBAL, &DBUS_V_DATA);
         CAN_F_Send(&hcan2, 0x2FF, MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND,
                    0,
                    MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,

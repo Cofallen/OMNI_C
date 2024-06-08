@@ -55,9 +55,9 @@
 #define MONITOR_ONLINE true
 
 // 模式
-#define MOD_SINGLE 2
-#define MOD_CONSIST 1
-#define MOD_SHUT 3
+#define DBUS_D_MOD_SINGLE 2
+#define DBUS_D_MOD_CONSIST 1
+#define DBUS_D_MOD_SHUT 3
 
 // ROOT信号，涉及程序运行状态
 #define ROOT_READY 1
