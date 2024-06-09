@@ -11,6 +11,7 @@
                 "d:\\RoboMaster\\SoftWare\\New_CubeMXCode\\OMNI_KEIL\\OMNI_C\\Bsp\\ctl\\inc",
                 "d:\\RoboMaster\\SoftWare\\New_CubeMXCode\\OMNI_KEIL\\OMNI_C\\Bsp\\dev\\inc",
                 "d:\\RoboMaster\\SoftWare\\New_CubeMXCode\\OMNI_KEIL\\OMNI_C\\Bsp\\extra\\inc",
+                "d:\\RoboMaster\\SoftWare\\New_CubeMXCode\\OMNI_KEIL\\OMNI_C\\LIB",
                 "D:\\RoboMaster\\SoftWare\\MDK537\\ARM\\ARMCLANG\\include",
                 "D:\\RoboMaster\\SoftWare\\MDK537\\ARM\\ARMCLANG\\include\\arm_linux",
                 "D:\\RoboMaster\\SoftWare\\MDK537\\ARM\\ARMCLANG\\include\\arm_linux_compat",
@@ -25,6 +26,7 @@
             "defines": [
                 "USE_HAL_DRIVER",
                 "STM32F407xx",
+                "ARM_MATH_CM4",
                 "__alignof__(x)=",
                 "__asm(x)=",
                 "__asm__(x)=",

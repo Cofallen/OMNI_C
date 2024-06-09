@@ -119,7 +119,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   CAN_Filter_Init();
 
-  HAL_UART_Receive_DMA(&huart3, DBUS_V_UNION.GET_DATA, sizeof(DBUS_V_UNION.GET_DATA));
+  HAL_UART_Receive_IT(&huart3, DBUS_V_UNION.GET_DATA, sizeof(DBUS_V_UNION.GET_DATA));
 
   ROOT_F_Init();
 

@@ -1,0 +1,26 @@
+omni_c/complexmathfunctionsf16.o: \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\ComplexMathFunctions\ComplexMathFunctionsF16.c \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\ComplexMathFunctions\arm_cmplx_conj_f16.c \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\complex_math_functions_f16.h \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\arm_math_types_f16.h \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\arm_math_types.h \
+  ..\Drivers\CMSIS\Include\cmsis_compiler.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  ..\Drivers\CMSIS\Include\cmsis_armclang.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\arm_compat.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\arm_acle.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\string.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\math.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\float.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\limits.h \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\arm_math_memory.h \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\none.h \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\utils.h \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\fast_math_functions_f16.h \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\fast_math_functions.h \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\basic_math_functions.h \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\ComplexMathFunctions\arm_cmplx_dot_prod_f16.c \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\ComplexMathFunctions\arm_cmplx_mag_f16.c \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\ComplexMathFunctions\arm_cmplx_mag_squared_f16.c \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\ComplexMathFunctions\arm_cmplx_mult_cmplx_f16.c \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\ComplexMathFunctions\arm_cmplx_mult_real_f16.c

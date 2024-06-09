@@ -35,31 +35,31 @@
                 "name": "Core",
                 "files": [
                   {
+                    "path": "../Core/Src/main.c"
+                  },
+                  {
+                    "path": "../Core/Src/gpio.c"
+                  },
+                  {
                     "path": "../Core/Src/can.c"
                   },
                   {
                     "path": "../Core/Src/dma.c"
                   },
                   {
-                    "path": "../Core/Src/gpio.c"
-                  },
-                  {
-                    "path": "../Core/Src/main.c"
-                  },
-                  {
                     "path": "../Core/Src/spi.c"
-                  },
-                  {
-                    "path": "../Core/Src/stm32f4xx_hal_msp.c"
-                  },
-                  {
-                    "path": "../Core/Src/stm32f4xx_it.c"
                   },
                   {
                     "path": "../Core/Src/tim.c"
                   },
                   {
                     "path": "../Core/Src/usart.c"
+                  },
+                  {
+                    "path": "../Core/Src/stm32f4xx_it.c"
+                  },
+                  {
+                    "path": "../Core/Src/stm32f4xx_hal_msp.c"
                   }
                 ],
                 "folders": []
@@ -117,15 +117,6 @@
         "name": "Drivers",
         "files": [],
         "folders": [
-          {
-            "name": "CMSIS",
-            "files": [
-              {
-                "path": "../Core/Src/system_stm32f4xx.c"
-              }
-            ],
-            "folders": []
-          },
           {
             "name": "STM32F4xx_HAL_Driver",
             "files": [
@@ -185,6 +176,15 @@
               }
             ],
             "folders": []
+          },
+          {
+            "name": "CMSIS",
+            "files": [
+              {
+                "path": "../Core/Src/system_stm32f4xx.c"
+              }
+            ],
+            "folders": []
           }
         ]
       },
@@ -205,6 +205,15 @@
           },
           {
             "path": "../Bsp/extra/src/YU_MATH.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "LIB",
+        "files": [
+          {
+            "path": "../LIB/bmi088.c"
           }
         ],
         "folders": []
@@ -358,15 +367,15 @@
           "../Bsp/ctl/inc",
           "../Bsp/dev/inc",
           "../Bsp/extra/inc",
-          ".cmsis/include",
-          "RTE/_OMNI_C",
-          ".eide/deps"
+          "../LIB",
+          "RTE/_OMNI_C"
         ],
         "libList": [],
         "sourceDirList": [],
         "defineList": [
           "USE_HAL_DRIVER",
-          "STM32F407xx"
+          "STM32F407xx",
+          "ARM_MATH_CM4"
         ]
       }
     }

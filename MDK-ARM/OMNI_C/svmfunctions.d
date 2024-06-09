@@ -1,0 +1,25 @@
+omni_c/svmfunctions.o: \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SVMFunctions\SVMFunctions.c \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SVMFunctions\arm_svm_linear_init_f32.c \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\svm_functions.h \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\arm_math_types.h \
+  ..\Drivers\CMSIS\Include\cmsis_compiler.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  ..\Drivers\CMSIS\Include\cmsis_armclang.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\arm_compat.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\arm_acle.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\string.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\math.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\float.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\limits.h \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\arm_math_memory.h \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\none.h \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\utils.h \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\svm_defines.h \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SVMFunctions\arm_svm_linear_predict_f32.c \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SVMFunctions\arm_svm_polynomial_init_f32.c \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SVMFunctions\arm_svm_polynomial_predict_f32.c \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SVMFunctions\arm_svm_rbf_init_f32.c \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SVMFunctions\arm_svm_rbf_predict_f32.c \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SVMFunctions\arm_svm_sigmoid_init_f32.c \
+  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SVMFunctions\arm_svm_sigmoid_predict_f32.c
