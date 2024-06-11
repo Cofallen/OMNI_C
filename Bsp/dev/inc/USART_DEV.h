@@ -5,4 +5,6 @@
 
 extern int fputc(int ch, FILE *f);
 
+void USER_UART_IRQHandler(UART_HandleTypeDef *huart);
+
 #endif // !__USART_DEV_H__

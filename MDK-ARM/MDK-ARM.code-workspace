@@ -7,7 +7,17 @@
     "settings": {
         "files.associations": {
             "bmi088reg.h": "c",
-            "bmi088.h": "c"
+            "bmi088.h": "c",
+            "dbus.h": "c",
+            "usart_dev.h": "c",
+            "stdio.h": "c",
+            "usart.h": "c",
+            "stm32f4xx_hal_dma.h": "c",
+            "dma.h": "c",
+            "string.h": "c",
+            "stm32f4xx_hal_dma_ex.h": "c",
+            "vision.h": "c",
+            "define.h": "c"
         }
     },
     "extensions": {}
