@@ -118,15 +118,6 @@
         "files": [],
         "folders": [
           {
-            "name": "CMSIS",
-            "files": [
-              {
-                "path": "../Core/Src/system_stm32f4xx.c"
-              }
-            ],
-            "folders": []
-          },
-          {
             "name": "STM32F4xx_HAL_Driver",
             "files": [
               {
@@ -185,6 +176,15 @@
               }
             ],
             "folders": []
+          },
+          {
+            "name": "CMSIS",
+            "files": [
+              {
+                "path": "../Core/Src/system_stm32f4xx.c"
+              }
+            ],
+            "folders": []
           }
         ]
       },
@@ -205,6 +205,24 @@
           },
           {
             "path": "../Bsp/extra/src/YU_MATH.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "JUDGE",
+        "files": [
+          {
+            "path": "../JUDGE/Anonymity_TX.c"
+          },
+          {
+            "path": "../JUDGE/CRC_DJI.c"
+          },
+          {
+            "path": "../JUDGE/Read_Data.c"
+          },
+          {
+            "path": "../JUDGE/Write_Data.c"
           }
         ],
         "folders": []
@@ -368,6 +386,7 @@
           "../Bsp/dev/inc",
           "../Bsp/extra/inc",
           "../LIB",
+          "../JUDGE",
           "RTE/_OMNI_C"
         ],
         "libList": [],

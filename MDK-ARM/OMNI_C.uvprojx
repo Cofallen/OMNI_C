@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx,ARM_MATH_CM4</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Bsp/ctl/inc;../Bsp/dev/inc;../Bsp/extra/inc;../LIB</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Bsp/ctl/inc;../Bsp/dev/inc;../Bsp/extra/inc;../LIB;..\JUDGE</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -648,6 +648,31 @@
               <FileName>bmi088.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\LIB\bmi088.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>JUDGE</GroupName>
+          <Files>
+            <File>
+              <FileName>CRC_DJI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\JUDGE\CRC_DJI.c</FilePath>
+            </File>
+            <File>
+              <FileName>Read_Data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\JUDGE\Read_Data.c</FilePath>
+            </File>
+            <File>
+              <FileName>Write_Data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\JUDGE\Write_Data.c</FilePath>
+            </File>
+            <File>
+              <FileName>Anonymity_TX.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\JUDGE\Anonymity_TX.c</FilePath>
             </File>
           </Files>
         </Group>

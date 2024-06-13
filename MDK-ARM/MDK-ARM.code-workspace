@@ -6,18 +6,10 @@
     ],
     "settings": {
         "files.associations": {
-            "bmi088reg.h": "c",
-            "bmi088.h": "c",
-            "dbus.h": "c",
-            "usart_dev.h": "c",
-            "stdio.h": "c",
-            "usart.h": "c",
-            "stm32f4xx_hal_dma.h": "c",
-            "dma.h": "c",
-            "string.h": "c",
-            "stm32f4xx_hal_dma_ex.h": "c",
-            "vision.h": "c",
-            "define.h": "c"
+            "anonymity_tx.h": "c",
+            "stm32f4xx_it.h": "c",
+            "judgement.h": "c",
+            "cmsis_armclang.h": "c"
         }
     },
     "extensions": {}
