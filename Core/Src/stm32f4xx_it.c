@@ -81,8 +81,8 @@ extern UART_HandleTypeDef huart6;
 /*           Cortex-M4 Processor Interruption and Exception Handlers          */
 /******************************************************************************/
 /**
- * @brief This function handles Non maskable interrupt.
- */
+  * @brief This function handles Non maskable interrupt.
+  */
 void NMI_Handler(void)
 {
   /* USER CODE BEGIN NonMaskableInt_IRQn 0 */
@@ -96,8 +96,8 @@ void NMI_Handler(void)
 }
 
 /**
- * @brief This function handles Hard fault interrupt.
- */
+  * @brief This function handles Hard fault interrupt.
+  */
 void HardFault_Handler(void)
 {
   /* USER CODE BEGIN HardFault_IRQn 0 */
@@ -111,8 +111,8 @@ void HardFault_Handler(void)
 }
 
 /**
- * @brief This function handles Memory management fault.
- */
+  * @brief This function handles Memory management fault.
+  */
 void MemManage_Handler(void)
 {
   /* USER CODE BEGIN MemoryManagement_IRQn 0 */
@@ -126,8 +126,8 @@ void MemManage_Handler(void)
 }
 
 /**
- * @brief This function handles Pre-fetch fault, memory access fault.
- */
+  * @brief This function handles Pre-fetch fault, memory access fault.
+  */
 void BusFault_Handler(void)
 {
   /* USER CODE BEGIN BusFault_IRQn 0 */
@@ -141,8 +141,8 @@ void BusFault_Handler(void)
 }
 
 /**
- * @brief This function handles Undefined instruction or illegal state.
- */
+  * @brief This function handles Undefined instruction or illegal state.
+  */
 void UsageFault_Handler(void)
 {
   /* USER CODE BEGIN UsageFault_IRQn 0 */
@@ -156,8 +156,8 @@ void UsageFault_Handler(void)
 }
 
 /**
- * @brief This function handles System service call via SWI instruction.
- */
+  * @brief This function handles System service call via SWI instruction.
+  */
 void SVC_Handler(void)
 {
   /* USER CODE BEGIN SVCall_IRQn 0 */
@@ -169,8 +169,8 @@ void SVC_Handler(void)
 }
 
 /**
- * @brief This function handles Debug monitor.
- */
+  * @brief This function handles Debug monitor.
+  */
 void DebugMon_Handler(void)
 {
   /* USER CODE BEGIN DebugMonitor_IRQn 0 */
@@ -182,8 +182,8 @@ void DebugMon_Handler(void)
 }
 
 /**
- * @brief This function handles Pendable request for system service.
- */
+  * @brief This function handles Pendable request for system service.
+  */
 void PendSV_Handler(void)
 {
   /* USER CODE BEGIN PendSV_IRQn 0 */
@@ -195,8 +195,8 @@ void PendSV_Handler(void)
 }
 
 /**
- * @brief This function handles System tick timer.
- */
+  * @brief This function handles System tick timer.
+  */
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
@@ -216,8 +216,8 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
- * @brief This function handles DMA1 stream1 global interrupt.
- */
+  * @brief This function handles DMA1 stream1 global interrupt.
+  */
 void DMA1_Stream1_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA1_Stream1_IRQn 0 */
@@ -230,8 +230,8 @@ void DMA1_Stream1_IRQHandler(void)
 }
 
 /**
- * @brief This function handles CAN1 RX0 interrupts.
- */
+  * @brief This function handles CAN1 RX0 interrupts.
+  */
 void CAN1_RX0_IRQHandler(void)
 {
   /* USER CODE BEGIN CAN1_RX0_IRQn 0 */
@@ -244,8 +244,8 @@ void CAN1_RX0_IRQHandler(void)
 }
 
 /**
- * @brief This function handles TIM1 break interrupt and TIM9 global interrupt.
- */
+  * @brief This function handles TIM1 break interrupt and TIM9 global interrupt.
+  */
 void TIM1_BRK_TIM9_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM1_BRK_TIM9_IRQn 0 */
@@ -258,8 +258,8 @@ void TIM1_BRK_TIM9_IRQHandler(void)
 }
 
 /**
- * @brief This function handles TIM2 global interrupt.
- */
+  * @brief This function handles TIM2 global interrupt.
+  */
 void TIM2_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM2_IRQn 0 */
@@ -272,8 +272,8 @@ void TIM2_IRQHandler(void)
 }
 
 /**
- * @brief This function handles TIM4 global interrupt.
- */
+  * @brief This function handles TIM4 global interrupt.
+  */
 void TIM4_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM4_IRQn 0 */
@@ -286,8 +286,8 @@ void TIM4_IRQHandler(void)
 }
 
 /**
- * @brief This function handles USART1 global interrupt.
- */
+  * @brief This function handles USART1 global interrupt.
+  */
 void USART1_IRQHandler(void)
 {
   /* USER CODE BEGIN USART1_IRQn 0 */
@@ -300,8 +300,8 @@ void USART1_IRQHandler(void)
 }
 
 /**
- * @brief This function handles USART3 global interrupt.
- */
+  * @brief This function handles USART3 global interrupt.
+  */
 void USART3_IRQHandler(void)
 {
   /* USER CODE BEGIN USART3_IRQn 0 */
@@ -309,13 +309,13 @@ void USART3_IRQHandler(void)
   /* USER CODE END USART3_IRQn 0 */
   HAL_UART_IRQHandler(&huart3);
   /* USER CODE BEGIN USART3_IRQn 1 */
-  USER_UART_IRQHandler(&huart3);
+ 
   /* USER CODE END USART3_IRQn 1 */
 }
 
 /**
- * @brief This function handles TIM6 global interrupt, DAC1 and DAC2 underrun error interrupts.
- */
+  * @brief This function handles TIM6 global interrupt, DAC1 and DAC2 underrun error interrupts.
+  */
 void TIM6_DAC_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM6_DAC_IRQn 0 */
@@ -328,8 +328,8 @@ void TIM6_DAC_IRQHandler(void)
 }
 
 /**
- * @brief This function handles DMA2 stream0 global interrupt.
- */
+  * @brief This function handles DMA2 stream0 global interrupt.
+  */
 void DMA2_Stream0_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA2_Stream0_IRQn 0 */
@@ -342,36 +342,22 @@ void DMA2_Stream0_IRQHandler(void)
 }
 
 /**
- * @brief This function handles DMA2 stream1 global interrupt.
- */
-void DMA2_Stream1_IRQHandler(void)
-{
-  /* USER CODE BEGIN DMA2_Stream1_IRQn 0 */
-
-  /* USER CODE END DMA2_Stream1_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_usart6_rx);
-  /* USER CODE BEGIN DMA2_Stream1_IRQn 1 */
-
-  /* USER CODE END DMA2_Stream1_IRQn 1 */
-}
-
-/**
- * @brief This function handles DMA2 stream2 global interrupt.
- */
+  * @brief This function handles DMA2 stream2 global interrupt.
+  */
 void DMA2_Stream2_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA2_Stream2_IRQn 0 */
 
   /* USER CODE END DMA2_Stream2_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_usart1_rx);
+  HAL_DMA_IRQHandler(&hdma_usart6_rx);
   /* USER CODE BEGIN DMA2_Stream2_IRQn 1 */
 
   /* USER CODE END DMA2_Stream2_IRQn 1 */
 }
 
 /**
- * @brief This function handles DMA2 stream3 global interrupt.
- */
+  * @brief This function handles DMA2 stream3 global interrupt.
+  */
 void DMA2_Stream3_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA2_Stream3_IRQn 0 */
@@ -384,8 +370,8 @@ void DMA2_Stream3_IRQHandler(void)
 }
 
 /**
- * @brief This function handles CAN2 RX0 interrupts.
- */
+  * @brief This function handles CAN2 RX0 interrupts.
+  */
 void CAN2_RX0_IRQHandler(void)
 {
   /* USER CODE BEGIN CAN2_RX0_IRQn 0 */
@@ -398,8 +384,22 @@ void CAN2_RX0_IRQHandler(void)
 }
 
 /**
- * @brief This function handles DMA2 stream6 global interrupt.
- */
+  * @brief This function handles DMA2 stream5 global interrupt.
+  */
+void DMA2_Stream5_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA2_Stream5_IRQn 0 */
+
+  /* USER CODE END DMA2_Stream5_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_usart1_rx);
+  /* USER CODE BEGIN DMA2_Stream5_IRQn 1 */
+
+  /* USER CODE END DMA2_Stream5_IRQn 1 */
+}
+
+/**
+  * @brief This function handles DMA2 stream6 global interrupt.
+  */
 void DMA2_Stream6_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA2_Stream6_IRQn 0 */
@@ -412,8 +412,8 @@ void DMA2_Stream6_IRQHandler(void)
 }
 
 /**
- * @brief This function handles DMA2 stream7 global interrupt.
- */
+  * @brief This function handles DMA2 stream7 global interrupt.
+  */
 void DMA2_Stream7_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA2_Stream7_IRQn 0 */
@@ -426,8 +426,8 @@ void DMA2_Stream7_IRQHandler(void)
 }
 
 /**
- * @brief This function handles USART6 global interrupt.
- */
+  * @brief This function handles USART6 global interrupt.
+  */
 void USART6_IRQHandler(void)
 {
   /* USER CODE BEGIN USART6_IRQn 0 */
@@ -435,7 +435,7 @@ void USART6_IRQHandler(void)
   /* USER CODE END USART6_IRQn 0 */
   HAL_UART_IRQHandler(&huart6);
   /* USER CODE BEGIN USART6_IRQn 1 */
-
+ USER_UART_IRQHandler(&huart6);
   /* USER CODE END USART6_IRQn 1 */
 }
 

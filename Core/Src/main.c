@@ -124,8 +124,8 @@ int main(void)
   /* USER CODE BEGIN 2 */
   CAN_Filter_Init();
 
-  __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
-  HAL_UART_Receive_DMA(&huart1, (uint8_t*)ALL_RX.Data, 255);
+  __HAL_UART_ENABLE_IT(&huart6, UART_IT_IDLE);
+  HAL_UART_Receive_DMA(&huart6, (uint8_t*)ALL_RX.Data, 255);
 
   __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
   HAL_UART_Receive_DMA(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, sizeof(DBUS_V_UNION.GET_DATA));
@@ -209,6 +209,9 @@ static void MX_NVIC_Init(void)
   /* USART1_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(USART1_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(USART1_IRQn);
+  /* USART6_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(USART6_IRQn, 2, 0);
+  HAL_NVIC_EnableIRQ(USART6_IRQn);
 }
 
 /* USER CODE BEGIN 4 */

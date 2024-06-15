@@ -26,3 +26,5 @@ void VOFA_F_Send(TYPEDEF_VOFA_UNION *VOFA, TYPEDEF_MOTOR *MOTOR)
 
     HAL_UART_Transmit_DMA(&huart6, (uint8_t *)VOFA->ALL, sizeof(VOFA->ALL));
 }
+
+//void VOFA_T_
