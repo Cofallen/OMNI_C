@@ -54,7 +54,7 @@ uint8_t VOFA_T_Send(int n, ...)
     VOFA_T_DATA.TAIL[42] = 0x80;
     VOFA_T_DATA.TAIL[43] = 0x7f;
 
-    HAL_UART_Transmit_IT(&huart1, (uint8_t *)(&VOFA_T_DATA.TAIL), sizeof(VOFA_T_DATA));
+    HAL_UART_Transmit_IT(&huart1, (uint8_t *)VOFA_T_DATA.TAIL, sizeof(VOFA_T_DATA));
 
     return ROOT_READY;
 }
