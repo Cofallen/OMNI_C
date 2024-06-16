@@ -11,7 +11,7 @@ union
 {
     float DATA[11];
     int8_t TAIL[44];
-}VOFA_T_DATA;
+}VOFA_T_DATA={0};
 
 
 // 发送VOFA数据包
@@ -48,7 +48,7 @@ uint8_t VOFA_T_Send(int n, ...)
         VOFA_T_DATA.DATA[i] = (float)(va_arg(list, double));
     }
     va_end(list);
-    
+
     VOFA_T_DATA.TAIL[40] = 0x00;
     VOFA_T_DATA.TAIL[41] = 0x00;
     VOFA_T_DATA.TAIL[42] = 0x80;
