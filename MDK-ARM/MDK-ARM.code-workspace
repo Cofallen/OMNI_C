@@ -6,10 +6,8 @@
     ],
     "settings": {
         "files.associations": {
-            "anonymity_tx.h": "c",
-            "stm32f4xx_it.h": "c",
-            "judgement.h": "c",
-            "cmsis_armclang.h": "c"
+            "vofa.h": "c",
+            "motor.h": "c"
         }
     },
     "extensions": {}
