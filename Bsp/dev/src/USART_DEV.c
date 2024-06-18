@@ -11,6 +11,8 @@
 #include "VOFA.h"
 #define BUFFER_SIZE (255)
 
+float m = 1.0f;
+
 extern DMA_HandleTypeDef hdma_usart6_rx;
 User_Data_T test;
 
@@ -76,19 +78,21 @@ void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
             //            printf("\r\nUART1 Idle IQR Detected\r\n");
             USAR_UART_IDLECallback(huart); // 调用中断处理函数
         }
-        Read_Data_system(&ALL_RX, &test);
+//        m = Read_Data_system(&ALL_RX, &test);
     }
 
     if (huart->Instance == USART1)
     {
         // printf usart1
-        // for (int i = 0; i < 255; i++)
-        // {
-        //     printf("%hd ", ALL_RX.Data[i]);
-        // }
-        
-        // VOFA_T_Send(2,
-        //             ALL_RX.RX_Data_power_heat_data.power_heat_data.chassis_power,
-        //             ALL_RX.RX_Data_game_robot_HP.game_robot_HP.blue_3_robot_HP);
+//         for(int i=0;i<255;i++){
+//             printf("%hd ", ALL_RX.Data[i]);
+//         
+//		 }
+         VOFA_T_Send(5,
+                     ALL_RX.RX_Data_power_heat_data.power_heat_data.chassis_power,
+                     ALL_RX.RX_Data_game_robot_HP.game_robot_HP.blue_3_robot_HP,
+					 m,
+					 test.power_heat_data.chassis_power,
+					 test.game_robot_HP.blue_3_robot_HP);
     }
 }

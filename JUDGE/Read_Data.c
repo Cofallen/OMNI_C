@@ -38,8 +38,8 @@
 
 
 
-ALL_RX_Data_T ALL_RX;
-User_Data_T user_data;
+ALL_RX_Data_T ALL_RX={0};
+User_Data_T user_data={0};
 uint16_t Data_length = 0;
 uint8_t zhanbaoshuliang = 0;
 

@@ -158,42 +158,22 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>DBUS_V_UNION,0x0A</ItemText>
+          <ItemText>i</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>DBUS_V_DATA,0x0A</ItemText>
+          <ItemText>ALL_RX</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>ALL_RX,0x0A</ItemText>
+          <ItemText>\\OMNI_C\../JUDGE/Read_Data.c\ALL_RX.RX_Data_dart_client_cmd</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>II,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>4</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>data_length,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>5</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>test,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>6</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>\\OMNI_C\../Bsp/dev/src/USART_DEV.c\test.ext_supply_projectile_action</ItemText>
-        </Ww>
-        <Ww>
-          <count>7</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>ALL_RX,0x10</ItemText>
+          <ItemText>user_data,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
