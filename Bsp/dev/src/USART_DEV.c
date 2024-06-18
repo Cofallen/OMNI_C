@@ -7,16 +7,14 @@
 #include "usart.h"
 
 #include "Read_Data.h"
-#include "Anonymity_TX.h" // copy ， 待改成VOFA
 #include "VOFA.h"
-#define BUFFER_SIZE (255)
 
-float m = 1.0f;
+#define BUFFER_SIZE (255)
 
 extern DMA_HandleTypeDef hdma_usart6_rx;
 User_Data_T test;
 
-// @TODO 原回调函数DMA不能�?，改用自定义回调函数
+// @TODO 原回调函数DMA不能?，改用自定义回调函数
 
 // void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 // {
@@ -42,17 +40,14 @@ void USAR_UART_IDLECallback(UART_HandleTypeDef *huart)
 
     data_length = BUFFER_SIZE - __HAL_DMA_GET_COUNTER(&hdma_usart6_rx); // 计算接收到的数据长度
 
-    //    printf("Receive Data(length = %d): ",data_length);
     Read_Data_first(&ALL_RX, &user_data, data_length); // 测试函数：待修改
 
-    //    printf("\r\n");
-    //	Anonymity_TX(data_length,0,0,0,0,0,0,0,0,0);
     memset((uint8_t *)ALL_RX.Data, 0, data_length); // 清零接收缓冲区
     data_length = 0;
     HAL_UART_Receive_DMA(&huart6, (uint8_t *)ALL_RX.Data, 255); // 重启开始DMA传输 每次255字节数据
 }
 
-// 移�?�的函数
+// 移植的函数
 void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
 {
     if (huart->Instance == USART3) // 判断是否是串口1（！此处应写(huart->Instance == USART1)
@@ -75,24 +70,13 @@ void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
         if (__HAL_UART_GET_FLAG(&huart6, UART_FLAG_IDLE) != RESET) // 判断是否是空闲中断
         {
             __HAL_UART_CLEAR_IDLEFLAG(&huart6); // 清楚空闲中断标志（否则会一直不断进入中断）
-            //            printf("\r\nUART1 Idle IQR Detected\r\n");
+            
             USAR_UART_IDLECallback(huart); // 调用中断处理函数
         }
-//        m = Read_Data_system(&ALL_RX, &test);
     }
 
-    if (huart->Instance == USART1)
+    if (huart->Instance == USART1) // 视觉模块/VOFA测试模块
     {
-        // printf usart1
-//         for(int i=0;i<255;i++){
-//             printf("%hd ", ALL_RX.Data[i]);
-//         
-//		 }
-         VOFA_T_Send(5,
-                     ALL_RX.RX_Data_power_heat_data.power_heat_data.chassis_power,
-                     ALL_RX.RX_Data_game_robot_HP.game_robot_HP.blue_3_robot_HP,
-					 m,
-					 test.power_heat_data.chassis_power,
-					 test.game_robot_HP.blue_3_robot_HP);
+         
     }
 }
