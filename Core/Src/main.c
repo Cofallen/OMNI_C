@@ -124,13 +124,13 @@ int main(void)
   /* USER CODE BEGIN 2 */
   CAN_Filter_Init();
 
-  __HAL_UART_ENABLE_IT(&huart6, UART_IT_IDLE);
+  HAL_UART_ENABLE_IT(&huart6, UART_IT_IDLE);
   HAL_UART_Receive_DMA(&huart6, (uint8_t*)ALL_RX.Data, 255);
 
   __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
   HAL_UART_Receive_DMA(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, sizeof(DBUS_V_UNION.GET_DATA));
 
-//  printf("ok\r\n");  // huart1 Áö? Âº?Âê?
+//  printf("ok\r\n");  // huart1  ?  ? ?
   HAL_UART_Transmit_IT(&huart1,(uint8_t *)ALL_RX.Data,255);
 
   ROOT_F_Init();
