@@ -10,6 +10,7 @@
 #include "DBUS.h"
 #include "GIMBAL.h"
 #include "ROOT.h"
+#include "ATTACK.h"
 
 // 一些全局变量
 TYPEDEF_MOTOR MOTOR_V_CHASSIS[4] = {0}; // 底盘数据
@@ -39,6 +40,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if (htim->Instance == TIM6) // 不知道 1ms
     {
         PARAM = sizeof(DBUS_V_UNION.GET_DATA);
+
+        ATTACK_F_Ctl(MOTOR_V_ATTACK, &DBUS_V_DATA);
+        CAN_F_Send(&hcan2, 0x1FF, MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.CAN_SEND,
+                   MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.CAN_SEND,
+                   MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.CAN_SEND,
+                   0);
     }
     if (htim->Instance == TIM9) // 离线监测 1ms
     {

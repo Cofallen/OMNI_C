@@ -7,6 +7,7 @@
 #include "TIM_DEV.h"
 #include "DEFINE.h"
 #include "PID.h"
+#include "ATTACK.h"
 
 uint8_t ROOT_V_MONITOR_DBUS = 0; // 离线判断参数
 
@@ -21,7 +22,7 @@ void ROOT_F_MONITOR_DBUS(TYPEDEF_DBUS *DBUS)
 }
 
 // 传pid参数
-void ROOT_F_PIDinit()
+uint8_t ROOT_F_PIDinit()
 {
     const float PID_V_CHASSIS_SPEED[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
     const float PID_V_CHASSIS_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
@@ -59,6 +60,8 @@ void ROOT_F_PIDinit()
     PID_F_Init(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].PID_A, PID_V_ATTACK_G_ANGLE);
     PID_F_Init(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].PID_C, PID_V_ATTACK_L_CURRENT);
     PID_F_Init(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].PID_C, PID_V_ATTACK_R_CURRENT);
+
+    return ROOT_READY;
 }
 
 void ROOT_F_Init()
@@ -66,4 +69,6 @@ void ROOT_F_Init()
     ROOT_F_PIDinit();
 
     MOTOR_V_ATTACK[MOTOR_D_GIMBAL_PIT].DATA.AIM = 4500;
+    MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 0;  // 云台初始化角度
+
 }

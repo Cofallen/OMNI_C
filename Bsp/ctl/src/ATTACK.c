@@ -8,20 +8,17 @@
 #include "TIM_DEV.h"
 #include "ROOT.h"
 #include "YU_MATH.h"
+#include "Read_Data.h"
+
+#include "VOFA.h"
 
 #define ATTACK_D_TIMEOUT 100
 #define ATTACK_D_SPEED 80
 
-struct
-{
-    int32_t TIME;
-    int8_t FLAG;
-    float SINGLE_ANGLE; // 单发角度
-    float SPEED;        // 摩擦轮角度
-    int COUNT;
-} ATTACK_V_PARAM = {0};
+TYPEDEF_ATTACK_PARAM ATTACK_V_PARAM = {0};
 
 int8_t LOCK = 0;
+int IOTA = 0; // test
 
 // @TODO 整合到整个ROOT_init函数中, 记得Init 时间 && 摩擦轮目标值应根据裁判系统拟合
 uint8_t ATTACK_F_Init(TYPEDEF_MOTOR *MOTOR)
@@ -30,12 +27,12 @@ uint8_t ATTACK_F_Init(TYPEDEF_MOTOR *MOTOR)
 
     // 数据初始化
     ATTACK_V_PARAM.SINGLE_ANGLE = 36864.0f;
-    ATTACK_V_PARAM.SPEED = 3000.0f;
+    // ATTACK_V_PARAM.SPEED = 3000.0f;
 
     // 电机初始化
     MOTOR[MOTOR_D_ATTACK_L].DATA.AIM = -ATTACK_V_PARAM.SPEED;
-    MOTOR[MOTOR_D_ATTACK_R].DATA.AIM = ATTACK_V_PARAM.SPEED;
-    MOTOR[MOTOR_D_ATTACK_G].DATA.AIM = (float)MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE;
+    MOTOR[MOTOR_D_ATTACK_R].DATA.AIM =  ATTACK_V_PARAM.SPEED;
+    MOTOR[MOTOR_D_ATTACK_G].DATA.AIM =  (float)MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE;
 
     return ROOT_READY;
 }
@@ -90,6 +87,49 @@ uint8_t ATTACK_F_JAM_Check(TYPEDEF_MOTOR *MOTOR)
     }
 }
 
+
+// 获取摩擦轮目标值  @TODO 应该是一个函数，等会写一个如何获取拟合函数
+// @TODO 电机当前转速也值得加入，但这之后再说
+float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
+{
+    // @veision 1 拟合
+    float a = 0.0f, b = 0.0f;
+    ATTACK_V_PARAM.SPEED = user_data.shoot_data.initial_speed * a + b;
+    return ATTACK_V_PARAM.SPEED;
+
+    // @version 2, Use this code, this code is get the fire speed by judgement system
+    // but the weakness is that the speed is not stable
+    
+    // float TEMP = 0.0f;
+    // if(user_data.shoot_data.initial_speed <= 27.5f)
+    // {
+    //     TEMP += 50;
+    // }
+    // else if (user_data.shoot_data.initial_speed > 27.5f && user_data.shoot_data.initial_speed <= 28.5f)
+    // {
+    //     TEMP += 5;
+    // }
+    // else if (user_data.shoot_data.initial_speed > 28.5f && user_data.shoot_data.initial_speed <= 29.5f)
+    // {
+    //     TEMP += 0;
+    // }
+    // else if (user_data.shoot_data.initial_speed > 29.5f && user_data.shoot_data.initial_speed <= 30.0f)
+    // {
+    //     TEMP -= 5;
+    // }
+    // else if (user_data.shoot_data.initial_speed > 30.0f)
+    // {
+    //     TEMP -= 50;
+    // }
+    // MOTOR->DATA.AIM = 8000.0f + TEMP;
+    // return MOTOR->DATA.AIM;
+
+    // @veision 3, final code, this code is a stable speed
+    // MOTOR->DATA.AIM = 8000.0f;
+    // return MOTOR->DATA.AIM;
+}
+
+
 // 总控制函数
 uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {
@@ -104,10 +144,43 @@ uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
         MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM = ATTACK_F_JAM_Aim(&MOTOR[MOTOR_D_ATTACK_G], DBUS);
     }
 
+    MOTOR[MOTOR_D_ATTACK_L].DATA.AIM =  ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_L]);
+    MOTOR[MOTOR_D_ATTACK_L].DATA.AIM = -ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_R]);
+
     // pid
     PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_L]);
     PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_R]);
     PID_F_AS(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_G]);
 
     return ROOT_READY;
+}
+
+
+/// @brief fitting using VOFA
+/// @param  
+void ATTACK_T_FIT(void)
+{
+    // Param fitting using VOFA
+    // in fact, the speed of motor is too fast, so we use rate to lower it.
+    VOFA_T_Send(2,
+                user_data.shoot_data.initial_speed,
+                MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW * 0.001f);
+
+    // Simply cauculate the param a,b
+    float param[2] = {0};
+    float bufferA[10] = {0};  // buffer length is 10
+    float bufferB[10] = {0};
+
+    bufferA[IOTA++] = user_data.shoot_data.initial_speed;
+    bufferB[IOTA++] = MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW;
+
+    // choose special line
+    int count = 0;   // count 
+    while (count >= 100)
+    {
+        
+    }
+    
+
+    
 }
