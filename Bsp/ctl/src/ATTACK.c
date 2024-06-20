@@ -11,6 +11,7 @@
 #include "Read_Data.h"
 
 #include "VOFA.h"
+#include "stdlib.h"
 
 #define ATTACK_D_TIMEOUT 100
 #define ATTACK_D_SPEED 80
@@ -18,7 +19,9 @@
 TYPEDEF_ATTACK_PARAM ATTACK_V_PARAM = {0};
 
 int8_t LOCK = 0;
+
 int IOTA = 0; // test
+double M;     // test
 
 // @TODO 整合到整个ROOT_init函数中, 记得Init 时间 && 摩擦轮目标值应根据裁判系统拟合
 uint8_t ATTACK_F_Init(TYPEDEF_MOTOR *MOTOR)
@@ -156,31 +159,79 @@ uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 }
 
 
-/// @brief fitting using VOFA
+/// @brief Prevent segfaults, to be tested
 /// @param  
-void ATTACK_T_FIT(void)
+/// @return return (ATTACK_T_Point())
+double *ATTACK_T_Point(void)
+{
+    double* m = (double*)malloc(2 * sizeof(double));
+    if (m == NULL) 
+    {
+        return NULL;
+    }
+    return m;
+}
+
+
+/// @brief fitting using VOFA
+/// @param  size buffer length (@TODO + multi param length)
+/// @return 
+double *ATTACK_T_FIT(int size)
 {
     // Param fitting using VOFA
     // in fact, the speed of motor is too fast, so we use rate to lower it.
-    VOFA_T_Send(2,
-                user_data.shoot_data.initial_speed,
-                MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW * 0.001f);
+    // VOFA_T_Send(2,
+    //             user_data.shoot_data.initial_speed,
+    //             MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW * 0.001f);
 
     // Simply cauculate the param a,b
-    float param[2] = {0};
-    float bufferA[10] = {0};  // buffer length is 10
-    float bufferB[10] = {0};
+    double *bufferA = (double *)malloc(size * sizeof(double));
+    double *bufferB = (double *)malloc(size * sizeof(double));
+    static int32_t count = 0;  // help IOTA replace
 
-    bufferA[IOTA++] = user_data.shoot_data.initial_speed;
-    bufferB[IOTA++] = MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW;
-
-    // choose special line
-    int count = 0;   // count 
-    while (count >= 100)
+    if (bufferA == NULL || bufferB == NULL)
     {
-        
+        return NULL;
+    }
+
+    for (int i = 0; i < size; i++)
+    {
+        bufferA[i] = 0.0f;
+        bufferB[i] = 0.0f;
     }
     
+    bufferA[IOTA++] = user_data.shoot_data.initial_speed;
+    bufferB[IOTA++] = MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW;
+    count++;
 
-    
+    // choose special line by Least Squares Method
+    double *array = (double *)calloc(2, sizeof(double));
+    if (count >= (size - 1))
+    {
+        double sumX = 0.0f, sumY = 0.0f, sumXY = 0.0f, sumXX = 0.0f;
+        for (int i = 0; i < size; i++)
+        {
+            sumX  += bufferA[i];
+            sumY  += bufferB[i];
+            sumXY += bufferA[i] * bufferB[i];
+            sumXX += bufferA[i] * bufferA[i];
+        }
+        if (size * sumXX - sumX * sumX != 0 && size > 0)
+        { 
+            array[0] = (size * sumXY - sumX * sumY) / (size * sumXX - sumX * sumX);
+            array[1] = (sumY - array[0] * sumX) / size;
+        }
+        else
+        {
+            // @TODO return error pointer  -- type cauculate error
+        }
+        IOTA = 0;  // replace the head of array
+    }
+    VOFA_T_Send(2, array[0], array[1]);
+
+    free (bufferA);
+    free (bufferB);
+    free (array);
+
+    return &M;
 }

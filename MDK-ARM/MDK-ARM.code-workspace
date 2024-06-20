@@ -20,7 +20,8 @@
             "attack.h": "c",
             "main.h": "c",
             "judgement.h": "c",
-            "read_data.h": "c"
+            "read_data.h": "c",
+            "stdlib.h": "c"
         }
     },
     "extensions": {}
