@@ -12,7 +12,6 @@
 #define BUFFER_SIZE (255)
 
 extern DMA_HandleTypeDef hdma_usart6_rx;
-User_Data_T test;
 
 // @TODO 原回调函数DMA不能?，改用自定义回调函数
 
@@ -50,17 +49,16 @@ void USAR_UART_IDLECallback(UART_HandleTypeDef *huart)
 // 移植的函数
 void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
 {
-    if (huart->Instance == USART3) // 判断是否是串口1（！此处应写(huart->Instance == USART1)
+    if (huart->Instance == USART3) // 遥控DBUS
     {
-        if (RESET != __HAL_UART_GET_FLAG(&huart3, UART_FLAG_IDLE)) // 判断是否是空闲中断
+        if (RESET != __HAL_UART_GET_FLAG(&huart3, UART_FLAG_IDLE))
         {
-            __HAL_UART_CLEAR_IDLEFLAG(&huart3); // 清楚空闲中断标志（否则会一直不断进入中断）
+            __HAL_UART_CLEAR_IDLEFLAG(&huart3); 
+            HAL_UART_DMAStop(&huart3);
+            DBUS_F_Cal(&DBUS_V_DATA);
 
-            HAL_UART_DMAStop(&huart3); // 停DMA
             // 使能接受
             HAL_UART_Receive_DMA(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, 19);
-
-            DBUS_F_Cal(&DBUS_V_DATA);
         }
     }
 

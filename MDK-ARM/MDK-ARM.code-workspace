@@ -10,7 +10,12 @@
             "motor.h": "c",
             "cstddef": "c",
             "type_traits": "c",
-            "limits": "c"
+            "limits": "c",
+            "math.h": "c",
+            "define.h": "c",
+            "tim_dev.h": "c",
+            "yu_math.h": "c",
+            "__config": "c"
         }
     },
     "extensions": {}

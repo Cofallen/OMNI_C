@@ -116,6 +116,15 @@
         "files": [],
         "folders": [
           {
+            "name": "CMSIS",
+            "files": [
+              {
+                "path": "../Core/Src/system_stm32f4xx.c"
+              }
+            ],
+            "folders": []
+          },
+          {
             "name": "STM32F4xx_HAL_Driver",
             "files": [
               {
@@ -174,15 +183,6 @@
               }
             ],
             "folders": []
-          },
-          {
-            "name": "CMSIS",
-            "files": [
-              {
-                "path": "../Core/Src/system_stm32f4xx.c"
-              }
-            ],
-            "folders": []
           }
         ]
       },
@@ -193,6 +193,9 @@
             "path": "../Bsp/extra/src/JUDGEMENT.c"
           },
           {
+            "path": "../Bsp/extra/src/ROOT.c"
+          },
+          {
             "path": "../Bsp/extra/src/VISION.c"
           },
           {
@@ -200,9 +203,6 @@
           },
           {
             "path": "../Bsp/extra/src/YU_MATH.c"
-          },
-          {
-            "path": "../Bsp/extra/src/ROOT.c"
           }
         ],
         "folders": []
@@ -211,6 +211,9 @@
         "name": "JUDGE",
         "files": [
           {
+            "path": "../JUDGE/Anonymity_TX.c"
+          },
+          {
             "path": "../JUDGE/CRC_DJI.c"
           },
           {
@@ -218,9 +221,6 @@
           },
           {
             "path": "../JUDGE/Write_Data.c"
-          },
-          {
-            "path": "../JUDGE/Anonymity_TX.c"
           }
         ],
         "folders": []
