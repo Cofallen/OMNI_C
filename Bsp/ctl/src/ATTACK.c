@@ -206,7 +206,7 @@ double *ATTACK_T_FIT(int size)
 
     // choose special line by Least Squares Method
     double *array = (double *)calloc(2, sizeof(double));
-    if (count >= (size - 1))
+    if (count > (size - 1))
     {
         double sumX = 0.0f, sumY = 0.0f, sumXY = 0.0f, sumXX = 0.0f;
         for (int i = 0; i < size; i++)
@@ -225,9 +225,13 @@ double *ATTACK_T_FIT(int size)
         {
             // @TODO return error pointer  -- type cauculate error
         }
-        IOTA = 0;  // replace the head of array
+        
+        if(count % 50 == 0)
+            IOTA = 0;  // replace the head of array
+        double error = array[0] * user_data.shoot_data.initial_speed + array[1] - MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW;
+
+        VOFA_T_Send(3, array[0], array[1], error);  // the place is not sure
     }
-    VOFA_T_Send(2, array[0], array[1]);
 
     free (bufferA);
     free (bufferB);
