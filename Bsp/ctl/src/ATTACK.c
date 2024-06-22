@@ -172,6 +172,25 @@ double *ATTACK_T_Point(void)
     return m;
 }
 
+// int n;
+// double x[50], y[50];
+// /// @brief test recursive function
+// /// @param a 
+// /// @param b 
+// /// @param k 
+// /// @return 
+// double recursive(double a, double b, int k)
+// {
+//     if (k >= n)
+//         return a * x[n-1] + b;
+//     double p = recursive(a, b, k + 1);
+//     double e = y[k] - p;
+//     double mu = 0.01;  // learning rate
+//     double a_new = a + mu * e * x[k] / (1 + mu * x[k] * x[k]);
+//     double b_new = b + mu * e / (1 + mu * x[k] * x[k]);
+//     return a_new * x[k] + b_new;
+// }
+
 
 /// @brief fitting using VOFA
 /// @param  size buffer length (@TODO + multi param length)
@@ -200,7 +219,7 @@ double *ATTACK_T_FIT(int size)
         bufferB[i] = 0.0f;
     }
     
-    bufferA[IOTA++] = user_data.shoot_data.initial_speed;
+    bufferA[IOTA]   = user_data.shoot_data.initial_speed;
     bufferB[IOTA++] = MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW;
     count++;
 
@@ -226,7 +245,7 @@ double *ATTACK_T_FIT(int size)
             // @TODO return error pointer  -- type cauculate error
         }
         
-        if(count % 50 == 0)
+        if(count % 50 == 0 || IOTA == size)
             IOTA = 0;  // replace the head of array
         double error = array[0] * user_data.shoot_data.initial_speed + array[1] - MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW;
 
