@@ -98,7 +98,7 @@ void CHASSIS_F_PwrLimitCalc(TYPEDEF_MOTOR *MOTOR)
         current[i] = MOTOR[i].DATA.CURRENT * 0.001220703125f;
         CHASSIS_V_PwrLimit.PwrPred[i] = CHASSIS_V_PwrLimit.k * current[i] * MOTOR[i].DATA.SPEED_NOW \
                         + CHASSIS_V_PwrLimit.R * current[i] * current[i];
-        if (CHASSIS_V_PwrLimit.PwrPred)
+        if (CHASSIS_V_PwrLimit.PwrPred < 0)
             continue;
         CHASSIS_V_PwrLimit.PwrSum += CHASSIS_V_PwrLimit.PwrPred[i];
     }
