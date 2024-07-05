@@ -36,5 +36,4 @@ omni_c/usart_dev.o: ..\Bsp\dev\src\USART_DEV.c ..\Core\Inc\usart.h \
   ..\Bsp\ctl\inc\DBUS.h ..\Bsp\dev\inc\USART_DEV.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdio.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\string.h \
-  ..\JUDGE\Read_Data.h ..\JUDGE\Anonymity_TX.h ..\Core\Inc\dma.h \
-  ..\Bsp\extra\inc\VOFA.h ..\Bsp\ctl\inc\MOTOR.h
+  ..\JUDGE\Read_Data.h ..\Bsp\extra\inc\VOFA.h ..\Bsp\ctl\inc\MOTOR.h

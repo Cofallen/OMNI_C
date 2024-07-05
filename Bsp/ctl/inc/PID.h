@@ -9,4 +9,5 @@ extern void PID_F_Init(TYPEDEF_MOTOR_PID *PID, const float *PID_V);
 extern uint8_t PID_F_AS(TYPEDEF_MOTOR *MOTOR);
 extern uint8_t PID_F_SC(TYPEDEF_MOTOR *MOTOR);
 
+extern uint8_t PID_F_S(TYPEDEF_MOTOR *MOTOR);
 #endif // !__PID_H__

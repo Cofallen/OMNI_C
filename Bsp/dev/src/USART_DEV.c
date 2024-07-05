@@ -55,10 +55,10 @@ void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
         {
             __HAL_UART_CLEAR_IDLEFLAG(&huart3); 
             HAL_UART_DMAStop(&huart3);
-            DBUS_F_Cal(&DBUS_V_DATA);
 
             // 使能接受
-            HAL_UART_Receive_DMA(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, 19);
+            HAL_UART_Receive_DMA(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, sizeof(DBUS_V_UNION.GET_DATA));
+            DBUS_F_Cal(&DBUS_V_DATA);
         }
     }
 

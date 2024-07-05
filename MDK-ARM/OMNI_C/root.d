@@ -36,4 +36,5 @@ omni_c/root.o: ..\Bsp\extra\src\ROOT.c ..\Core\Inc\main.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\string.h \
   ..\Bsp\extra\inc\ROOT.h ..\Bsp\ctl\inc\DBUS.h ..\Bsp\ctl\inc\MOTOR.h \
   ..\Bsp\dev\inc\TIM_DEV.h ..\Bsp\extra\inc\DEFINE.h \
-  ..\Bsp\ctl\inc\PID.h
+  ..\Bsp\ctl\inc\PID.h ..\Bsp\ctl\inc\ATTACK.h \
+  ..\Bsp\extra\inc\JUDGEMENT.h

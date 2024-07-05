@@ -33,6 +33,8 @@ omni_c/chassis.o: ..\Bsp\ctl\src\CHASSIS.c ..\Core\Inc\main.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\math.h \
   ..\Bsp\ctl\inc\CHASSIS.h ..\Bsp\ctl\inc\DBUS.h ..\Bsp\ctl\inc\MOTOR.h \
   ..\Bsp\extra\inc\DEFINE.h ..\Bsp\extra\inc\YU_MATH.h \
-  ..\Bsp\ctl\inc\PID.h
+  ..\Bsp\ctl\inc\PID.h ..\Bsp\dev\inc\TIM_DEV.h ..\JUDGE\Read_Data.h \
+  ..\Core\Inc\usart.h

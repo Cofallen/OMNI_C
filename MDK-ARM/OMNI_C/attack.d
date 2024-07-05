@@ -36,4 +36,6 @@ omni_c/attack.o: ..\Bsp\ctl\src\ATTACK.c ..\Core\Inc\main.h \
   ..\Bsp\ctl\inc\ATTACK.h ..\Bsp\ctl\inc\MOTOR.h ..\Bsp\ctl\inc\DBUS.h \
   ..\Bsp\extra\inc\JUDGEMENT.h ..\Bsp\extra\inc\DEFINE.h \
   ..\Bsp\ctl\inc\PID.h ..\Bsp\dev\inc\TIM_DEV.h ..\Bsp\extra\inc\ROOT.h \
-  ..\Bsp\extra\inc\YU_MATH.h
+  ..\Bsp\extra\inc\YU_MATH.h ..\JUDGE\Read_Data.h ..\Core\Inc\usart.h \
+  ..\Bsp\extra\inc\VOFA.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdlib.h
