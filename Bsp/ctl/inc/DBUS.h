@@ -80,12 +80,37 @@ typedef union TYPEDEF_DBUS_UNION // 使用共用体整合数据
         uint64_t S1 : 2;
         uint64_t S2 : 2;
 
+        // 鼠标数据
+        int64_t MOUSE_X : 16;
+        int64_t MOUSE_Y : 16;
+        int64_t MOUSE_Z : 16;
+        int64_t MOUSE_L : 8;
+        int64_t MOUSE_R : 8;
+
+        // 键盘数据
+        uint64_t KEY_W : 1;
+        uint64_t KEY_S : 1;
+        uint64_t KEY_A : 1;
+        uint64_t KEY_D : 1;
+        uint64_t KEY_SHIFT : 1;
+        uint64_t KEY_CTRL : 1;
+        uint64_t KEY_Q : 1;
+        uint64_t KEY_E : 1;
+        uint64_t KEY_R : 1;
+        uint64_t KEY_F : 1;
+        uint64_t KEY_G : 1;
+        uint64_t KEY_Z : 1;
+        uint64_t KEY_X : 1;
+        uint64_t KEY_C : 1;
+        uint64_t KEY_V : 1;
+        uint64_t KEY_B : 1;
+        
         // 遥控滑轮
         uint64_t DIR : 11;
         uint64_t : 5;
     } DATA_NEATEN;
     // 接收到的数组
-    uint8_t GET_DATA[19];
+    uint8_t GET_DATA[18];
 } TYPEDEF_DBUS_UNION;
 
 extern TYPEDEF_DBUS DBUS_V_DATA;

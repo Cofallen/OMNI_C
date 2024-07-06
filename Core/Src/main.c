@@ -132,7 +132,7 @@ int main(void)
 
   // HAL_UART_Receive_IT(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, sizeof(DBUS_V_UNION.GET_DATA));
 
-//  printf("ok\r\n");  // huart1 �?? �??�??
+//  printf("ok\r\n");  // huart1 
 
   ROOT_F_Init();
 

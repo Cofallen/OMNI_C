@@ -51,14 +51,16 @@ void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
 {
     if (huart->Instance == USART3) // 遥控DBUS
     {
-        if (RESET != __HAL_UART_GET_FLAG(&huart3, UART_FLAG_IDLE))
+        if ( __HAL_UART_GET_FLAG(&huart3, UART_FLAG_IDLE != RESET))
         {
             __HAL_UART_CLEAR_IDLEFLAG(&huart3); 
+            
             HAL_UART_DMAStop(&huart3);
 
+            DBUS_F_Cal(&DBUS_V_DATA);
             // 使能接受
             HAL_UART_Receive_DMA(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, sizeof(DBUS_V_UNION.GET_DATA));
-            DBUS_F_Cal(&DBUS_V_DATA);
+            
         }
     }
 
