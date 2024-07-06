@@ -22,7 +22,10 @@
             "judgement.h": "c",
             "read_data.h": "c",
             "stdlib.h": "c",
-            "root.h": "c"
+            "root.h": "c",
+            "usart_dev.h": "c",
+            "string.h": "c",
+            "stdio.h": "c"
         }
     },
     "extensions": {}
