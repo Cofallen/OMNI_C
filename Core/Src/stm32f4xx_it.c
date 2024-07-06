@@ -24,6 +24,7 @@
 /* USER CODE BEGIN Includes */
 #include "DBUS.h"
 #include "USART_DEV.h"
+#include "ROOT.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -303,11 +304,13 @@ void USART1_IRQHandler(void)
 void USART3_IRQHandler(void)
 {
   /* USER CODE BEGIN USART3_IRQn 0 */
-
+	USER_UART_IRQHandler(&huart3);
   /* USER CODE END USART3_IRQn 0 */
   HAL_UART_IRQHandler(&huart3);
   /* USER CODE BEGIN USART3_IRQn 1 */
-  USER_UART_IRQHandler(&huart3);
+  ROOT_V_MONITOR_DBUS = 0; //  离线判断参数清零
+            
+  DBUS_F_Cal(&DBUS_V_DATA);
   /* USER CODE END USART3_IRQn 1 */
 }
 

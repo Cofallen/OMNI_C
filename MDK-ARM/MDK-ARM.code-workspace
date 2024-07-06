@@ -21,7 +21,8 @@
             "main.h": "c",
             "judgement.h": "c",
             "read_data.h": "c",
-            "stdlib.h": "c"
+            "stdlib.h": "c",
+            "root.h": "c"
         }
     },
     "extensions": {}

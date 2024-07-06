@@ -44,7 +44,6 @@ void DBUS_F_Cal(TYPEDEF_DBUS *DBUS)
 
     // @TODO l/r flag to control atatck
 
-    ROOT_V_MONITOR_DBUS = 0; //  离线判断参数清零
 }
 
 /**
