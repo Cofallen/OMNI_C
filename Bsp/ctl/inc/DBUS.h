@@ -7,7 +7,7 @@ typedef struct TYPEDEF_DBUS // 遥控器数据结构体
     uint8_t L_FLAG;
 
     // 遥控
-    struct
+    struct __packed
     {
         int16_t CH0_int16;
         int16_t CH1_int16;
@@ -20,7 +20,7 @@ typedef struct TYPEDEF_DBUS // 遥控器数据结构体
         int8_t Error_int8;
     } REMOTE;
     // 鼠标
-    struct
+    struct __packed
     {
         float X_FLT;
         float X_FILTER; // 处理后使用的鼠标值
@@ -33,7 +33,7 @@ typedef struct TYPEDEF_DBUS // 遥控器数据结构体
         uint8_t R_PRESS_TIME;
         uint8_t L_PRESS_TIME;
     } MOUSE;
-    struct
+    struct __packed
     {
         uint8_t W : 4;
         uint8_t S : 4;
@@ -70,7 +70,7 @@ typedef struct TYPEDEF_DBUS // 遥控器数据结构体
 
 typedef union TYPEDEF_DBUS_UNION // 使用共用体整合数据
 {
-    struct
+    struct __packed
     {
         // 遥控数据
         uint64_t CH0 : 11;

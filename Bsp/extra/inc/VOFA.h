@@ -25,7 +25,7 @@ typedef struct TYPEDEF_VOFA
 
 typedef union
 {
-    struct
+    struct __packed
     {
         TYPEDEF_VOFA MOTOR;
         char TAIL[4];
