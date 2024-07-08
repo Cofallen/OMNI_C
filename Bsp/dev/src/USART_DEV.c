@@ -13,9 +13,6 @@
 #define BUFFER_SIZE (255)
 
 extern DMA_HandleTypeDef hdma_usart6_rx;
-extern DMA_HandleTypeDef hdma_usart3_rx;
-
-int rx_data_len = 0;
 
 // @TODO 原回调函数DMA不能?，改用自定义回调函数
 
@@ -55,24 +52,13 @@ void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
 {
     if (huart->Instance == USART3) // 遥控DBUS
     {
-        if (RESET != __HAL_UART_GET_FLAG(&huart3, UART_FLAG_IDLE))
-        {
-            __HAL_UART_CLEAR_IDLEFLAG(&huart3); 
-            
-            //
-            HAL_UART_DMAStop(&huart3);
-            
-            // rx_data_len = 18 - __HAL_DMA_GET_COUNTER(&hdma_usart3_rx); // 计算接收到的数据长度
-
-            // memset(DBUS_V_UNION.GET_DATA, 0, rx_data_len); // 清零接收缓冲区
-            // rx_data_len = 0;
-            
-            // 使能接受
-            HAL_UART_Receive_DMA(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, 19);
-            // ROOT_V_MONITOR_DBUS = 0; //  离线判断参数清零
-            
-            DBUS_F_Cal(&DBUS_V_DATA);
-        }
+        __HAL_UART_CLEAR_IDLEFLAG(&huart3);
+        HAL_UART_DMAStop(&huart3);
+        
+        ROOT_V_MONITOR_DBUS = 0; //  离线判断参数清零
+        
+        DBUS_F_Cal(&DBUS_V_DATA);
+        HAL_UART_Receive_DMA(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, sizeof(DBUS_V_UNION.GET_DATA));
     }
 
     // 裁判系统
@@ -101,5 +87,5 @@ void USER_UART3_IRQHandler()
     ROOT_V_MONITOR_DBUS = 0; //  离线判断参数清零
     
     DBUS_F_Cal(&DBUS_V_DATA);
-    HAL_UART_Receive_DMA(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, 19);
+    HAL_UART_Receive_DMA(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, 18);
 }

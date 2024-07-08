@@ -1,7 +1,7 @@
 Dependencies for Project 'OMNI_C', Target 'OMNI_C': (DO NOT MODIFY !)
 CompilerVersion: 6180000::V6.18::ARMCLANG
 F (startup_stm32f407xx.s)(0x668B4B55)(--target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -masm=auto -c-gdwarf-4 -Wa,armasm,--pd,"__MICROLIB SETA 1"-I./RTE/_OMNI_C-ID:/RoboMaster/SoftWare/MDK537/Package/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/RoboMaster/SoftWare/MDK537/Package/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-Wa,armasm,--pd,"__UVISION_VERSION SETA 537" -Wa,armasm,--pd,"_RTE_ SETA 1" -Wa,armasm,--pd,"STM32F407xx SETA 1" -Wa,armasm,--pd,"_RTE_ SETA 1"-o omni_c/startup_stm32f407xx.o)
-F (../Core/Src/main.c)(0x668B4D7B)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Bsp/ctl/inc -I ../Bsp/dev/inc -I ../Bsp/extra/inc -I ../LIB -I ../JUDGE-I./RTE/_OMNI_C-ID:/RoboMaster/SoftWare/MDK537/Package/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/RoboMaster/SoftWare/MDK537/Package/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4-o omni_c/main.o -MD)
+F (../Core/Src/main.c)(0x668B563A)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Bsp/ctl/inc -I ../Bsp/dev/inc -I ../Bsp/extra/inc -I ../LIB -I ../JUDGE-I./RTE/_OMNI_C-ID:/RoboMaster/SoftWare/MDK537/Package/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/RoboMaster/SoftWare/MDK537/Package/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4-o omni_c/main.o -MD)
 I (..\Core\Inc\main.h)(0x66658BF0)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h)(0x6544B613)
 I (..\Core\Inc\stm32f4xx_hal_conf.h)(0x66547928)
@@ -45,7 +45,7 @@ I (..\Core\Inc\usart.h)(0x666A98DE)
 I (..\Core\Inc\gpio.h)(0x66547925)
 I (..\Bsp\ctl\inc\ATTACK.h)(0x66742B94)
 I (..\Bsp\ctl\inc\MOTOR.h)(0x66547CEB)
-I (..\Bsp\ctl\inc\DBUS.h)(0x6689F464)
+I (..\Bsp\ctl\inc\DBUS.h)(0x668B5648)
 I (..\Bsp\extra\inc\JUDGEMENT.h)(0x666AA0AD)
 I (..\Bsp\ctl\inc\CAP.h)(0x66547C86)
 I (..\Bsp\ctl\inc\CHASSIS.h)(0x665D825E)
@@ -284,7 +284,7 @@ I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_spi.h)(0x6544B613)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h)(0x6544B613)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h)(0x6544B613)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h)(0x6544B613)
-F (../Core/Src/stm32f4xx_it.c)(0x668B4C09)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Bsp/ctl/inc -I ../Bsp/dev/inc -I ../Bsp/extra/inc -I ../LIB -I ../JUDGE-I./RTE/_OMNI_C-ID:/RoboMaster/SoftWare/MDK537/Package/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/RoboMaster/SoftWare/MDK537/Package/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4-o omni_c/stm32f4xx_it.o -MD)
+F (../Core/Src/stm32f4xx_it.c)(0x668B55B9)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Bsp/ctl/inc -I ../Bsp/dev/inc -I ../Bsp/extra/inc -I ../LIB -I ../JUDGE-I./RTE/_OMNI_C-ID:/RoboMaster/SoftWare/MDK537/Package/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/RoboMaster/SoftWare/MDK537/Package/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4-o omni_c/stm32f4xx_it.o -MD)
 I (..\Core\Inc\main.h)(0x66658BF0)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h)(0x6544B613)
 I (..\Core\Inc\stm32f4xx_hal_conf.h)(0x66547928)
@@ -321,7 +321,7 @@ I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h)(0x6544B613)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h)(0x6544B613)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h)(0x6544B613)
 I (..\Core\Inc\stm32f4xx_it.h)(0x668A9E3A)
-I (..\Bsp\ctl\inc\DBUS.h)(0x6689F464)
+I (..\Bsp\ctl\inc\DBUS.h)(0x668B5648)
 I (..\Bsp\dev\inc\USART_DEV.h)(0x66895253)
 I (D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\include\stdio.h)(0x625260D6)
 I (..\Bsp\extra\inc\ROOT.h)(0x66742FBD)
@@ -1064,7 +1064,7 @@ I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h)(0x6544B613)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h)(0x6544B613)
 I (..\Bsp\ctl\inc\ATTACK.h)(0x66742B94)
 I (..\Bsp\ctl\inc\MOTOR.h)(0x66547CEB)
-I (..\Bsp\ctl\inc\DBUS.h)(0x6689F464)
+I (..\Bsp\ctl\inc\DBUS.h)(0x668B5648)
 I (..\Bsp\extra\inc\JUDGEMENT.h)(0x666AA0AD)
 I (..\Bsp\extra\inc\DEFINE.h)(0x666423A5)
 I (..\Bsp\ctl\inc\PID.h)(0x6688B9E4)
@@ -1115,7 +1115,7 @@ I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h)(0x6544B613)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h)(0x6544B613)
 I (D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\include\math.h)(0x625260D6)
 I (..\Bsp\ctl\inc\CHASSIS.h)(0x665D825E)
-I (..\Bsp\ctl\inc\DBUS.h)(0x6689F464)
+I (..\Bsp\ctl\inc\DBUS.h)(0x668B5648)
 I (..\Bsp\ctl\inc\MOTOR.h)(0x66547CEB)
 I (..\Bsp\extra\inc\DEFINE.h)(0x666423A5)
 I (..\Bsp\extra\inc\YU_MATH.h)(0x6674197A)
@@ -1123,7 +1123,7 @@ I (..\Bsp\ctl\inc\PID.h)(0x6688B9E4)
 I (..\Bsp\dev\inc\TIM_DEV.h)(0x66547D39)
 I (..\JUDGE\Read_Data.h)(0x665D90E0)
 I (..\Core\Inc\usart.h)(0x666A98DE)
-F (..\Bsp\ctl\src\DBUS.c)(0x668938A3)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Bsp/ctl/inc -I ../Bsp/dev/inc -I ../Bsp/extra/inc -I ../LIB -I ../JUDGE-I./RTE/_OMNI_C-ID:/RoboMaster/SoftWare/MDK537/Package/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/RoboMaster/SoftWare/MDK537/Package/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4-o omni_c/dbus.o -MD)
+F (..\Bsp\ctl\src\DBUS.c)(0x668B564E)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Bsp/ctl/inc -I ../Bsp/dev/inc -I ../Bsp/extra/inc -I ../LIB -I ../JUDGE-I./RTE/_OMNI_C-ID:/RoboMaster/SoftWare/MDK537/Package/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/RoboMaster/SoftWare/MDK537/Package/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4-o omni_c/dbus.o -MD)
 I (..\Core\Inc\main.h)(0x66658BF0)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h)(0x6544B613)
 I (..\Core\Inc\stm32f4xx_hal_conf.h)(0x66547928)
@@ -1160,7 +1160,7 @@ I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h)(0x6544B613)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h)(0x6544B613)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h)(0x6544B613)
 I (D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\include\string.h)(0x625260D6)
-I (..\Bsp\ctl\inc\DBUS.h)(0x6689F464)
+I (..\Bsp\ctl\inc\DBUS.h)(0x668B5648)
 I (..\Bsp\extra\inc\ROOT.h)(0x66742FBD)
 F (..\Bsp\ctl\src\GIMBAL.c)(0x66642E1F)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Bsp/ctl/inc -I ../Bsp/dev/inc -I ../Bsp/extra/inc -I ../LIB -I ../JUDGE-I./RTE/_OMNI_C-ID:/RoboMaster/SoftWare/MDK537/Package/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/RoboMaster/SoftWare/MDK537/Package/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4-o omni_c/gimbal.o -MD)
 I (..\Core\Inc\main.h)(0x66658BF0)
@@ -1200,7 +1200,7 @@ I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h)(0x6544B613)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h)(0x6544B613)
 I (..\Bsp\ctl\inc\GIMBAL.h)(0x66642E26)
 I (..\Bsp\ctl\inc\MOTOR.h)(0x66547CEB)
-I (..\Bsp\ctl\inc\DBUS.h)(0x6689F464)
+I (..\Bsp\ctl\inc\DBUS.h)(0x668B5648)
 I (..\Bsp\extra\inc\DEFINE.h)(0x666423A5)
 I (..\Bsp\ctl\inc\PID.h)(0x6688B9E4)
 F (..\Bsp\ctl\src\MOTOR.c)(0x66547CD5)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Bsp/ctl/inc -I ../Bsp/dev/inc -I ../Bsp/extra/inc -I ../LIB -I ../JUDGE-I./RTE/_OMNI_C-ID:/RoboMaster/SoftWare/MDK537/Package/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/RoboMaster/SoftWare/MDK537/Package/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4-o omni_c/motor.o -MD)
@@ -1362,7 +1362,7 @@ I (..\Bsp\dev\inc\CAN_DEV.h)(0x66570BFB)
 I (..\Bsp\dev\inc\TIM_DEV.h)(0x66547D39)
 I (..\Bsp\ctl\inc\MOTOR.h)(0x66547CEB)
 I (..\Bsp\extra\inc\DEFINE.h)(0x666423A5)
-F (..\Bsp\dev\src\TIM_DEV.c)(0x668A8E66)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Bsp/ctl/inc -I ../Bsp/dev/inc -I ../Bsp/extra/inc -I ../LIB -I ../JUDGE-I./RTE/_OMNI_C-ID:/RoboMaster/SoftWare/MDK537/Package/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/RoboMaster/SoftWare/MDK537/Package/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4-o omni_c/tim_dev.o -MD)
+F (..\Bsp\dev\src\TIM_DEV.c)(0x668B4F57)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Bsp/ctl/inc -I ../Bsp/dev/inc -I ../Bsp/extra/inc -I ../LIB -I ../JUDGE-I./RTE/_OMNI_C-ID:/RoboMaster/SoftWare/MDK537/Package/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/RoboMaster/SoftWare/MDK537/Package/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4-o omni_c/tim_dev.o -MD)
 I (..\Core\Inc\main.h)(0x66658BF0)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h)(0x6544B613)
 I (..\Core\Inc\stm32f4xx_hal_conf.h)(0x66547928)
@@ -1405,12 +1405,12 @@ I (..\Bsp\ctl\inc\MOTOR.h)(0x66547CEB)
 I (..\Bsp\dev\inc\CAN_DEV.h)(0x66570BFB)
 I (..\Bsp\extra\inc\DEFINE.h)(0x666423A5)
 I (..\Bsp\ctl\inc\CHASSIS.h)(0x665D825E)
-I (..\Bsp\ctl\inc\DBUS.h)(0x6689F464)
+I (..\Bsp\ctl\inc\DBUS.h)(0x668B5648)
 I (..\Bsp\ctl\inc\GIMBAL.h)(0x66642E26)
 I (..\Bsp\extra\inc\ROOT.h)(0x66742FBD)
 I (..\Bsp\ctl\inc\ATTACK.h)(0x66742B94)
 I (..\Bsp\extra\inc\JUDGEMENT.h)(0x666AA0AD)
-F (..\Bsp\dev\src\USART_DEV.c)(0x668B4C0E)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Bsp/ctl/inc -I ../Bsp/dev/inc -I ../Bsp/extra/inc -I ../LIB -I ../JUDGE-I./RTE/_OMNI_C-ID:/RoboMaster/SoftWare/MDK537/Package/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/RoboMaster/SoftWare/MDK537/Package/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4-o omni_c/usart_dev.o -MD)
+F (..\Bsp\dev\src\USART_DEV.c)(0x668B55C1)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../Bsp/ctl/inc -I ../Bsp/dev/inc -I ../Bsp/extra/inc -I ../LIB -I ../JUDGE-I./RTE/_OMNI_C-ID:/RoboMaster/SoftWare/MDK537/Package/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/RoboMaster/SoftWare/MDK537/Package/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4-o omni_c/usart_dev.o -MD)
 I (..\Core\Inc\usart.h)(0x666A98DE)
 I (..\Core\Inc\main.h)(0x66658BF0)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h)(0x6544B613)
@@ -1447,7 +1447,7 @@ I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_spi.h)(0x6544B613)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h)(0x6544B613)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h)(0x6544B613)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h)(0x6544B613)
-I (..\Bsp\ctl\inc\DBUS.h)(0x6689F464)
+I (..\Bsp\ctl\inc\DBUS.h)(0x668B5648)
 I (..\Bsp\dev\inc\USART_DEV.h)(0x66895253)
 I (D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\include\stdio.h)(0x625260D6)
 I (D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\include\string.h)(0x625260D6)
@@ -1613,7 +1613,7 @@ I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h)(0x6544B613)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h)(0x6544B613)
 I (D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\include\string.h)(0x625260D6)
 I (..\Bsp\extra\inc\ROOT.h)(0x66742FBD)
-I (..\Bsp\ctl\inc\DBUS.h)(0x6689F464)
+I (..\Bsp\ctl\inc\DBUS.h)(0x668B5648)
 I (..\Bsp\ctl\inc\MOTOR.h)(0x66547CEB)
 I (..\Bsp\dev\inc\TIM_DEV.h)(0x66547D39)
 I (..\Bsp\extra\inc\DEFINE.h)(0x666423A5)

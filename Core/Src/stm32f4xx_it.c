@@ -224,7 +224,7 @@ void DMA1_Stream1_IRQHandler(void)
   /* USER CODE END DMA1_Stream1_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_usart3_rx);
   /* USER CODE BEGIN DMA1_Stream1_IRQn 1 */
-  USER_UART3_IRQHandler();
+  
   /* USER CODE END DMA1_Stream1_IRQn 1 */
 }
 
@@ -306,8 +306,7 @@ void USART3_IRQHandler(void)
   /* USER CODE BEGIN USART3_IRQn 0 */
   if(__HAL_UART_GET_FLAG(&huart3, UART_FLAG_IDLE) != RESET)
   {
-    __HAL_UART_CLEAR_IDLEFLAG(&huart3);
-    USER_UART3_IRQHandler();
+    USER_UART_IRQHandler(&huart3);     //user_it , 空闲中断需要包含hal_uart_irqhandler
   
   /* USER CODE END USART3_IRQn 0 */
   HAL_UART_IRQHandler(&huart3);
