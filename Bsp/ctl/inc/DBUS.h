@@ -110,7 +110,7 @@ typedef union TYPEDEF_DBUS_UNION // 使用共用体整合数据
         uint64_t : 5;
     } DATA_NEATEN;
     // 接收到的数组
-    uint8_t GET_DATA[18];
+    uint8_t GET_DATA[19];
 } TYPEDEF_DBUS_UNION;
 
 extern TYPEDEF_DBUS DBUS_V_DATA;

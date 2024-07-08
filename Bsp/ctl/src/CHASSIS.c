@@ -22,6 +22,7 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     Vx = (float)DBUS->REMOTE.CH0_int16 * RATE;
     Vy = (float)DBUS->REMOTE.CH1_int16 * RATE;
     // Vr = -(float)DBUS->REMOTE.CH2_int16;
+    // Vr = 1000.0f; // spining mode
 
     // 底盘跟随模式
 //    ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;

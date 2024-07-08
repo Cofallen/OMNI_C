@@ -129,7 +129,7 @@ int main(void)
 
   __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
   HAL_UART_Receive_DMA(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, 19);
-  DBUS_F_Cal(&DBUS_V_DATA);
+//  DBUS_F_Cal(&DBUS_V_DATA);
 
   // HAL_UART_Receive_IT(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, sizeof(DBUS_V_UNION.GET_DATA));
 

@@ -71,7 +71,7 @@ void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
             HAL_UART_Receive_DMA(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, 19);
             // ROOT_V_MONITOR_DBUS = 0; //  离线判断参数清零
             
-            // DBUS_F_Cal(&DBUS_V_DATA);
+            DBUS_F_Cal(&DBUS_V_DATA);
         }
     }
 
@@ -94,22 +94,12 @@ void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
 
 void USER_UART3_IRQHandler()
 {
-    if (__HAL_UART_GET_FLAG(&huart3, UART_FLAG_IDLE != RESET))
-        {
-            __HAL_UART_CLEAR_IDLEFLAG(&huart3); 
-            
-            //
-            HAL_UART_DMAStop(&huart3);
-            
-            // rx_data_len = 18 - __HAL_DMA_GET_COUNTER(&hdma_usart3_rx); // 计算接收到的数据长度
-
-            // memset(DBUS_V_UNION.GET_DATA, 0, rx_data_len); // 清零接收缓冲区
-            // rx_data_len = 0;
-            
-            // 使能接受
-            HAL_UART_Receive_DMA(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, 19);
-            // ROOT_V_MONITOR_DBUS = 0; //  离线判断参数清零
-            
-            // DBUS_F_Cal(&DBUS_V_DATA);
-        }
+    HAL_UART_DMAStop(&huart3);
+    
+    // 使能接受
+    
+    ROOT_V_MONITOR_DBUS = 0; //  离线判断参数清零
+    
+    DBUS_F_Cal(&DBUS_V_DATA);
+    HAL_UART_Receive_DMA(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, 19);
 }
