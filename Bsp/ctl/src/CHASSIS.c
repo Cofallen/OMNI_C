@@ -13,26 +13,43 @@
 
 // 本代码为全向轮底盘运动基本代码
 
+double ANGLE_Rad = 0.0f;
 void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {
     // 运动学解算
     float Vx = 0.0f, Vy = 0.0f, Vr = 0.0f, RATE = 1.0f, COMPONENT[2] = {0.5, 1};
-    double ANGLE_Relative = 0.0f, ANGLE_Rad = 0.0f;
+    double ANGLE_Relative = 0.0f; //ANGLE_Rad = 0.0f;
     double PRIDICT = 0.0f;    // 底盘预测，前馈
     Vx = (float)DBUS->REMOTE.CH0_int16 * RATE;
-    Vy = (float)DBUS->REMOTE.CH1_int16 * RATE;
+    Vy = -(float)DBUS->REMOTE.CH1_int16 * RATE;
     // Vr = -(float)DBUS->REMOTE.CH2_int16;
-    // Vr = 1000.0f; // spining mode
-
+    
     // 底盘跟随模式
 //    ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;
-//    ANGLE_Rad = ANGLE_Relative * MATH_D_RELATIVE_PARAM;
+    
+    //ANGLE_Rad = ANGLE_Relative * MATH_D_RELATIVE_PARAM;
 
-//    double COS = cos(ANGLE_Rad);
-//    double SIN = sin(ANGLE_Rad);
-//    Vx = -Vy * SIN + Vx * COS;
-//    Vy =  Vy * COS + Vx * SIN;
+    if (DBUS->REMOTE.S2_u8 == 1)  // @TODO + 底盘跟随判断 A&B + GEER挡位
+    {
+        ANGLE_Rad += 3.1416926f * 0.5f  * 0.001f;
+        Vr = 5000.0f;
+    }
+    else if (DBUS->REMOTE.S2_u8 == 3)
+    {
+        Vr = 0.0f;
+    }
+    else if (DBUS->REMOTE.S2_u8 == 2)
+    {
+        // ANGLE_Rad += 3.1416926f * 0.5f * 0.001f;
+        Vr = -5000.0f;
+    }
 
+    // double COS = cos(ANGLE_Rad);
+    // double SIN = sin(ANGLE_Rad);
+    // Vx = -Vy * SIN + Vx * COS;
+    // Vy =  Vy * COS + Vx * SIN;
+
+    
 //    // 各方向分量限幅，TODO：待计算比例因子RATE
 //    Vx = MATH_D_LIMIT(3000, -3000, Vx);
 //    Vy = MATH_D_LIMIT(3000, -3000, Vy);

@@ -159,7 +159,7 @@
           <Type>0</Type>
           <LineNumber>56</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134245298</Address>
+          <Address>134246794</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -206,6 +206,11 @@
           <count>6</count>
           <WinNumber>1</WinNumber>
           <ItemText>dbus_test_union,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>7</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>ANGLE_Rad,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>

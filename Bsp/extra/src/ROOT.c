@@ -24,7 +24,7 @@ void ROOT_F_MONITOR_DBUS(TYPEDEF_DBUS *DBUS)
 // 传pid参数
 uint8_t ROOT_F_PIDinit()
 {
-    const float PID_V_CHASSIS_SPEED[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
+    const float PID_V_CHASSIS_SPEED[5] = {15.0f, 0.001f, 0, 2000.0f, 10000.0f};
     const float PID_V_CHASSIS_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
 
     const float PID_V_GIMBAL_YAW_SPEED[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};

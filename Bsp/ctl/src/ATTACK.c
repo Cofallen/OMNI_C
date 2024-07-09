@@ -195,6 +195,7 @@ double *ATTACK_T_Point(void)
 /// @brief fitting using VOFA
 /// @param  size buffer length (@TODO + multi param length)
 /// @return 
+/// @date 2024-06-21
 double *ATTACK_T_FIT(int size)
 {
     // Param fitting using VOFA
