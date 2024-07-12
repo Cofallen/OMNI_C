@@ -94,3 +94,5 @@ uint8_t PID_F_S(TYPEDEF_MOTOR *MOTOR)
 	MOTOR->DATA.CAN_SEND = (int16_t)(MOTOR->PID_S.OUT.ALL_OUT);
 	return ROOT_READY;
 }
+
+uint8_t PID_T_Cal(){}

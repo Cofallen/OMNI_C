@@ -37,4 +37,5 @@ omni_c/tim_dev.o: ..\Bsp\dev\src\TIM_DEV.c ..\Core\Inc\main.h \
   ..\Bsp\ctl\inc\MOTOR.h ..\Bsp\dev\inc\CAN_DEV.h \
   ..\Bsp\extra\inc\DEFINE.h ..\Bsp\ctl\inc\CHASSIS.h \
   ..\Bsp\ctl\inc\DBUS.h ..\Bsp\ctl\inc\GIMBAL.h ..\Bsp\extra\inc\ROOT.h \
-  ..\Bsp\ctl\inc\ATTACK.h ..\Bsp\extra\inc\JUDGEMENT.h
+  ..\Bsp\ctl\inc\ATTACK.h ..\Bsp\extra\inc\JUDGEMENT.h \
+  ..\Bsp\extra\inc\VOFA.h

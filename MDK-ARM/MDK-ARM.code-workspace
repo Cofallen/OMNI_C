@@ -25,7 +25,8 @@
             "root.h": "c",
             "usart_dev.h": "c",
             "string.h": "c",
-            "stdio.h": "c"
+            "stdio.h": "c",
+            "can_dev.h": "c"
         }
     },
     "extensions": {}

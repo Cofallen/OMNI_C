@@ -22,7 +22,7 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     double PRIDICT = 0.0f;    // 底盘预测，前馈
     Vx = (float)DBUS->REMOTE.CH0_int16 * RATE;
     Vy = -(float)DBUS->REMOTE.CH1_int16 * RATE;
-    // Vr = -(float)DBUS->REMOTE.CH2_int16;
+    // Vr = MATH_D_ABS(MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.SPEED_NOW);  // head rotate -> chassis rotate
     
     // 底盘跟随模式
 //    ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;

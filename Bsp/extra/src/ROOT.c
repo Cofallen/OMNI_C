@@ -27,10 +27,10 @@ uint8_t ROOT_F_PIDinit()
     const float PID_V_CHASSIS_SPEED[5] = {15.0f, 0.001f, 0, 2000.0f, 10000.0f};
     const float PID_V_CHASSIS_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
 
-    const float PID_V_GIMBAL_YAW_SPEED[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
-    const float PID_V_GIMBAL_YAW_ANGLE[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
-    const float PID_V_GIMBAL_PIT_SPEED[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
-    const float PID_V_GIMBAL_PIT_ANGLE[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
+    const float PID_V_GIMBAL_YAW_SPEED[5] = {10.0f, 0, 5.0f, 1000.0f, 10000.0f};
+    const float PID_V_GIMBAL_YAW_ANGLE[5] = {5.0f, 0, 0, 1000.0f, 3000.0f};
+    const float PID_V_GIMBAL_PIT_SPEED[5] = {10.0f, 0, 0, 1000.0f, 10000.0f};
+    const float PID_V_GIMBAL_PIT_ANGLE[5] = {5.0f, 0, 0, 1000.0f, 3000.0f};
 
     const float PID_V_ATTACK_L_SPEED[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
     const float PID_V_ATTACK_R_SPEED[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
@@ -68,7 +68,7 @@ void ROOT_F_Init()
 {
     ROOT_F_PIDinit();
 
-    MOTOR_V_ATTACK[MOTOR_D_GIMBAL_PIT].DATA.AIM = 4500;
+    MOTOR_V_ATTACK[MOTOR_D_GIMBAL_PIT].DATA.AIM = 5200;
     MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 0;  // 云台初始化角度
 
 }

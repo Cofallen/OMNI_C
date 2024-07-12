@@ -16,11 +16,11 @@
 // 陀螺仪
 #define CAN_D_TOP 0x101
 // 云台
-#define CAN_D_GIMBAL_YAW 0x20B
-#define CAN_D_GIMBAL_PIT 0x209
+#define CAN_D_GIMBAL_YAW 0x206
+#define CAN_D_GIMBAL_PIT 0x205
 // 发射
-#define CAN_D_ATTACK_L 0x208
-#define CAN_D_ATTACK_R 0x207
+#define CAN_D_ATTACK_L 0x201
+#define CAN_D_ATTACK_R 0x202
 #define CAN_D_ATTACK_G 0x203
 
 // 底盘电机
