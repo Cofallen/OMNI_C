@@ -133,7 +133,6 @@ int main(void)
 //  printf("ok\r\n");  // huart1 
 
   ROOT_F_Init();
-
   HAL_TIM_Base_Start_IT(&htim2);
   HAL_TIM_Base_Start_IT(&htim4);
   HAL_Delay(100);
