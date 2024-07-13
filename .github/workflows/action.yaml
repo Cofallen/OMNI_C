@@ -1,0 +1,23 @@
+name: Upload to Debug Branch
+
+on:
+  # schedule:
+  #   - cron: "0 12 * * *" # Every day at 12:00 UTC
+    push:
+      branches:
+        - debug
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Upload to Debug Branch
+        run: |
+          # git add .
+          # git commit -m "Upload to Debug Branch"
+          # git push origin debug
+          echo "Upload to Debug Branch"
