@@ -3,9 +3,10 @@ name: Upload to Debug Branch
 on:
   # schedule:
   #   - cron: "0 12 * * *" # Every day at 12:00 UTC
-    push:
-      branches:
-        - debug
+    # push:
+    #   branches:
+        # - debug
+        # - master
 
 jobs:
   upload:
@@ -20,4 +21,4 @@ jobs:
           # git add .
           # git commit -m "Upload to Debug Branch"
           # git push origin debug
-          echo "Upload to Debug Branch"
+          # echo "Upload to Debug Branch"
