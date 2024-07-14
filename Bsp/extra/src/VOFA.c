@@ -67,5 +67,9 @@ uint8_t VOFA_T_Send(int n, ...)
 
     HAL_UART_Transmit_IT(&huart1, (uint8_t *)VOFA_T_DATA, sizeof(struct Data));
 
+    free(VOFA_T_DATA->data);
+    free(VOFA_T_DATA->tail);
+    free(VOFA_T_DATA);
+
     return ROOT_READY;
 }
