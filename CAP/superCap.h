@@ -46,6 +46,7 @@ extern struct capDate_typdef capData_t;
 
 extern int16_t shu_temp72;
 extern int16_t shu_temp2;	//电容开启关闭标志位
+extern struct capDate_typdef capData_t;
 #ifdef  RUI_CAP_YUNXIANG
 //超级电容发送初始化
 void CapSendInit(uint8_t powerBuffer , uint8_t nowPower , uint16_t volt);

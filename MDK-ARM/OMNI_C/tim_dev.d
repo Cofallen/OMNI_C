@@ -38,4 +38,6 @@ omni_c/tim_dev.o: ..\Bsp\dev\src\TIM_DEV.c ..\Core\Inc\main.h \
   ..\Bsp\extra\inc\DEFINE.h ..\Bsp\ctl\inc\CHASSIS.h \
   ..\Bsp\ctl\inc\DBUS.h ..\Bsp\ctl\inc\GIMBAL.h ..\Bsp\extra\inc\ROOT.h \
   ..\Bsp\ctl\inc\ATTACK.h ..\Bsp\extra\inc\JUDGEMENT.h \
-  ..\JUDGE\Read_Data.h ..\Core\Inc\usart.h
+  ..\JUDGE\Read_Data.h ..\Core\Inc\usart.h ..\CAP\superCap.h \
+  ..\CAP\judgeSystem.h ..\CAP\CAN_receive.h ..\Bsp\ctl\inc\top.h \
+  ..\CAP\switch.h

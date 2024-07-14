@@ -8,5 +8,5 @@
 extern TYPEDEF_MOTOR MOTOR_V_CHASSIS[4];
 extern TYPEDEF_MOTOR MOTOR_V_GIMBAL[2];
 extern TYPEDEF_MOTOR MOTOR_V_ATTACK[3];
-
+extern uint64_t RunTime ;
 #endif // !__TIM_DEV_H__

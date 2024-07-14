@@ -34,4 +34,8 @@ omni_c/can_dev.o: ..\Bsp\dev\src\CAN_DEV.c ..\Core\Inc\main.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h \
   ..\Core\Inc\can.h ..\Bsp\dev\inc\CAN_DEV.h ..\Bsp\dev\inc\TIM_DEV.h \
-  ..\Bsp\ctl\inc\MOTOR.h ..\Bsp\extra\inc\DEFINE.h
+  ..\Bsp\ctl\inc\MOTOR.h ..\Bsp\extra\inc\DEFINE.h \
+  ..\Bsp\ctl\inc\CHASSIS.h ..\Bsp\ctl\inc\DBUS.h ..\CAP\superCap.h \
+  ..\CAP\judgeSystem.h ..\Core\Inc\usart.h ..\CAP\CAN_receive.h \
+  ..\Bsp\ctl\inc\gimbal.h ..\Bsp\ctl\inc\top.h ..\Bsp\extra\inc\root.h \
+  ..\CAP\switch.h

@@ -12,7 +12,7 @@
 #define CAN_D_CHASSIS_3 0x203
 #define CAN_D_CHASSIS_4 0x204
 // 电容
-#define CAN_D_CAP 0x206
+#define CAN_D_CAP 0x240
 // 陀螺仪
 #define CAN_D_TOP 0x101
 // 云台

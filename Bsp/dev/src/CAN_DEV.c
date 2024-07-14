@@ -5,7 +5,8 @@
 #include "TIM_DEV.h"
 #include "MOTOR.h"
 #include "DEFINE.h"
-
+#include "CHASSIS.h"
+#include "superCap.h"
 // 盛放原始can数据
 uint8_t CANRxmsg[8] = {0};
 CAN_RxHeaderTypeDef CANRxheader;
@@ -42,8 +43,12 @@ void CAN_F_Recv(CAN_HandleTypeDef *hcan, uint32_t ID)
         case CAN_D_CHASSIS_4:
             MOTOR_F_Cal_Data(&MOTOR_V_CHASSIS[3], CANRxmsg);
             break;
+				case CAN_D_CAP:
+					   CanManage_cap(CANRxmsg,&capData_t.capGetDate);
         default:
             break;
+				
+					
         }
     }
     if (hcan->Instance == CAN2)
