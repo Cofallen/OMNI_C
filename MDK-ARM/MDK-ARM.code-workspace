@@ -6,26 +6,16 @@
     ],
     "settings": {
         "files.associations": {
-            "vofa.h": "c",
-            "motor.h": "c",
-            "cstddef": "c",
-            "type_traits": "c",
-            "limits": "c",
+            "chassis.h": "c",
             "math.h": "c",
-            "define.h": "c",
-            "tim_dev.h": "c",
-            "yu_math.h": "c",
-            "__config": "c",
+            "motor.h": "c",
+            "gimbal.h": "c",
             "dbus.h": "c",
-            "attack.h": "c",
-            "main.h": "c",
-            "judgement.h": "c",
+            "pid.h": "c",
+            "tim_dev.h": "c",
             "read_data.h": "c",
-            "stdlib.h": "c",
-            "root.h": "c",
-            "usart_dev.h": "c",
-            "string.h": "c",
-            "stdio.h": "c"
+            "supercap.h": "c",
+            "shu_math.h": "c"
         }
     },
     "extensions": {}

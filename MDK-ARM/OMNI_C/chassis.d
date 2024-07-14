@@ -6,16 +6,16 @@ omni_c/chassis.o: ..\Bsp\ctl\src\CHASSIS.c ..\Core\Inc\main.h \
   ..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h \
   ..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h \
   ..\Drivers\CMSIS\Include\core_cm4.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
   ..\Drivers\CMSIS\Include\cmsis_version.h \
   ..\Drivers\CMSIS\Include\cmsis_compiler.h \
   ..\Drivers\CMSIS\Include\cmsis_armclang.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\arm_compat.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\arm_acle.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\arm_compat.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\arm_acle.h \
   ..\Drivers\CMSIS\Include\mpu_armv7.h \
   ..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stddef.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stddef.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc_ex.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_gpio.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_gpio_ex.h \
@@ -33,8 +33,11 @@ omni_c/chassis.o: ..\Bsp\ctl\src\CHASSIS.c ..\Core\Inc\main.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\math.h \
-  ..\Bsp\ctl\inc\CHASSIS.h ..\Bsp\ctl\inc\DBUS.h ..\Bsp\ctl\inc\MOTOR.h \
-  ..\Bsp\extra\inc\DEFINE.h ..\Bsp\extra\inc\YU_MATH.h \
-  ..\Bsp\ctl\inc\PID.h ..\Bsp\dev\inc\TIM_DEV.h ..\JUDGE\Read_Data.h \
-  ..\Core\Inc\usart.h
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\math.h ..\Bsp\ctl\inc\CHASSIS.h \
+  ..\Bsp\ctl\inc\DBUS.h ..\Bsp\ctl\inc\MOTOR.h ..\Bsp\extra\inc\DEFINE.h \
+  ..\Bsp\extra\inc\YU_MATH.h ..\Bsp\ctl\inc\PID.h \
+  ..\Bsp\dev\inc\TIM_DEV.h ..\JUDGE\Read_Data.h ..\Core\Inc\usart.h \
+  ..\CAP\superCap.h ..\CAP\judgeSystem.h ..\CAP\CAN_receive.h \
+  ..\Bsp\ctl\inc\gimbal.h ..\Bsp\ctl\inc\top.h ..\Bsp\extra\inc\root.h \
+  ..\CAP\switch.h ..\CAP\shu_math.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h

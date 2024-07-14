@@ -23,6 +23,7 @@
         "misc-controls": "--diag_suppress=L6329",
         "xo-base": "",
         "ro-base": "",
-        "rw-base": ""
+        "rw-base": "",
+        "$disableOutputTask": true
     }
 }
