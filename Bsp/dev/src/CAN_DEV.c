@@ -25,7 +25,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
  */
 void CAN_F_Recv(CAN_HandleTypeDef *hcan, uint32_t ID)
 {
-    if (hcan->Instance == CAN2)
+    if (hcan->Instance == CAN1)
     {
         switch (ID)
         {
@@ -46,7 +46,7 @@ void CAN_F_Recv(CAN_HandleTypeDef *hcan, uint32_t ID)
             break;
         }
     }
-    if (hcan->Instance == CAN1)
+    if (hcan->Instance == CAN2)
     {
         switch (ID)
         {
