@@ -54,9 +54,9 @@ int16_t CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     PID_F_S(&MOTOR[MOTOR_D_CHASSIS_2]);
     PID_F_S(&MOTOR[MOTOR_D_CHASSIS_3]);
     PID_F_S(&MOTOR[MOTOR_D_CHASSIS_4]);
-    for(int i;i<4;i++)
+    for(int i = 0;i<4;i++)
     {
-        powersum += MOTOR[i].DATA.CAN_SEND;
+        powersum += MATH_D_ABS(MOTOR[i].DATA.CAN_SEND);
     }
     return powersum;
 }
@@ -130,7 +130,6 @@ void CHASSIS_F_PwrLimitCalc(TYPEDEF_MOTOR *MOTOR)
     
 }
 
-
 /************************************************************万能分隔符**************************************************************
 *	@author:			//赵澍
 *	@performance:	//将四个电机功率按照输出值按比分配
@@ -143,13 +142,16 @@ void AllotPower(int32_t setOut)
 		//得到未限制之前的总输出
 	float allOutPower = abs_float(MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].PID_S.OUT.ALL_OUT + abs_float(MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].PID_S.OUT.ALL_OUT) + \
 		abs_float(MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].PID_S.OUT.ALL_OUT) + abs_float(MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].PID_S.OUT.ALL_OUT));
-
+	
 	MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND = setOut * (float) (MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].PID_S.OUT.ALL_OUT/allOutPower);
 MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND = setOut * (float) (MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].PID_S.OUT.ALL_OUT/allOutPower);
 	MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND = setOut * (float) (MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].PID_S.OUT.ALL_OUT/allOutPower);
 	MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND = setOut * (float) (MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].PID_S.OUT.ALL_OUT/allOutPower);
 }
 
+float rebuffer;
+double raid,raidTemp;
+int32_t ii;
 
 int32_t PowerLimBuffer_Cap(uint16_t maxPower , float buffer , int32_t setOut)
 {
@@ -170,10 +172,16 @@ int32_t PowerLimBuffer_Cap(uint16_t maxPower , float buffer , int32_t setOut)
 	//平方
 	raid_temp = Raid * Raid;
 
-	reData = (raid_temp * setOut);
+	reData = (float)(raid_temp * setOut);
 
 	AllotPower(reData);
 
+	rebuffer = residueBuffer;
+	raid = Raid;
+	raidTemp = raid_temp;
+	ii = reData;
+	
 	return reData;
+
 }
 

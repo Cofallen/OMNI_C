@@ -22,11 +22,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if (htim->Instance == TIM2) // 底盘 1ms
     {
         powersum = CHASSIS_F_Ctl(MOTOR_V_CHASSIS, &DBUS_V_DATA);
-        PowerLimBuffer_Cap(user_data.robot_status.chassis_power_limit,user_data.power_heat_data.buffer_energy,powersum);
-    //    CAN_F_Send(&hcan1, 0x200, MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
-    //               MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
-    //               MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
-    //               MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
+        PowerLimBuffer_Cap(user_data.robot_status.chassis_power_limit,user_data.power_heat_data.buffer_energy, powersum);
+        CAN_F_Send(&hcan1, 0x200, MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
+                   MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
+                   MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
+                   MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
     }
     if (htim->Instance == TIM4) // 云台 1ms
     {
