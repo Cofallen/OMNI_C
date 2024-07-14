@@ -6,14 +6,20 @@
 #include "VOFA.h"
 #include "MOTOR.h"
 #include "DEFINE.h"
+#include "stdlib.h"
 
-union 
+// union 
+// {
+//     float DATA[11];
+//     int8_t TAIL[44];
+// }VOFA_T_DATA={0};
+
+struct Data
 {
-    float DATA[11];
-    int8_t TAIL[44];
-}VOFA_T_DATA={0};
-
-
+    float *data;
+    char *tail;
+};
+    
 // 发送VOFA数据包
 void VOFA_F_Send(TYPEDEF_VOFA_UNION *VOFA, TYPEDEF_MOTOR *MOTOR)
 {
@@ -38,23 +44,28 @@ void VOFA_F_Send(TYPEDEF_VOFA_UNION *VOFA, TYPEDEF_MOTOR *MOTOR)
 
 // VOFA 使用 huart1 发送任意个数数据
 // 先使用定长数组接收 @TODO 使用malloc分配内存，释放内存
+//                  @update 暂时完成
 uint8_t VOFA_T_Send(int n, ...)
 {
     va_list list;
     va_start(list, n);
+    
+    struct Data *VOFA_T_DATA = (struct Data *)calloc(1, sizeof(struct Data));
+    VOFA_T_DATA->data = (float *)calloc(n, sizeof(float));
+    VOFA_T_DATA->tail = (char *)calloc(4, sizeof(char));
 
     for (int i = 0; i < n; i++)
     {
-        VOFA_T_DATA.DATA[i] = (float)(va_arg(list, double));
+        VOFA_T_DATA->data[i] = va_arg(list, float);
     }
     va_end(list);
 
-    VOFA_T_DATA.TAIL[40] = 0x00;
-    VOFA_T_DATA.TAIL[41] = 0x00;
-    VOFA_T_DATA.TAIL[42] = 0x80;
-    VOFA_T_DATA.TAIL[43] = 0x7f;
+    VOFA_T_DATA->tail[0] = 0x00;
+    VOFA_T_DATA->tail[1] = 0x00;
+    VOFA_T_DATA->tail[2] = 0x80;
+    VOFA_T_DATA->tail[3] = 0x7f;
 
-    HAL_UART_Transmit_IT(&huart1, (uint8_t *)VOFA_T_DATA.TAIL, sizeof(VOFA_T_DATA));
+    HAL_UART_Transmit_IT(&huart1, (uint8_t *)VOFA_T_DATA, sizeof(struct Data));
 
     return ROOT_READY;
 }
