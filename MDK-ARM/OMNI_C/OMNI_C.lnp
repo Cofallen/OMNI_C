@@ -51,6 +51,7 @@
 "omni_c\anonymity_tx.o"
 "omni_c\supercap.o"
 "omni_c\shu_math.o"
+"omni_c\power_control.o"
 "omni_c\kalman_filter.o"
 --library_type=microlib --strict --scatter "OMNI_C\OMNI_C.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols

@@ -6,16 +6,9 @@
     ],
     "settings": {
         "files.associations": {
-            "chassis.h": "c",
-            "math.h": "c",
-            "motor.h": "c",
-            "gimbal.h": "c",
-            "dbus.h": "c",
-            "pid.h": "c",
-            "tim_dev.h": "c",
-            "read_data.h": "c",
             "supercap.h": "c",
-            "shu_math.h": "c"
+            "power_control.h": "c",
+            "chassis.h": "c"
         }
     },
     "extensions": {}

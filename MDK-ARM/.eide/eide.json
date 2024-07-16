@@ -234,6 +234,12 @@
         "files": [
           {
             "path": "../CAP/superCap.c"
+          },
+          {
+            "path": "../CAP/shu_math.c"
+          },
+          {
+            "path": "../CAP/power_control.c"
           }
         ],
         "folders": []

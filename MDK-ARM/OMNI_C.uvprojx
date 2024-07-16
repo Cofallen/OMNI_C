@@ -689,6 +689,11 @@
               <FileType>1</FileType>
               <FilePath>..\CAP\shu_math.c</FilePath>
             </File>
+            <File>
+              <FileName>power_control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CAP\power_control.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

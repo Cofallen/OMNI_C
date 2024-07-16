@@ -91,7 +91,7 @@ void SuperCapTransation(uint8_t mod , int32_t setOut , uint64_t time)
 //*	float raid_3=0.1;
 	uint16_t slope_out_1 = 0;  //电容进入斜坡当前值
 	uint16_t slope_out_2 = 0;  //电容退出斜坡当前值
-	uint16_t slope_err = SuperMaxPower - user_data.robot_status.chassis_power_limit;		//斜坡功率总值//原来是maxpower，但我没弄明白MAXPOWER和POWER的关系
+	uint16_t slope_err = SuperMaxPower - user_data.robot_status.chassis_power_limit;		//斜坡功率总值//
 //	mod=remote_t.key_board.ctrl;
 
 	if (capData_t.capGetDate.capVolt <= capValt)

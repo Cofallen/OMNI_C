@@ -1589,6 +1589,36 @@ Section Cross References
     shu_math.o(.ARM.exidx.text.my_abs) refers to shu_math.o(.text.my_abs) for [Anonymous Symbol]
     shu_math.o(.ARM.exidx.text.setbit) refers to shu_math.o(.text.setbit) for [Anonymous Symbol]
     shu_math.o(.ARM.exidx.text.RUI_F_MATH_ABS_int16_t) refers to shu_math.o(.text.RUI_F_MATH_ABS_int16_t) for [Anonymous Symbol]
+    power_control.o(.text.chassis_power_control) refers to read_data.o(.bss.user_data) for user_data
+    power_control.o(.text.chassis_power_control) refers to power_control.o(.bss.PID_Buffer) for PID_Buffer
+    power_control.o(.text.chassis_power_control) refers to power_control.o(.text.PID_buffer_init) for PID_buffer_init
+    power_control.o(.text.chassis_power_control) refers to power_control.o(.text.PID_buffer) for PID_buffer
+    power_control.o(.text.chassis_power_control) refers to supercap.o(.bss.capData_t) for capData_t
+    power_control.o(.text.chassis_power_control) refers to tim_dev.o(.bss.MOTOR_V_CHASSIS) for MOTOR_V_CHASSIS
+    power_control.o(.text.chassis_power_control) refers to power_control.o(.text.get_initial_power) for get_initial_power
+    power_control.o(.text.chassis_power_control) refers to power_control.o(.bss.scaled_give_power) for scaled_give_power
+    power_control.o(.text.chassis_power_control) refers to power_control.o(.text.chassis_power_limit) for chassis_power_limit
+    power_control.o(.ARM.exidx.text.chassis_power_control) refers to power_control.o(.text.chassis_power_control) for [Anonymous Symbol]
+    power_control.o(.ARM.exidx.text.PID_buffer_init) refers to power_control.o(.text.PID_buffer_init) for [Anonymous Symbol]
+    power_control.o(.text.PID_buffer) refers to shu_math.o(.text.SectionLimit_f) for SectionLimit_f
+    power_control.o(.ARM.exidx.text.PID_buffer) refers to power_control.o(.text.PID_buffer) for [Anonymous Symbol]
+    power_control.o(.text.get_initial_power) refers to power_control.o(.data.toque_coefficient) for toque_coefficient
+    power_control.o(.text.get_initial_power) refers to power_control.o(.data.k2) for k2
+    power_control.o(.text.get_initial_power) refers to power_control.o(.data.a) for a
+    power_control.o(.text.get_initial_power) refers to power_control.o(.data.constant) for constant
+    power_control.o(.ARM.exidx.text.get_initial_power) refers to power_control.o(.text.get_initial_power) for [Anonymous Symbol]
+    power_control.o(.text.chassis_power_limit) refers to tim_dev.o(.bss.MOTOR_V_CHASSIS) for MOTOR_V_CHASSIS
+    power_control.o(.text.chassis_power_limit) refers to power_control.o(.bss.scaled_give_power) for scaled_give_power
+    power_control.o(.text.chassis_power_limit) refers to power_control.o(.data.toque_coefficient) for toque_coefficient
+    power_control.o(.text.chassis_power_limit) refers to power_control.o(.data.k2) for k2
+    power_control.o(.text.chassis_power_limit) refers to power_control.o(.data.constant) for constant
+    power_control.o(.text.chassis_power_limit) refers to f2d.o(.text) for __aeabi_f2d
+    power_control.o(.text.chassis_power_limit) refers to power_control.o(.data.a) for a
+    power_control.o(.text.chassis_power_limit) refers to sqrt.o(i.__hardfp_sqrt) for __hardfp_sqrt
+    power_control.o(.text.chassis_power_limit) refers to dadd.o(.text) for __aeabi_dsub
+    power_control.o(.text.chassis_power_limit) refers to ddiv.o(.text) for __aeabi_ddiv
+    power_control.o(.text.chassis_power_limit) refers to d2f.o(.text) for __aeabi_d2f
+    power_control.o(.ARM.exidx.text.chassis_power_limit) refers to power_control.o(.text.chassis_power_limit) for [Anonymous Symbol]
     sqrt.o(i.__hardfp_sqrt) refers (Special) to iusefp.o(.text) for __I$use$fp
     sqrt.o(i.__hardfp_sqrt) refers to dsqrt.o(.text) for _dsqrt
     sqrt.o(i.__hardfp_sqrt) refers to errno.o(i.__set_errno) for __set_errno
@@ -2865,6 +2895,23 @@ Removing Unused input sections from the image.
     Removing shu_math.o(.ARM.exidx.text.setbit), (8 bytes).
     Removing shu_math.o(.text.RUI_F_MATH_ABS_int16_t), (46 bytes).
     Removing shu_math.o(.ARM.exidx.text.RUI_F_MATH_ABS_int16_t), (8 bytes).
+    Removing power_control.o(.text), (0 bytes).
+    Removing power_control.o(.text.chassis_power_control), (556 bytes).
+    Removing power_control.o(.ARM.exidx.text.chassis_power_control), (8 bytes).
+    Removing power_control.o(.text.PID_buffer_init), (40 bytes).
+    Removing power_control.o(.ARM.exidx.text.PID_buffer_init), (8 bytes).
+    Removing power_control.o(.text.PID_buffer), (186 bytes).
+    Removing power_control.o(.ARM.exidx.text.PID_buffer), (8 bytes).
+    Removing power_control.o(.text.get_initial_power), (122 bytes).
+    Removing power_control.o(.ARM.exidx.text.get_initial_power), (8 bytes).
+    Removing power_control.o(.text.chassis_power_limit), (744 bytes).
+    Removing power_control.o(.ARM.exidx.text.chassis_power_limit), (8 bytes).
+    Removing power_control.o(.data.toque_coefficient), (4 bytes).
+    Removing power_control.o(.data.a), (4 bytes).
+    Removing power_control.o(.data.k2), (4 bytes).
+    Removing power_control.o(.data.constant), (4 bytes).
+    Removing power_control.o(.bss.PID_Buffer), (44 bytes).
+    Removing power_control.o(.bss.scaled_give_power), (16 bytes).
     Removing kalman_filter.o(.text), (0 bytes).
     Removing ddiv.o(.text), (222 bytes).
     Removing dcmple.o(.text), (54 bytes).
@@ -2872,7 +2919,7 @@ Removing Unused input sections from the image.
     Removing dcmpeq.o(.text), (56 bytes).
     Removing dsqrt.o(.text), (162 bytes).
 
-1189 unused section(s) (total 99049 bytes) removed from the image.
+1206 unused section(s) (total 100813 bytes) removed from the image.
 
 ==============================================================================
 
@@ -2953,6 +3000,7 @@ Image Symbol Table
     init.s                                   0x00000000   Number         0  init.o ABSOLUTE
     kalman_filter.c                          0x00000000   Number         0  kalman_filter.o ABSOLUTE
     main.c                                   0x00000000   Number         0  main.o ABSOLUTE
+    power_control.c                          0x00000000   Number         0  power_control.o ABSOLUTE
     shu_math.c                               0x00000000   Number         0  shu_math.o ABSOLUTE
     spi.c                                    0x00000000   Number         0  spi.o ABSOLUTE
     startup_stm32f407xx.s                    0x00000000   Number         0  startup_stm32f407xx.o ABSOLUTE
@@ -3554,33 +3602,33 @@ Memory Map of the image
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x08000000   0x08000000   0x00000188   Data   RO            3    RESET               startup_stm32f407xx.o
-    0x08000188   0x08000188   0x00000000   Code   RO         1708  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x08000188   0x08000188   0x00000004   Code   RO         1769    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x0800018c   0x0800018c   0x00000004   Code   RO         1772    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x08000190   0x08000190   0x00000000   Code   RO         1774    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x08000190   0x08000190   0x00000000   Code   RO         1776    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
-    0x08000190   0x08000190   0x00000008   Code   RO         1777    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
-    0x08000198   0x08000198   0x00000000   Code   RO         1779    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
-    0x08000198   0x08000198   0x00000000   Code   RO         1781    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
-    0x08000198   0x08000198   0x00000004   Code   RO         1770    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x08000188   0x08000188   0x00000000   Code   RO         1731  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x08000188   0x08000188   0x00000004   Code   RO         1792    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x0800018c   0x0800018c   0x00000004   Code   RO         1795    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x08000190   0x08000190   0x00000000   Code   RO         1797    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x08000190   0x08000190   0x00000000   Code   RO         1799    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x08000190   0x08000190   0x00000008   Code   RO         1800    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x08000198   0x08000198   0x00000000   Code   RO         1802    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x08000198   0x08000198   0x00000000   Code   RO         1804    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x08000198   0x08000198   0x00000004   Code   RO         1793    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
     0x0800019c   0x0800019c   0x00000024   Code   RO            4    .text               startup_stm32f407xx.o
-    0x080001c0   0x080001c0   0x00000062   Code   RO         1711    .text               mc_w.l(uldiv.o)
-    0x08000222   0x08000222   0x00000024   Code   RO         1713    .text               mc_w.l(memcpya.o)
-    0x08000246   0x08000246   0x00000024   Code   RO         1715    .text               mc_w.l(memseta.o)
-    0x0800026a   0x0800026a   0x0000014e   Code   RO         1749    .text               mf_w.l(dadd.o)
-    0x080003b8   0x080003b8   0x000000e4   Code   RO         1751    .text               mf_w.l(dmul.o)
-    0x0800049c   0x0800049c   0x0000001c   Code   RO         1761    .text               mf_w.l(ffltul.o)
-    0x080004b8   0x080004b8   0x00000022   Code   RO         1763    .text               mf_w.l(dflti.o)
-    0x080004da   0x080004da   0x00000026   Code   RO         1765    .text               mf_w.l(f2d.o)
-    0x08000500   0x08000500   0x00000038   Code   RO         1767    .text               mf_w.l(d2f.o)
-    0x08000538   0x08000538   0x0000001e   Code   RO         1783    .text               mc_w.l(llshl.o)
-    0x08000556   0x08000556   0x00000020   Code   RO         1785    .text               mc_w.l(llushr.o)
-    0x08000576   0x08000576   0x00000024   Code   RO         1787    .text               mc_w.l(llsshr.o)
-    0x0800059a   0x0800059a   0x00000000   Code   RO         1798    .text               mc_w.l(iusefp.o)
-    0x0800059a   0x0800059a   0x0000006e   Code   RO         1799    .text               mf_w.l(fepilogue.o)
-    0x08000608   0x08000608   0x000000ba   Code   RO         1801    .text               mf_w.l(depilogue.o)
+    0x080001c0   0x080001c0   0x00000062   Code   RO         1734    .text               mc_w.l(uldiv.o)
+    0x08000222   0x08000222   0x00000024   Code   RO         1736    .text               mc_w.l(memcpya.o)
+    0x08000246   0x08000246   0x00000024   Code   RO         1738    .text               mc_w.l(memseta.o)
+    0x0800026a   0x0800026a   0x0000014e   Code   RO         1772    .text               mf_w.l(dadd.o)
+    0x080003b8   0x080003b8   0x000000e4   Code   RO         1774    .text               mf_w.l(dmul.o)
+    0x0800049c   0x0800049c   0x0000001c   Code   RO         1784    .text               mf_w.l(ffltul.o)
+    0x080004b8   0x080004b8   0x00000022   Code   RO         1786    .text               mf_w.l(dflti.o)
+    0x080004da   0x080004da   0x00000026   Code   RO         1788    .text               mf_w.l(f2d.o)
+    0x08000500   0x08000500   0x00000038   Code   RO         1790    .text               mf_w.l(d2f.o)
+    0x08000538   0x08000538   0x0000001e   Code   RO         1806    .text               mc_w.l(llshl.o)
+    0x08000556   0x08000556   0x00000020   Code   RO         1808    .text               mc_w.l(llushr.o)
+    0x08000576   0x08000576   0x00000024   Code   RO         1810    .text               mc_w.l(llsshr.o)
+    0x0800059a   0x0800059a   0x00000000   Code   RO         1821    .text               mc_w.l(iusefp.o)
+    0x0800059a   0x0800059a   0x0000006e   Code   RO         1822    .text               mf_w.l(fepilogue.o)
+    0x08000608   0x08000608   0x000000ba   Code   RO         1824    .text               mf_w.l(depilogue.o)
     0x080006c2   0x080006c2   0x00000002   PAD
-    0x080006c4   0x080006c4   0x00000024   Code   RO         1805    .text               mc_w.l(init.o)
+    0x080006c4   0x080006c4   0x00000024   Code   RO         1828    .text               mc_w.l(init.o)
     0x080006e8   0x080006e8   0x000000fc   Code   RO         1324    .text.AllotPower    chassis.o
     0x080007e4   0x080007e4   0x00000004   Code   RO          129    .text.BusFault_Handler  stm32f4xx_it.o
     0x080007e8   0x080007e8   0x00000010   Code   RO          143    .text.CAN1_RX0_IRQHandler  stm32f4xx_it.o
@@ -3802,9 +3850,9 @@ Memory Map of the image
     0x08007aac   0x08007aac   0x0000003c   Code   RO          537    .text.__NVIC_SetPriorityGrouping  stm32f4xx_hal_cortex.o
     0x08007ae8   0x08007ae8   0x00000030   Code   RO         1685    .text.abs_float     shu_math.o
     0x08007b18   0x08007b18   0x000000ce   Code   RO           11    .text.main          main.o
-    0x08007be6   0x08007be6   0x0000000e   Code   RO         1809    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x08007bf4   0x08007bf4   0x00000002   Code   RO         1810    i.__scatterload_null  mc_w.l(handlers.o)
-    0x08007bf6   0x08007bf6   0x0000000e   Code   RO         1811    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x08007be6   0x08007be6   0x0000000e   Code   RO         1832    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x08007bf4   0x08007bf4   0x00000002   Code   RO         1833    i.__scatterload_null  mc_w.l(handlers.o)
+    0x08007bf6   0x08007bf6   0x0000000e   Code   RO         1834    i.__scatterload_zeroinit  mc_w.l(handlers.o)
     0x08007c04   0x08007c04   0x00000014   Data   RO         1497    .rodata..L__const.ROOT_F_PIDinit.PID_V_ATTACK_G_ANGLE  root.o
     0x08007c18   0x08007c18   0x00000014   Data   RO         1496    .rodata..L__const.ROOT_F_PIDinit.PID_V_ATTACK_G_SPEED  root.o
     0x08007c2c   0x08007c2c   0x00000014   Data   RO         1498    .rodata..L__const.ROOT_F_PIDinit.PID_V_ATTACK_L_CURRENT  root.o
@@ -3823,7 +3871,7 @@ Memory Map of the image
     0x08007e0c   0x08007e0c   0x00000008   Data   RO          467    .rodata.DMA_CalcBaseAndBitshift.flagBitshiftOffset  stm32f4xx_hal_dma.o
     0x08007e14   0x08007e14   0x00000008   Data   RO         1328    .rodata.cst8        chassis.o
     0x08007e1c   0x08007e1c   0x00000200   Data   RO         1562    .rodata.wCRC_Table  crc_dji.o
-    0x0800801c   0x0800801c   0x00000020   Data   RO         1808    Region$$Table       anon$$obj.o
+    0x0800801c   0x0800801c   0x00000020   Data   RO         1831    Region$$Table       anon$$obj.o
 
 
     Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08008040, Size: 0x000011a0, Max: 0x0001c000, ABSOLUTE)

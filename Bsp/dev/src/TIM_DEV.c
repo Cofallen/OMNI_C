@@ -13,7 +13,7 @@
 #include "ATTACK.h"
 #include "Read_Data.h"
 #include "superCap.h"
-
+#include "power_control.h"
 uint64_t RunTime=0;//时间轴
 
 // 一些全局变量
@@ -26,12 +26,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if (htim->Instance == TIM2) // 底盘 1ms
     {
         powersum = CHASSIS_F_Ctl(MOTOR_V_CHASSIS, &DBUS_V_DATA);
-        SuperCapTransation(1, (int32_t)powersum, RunTime);
-        CAN_F_Send(&hcan1, 0x200, MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
-                   MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
-                   MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
-                   MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
-			  CapSendInit(user_data.power_heat_data.buffer_energy , user_data.power_heat_data.chassis_power, user_data.power_heat_data.chassis_voltage);
+        chassis_power_control(1);
+         //SuperCapTransation(1, (int32_t)powersum, RunTime);
+        // CAN_F_Send(&hcan1, 0x200, MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
+        //            MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
+        //            MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
+        //            MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
+		// 	  CapSendInit(user_data.power_heat_data.buffer_energy , user_data.power_heat_data.chassis_power, user_data.power_heat_data.chassis_voltage);
 				
     }
     if (htim->Instance == TIM4) // 云台 1ms
