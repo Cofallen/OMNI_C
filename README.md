@@ -88,6 +88,33 @@ git merge origin/main
 
 因为能直接修改代码，所以建议你开一个`branch`。
 
+### 删除分支
+
+> using ChatGPT 4-o
+> 
+>To delete a branch both locally (home) and remotely, follow these steps:
+
+### 1. Deleting a Local Branch
+1. **List all branches** to verify the branch name:
+   ```bash
+   git branch
+   ```
+
+2. **Delete the local branch**:
+   ```bash
+   git branch -d branch_name
+   ```
+   If the branch hasn't been merged yet, you might need to force delete it:
+   ```bash
+   git branch -D branch_name
+   ```
+
+### 2. Deleting a Remote Branch
+1. **Delete the remote branch**:
+   ```bash
+   git push origin --delete branch_name
+   ```
+
 ## 已踩的坑
 
 * 裁判系统数据不正常
