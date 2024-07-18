@@ -56,7 +56,7 @@ uint8_t VOFA_T_Send(int n, ...)
 
     for (int i = 0; i < n; i++)
     {
-        VOFA_T_DATA->data[i] = va_arg(list, float);
+        VOFA_T_DATA->data[i] = (float)va_arg(list, double);
     }
     va_end(list);
 

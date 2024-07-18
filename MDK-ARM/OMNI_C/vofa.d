@@ -37,4 +37,5 @@ omni_c/vofa.o: ..\Bsp\extra\src\VOFA.c ..\Core\Inc\main.h \
   ..\Core\Inc\usart.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdarg.h \
   ..\Bsp\extra\inc\VOFA.h ..\Bsp\ctl\inc\MOTOR.h \
-  ..\Bsp\extra\inc\DEFINE.h
+  ..\Bsp\extra\inc\DEFINE.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdlib.h

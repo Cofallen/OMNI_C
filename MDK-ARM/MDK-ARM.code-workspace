@@ -35,7 +35,8 @@
             "__tuple": "c",
             "ratio": "c",
             "tuple": "c",
-            "variant": "c"
+            "variant": "c",
+            "pid.h": "c"
         }
     },
     "extensions": {}

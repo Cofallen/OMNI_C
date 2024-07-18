@@ -95,4 +95,92 @@ uint8_t PID_F_S(TYPEDEF_MOTOR *MOTOR)
 	return ROOT_READY;
 }
 
-uint8_t PID_T_Cal(){}
+/// @brief enhanced PID
+/// @param mode 1: trapezoidal integration
+///             2: anti windup
+///             3: integration speration
+///             4: changing rate
+/// @return 
+/// @TODO add the D part
+float PID_T_Cal(TYPEDEF_MOTOR_PID *PID, float TARGET, float REALVAL, int8_t mode)
+{
+    if (PID == NULL)
+    {
+        return 0.0f;
+    }
+
+    PID->OUT.ERROR[NOW] = TARGET - REALVAL;
+
+    PID->OUT.P_OUT = PID->IN.KP * PID->OUT.ERROR[NOW];
+
+    switch (mode)
+    {
+        case 0: // bumpless opration
+        {
+            PID->OUT.I_OUT += PID->IN.KI * PID->OUT.ERROR[NOW];
+            PID->OUT.I_OUT = MATH_D_LIMIT(PID->IN.I_LIT, -PID->IN.I_LIT, PID->OUT.I_OUT);
+            break;
+        }
+        case 1: // trapezoidal integration
+        {
+            PID->OUT.I_OUT += PID->IN.KI * (PID->OUT.ERROR[NOW] + PID->OUT.ERROR[LAST]) * 0.5f;
+            PID->OUT.I_OUT =  MATH_D_LIMIT(PID->IN.I_LIT, -PID->IN.I_LIT, PID->OUT.I_OUT);
+            break;
+        }
+        case 2: // anti windup
+        {
+            float alpha = 0.0f; // whether to accumulate the error
+            // the i_lit can be set to another vaule, and is different from origin
+            if ((MATH_D_ABS(PID->OUT.I_OUT) > PID->IN.I_LIT) && (PID->OUT.I_OUT * PID->OUT.ERROR[NOW] > 0))
+            {
+                alpha = 0.0f;
+            } else
+            {
+                alpha = 1.0f;
+            }
+            PID->OUT.I_OUT += alpha * PID->IN.KI * PID->OUT.ERROR[NOW];
+            break;
+        }
+        case 3: // integration speration (using intergration limit)
+        {
+            float edge = 500.0f; // the edge of the error
+            if (MATH_D_ABS(PID->OUT.ERROR[NOW]) < edge)
+            {
+                PID->OUT.I_OUT += PID->IN.KI * PID->OUT.ERROR[NOW];
+                PID->OUT.I_OUT = MATH_D_LIMIT(PID->IN.I_LIT, -PID->IN.I_LIT, PID->OUT.I_OUT);
+            }
+            break;
+        }
+        case 4: // changing rate (using intergration limit)
+        {
+            // consider f(e(k)) is a linear ralation with e(k)
+            // 0 <= a < b
+            float a = 0.0f, b = 0.0f, f = 0.0f;
+            if (MATH_D_ABS(PID->OUT.ERROR[NOW]) <= a)
+            {
+                f = 1.0f;
+            } else if (MATH_D_ABS(PID->OUT.ERROR[NOW]) > b)
+            {
+                f = 0.0f;
+            } else if (MATH_D_ABS(PID->OUT.ERROR[NOW]) > a && MATH_D_ABS(PID->OUT.ERROR[NOW]) <= b)
+            {
+                f = (b - (MATH_D_ABS(PID->OUT.ERROR[NOW]))) / (b - a);
+            }
+            PID->OUT.I_OUT += f * PID->IN.KI * PID->OUT.ERROR[NOW];
+            PID->OUT.I_OUT = MATH_D_LIMIT(PID->IN.I_LIT, -PID->IN.I_LIT, PID->OUT.I_OUT);
+            break;
+        }
+        default:
+            break;
+    }
+   
+    // @TODO add the D part
+    PID->OUT.D_OUT = PID->IN.KD * (PID->OUT.ERROR[NOW] - PID->OUT.ERROR[LAST]);
+    PID->OUT.ALL_OUT = PID->OUT.P_OUT + PID->OUT.I_OUT + PID->OUT.D_OUT;
+
+    PID->OUT.ALL_OUT = MATH_D_LIMIT(PID->IN.ALL_LIT, -PID->IN.ALL_LIT, PID->OUT.ALL_OUT);
+
+    PID->OUT.ERROR[LAST] = PID->OUT.ERROR[NOW];
+
+    return PID->OUT.ALL_OUT;
+}
