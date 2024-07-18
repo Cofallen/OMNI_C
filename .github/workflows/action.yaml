@@ -6,7 +6,7 @@ on:
     push:
       branches:
         # - debug
-        - main
+        - debugHYH
 
 jobs:
   upload:
