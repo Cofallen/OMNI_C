@@ -306,7 +306,7 @@ void USART3_IRQHandler(void)
   /* USER CODE BEGIN USART3_IRQn 0 */
   if(__HAL_UART_GET_FLAG(&huart3, UART_FLAG_IDLE) != RESET)
   {
-    USER_UART_IRQHandler(&huart3);     //user_it , 空闲中断需要包含hal_uart_irqhandler
+    USER_UART_IRQHandler(&huart3);     //user_it , 空闲中断�?要包含hal_uart_irqhandler
   
   /* USER CODE END USART3_IRQn 0 */
   HAL_UART_IRQHandler(&huart3);

@@ -22,11 +22,11 @@ bmi088_error_e BMI088_INIT(void)
     error |= VerifyAccChipID();
     error |= VerifyGyroChipID();
     if (1)
-    { // �����ĳɱ��������Լ�
+    { // 将来改成变量控制自检
         error |= VerifyAccSelfTest();
     }
     if (1)
-    { // �����ĳɱ��������Լ�
+    { // 将来改成变量控制自检
         error |= VerifyGyroSelfTest();
     }
     return error;
@@ -132,33 +132,33 @@ void ReadMultiDataFromGyro(uint8_t addr, uint8_t len, uint8_t *data)
 
 void BMI088_CONF_INIT(void)
 {
-    // ���ٶȼƳ�ʼ��
-    // ����������������мĴ���
+    // 加速度计初始化
+    // 先软重启，清空所有寄存器
     WriteDataToAcc(ACC_SOFTRESET_ADDR, ACC_SOFTRESET_VAL);
     HAL_Delay(50);
-    // �򿪼��ٶȼƵ�Դ
+    // 打开加速度计电源
     WriteDataToAcc(ACC_PWR_CTRL_ADDR, ACC_PWR_CTRL_ON);
-    // ���ٶȼƱ������ģʽ
+    // 加速度计变成正常模式
     WriteDataToAcc(ACC_PWR_CONF_ADDR, ACC_PWR_CONF_ACT);
 
-    // �����ǳ�ʼ��
-    // ����������������мĴ���
+    // 陀螺仪初始化
+    // 先软重启，清空所有寄存器
     WriteDataToGyro(GYRO_SOFTRESET_ADDR, GYRO_SOFTRESET_VAL);
     HAL_Delay(50);
-    // �����Ǳ������ģʽ
+    // 陀螺仪变成正常模式
     WriteDataToGyro(GYRO_LPM1_ADDR, GYRO_LPM1_NOR);
 
-    // ���ٶȼ�����д��
-    // д�뷶Χ��+-3g�Ĳ�����Χ
+    // 加速度计配置写入
+    // 写入范围，+-3g的测量范围
     WriteDataToAcc(ACC_RANGE_ADDR, ACC_RANGE_3G);
-    // д�����ã�����������1600hz���Ƶ��
+    // 写入配置，正常带宽，1600hz输出频率
     WriteDataToAcc(ACC_CONF_ADDR,
                    (ACC_CONF_RESERVED << 7) | (ACC_CONF_BWP_NORM << 6) | (ACC_CONF_ODR_1600_Hz));
 
-    // ����������д��
-    // д�뷶Χ��+-500��/s�Ĳ�����Χ
+     // 陀螺仪配置写入
+    // 写入范围，+-500°/s的测量范围
     WriteDataToGyro(GYRO_RANGE_ADDR, GYRO_RANGE_500_DEG_S);
-    // д�������2000Hz���Ƶ�ʣ�532Hz�˲�������
+     // 写入带宽，2000Hz输出频率，532Hz滤波器带宽
     WriteDataToGyro(GYRO_BANDWIDTH_ADDR, GYRO_ODR_2000Hz_BANDWIDTH_532Hz);
 }
 
@@ -232,6 +232,16 @@ bmi088_error_e VerifyGyroSelfTest(void)
     }
 }
 
+///
+/// @brief  低通滤波
+
+#define ALPHA 0.5  // 滤波系数，范围在0到1之间
+#define FILTER_ON 1 // 滤波开关
+
+void LowPassFilter(float *current_data, float new_data) {
+    *current_data = ALPHA * (*current_data) + (1 - ALPHA) * new_data;
+}
+
 void ReadAccData(acc_raw_data_t *data)
 {
     uint8_t buf[ACC_XYZ_LEN], range;
@@ -244,6 +254,16 @@ void ReadAccData(acc_raw_data_t *data)
     data->x = (float)acc[0] * BMI088_ACCEL_3G_SEN;
     data->y = (float)acc[1] * BMI088_ACCEL_3G_SEN;
     data->z = (float)acc[2] * BMI088_ACCEL_3G_SEN;
+
+    #ifdef FILTER_ON
+    static float filtered_x = 0, filtered_y = 0, filtered_z = 0;
+    LowPassFilter(&filtered_x, data->x);
+    LowPassFilter(&filtered_y, data->y);
+    LowPassFilter(&filtered_z, data->z);
+    data->x = filtered_x;
+    data->y = filtered_y;
+    data->z = filtered_z;
+    #endif
 }
 
 void ReadGyroData(gyro_raw_data_t *data)
@@ -280,6 +300,16 @@ void ReadGyroData(gyro_raw_data_t *data)
     data->roll = (float)gyro[0] / unit * DEG2SEC;
     data->pitch = (float)gyro[1] / unit * DEG2SEC;
     data->yaw = (float)gyro[2] / unit * DEG2SEC;
+
+    #ifdef FILTER_ON
+    static float filtered_roll = 0, filtered_pitch = 0, filtered_yaw = 0;
+    LowPassFilter(&filtered_roll, data->roll);
+    LowPassFilter(&filtered_pitch, data->pitch);
+    LowPassFilter(&filtered_yaw, data->yaw);
+    data->roll = filtered_roll;
+    data->pitch = filtered_pitch;
+    data->yaw = filtered_yaw;
+    #endif
 }
 
 void ReadAccSensorTime(float *time)

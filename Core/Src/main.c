@@ -45,6 +45,7 @@
 #include "YU_MATH.h"
 #include "ROOT.h"
 #include "Read_Data.h"
+#include "bmi088.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -64,6 +65,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+bmi088_data_t cp;
 
 /* USER CODE END PV */
 
@@ -122,6 +124,8 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
+   ROOT_F_Init();
+   HAL_Delay(10);
   CAN_Filter_Init();
 
   __HAL_UART_ENABLE_IT(&huart6, UART_IT_IDLE);
@@ -132,13 +136,14 @@ int main(void)
 
 //  printf("ok\r\n");  // huart1 
 
-  ROOT_F_Init();
+  
   HAL_TIM_Base_Start_IT(&htim2);
   HAL_TIM_Base_Start_IT(&htim4);
   HAL_Delay(100);
   HAL_TIM_Base_Start_IT(&htim6);
   HAL_TIM_Base_Start_IT(&htim9);
   HAL_Delay(100);
+
 
   /* USER CODE END 2 */
 
@@ -149,6 +154,11 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    
+    ReadAccData(&cp.acc_data.acc_raw_data);
+    ReadAccSensorTime(&cp.acc_data.sensor_time);
+    ReadAccTemperature(&cp.acc_data.temperature);
+    ReadGyroData(&cp.gyro_data.gyro_raw_data);
   }
   /* USER CODE END 3 */
 }

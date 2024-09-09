@@ -12,11 +12,11 @@
 #define SEC2DEG 57.295779578f
 #define PI 3.14159265f
 
-/*-----bmi088µÄspi¶ÁÈ¡Ğ­Òé²¿·Ö-----*/
+/*-----bmi088çš„spiè¯»å–åè®®éƒ¨åˆ†-----*/
 #define BMI088_SPI_WRITE_CODE 0x7F
 #define BMI088_SPI_READ_CODE 0x80
 
-/*-----¼ÓËÙ¶È¼Æ¼Ä´æÆ÷±í-----*/
+/*-----åŠ é€Ÿåº¦è®¡å¯„å­˜å™¨è¡¨-----*/
 #define ACC_CHIP_ID_ADDR 0x00
 #define ACC_CHIP_ID_VAL 0x1E
 
@@ -90,7 +90,7 @@
 #define ACC_SOFTRESET_ADDR 0x7E
 #define ACC_SOFTRESET_VAL 0xB6
 
-/*-----ÍÓÂİÒÇ¼Ä´æÆ÷±í-----*/
+/*-----é™€èºä»ªå¯„å­˜å™¨è¡¨-----*/
 #define GYRO_CHIP_ID_ADDR 0x00
 #define GYRO_CHIP_ID_VAL 0x0F
 

@@ -58,10 +58,11 @@ typedef enum bmi088_error_e
 typedef struct bmi088_data_t
 {
     acc_data_t acc_data;
+    gyro_data_t gyro_data;
     bmi088_error_e bmi088_error;
 } bmi088_data_t;
 
-// ��������
+// 基础函数
 void WriteDataToAcc(uint8_t addr, uint8_t data);
 void WriteDataToGyro(uint8_t addr, uint8_t data);
 void ReadSingleDataFromAcc(uint8_t addr, uint8_t *data);
@@ -69,18 +70,20 @@ void ReadSingleDataFromGyro(uint8_t addr, uint8_t *data);
 void ReadMultiDataFromAcc(uint8_t addr, uint8_t len, uint8_t *data);
 void ReadMultiDataFromGyro(uint8_t addr, uint8_t len, uint8_t *data);
 
-// ��ʼ������
+// 初始化函数
 bmi088_error_e BMI088_INIT(void);
 void BMI088_CONF_INIT(void);
 
-// ���ܺ���
+// 功能函数
 void ReadAccData(acc_raw_data_t *data);
 void ReadGyroData(gyro_raw_data_t *data);
 void ReadAccSensorTime(float *time);
 void ReadAccTemperature(float *temp);
 
-// У�麯��
+// 校验函数
 bmi088_error_e VerifyAccChipID(void);
 bmi088_error_e VerifyGyroChipID(void);
 bmi088_error_e VerifyAccSelfTest(void);
 bmi088_error_e VerifyGyroSelfTest(void);
+
+extern bmi088_data_t cp;

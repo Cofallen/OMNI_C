@@ -11,28 +11,32 @@
 
 #include "Read_Data.h"
 
+float mm = 0, nn = 0, xx = 0, yy = 0, rr = 0, cc = 0, ss = 0;
 // 本代码为全向轮底盘运动基本代码
 
 double ANGLE_Rad = 0.0f;
 void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {
     // 运动学解算
-    float Vx = 0.0f, Vy = 0.0f, Vr = 0.0f, RATE = 1.0f, COMPONENT[2] = {0.5, 1};
+    float Vx = 0.0f, Vy = 0.0f, Vr = 0.0f, RATE = 1.0f, COMPONENT[2] = {1, 1};
     double ANGLE_Relative = 0.0f; //ANGLE_Rad = 0.0f;
     double PRIDICT = 0.0f;    // 底盘预测，前馈
     Vx = (float)DBUS->REMOTE.CH0_int16 * RATE;
     Vy = -(float)DBUS->REMOTE.CH1_int16 * RATE;
-    // Vr = MATH_D_ABS(MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.SPEED_NOW);  // head rotate -> chassis rotate
+//    Vr = (float)DBUS->REMOTE.CH2_int16 * RATE;
+//     Vr = MATH_D_ABS(MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.SPEED_NOW) * 1.0f;  // head rotate -> chassis rotate
     
     // 底盘跟随模式
-//    ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;
+    ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;
     
-    //ANGLE_Rad = ANGLE_Relative * MATH_D_RELATIVE_PARAM;
+	mm = ANGLE_Relative;
+	nn = ANGLE_Rad;
+    ANGLE_Rad = ANGLE_Relative * MATH_D_RELATIVE_PARAM;
 
     if (DBUS->REMOTE.S2_u8 == 1)  // @TODO + 底盘跟随判断 A&B + GEER挡位
     {
         ANGLE_Rad += 3.1416926f * 0.5f  * 0.001f;
-        Vr = 5000.0f;
+        Vr = 1000.0f;
     }
     else if (DBUS->REMOTE.S2_u8 == 3)
     {
@@ -41,13 +45,18 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     else if (DBUS->REMOTE.S2_u8 == 2)
     {
         // ANGLE_Rad += 3.1416926f * 0.5f * 0.001f;
-        Vr = -5000.0f;
+        Vr = -1000.0f;
     }
 
-    // double COS = cos(ANGLE_Rad);
-    // double SIN = sin(ANGLE_Rad);
-    // Vx = -Vy * SIN + Vx * COS;
-    // Vy =  Vy * COS + Vx * SIN;
+     double COS = cos(ANGLE_Rad);
+     double SIN = sin(ANGLE_Rad);
+     Vx = -Vy * SIN + Vx * COS;
+     Vy =  Vy * COS + Vx * SIN;
+	xx = Vx;
+	yy = Vy;
+	rr = Vr;
+	cc = COS;
+	ss = SIN;
 
     
 //    // 各方向分量限幅，TODO：待计算比例因子RATE
@@ -55,7 +64,7 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 //    Vy = MATH_D_LIMIT(3000, -3000, Vy);
 //    Vr = MATH_D_LIMIT(1000, -1000, Vr);
 
-//    PRIDICT = MATH_D_LIMIT(200, -200, (DBUS->REMOTE.CH2_int16) * 0.3f);  // @TODO 预测模型待思考
+    PRIDICT = DBUS->REMOTE.CH2_int16 * 16.0f;  // @TODO 预测模型待思考
 
     // 运动学解算
     MOTOR[MOTOR_D_CHASSIS_1].DATA.AIM = ( Vx + Vy - Vr * COMPONENT[0]) * COMPONENT[1] + PRIDICT;

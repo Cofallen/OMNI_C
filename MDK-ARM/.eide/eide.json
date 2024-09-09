@@ -8,6 +8,11 @@
     "files": [],
     "folders": [
       {
+        "name": "::CMSIS",
+        "files": [],
+        "folders": []
+      },
+      {
         "name": "Application",
         "files": [],
         "folders": [
@@ -28,31 +33,31 @@
                 "name": "Core",
                 "files": [
                   {
-                    "path": "../Core/Src/main.c"
-                  },
-                  {
-                    "path": "../Core/Src/gpio.c"
-                  },
-                  {
                     "path": "../Core/Src/can.c"
                   },
                   {
                     "path": "../Core/Src/dma.c"
                   },
                   {
+                    "path": "../Core/Src/gpio.c"
+                  },
+                  {
+                    "path": "../Core/Src/main.c"
+                  },
+                  {
                     "path": "../Core/Src/spi.c"
+                  },
+                  {
+                    "path": "../Core/Src/stm32f4xx_hal_msp.c"
+                  },
+                  {
+                    "path": "../Core/Src/stm32f4xx_it.c"
                   },
                   {
                     "path": "../Core/Src/tim.c"
                   },
                   {
                     "path": "../Core/Src/usart.c"
-                  },
-                  {
-                    "path": "../Core/Src/stm32f4xx_it.c"
-                  },
-                  {
-                    "path": "../Core/Src/stm32f4xx_hal_msp.c"
                   }
                 ],
                 "folders": []
@@ -62,9 +67,63 @@
         ]
       },
       {
+        "name": "ctl",
+        "files": [
+          {
+            "path": "../Bsp/ctl/src/ATTACK.c"
+          },
+          {
+            "path": "../Bsp/ctl/src/CAP.c"
+          },
+          {
+            "path": "../Bsp/ctl/src/CHASSIS.c"
+          },
+          {
+            "path": "../Bsp/ctl/src/DBUS.c"
+          },
+          {
+            "path": "../Bsp/ctl/src/GIMBAL.c"
+          },
+          {
+            "path": "../Bsp/ctl/src/MOTOR.c"
+          },
+          {
+            "path": "../Bsp/ctl/src/PID.c"
+          },
+          {
+            "path": "../Bsp/ctl/src/TOP.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "dev",
+        "files": [
+          {
+            "path": "../Bsp/dev/src/CAN_DEV.c"
+          },
+          {
+            "path": "../Bsp/dev/src/TIM_DEV.c"
+          },
+          {
+            "path": "../Bsp/dev/src/USART_DEV.c"
+          }
+        ],
+        "folders": []
+      },
+      {
         "name": "Drivers",
         "files": [],
         "folders": [
+          {
+            "name": "CMSIS",
+            "files": [
+              {
+                "path": "../Core/Src/system_stm32f4xx.c"
+              }
+            ],
+            "folders": []
+          },
           {
             "name": "STM32F4xx_HAL_Driver",
             "files": [
@@ -124,68 +183,17 @@
               }
             ],
             "folders": []
-          },
-          {
-            "name": "CMSIS",
-            "files": [
-              {
-                "path": "../Core/Src/system_stm32f4xx.c"
-              }
-            ],
-            "folders": []
           }
         ]
-      },
-      {
-        "name": "ctl",
-        "files": [
-          {
-            "path": "../Bsp/ctl/src/ATTACK.c"
-          },
-          {
-            "path": "../Bsp/ctl/src/CAP.c"
-          },
-          {
-            "path": "../Bsp/ctl/src/CHASSIS.c"
-          },
-          {
-            "path": "../Bsp/ctl/src/DBUS.c"
-          },
-          {
-            "path": "../Bsp/ctl/src/GIMBAL.c"
-          },
-          {
-            "path": "../Bsp/ctl/src/MOTOR.c"
-          },
-          {
-            "path": "../Bsp/ctl/src/PID.c"
-          },
-          {
-            "path": "../Bsp/ctl/src/TOP.c"
-          }
-        ],
-        "folders": []
-      },
-      {
-        "name": "dev",
-        "files": [
-          {
-            "path": "../Bsp/dev/src/CAN_DEV.c"
-          },
-          {
-            "path": "../Bsp/dev/src/TIM_DEV.c"
-          },
-          {
-            "path": "../Bsp/dev/src/USART_DEV.c"
-          }
-        ],
-        "folders": []
       },
       {
         "name": "extra",
         "files": [
           {
             "path": "../Bsp/extra/src/JUDGEMENT.c"
+          },
+          {
+            "path": "../Bsp/extra/src/ROOT.c"
           },
           {
             "path": "../Bsp/extra/src/VISION.c"
@@ -195,9 +203,24 @@
           },
           {
             "path": "../Bsp/extra/src/YU_MATH.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "JUDGE",
+        "files": [
+          {
+            "path": "../JUDGE/Anonymity_TX.c"
           },
           {
-            "path": "../Bsp/extra/src/ROOT.c"
+            "path": "../JUDGE/CRC_DJI.c"
+          },
+          {
+            "path": "../JUDGE/Read_Data.c"
+          },
+          {
+            "path": "../JUDGE/Write_Data.c"
           }
         ],
         "folders": []
@@ -209,29 +232,6 @@
             "path": "../LIB/bmi088.c"
           }
         ],
-        "folders": []
-      },
-      {
-        "name": "JUDGE",
-        "files": [
-          {
-            "path": "../JUDGE/CRC_DJI.c"
-          },
-          {
-            "path": "../JUDGE/Read_Data.c"
-          },
-          {
-            "path": "../JUDGE/Write_Data.c"
-          },
-          {
-            "path": "../JUDGE/Anonymity_TX.c"
-          }
-        ],
-        "folders": []
-      },
-      {
-        "name": "::CMSIS",
-        "files": [],
         "folders": []
       }
     ]

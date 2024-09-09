@@ -44,4 +44,6 @@ omni_c/main.o: ..\Core\Src\main.c ..\Core\Inc\main.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdio.h \
   ..\Bsp\extra\inc\VISION.h ..\Bsp\extra\inc\VOFA.h \
   ..\Bsp\extra\inc\YU_MATH.h ..\Bsp\extra\inc\ROOT.h \
-  ..\JUDGE\Read_Data.h
+  ..\JUDGE\Read_Data.h ..\LIB\bmi088.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h \
+  ..\LIB\bmi088reg.h
