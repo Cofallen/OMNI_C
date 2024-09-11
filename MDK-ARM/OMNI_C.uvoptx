@@ -157,6 +157,38 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
+          <LineNumber>82</LineNumber>
+          <EnabledFlag>0</EnabledFlag>
+          <Address>134252636</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\Bsp\dev\src\USART_DEV.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\OMNI_C\../Bsp/dev/src/USART_DEV.c\82</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>54</LineNumber>
+          <EnabledFlag>0</EnabledFlag>
+          <Address>134252354</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\Bsp\dev\src\USART_DEV.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\OMNI_C\../Bsp/dev/src/USART_DEV.c\54</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
           <LineNumber>49</LineNumber>
           <EnabledFlag>0</EnabledFlag>
           <Address>134220060</Address>
@@ -171,7 +203,7 @@
           <Expression>\\OMNI_C\../Bsp/dev/src/CAN_DEV.c\49</Expression>
         </Bp>
         <Bp>
-          <Number>1</Number>
+          <Number>3</Number>
           <Type>0</Type>
           <LineNumber>56</LineNumber>
           <EnabledFlag>0</EnabledFlag>
@@ -187,7 +219,7 @@
           <Expression>\\OMNI_C\../Bsp/dev/src/CAN_DEV.c\56</Expression>
         </Bp>
         <Bp>
-          <Number>2</Number>
+          <Number>4</Number>
           <Type>0</Type>
           <LineNumber>62</LineNumber>
           <EnabledFlag>0</EnabledFlag>
@@ -203,7 +235,7 @@
           <Expression>\\OMNI_C\../Bsp/dev/src/CAN_DEV.c\62</Expression>
         </Bp>
         <Bp>
-          <Number>3</Number>
+          <Number>5</Number>
           <Type>0</Type>
           <LineNumber>67</LineNumber>
           <EnabledFlag>0</EnabledFlag>
@@ -219,7 +251,7 @@
           <Expression>\\OMNI_C\../Bsp/dev/src/CAN_DEV.c\67</Expression>
         </Bp>
         <Bp>
-          <Number>4</Number>
+          <Number>6</Number>
           <Type>0</Type>
           <LineNumber>70</LineNumber>
           <EnabledFlag>0</EnabledFlag>
@@ -235,11 +267,11 @@
           <Expression>\\OMNI_C\../Bsp/dev/src/CAN_DEV.c\70</Expression>
         </Bp>
         <Bp>
-          <Number>5</Number>
+          <Number>7</Number>
           <Type>0</Type>
           <LineNumber>412</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134252220</Address>
+          <EnabledFlag>0</EnabledFlag>
+          <Address>134252236</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -251,41 +283,25 @@
           <Expression>\\OMNI_C\../Core/Src/stm32f4xx_it.c\412</Expression>
         </Bp>
         <Bp>
-          <Number>6</Number>
-          <Type>0</Type>
-          <LineNumber>63</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\Bsp\dev\src\USART_DEV.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>7</Number>
-          <Type>0</Type>
-          <LineNumber>76</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\Bsp\dev\src\USART_DEV.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
           <Number>8</Number>
           <Type>0</Type>
-          <LineNumber>88</LineNumber>
+          <LineNumber>53</LineNumber>
+          <EnabledFlag>0</EnabledFlag>
+          <Address>134252348</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\Bsp\dev\src\USART_DEV.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\OMNI_C\../Bsp/dev/src/USART_DEV.c\53</Expression>
+        </Bp>
+        <Bp>
+          <Number>9</Number>
+          <Type>0</Type>
+          <LineNumber>34</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -294,7 +310,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\Bsp\dev\src\USART_DEV.c</Filename>
+          <Filename>..\Bsp\ctl\src\CHASSIS.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
@@ -303,7 +319,7 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>i</ItemText>
+          <ItemText>i,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
@@ -378,17 +394,37 @@
         <Ww>
           <count>15</count>
           <WinNumber>1</WinNumber>
-          <ItemText>absolute_roll</ItemText>
+          <ItemText>absolute_roll,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>16</count>
           <WinNumber>1</WinNumber>
-          <ItemText>absolute_yaw</ItemText>
+          <ItemText>absolute_yaw,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>17</count>
           <WinNumber>1</WinNumber>
           <ItemText>huart-&gt;Instance,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>18</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>count,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>19</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>previous,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>20</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>previous</ItemText>
+        </Ww>
+        <Ww>
+          <count>21</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>rx_data_len,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>

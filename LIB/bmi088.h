@@ -48,6 +48,7 @@ typedef struct gyro_data_t
 {
     gyro_raw_data_t gyro_raw_data;
     float absolute[3];  // absolute angles
+    float scaleTransform[3];  // scale transform
     bool enable_self_test;
 } gyro_data_t;
 

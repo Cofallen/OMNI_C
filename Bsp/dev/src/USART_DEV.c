@@ -75,10 +75,10 @@ void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
 
     if (huart->Instance == USART1) // 视觉模块/VOFA测试模块 tx: white rx: purple
     {
-        VOFA_T_Send(4, 0, 
-            (float)cp.gyro_data.gyro_raw_data.yaw,
-            (float)cp.gyro_data.absolute[2],
-            1.0f);
+        // VOFA_T_Send(4, 0, 
+        //     (float)cp.gyro_data.gyro_raw_data.yaw,
+        //     (float)cp.gyro_data.absolute[2],
+        //     1.0f);
     }
 }
 

@@ -34,4 +34,4 @@ omni_c/dbus.o: ..\Bsp\ctl\src\DBUS.c ..\Core\Inc\main.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\string.h \
-  ..\Bsp\ctl\inc\DBUS.h ..\Bsp\extra\inc\ROOT.h
+  ..\Bsp\ctl\inc\DBUS.h ..\Bsp\extra\inc\ROOT.h ..\Bsp\ctl\inc\MOTOR.h

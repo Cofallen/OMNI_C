@@ -36,4 +36,4 @@ omni_c/stm32f4xx_it.o: ..\Core\Src\stm32f4xx_it.c ..\Core\Inc\main.h \
   ..\Core\Inc\stm32f4xx_it.h ..\Bsp\ctl\inc\DBUS.h \
   ..\Bsp\dev\inc\USART_DEV.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdio.h \
-  ..\Bsp\extra\inc\ROOT.h
+  ..\Bsp\extra\inc\ROOT.h ..\Bsp\ctl\inc\MOTOR.h

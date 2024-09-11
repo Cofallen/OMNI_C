@@ -37,4 +37,6 @@ omni_c/chassis.o: ..\Bsp\ctl\src\CHASSIS.c ..\Core\Inc\main.h \
   ..\Bsp\ctl\inc\CHASSIS.h ..\Bsp\ctl\inc\DBUS.h ..\Bsp\ctl\inc\MOTOR.h \
   ..\Bsp\extra\inc\DEFINE.h ..\Bsp\extra\inc\YU_MATH.h \
   ..\Bsp\ctl\inc\PID.h ..\Bsp\dev\inc\TIM_DEV.h ..\JUDGE\Read_Data.h \
-  ..\Core\Inc\usart.h
+  ..\Core\Inc\usart.h ..\Bsp\extra\inc\ROOT.h ..\LIB\bmi088.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h \
+  ..\LIB\bmi088reg.h

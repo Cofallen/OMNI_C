@@ -65,7 +65,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-bmi088_data_t cp;
+bmi088_data_t cp = {0};
 
 /* USER CODE END PV */
 
@@ -134,7 +134,7 @@ int main(void)
   __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
   HAL_UART_Receive_DMA(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, sizeof(DBUS_V_UNION.GET_DATA));
 
-//  printf("ok\r\n");  // huart1 
+ printf("ok\r\n");  // huart1 
 
   
   HAL_TIM_Base_Start_IT(&htim2);
