@@ -18,6 +18,8 @@
 #define BMI088_GYRO_GPIOx GPIOB
 #define BMI088_GYRO_GPIOp GPIO_PIN_0
 
+#define SCALR_FACTOR 1303.7972938088065906186957895476f
+
 typedef struct acc_raw_data_t
 {
     float x;
@@ -36,6 +38,8 @@ typedef struct acc_data_t
 {
     acc_raw_data_t acc_raw_data;
     float sensor_time;
+    float prev_time;
+    float delta_time;
     float temperature;
     bool enable_self_test;
 } acc_data_t;
@@ -43,6 +47,7 @@ typedef struct acc_data_t
 typedef struct gyro_data_t
 {
     gyro_raw_data_t gyro_raw_data;
+    float absolute[3];  // absolute angles
     bool enable_self_test;
 } gyro_data_t;
 
@@ -60,6 +65,7 @@ typedef struct bmi088_data_t
     acc_data_t acc_data;
     gyro_data_t gyro_data;
     bmi088_error_e bmi088_error;
+    
 } bmi088_data_t;
 
 // 基础函数

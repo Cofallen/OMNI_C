@@ -12,6 +12,7 @@
 #include "bmi088reg.h"
 #include "gpio.h"
 #include "spi.h"
+#include "YU_MATH.h"
 
 bmi088_error_e BMI088_INIT(void)
 {
@@ -310,6 +311,20 @@ void ReadGyroData(gyro_raw_data_t *data)
     data->pitch = filtered_pitch;
     data->yaw = filtered_yaw;
     #endif
+    
+    // Compute delta time
+    cp.acc_data.delta_time = cp.acc_data.sensor_time - cp.acc_data.prev_time;
+    
+    // Update absolute angles using integration
+    cp.gyro_data.absolute[0] += data->roll * cp.acc_data.delta_time;
+    cp.gyro_data.absolute[1] += data->pitch * cp.acc_data.delta_time;
+    cp.gyro_data.absolute[2] += data->yaw * cp.acc_data.delta_time;
+    
+    // Save the current time for the next function call
+    cp.acc_data.prev_time = cp.acc_data.sensor_time;
+
+    cp.gyro_data.absolute[2] *= SCALR_FACTOR; // yaw
+    LimitRange(&cp.gyro_data.absolute[2], 8192, 0);
 }
 
 void ReadAccSensorTime(float *time)

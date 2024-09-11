@@ -37,4 +37,4 @@ omni_c/bmi088.o: ..\LIB\bmi088.c ..\LIB\bmi088.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h \
-  ..\Core\Inc\spi.h
+  ..\Core\Inc\spi.h ..\Bsp\extra\inc\YU_MATH.h

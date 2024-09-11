@@ -29,7 +29,10 @@
             "tim.h": "c",
             "judgement.h": "c",
             "bmi088.h": "c",
-            "bmi088reg.h": "c"
+            "bmi088reg.h": "c",
+            "__config": "c",
+            "spi.h": "c",
+            "gpio.h": "c"
         }
     },
     "extensions": {}
