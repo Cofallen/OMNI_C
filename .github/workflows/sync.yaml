@@ -2,7 +2,7 @@ name: Sync Local Repository
 
 on:
   schedule:
-    - cron: '23 13 * * *' # 每小时运行一次
+    - cron: '28 13 * * *' # 每小时运行一次
   push:
     branches:
       - main
