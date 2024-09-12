@@ -2,7 +2,7 @@ name: Sync Local Repository
 
 on:
   schedule:
-    - cron: '28 13 * * *' # 每小时运行一次
+    - cron: '37 13 * * *' # 每小时运行一次
   push:
     branches:
       - main
@@ -49,6 +49,6 @@ jobs:
 
       - name: 推送到 GitHub
         run: |
-          git push origin master
+          git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
