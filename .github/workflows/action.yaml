@@ -2,11 +2,22 @@ name: Upload to Debug Branch
 
 on:
   # schedule:
-  #   - cron: "0 12 * * *" # Every day at 12:00 UTC
+    # - cron: "0 12 * * *" # Every day at 12:00 UTC
+    # cron 用法
+    # * * * * * 分别代表分钟、小时、日期、月份、星期
+    # 0 12 * * * 代表每天的12:00 UTC时间执行
+    # 0 12 * * 1 代表每周一的12:00 UTC时间执行
+    # 0 12 1 * * 代表每月1号的12:00 UTC时间执行
+    # 0 12 * * 1,4 代表每周一和周四的12:00 UTC时间执行
+    # 0 12 * * 1-5 代表每周一到周五的12:00 UTC时间执行
+    # 0 12 * * 1,4,5 代表每周一、周四、周五的12:00 UTC时间执行
+    # 0 12 1 * 1,4,5 代表每月1号、周一、周四、周五的12:00 UTC时间执行
+    # 0 12 1 * 1,4,5 代表每月1号、周一、周四、周五的12:00 UTC时间执行
+    # 0 12 1 1,4,5 代表每月1号、1日、4日、5日的12:00 UTC时间执行
+    
     push:
       branches:
-        # - debug
-        - debugHYH
+    #     - main
 
 jobs:
   upload:
@@ -19,6 +30,6 @@ jobs:
       - name: Upload to Debug Branch
         run: |
           # git add .
-          # git commit -m "Upload to Debug Branch"
-          # git push origin debug
+          # git commit -m "Upload to main Branch"
+          # git push origin main
           # echo "Upload to Debug Branch"
