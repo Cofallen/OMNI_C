@@ -29,7 +29,7 @@ uint8_t ROOT_F_PIDinit()
     const float PID_V_CHASSIS_SPEED[5] = {15.0f, 0.001f, 0, 2000.0f, 30000.0f};
     const float PID_V_CHASSIS_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
 
-    const float PID_V_GIMBAL_YAW_SPEED[5] = {29.0f, 0.0001f, 20.0f, 1000.0f, 25000.0f};
+    const float PID_V_GIMBAL_YAW_SPEED[5] = {29.0f, 0.0001f, 20.0f, 1000.0f, 5000.0f};
     const float PID_V_GIMBAL_YAW_ANGLE[5] = {12.0f, 0.0005f, 8.0f, 500.0f, 5000.0f};
     const float PID_V_GIMBAL_PIT_SPEED[5] = {20.0f, 0, 0, 1000.0f, 20000.0f};
     const float PID_V_GIMBAL_PIT_ANGLE[5] = {10.0f, 0, 0, 1000.0f, 3000.0f};
