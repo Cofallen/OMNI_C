@@ -30,8 +30,8 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 //     Vr = MATH_D_ABS(MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.SPEED_NOW) * 1.0f;  // head rotate -> chassis rotate
     
     // 底盘跟随模式
-    // ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;
-    ANGLE_Relative = (float)cp.gyro_data.scaleTransform[2] - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;
+     ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;
+    //ANGLE_Relative = (float)cp.gyro_data.scaleTransform[2] - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;
     
 	mm = ANGLE_Relative;
 	nn = ANGLE_Rad;
@@ -52,12 +52,12 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
         Vr = -1000.0f;
     }
 
-    //  double COS = cos(ANGLE_Rad);
-    //  double SIN = sin(ANGLE_Rad);
-    //  Vx = -Vy * SIN + Vx * COS;
-    //  Vy =  Vy * COS + Vx * SIN;
+      double COS = cos(ANGLE_Rad);
+      double SIN = sin(ANGLE_Rad);
+      Vx = -Vy * SIN + Vx * COS;
+      Vy =  Vy * COS + Vx * SIN;
 
-    // Vr = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative);
+     Vr = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative);
     // PRIDICT = DBUS->REMOTE.CH2_int16 * 4.0f;  // @TODO 预测模型待思考
 
     // 运动学解算

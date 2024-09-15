@@ -29,8 +29,8 @@ uint8_t ROOT_F_PIDinit()
     const float PID_V_CHASSIS_SPEED[5] = {15.0f, 0.001f, 0, 2000.0f, 30000.0f};
     const float PID_V_CHASSIS_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
 
-    const float PID_V_GIMBAL_YAW_SPEED[5] = {29.0f, 0.0001f, 20.0f, 1000.0f, 25000.0f};
-    const float PID_V_GIMBAL_YAW_ANGLE[5] = {12.0f, 0.0005f, 8.0f, 500.0f, 5000.0f};
+    const float PID_V_GIMBAL_YAW_SPEED[5] = {35.0f, 0.001f, 20.0f, 500.0f, 20000.0f};
+    const float PID_V_GIMBAL_YAW_ANGLE[5] = {1.1267f, 0.001f, 30.0f, 300.0f, 10000.0f};
     const float PID_V_GIMBAL_PIT_SPEED[5] = {20.0f, 0, 0, 1000.0f, 20000.0f};
     const float PID_V_GIMBAL_PIT_ANGLE[5] = {10.0f, 0, 0, 1000.0f, 3000.0f};
 
@@ -41,7 +41,7 @@ uint8_t ROOT_F_PIDinit()
     const float PID_V_ATTACK_L_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
     const float PID_V_ATTACK_R_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
 
-    const float FOLLOW_PID_V[5] = {0.2f, 0.0f, 0, 50.0f, 100.0f};
+    const float FOLLOW_PID_V[5] = {0.046f, 0.0f, 3.0f, 50.0f, 2000.0f};
 
     PID_F_Init(&MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].PID_S, PID_V_CHASSIS_SPEED);
     PID_F_Init(&MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].PID_S, PID_V_CHASSIS_SPEED);
@@ -72,9 +72,10 @@ uint8_t ROOT_F_PIDinit()
 void ROOT_F_Init()
 {
     ROOT_F_PIDinit();
-	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM = (float)MOTOR_V_ATTACK[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE;
+	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 3408.0f;  // 云台初始化角度
+	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM = (float)MOTOR_V_ATTACK[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;
     MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM = 5000.0f;
-    MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 3408.0f;  // 云台初始化角度
+    
 	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS = -1.0f;
 	
     BMI088_INIT();

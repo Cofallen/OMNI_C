@@ -29,7 +29,8 @@ extern DMA_HandleTypeDef hdma_usart6_rx;
 // 使用视觉串口huart1
 int fputc(int ch, FILE *f) // VOFA 的重定向
 {
-    HAL_UART_Transmit_IT(&huart1, (uint8_t *)&ch, 1);
+    //HAL_UART_Transmit_IT(&huart1, (uint8_t *)&ch, 1);
+	  HAL_UART_Transmit_DMA(&huart1, (uint8_t *)&ch, 1);
     return ch;
 }
 

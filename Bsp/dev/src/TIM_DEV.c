@@ -18,7 +18,7 @@ TYPEDEF_MOTOR MOTOR_V_CHASSIS[4] = {0}; // 底盘数据
 TYPEDEF_MOTOR MOTOR_V_GIMBAL[2] = {0};  // 云台数据
 TYPEDEF_MOTOR MOTOR_V_ATTACK[3] = {0};  // 拨弹数据
 
-
+TYPEDEF_VOFA_UNION aa = {0};
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim->Instance == TIM2) // 底盘 1ms
@@ -37,10 +37,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
                  MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
                  0,
                  0);
-       VOFA_T_Send(4, 0.0f, 
-                      (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE,
-                      (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
-                      1.0f);
+//       VOFA_T_Send(4, 0.0f, 
+//                      (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE,
+//                      (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
+//                      1.0f);
+			VOFA_F_Send(&aa, &MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW]);
     }
     if (htim->Instance == TIM6) // 不知道 1ms
     {

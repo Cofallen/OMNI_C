@@ -4,36 +4,6 @@
             "path": "."
         }
     ],
-    "settings": {
-        "files.associations": {
-            "read_data.h": "c",
-            "math.h": "c",
-            "pid.h": "c",
-            "vofa.h": "c",
-            "attack.h": "c",
-            "root.h": "c",
-            "define.h": "c",
-            "chassis.h": "c",
-            "dbus.h": "c",
-            "gimbal.h": "c",
-            "motor.h": "c",
-            "yu_math.h": "c",
-            "main.h": "c",
-            "stdarg.h": "c",
-            "stdlib.h": "c",
-            "usart.h": "c",
-            "string.h": "c",
-            "tim_dev.h": "c",
-            "can_dev.h": "c",
-            "can.h": "c",
-            "tim.h": "c",
-            "judgement.h": "c",
-            "bmi088.h": "c",
-            "bmi088reg.h": "c",
-            "__config": "c",
-            "spi.h": "c",
-            "gpio.h": "c"
-        }
-    },
+    "settings": {},
     "extensions": {}
 }

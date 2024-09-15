@@ -595,14 +595,14 @@
           <GroupName>dev</GroupName>
           <Files>
             <File>
-              <FileName>CAN_DEV.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Bsp\dev\src\CAN_DEV.c</FilePath>
-            </File>
-            <File>
               <FileName>TIM_DEV.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Bsp\dev\src\TIM_DEV.c</FilePath>
+            </File>
+            <File>
+              <FileName>CAN_DEV.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Bsp\dev\src\CAN_DEV.c</FilePath>
             </File>
             <File>
               <FileName>USART_DEV.c</FileName>

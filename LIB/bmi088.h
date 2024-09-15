@@ -29,17 +29,17 @@ typedef struct acc_raw_data_t
 
 typedef struct gyro_raw_data_t
 {
-    float roll;
-    float pitch;
-    float yaw;
+    double roll;
+    double pitch;
+    double yaw;
 } gyro_raw_data_t;
 
 typedef struct acc_data_t
 {
     acc_raw_data_t acc_raw_data;
-    float sensor_time;
-    float prev_time;
-    float delta_time;
+    double sensor_time;
+    double prev_time;
+    double delta_time;
     float temperature;
     bool enable_self_test;
 } acc_data_t;
@@ -47,8 +47,8 @@ typedef struct acc_data_t
 typedef struct gyro_data_t
 {
     gyro_raw_data_t gyro_raw_data;
-    float absolute[3];  // absolute angles
-    float scaleTransform[3];  // scale transform
+    double absolute[3];  // absolute angles
+    double scaleTransform[3];  // scale transform
     bool enable_self_test;
 } gyro_data_t;
 
@@ -84,7 +84,7 @@ void BMI088_CONF_INIT(void);
 // 功能函数
 void ReadAccData(acc_raw_data_t *data);
 void ReadGyroData(gyro_raw_data_t *data);
-void ReadAccSensorTime(float *time);
+void ReadAccSensorTime(double *time);
 void ReadAccTemperature(float *temp);
 
 // 校验函数

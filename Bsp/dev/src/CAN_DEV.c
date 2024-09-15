@@ -54,7 +54,9 @@ void CAN_F_Recv(CAN_HandleTypeDef *hcan, uint32_t ID)
         case CAN_D_GIMBAL_YAW:
         {
             MOTOR_F_Cal_Data(&MOTOR_V_GIMBAL[0], CANRxmsg);
+					
             MOTOR_F_Cal_Round(&MOTOR_V_GIMBAL[0]);
+					 
             break;
         }
         case CAN_D_GIMBAL_PIT:

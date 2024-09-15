@@ -236,7 +236,7 @@ bmi088_error_e VerifyGyroSelfTest(void)
 ///
 /// @brief  低通滤波
 
-#define ALPHA 0.5  // 滤波系数，范围在0到1之间
+#define ALPHA 0.78  // 滤波系数，范围在0到1之间
 #define FILTER_ON 1 // 滤波开关
 
 void LowPassFilter(float *current_data, float new_data) {
@@ -334,7 +334,7 @@ void ReadGyroData(gyro_raw_data_t *data)
     LimitRange(&cp.gyro_data.scaleTransform[2], 8192, 0);
 }
 
-void ReadAccSensorTime(float *time)
+void ReadAccSensorTime(double *time)
 {
     uint8_t buf[SENSORTIME_LEN];
     ReadMultiDataFromAcc(SENSORTIME_0_ADDR, SENSORTIME_LEN, buf);
