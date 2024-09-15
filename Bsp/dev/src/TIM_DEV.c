@@ -37,11 +37,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
                  MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
                  0,
                  0);
-//       VOFA_T_Send(4, 0.0f, 
-//                      (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE,
-//                      (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
-//                      1.0f);
-			VOFA_F_Send(&aa, &MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW]);
+//		CAN_F_Send(&hcan2, 0x1FF, 0,
+//                 -10000,
+//                 0,
+//                 0);
+    //    VOFA_T_Send(4, 0.0f, 
+    //                  (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE,
+    //                  (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
+    //                  1.0f);
+	   VOFA_F_Send(&aa, &MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW]);
     }
     if (htim->Instance == TIM6) // 不知道 1ms
     {
