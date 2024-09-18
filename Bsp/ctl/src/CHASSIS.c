@@ -13,7 +13,7 @@
 #include "ROOT.h"
 #include "bmi088.h"
 
-float mm = 0, nn = 0, xx = 0, yy = 0, rr = 0, cc = 0, ss = 0;
+float mm = 0, nn = 0, xx = 0, yy = 0, rr = 0, cc = 0, ss = 0, tt = 0;
 
 // 本代码为全向轮底盘运动基本代码
 
@@ -26,38 +26,31 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     double PRIDICT = 0.0f;    // 底盘预测，前馈
     Vx =  (float)DBUS->REMOTE.CH0_int16;
     Vy = -(float)DBUS->REMOTE.CH1_int16;
-//    Vr = (float)DBUS->REMOTE.CH2_int16;
-//     Vr = MATH_D_ABS(MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.SPEED_NOW) * 1.0f;  // head rotate -> chassis rotate
-    
-    // 底盘跟随模式
-    // ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;
-    //ANGLE_Relative = (float)cp.gyro_data.scaleTransform[2] - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;
-    
+
 	mm = ANGLE_Relative;
 	nn = ANGLE_Rad;
-    ANGLE_Rad = ANGLE_Relative * MATH_D_RELATIVE_PARAM;
 
-    if (DBUS->REMOTE.S2_u8 == 1)  // @TODO + 底盘跟随判断 A&B + GEER挡位
+    if (DBUS->REMOTE.S2_u8 == 1)  // @TODO + 底盘跟随判断 A&B + GEER挡位 // chassis folllow
     {
-        ANGLE_Rad += 3.1416926f * 0.5f  * 0.001f;
-        Vr = 1000.0f;
+        ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;
+        ANGLE_Rad = ANGLE_Relative * MATH_D_RELATIVE_PARAM;
+        Vr = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative);
     }
     else if (DBUS->REMOTE.S2_u8 == 3)
     {
         Vr = 0.0f;
     }
-    else if (DBUS->REMOTE.S2_u8 == 2)
+    else if (DBUS->REMOTE.S2_u8 == 2) // @TODO little spining go straight
     {
-        // ANGLE_Rad += 3.1416926f * 0.5f * 0.001f;
         Vr = -1000.0f;
     }
 
-      double COS = cos(ANGLE_Rad);
-      double SIN = sin(ANGLE_Rad);
-      Vx = -Vy * SIN + Vx * COS;
-      Vy =  Vy * COS + Vx * SIN;
+    //// rotate matrix
+    //   double COS = cos(ANGLE_Rad);
+    //   double SIN = sin(ANGLE_Rad);
+    //   Vx = -Vy * SIN + Vx * COS;
+    //   Vy =  Vy * COS + Vx * SIN;
 
-     Vr = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative);
     PRIDICT = DBUS->REMOTE.CH2_int16 * 2.0f;  // @TODO 预测模型待思考
 
     // 运动学解算

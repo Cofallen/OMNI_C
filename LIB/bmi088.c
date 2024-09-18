@@ -323,15 +323,15 @@ void ReadGyroData(gyro_raw_data_t *data)
     // Save the current time for the next function call
     cp.acc_data.prev_time = cp.acc_data.sensor_time;
 
-    cp.gyro_data.scaleTransform[2] = cp.gyro_data.absolute[2] * SCALR_FACTOR; // yaw
+    cp.gyro_data.scaleTransformInfinit[2] = cp.gyro_data.absolute[2] * SCALR_FACTOR; // yaw
 
     #ifdef FILTER_ON
     static float filtered_yaw_a = 0;
-    LowPassFilter(&filtered_yaw_a, cp.gyro_data.scaleTransform[2]);
-    cp.gyro_data.scaleTransform[2] = filtered_yaw_a;
+    LowPassFilter(&filtered_yaw_a, cp.gyro_data.scaleTransformInfinit[2]);
+    cp.gyro_data.scaleTransformInfinit[2] = filtered_yaw_a;
     #endif
 
-    LimitRange(&cp.gyro_data.scaleTransform[2], 8192, 0);
+    cp.gyro_data.scaleTransform[2] = LimitRange(cp.gyro_data.scaleTransformInfinit[2], 8192, 0);
 }
 
 void ReadAccSensorTime(double *time)
