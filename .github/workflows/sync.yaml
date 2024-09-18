@@ -7,41 +7,41 @@ on:
   #   branches:
   #     - main
 
-jobs:
-  sync:
-    runs-on: ubuntu-latest
+# jobs:
+#   sync:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
 
-      - name: Set up Git
-        run: |
-          git config --global user.name "${{ secrets.USERNAME }}"
-          git config --global user.email "${{ secrets.EMAIL }}"
+#       - name: Set up Git
+#         run: |
+#           git config --global user.name "${{ secrets.USERNAME }}"
+#           git config --global user.email "${{ secrets.EMAIL }}"
 
-      - name: Sync with local repository
-        run: |
-          git remote add local /path/to/your/local/repository || true  # Prevent failure if remote already exists
-          git fetch local
-          git merge local/main
-          git push https://${{ secrets.USERNAME }}:${{ secrets.PAT }}@github.com/Cofallen/OMNI_C.git main
+#       - name: Sync with local repository
+#         run: |
+#           git remote add local /path/to/your/local/repository || true  # Prevent failure if remote already exists
+#           git fetch local
+#           git merge local/main
+#           git push https://${{ secrets.USERNAME }}:${{ secrets.PAT }}@github.com/Cofallen/OMNI_C.git main
 
-  upload:
-    runs-on: ubuntu-latest
+#   upload:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: 检出代码
-        uses: actions/checkout@v3
+#     steps:
+#       - name: 检出代码
+#         uses: actions/checkout@v3
 
-      - name: Set up Git
-        run: |
-          git config --global user.name "${{ secrets.USERNAME }}"
-          git config --global user.email "${{ secrets.EMAIL }}"
+#       - name: Set up Git
+#         run: |
+#           git config --global user.name "${{ secrets.USERNAME }}"
+#           git config --global user.email "${{ secrets.EMAIL }}"
 
-      - name: 添加更改
-        run: |
-          git add .
-          git commit -m "update" || echo "没有更改需要提交"
-          git push https://${{ secrets.USERNAME }}:${{ secrets.PAT }}@github.com/Cofallen/OMNI_C.git main
-          echo "上传到远程仓库"
+#       - name: 添加更改
+#         run: |
+#           git add .
+#           git commit -m "update" || echo "没有更改需要提交"
+#           git push https://${{ secrets.USERNAME }}:${{ secrets.PAT }}@github.com/Cofallen/OMNI_C.git main
+#           echo "上传到远程仓库"
