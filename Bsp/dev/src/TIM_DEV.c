@@ -12,6 +12,7 @@
 #include "ROOT.h"
 #include "ATTACK.h"
 #include "VOFA.h"
+#include "bmi088.h"
 
 // 一些全局变量
 TYPEDEF_MOTOR MOTOR_V_CHASSIS[4] = {0}; // 底盘数据
@@ -63,6 +64,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     }
     if (htim->Instance == TIM10) // 云台 0.01ms
     {
+<<<<<<< HEAD
         
+=======
+        ReadAccData(&cp.acc_data.acc_raw_data);
+        ReadAccSensorTime(&cp.acc_data.sensor_time);
+        ReadAccTemperature(&cp.acc_data.temperature);
+        ReadGyroData(&cp.gyro_data.gyro_raw_data);
+>>>>>>> a8258d8adf7dccbd9eae4384732789dc097c1b3a
     }
 }
