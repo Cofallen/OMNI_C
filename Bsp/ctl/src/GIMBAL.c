@@ -3,7 +3,9 @@
 #include "GIMBAL.h"
 #include "DEFINE.h"
 #include "DBUS.h"
-#include "PID.h"
+#include "YU_PID.h"
+
+float yawInfinit = 0.0f;
 
 void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {

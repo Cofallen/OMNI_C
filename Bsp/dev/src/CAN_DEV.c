@@ -58,13 +58,13 @@ void CAN_F_Recv(CAN_HandleTypeDef *hcan, uint32_t ID)
             MOTOR_F_Cal_Round(&MOTOR_V_GIMBAL[0]);
             
 		// 	if (DBUS_V_DATA.REMOTE.S2_u8 == 1) // @TODO if little spining data accuracy enough, you can delete it.
-<<<<<<< HEAD
+
 //        //    {
 //                MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE = (float)cp.gyro_data.scaleTransformInfinit[2];
-=======
+
         //    {
-                MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE = (float)cp.gyro_data.scaleTransformInfinit[2];
->>>>>>> a8258d8adf7dccbd9eae4384732789dc097c1b3a
+//                MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE = (float)cp.gyro_data.scaleTransformInfinit[2];
+
         //    }
             break;
         }

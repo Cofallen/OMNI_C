@@ -37,8 +37,8 @@ omni_c/attack.o: ..\Bsp\ctl\src\ATTACK.c ..\Core\Inc\main.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_usb.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h \
   ..\Bsp\ctl\inc\ATTACK.h ..\Bsp\ctl\inc\MOTOR.h ..\Bsp\ctl\inc\DBUS.h \
-  ..\Bsp\extra\inc\JUDGEMENT.h ..\Bsp\extra\inc\DEFINE.h ..\LIB\PID.h \
-  ..\LIB\struct_typedef.h ..\Bsp\dev\inc\TIM_DEV.h \
+  ..\Bsp\extra\inc\JUDGEMENT.h ..\Bsp\extra\inc\DEFINE.h \
+  ..\Bsp\ctl\inc\YU_PID.h ..\Bsp\dev\inc\TIM_DEV.h \
   ..\Bsp\extra\inc\ROOT.h ..\Bsp\extra\inc\YU_MATH.h \
   ..\JUDGE\Read_Data.h ..\Core\Inc\usart.h ..\Bsp\extra\inc\VOFA.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdlib.h

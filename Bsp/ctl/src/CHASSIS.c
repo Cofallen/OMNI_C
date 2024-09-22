@@ -6,11 +6,13 @@
 #include "MOTOR.h"
 #include "YU_MATH.h"
 #include "DBUS.h"
-#include "PID.h"
+#include "YU_PID.h"
 #include "TIM_DEV.h"
 
 #include "Read_Data.h"
 #include "ROOT.h"
+#include "GIMBAL.h"
+#include "YU_MATH.h"
 
 float mm = 0, nn = 0, xx = 0, yy = 0, rr = 0, cc = 0, ss = 0, tt = 0;
 
@@ -31,6 +33,8 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 
     if (DBUS->REMOTE.S2_u8 == 1)  // @TODO + 底盘跟随判断 A&B + GEER挡位 // chassis folllow
     {
+        convertAngleToIndex(yaw, &yawInfinit);
+
         ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;
         ANGLE_Rad = ANGLE_Relative * MATH_D_RELATIVE_PARAM;
         Vr = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative);

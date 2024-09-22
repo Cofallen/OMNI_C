@@ -6,6 +6,15 @@
     ],
     "settings": {
         "files.associations": {
+            "tim_dev.h": "c",
+            "pid.h": "c",
+            "read_data.h": "c",
+            "root.h": "c",
+            "yu_pid.h": "c",
+            "attack.h": "c",
+            "gimbal.h": "c",
+            "define.h": "c",
+            "motor.h": "c",
             "yu_math.h": "c"
         }
     },

@@ -34,6 +34,9 @@
                     "path": "../Core/Src/gpio.c"
                   },
                   {
+                    "path": "../Core/Src/freertos.c"
+                  },
+                  {
                     "path": "../Core/Src/can.c"
                   },
                   {
@@ -56,6 +59,36 @@
                   }
                 ],
                 "folders": []
+              },
+              {
+                "name": "USB_DEVICE",
+                "files": [],
+                "folders": [
+                  {
+                    "name": "App",
+                    "files": [
+                      {
+                        "path": "../USB_DEVICE/App/usb_device.c"
+                      },
+                      {
+                        "path": "../USB_DEVICE/App/usbd_desc.c"
+                      },
+                      {
+                        "path": "../USB_DEVICE/App/usbd_cdc_if.c"
+                      }
+                    ],
+                    "folders": []
+                  },
+                  {
+                    "name": "Target",
+                    "files": [
+                      {
+                        "path": "../USB_DEVICE/Target/usbd_conf.c"
+                      }
+                    ],
+                    "folders": []
+                  }
+                ]
               }
             ]
           }
@@ -69,7 +102,13 @@
             "name": "STM32F4xx_HAL_Driver",
             "files": [
               {
-                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c"
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd.c"
+              },
+              {
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd_ex.c"
+              },
+              {
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usb.c"
               },
               {
                 "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c"
@@ -109,6 +148,9 @@
               },
               {
                 "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c"
+              },
+              {
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c"
               },
               {
                 "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c"
@@ -158,7 +200,7 @@
             "path": "../Bsp/ctl/src/MOTOR.c"
           },
           {
-            "path": "../Bsp/ctl/src/PID.c"
+            "path": "../Bsp/ctl/src/YU_PID.c"
           },
           {
             "path": "../Bsp/ctl/src/TOP.c"
@@ -170,10 +212,10 @@
         "name": "dev",
         "files": [
           {
-            "path": "../Bsp/dev/src/CAN_DEV.c"
+            "path": "../Bsp/dev/src/TIM_DEV.c"
           },
           {
-            "path": "../Bsp/dev/src/TIM_DEV.c"
+            "path": "../Bsp/dev/src/CAN_DEV.c"
           },
           {
             "path": "../Bsp/dev/src/USART_DEV.c"
@@ -206,7 +248,58 @@
         "name": "LIB",
         "files": [
           {
-            "path": "../LIB/bmi088.c"
+            "path": "../LIB/BMI088driver.c"
+          },
+          {
+            "path": "../LIB/BMI088driver.h"
+          },
+          {
+            "path": "../LIB/BMI088Middleware.c"
+          },
+          {
+            "path": "../LIB/BMI088Middleware.h"
+          },
+          {
+            "path": "../LIB/BMI088reg.h"
+          },
+          {
+            "path": "../LIB/bsp_imu_pwm.c"
+          },
+          {
+            "path": "../LIB/bsp_imu_pwm.h"
+          },
+          {
+            "path": "../LIB/kalman_filter.c"
+          },
+          {
+            "path": "../LIB/kalman_filter.h"
+          },
+          {
+            "path": "../LIB/QuaternionEKF.c"
+          },
+          {
+            "path": "../LIB/QuaternionEKF.h"
+          },
+          {
+            "path": "../LIB/struct_typedef.h"
+          },
+          {
+            "path": "../LIB/user_lib.c"
+          },
+          {
+            "path": "../LIB/user_lib.h"
+          },
+          {
+            "path": "../LIB/imu_temp_control_task.c"
+          },
+          {
+            "path": "../LIB/imu_temp_control_task.h"
+          },
+          {
+            "path": "../LIB/pid.c"
+          },
+          {
+            "path": "../LIB/pid.h"
           }
         ],
         "folders": []
@@ -230,9 +323,118 @@
         "folders": []
       },
       {
-        "name": "::CMSIS",
-        "files": [],
+        "name": "CMSIS",
+        "files": [
+          {
+            "path": "../CMSIS/DSP/Src/BasicMathFunctions/BasicMathFunctions.c"
+          },
+          {
+            "path": "../CMSIS/DSP/Src/BayesFunctions/BayesFunctions.c"
+          },
+          {
+            "path": "../CMSIS/DSP/Src/CommonTables/CommonTables.c"
+          },
+          {
+            "path": "../CMSIS/DSP/Src/ComplexMathFunctions/ComplexMathFunctions.c"
+          },
+          {
+            "path": "../CMSIS/DSP/Src/ControllerFunctions/ControllerFunctions.c"
+          },
+          {
+            "path": "../CMSIS/DSP/Src/DistanceFunctions/DistanceFunctions.c"
+          },
+          {
+            "path": "../CMSIS/DSP/Src/FastMathFunctions/FastMathFunctions.c"
+          },
+          {
+            "path": "../CMSIS/DSP/Src/FilteringFunctions/FilteringFunctions.c"
+          },
+          {
+            "path": "../CMSIS/DSP/Src/InterpolationFunctions/InterpolationFunctions.c"
+          },
+          {
+            "path": "../CMSIS/DSP/Src/MatrixFunctions/MatrixFunctions.c"
+          },
+          {
+            "path": "../CMSIS/DSP/Src/QuaternionMathFunctions/QuaternionMathFunctions.c"
+          },
+          {
+            "path": "../CMSIS/DSP/Src/StatisticsFunctions/StatisticsFunctions.c"
+          },
+          {
+            "path": "../CMSIS/DSP/Src/SupportFunctions/SupportFunctions.c"
+          },
+          {
+            "path": "../CMSIS/DSP/Src/SVMFunctions/SVMFunctions.c"
+          },
+          {
+            "path": "../CMSIS/DSP/Src/TransformFunctions/TransformFunctions.c"
+          },
+          {
+            "path": "../CMSIS/DSP/Src/WindowFunctions/WindowFunctions.c"
+          }
+        ],
         "folders": []
+      },
+      {
+        "name": "Middlewares",
+        "files": [],
+        "folders": [
+          {
+            "name": "FreeRTOS",
+            "files": [
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/croutine.c"
+              },
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/event_groups.c"
+              },
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/list.c"
+              },
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/queue.c"
+              },
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c"
+              },
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/tasks.c"
+              },
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/timers.c"
+              },
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c"
+              },
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c"
+              },
+              {
+                "path": "../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/port.c"
+              }
+            ],
+            "folders": []
+          },
+          {
+            "name": "USB_Device_Library",
+            "files": [
+              {
+                "path": "../Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c"
+              },
+              {
+                "path": "../Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c"
+              },
+              {
+                "path": "../Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c"
+              },
+              {
+                "path": "../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c"
+              }
+            ],
+            "folders": []
+          }
+        ]
       }
     ]
   },
@@ -385,6 +587,17 @@
           "../Bsp/extra/inc",
           "../LIB",
           "../JUDGE",
+          "../CMSIS/Core/Inc",
+          "../CMSIS/DSP/Inc/dsp",
+          "../CMSIS/DSP/Inc",
+          "../CMSIS/DSP/PrivateInclude",
+          "../USB_DEVICE/App",
+          "../USB_DEVICE/Target",
+          "../Middlewares/Third_Party/FreeRTOS/Source/include",
+          "../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS",
+          "../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F",
+          "../Middlewares/ST/STM32_USB_Device_Library/Core/Inc",
+          "../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc",
           "RTE/_OMNI_C"
         ],
         "libList": [],
