@@ -40,4 +40,4 @@ omni_c/chassis.o: ..\Bsp\ctl\src\CHASSIS.c ..\Core\Inc\main.h \
   ..\Bsp\ctl\inc\CHASSIS.h ..\Bsp\ctl\inc\DBUS.h ..\Bsp\ctl\inc\MOTOR.h \
   ..\Bsp\extra\inc\DEFINE.h ..\Bsp\extra\inc\YU_MATH.h \
   ..\Bsp\ctl\inc\YU_PID.h ..\Bsp\dev\inc\TIM_DEV.h ..\JUDGE\Read_Data.h \
-  ..\Core\Inc\usart.h ..\Bsp\extra\inc\ROOT.h ..\Bsp\ctl\inc\GIMBAL.h
+  ..\Core\Inc\usart.h ..\Bsp\extra\inc\ROOT.h ..\Bsp\ctl\inc\TOP.h

@@ -15,7 +15,10 @@
             "gimbal.h": "c",
             "define.h": "c",
             "motor.h": "c",
-            "yu_math.h": "c"
+            "yu_math.h": "c",
+            "top.h": "c",
+            "string.h": "c",
+            "main.h": "c"
         }
     },
     "extensions": {}

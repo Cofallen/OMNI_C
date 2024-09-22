@@ -24,4 +24,10 @@ typedef union TYPEDEF_TOP_DATA_UNION // 共用体(用于接受各种数据)(视�
     };
     uint8_t GET_DATA[8];
 } TYPEDEF_TOP_DATA_UNION;
+
+extern float yaw;
+extern float Top[4];
+
+extern void TOP_T_Cal();
+
 #endif // !__TOP_H__

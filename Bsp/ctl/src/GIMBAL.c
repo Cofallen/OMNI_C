@@ -5,8 +5,6 @@
 #include "DBUS.h"
 #include "YU_PID.h"
 
-float yawInfinit = 0.0f;
-
 void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {
     MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += -(float)DBUS->REMOTE.CH2_int16 * 0.02f;

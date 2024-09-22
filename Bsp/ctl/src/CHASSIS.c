@@ -11,9 +11,8 @@
 
 #include "Read_Data.h"
 #include "ROOT.h"
-#include "GIMBAL.h"
 #include "YU_MATH.h"
-
+#include "TOP.h"
 float mm = 0, nn = 0, xx = 0, yy = 0, rr = 0, cc = 0, ss = 0, tt = 0;
 
 // 本代码为全向轮底盘运动基本代码
@@ -31,12 +30,13 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 	mm = ANGLE_Relative;
 	nn = ANGLE_Rad;
 
+    TOP_T_Cal();
+
+    ANGLE_Relative = (float)Top[NOW] - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;  // if add 4096
+    ANGLE_Rad = ANGLE_Relative * MATH_D_RELATIVE_PARAM;
+
     if (DBUS->REMOTE.S2_u8 == 1)  // @TODO + 底盘跟随判断 A&B + GEER挡位 // chassis folllow
     {
-        convertAngleToIndex(yaw, &yawInfinit);
-
-        ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;
-        ANGLE_Rad = ANGLE_Relative * MATH_D_RELATIVE_PARAM;
         Vr = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative);
     }
     else if (DBUS->REMOTE.S2_u8 == 3)
@@ -46,13 +46,12 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     else if (DBUS->REMOTE.S2_u8 == 2) // @TODO little spining go straight
     {
         Vr = -1000.0f;
+        // rotate matrix
+        double COS = cos(ANGLE_Rad);
+        double SIN = sin(ANGLE_Rad);
+        Vx = -Vy * SIN + Vx * COS;
+        Vy =  Vy * COS + Vx * SIN;
     }
-
-    //// rotate matrix
-    //   double COS = cos(ANGLE_Rad);
-    //   double SIN = sin(ANGLE_Rad);
-    //   Vx = -Vy * SIN + Vx * COS;
-    //   Vy =  Vy * COS + Vx * SIN;
 
     PRIDICT = DBUS->REMOTE.CH2_int16 * 2.0f;  // @TODO 预测模型待思考
 

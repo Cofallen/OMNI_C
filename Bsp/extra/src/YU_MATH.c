@@ -26,7 +26,7 @@ float LimitRange(float value, float MAX_VALUE, float MIN_VALUE)
     return value;
 }
 
-// 函数定义
+// -180-180 -> 0-8192
 void convertAngleToIndex(float angle, float *index) {
     // 角度标准化到0-360度
     while (angle < 0) {
@@ -37,5 +37,5 @@ void convertAngleToIndex(float angle, float *index) {
     }
 
     // 将角度转换为0-8191的索引
-    *index = (angle / 360.0f * 8192.0f);
+    index[0] = (angle / 360.0f * 8192.0f);
 }
