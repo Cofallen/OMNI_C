@@ -120,6 +120,7 @@ int main(void)
   MX_USART3_UART_Init();
   MX_USART1_UART_Init();
   MX_USART6_UART_Init();
+  MX_TIM10_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -154,10 +155,10 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-        ReadAccData(&cp.acc_data.acc_raw_data);
-        ReadAccSensorTime(&cp.acc_data.sensor_time);
-        ReadAccTemperature(&cp.acc_data.temperature);
-        ReadGyroData(&cp.gyro_data.gyro_raw_data);
+        // ReadAccData(&cp.acc_data.acc_raw_data);
+        // ReadAccSensorTime(&cp.acc_data.sensor_time);
+        // ReadAccTemperature(&cp.acc_data.temperature);
+        // ReadGyroData(&cp.gyro_data.gyro_raw_data);
   }
   /* USER CODE END 3 */
 }
