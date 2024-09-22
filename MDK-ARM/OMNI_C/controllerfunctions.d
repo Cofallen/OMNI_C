@@ -1,8 +1,8 @@
 omni_c/controllerfunctions.o: \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\ControllerFunctions\ControllerFunctions.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\ControllerFunctions\arm_pid_init_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\controller_functions.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\arm_math_types.h \
+  ..\CMSIS\DSP\Src\ControllerFunctions\ControllerFunctions.c \
+  ..\CMSIS\DSP\Src\ControllerFunctions\arm_pid_init_f32.c \
+  ..\CMSIS\DSP\Inc\dsp\controller_functions.h \
+  ..\CMSIS\DSP\Inc\arm_math_types.h \
   ..\Drivers\CMSIS\Include\cmsis_compiler.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdint.h \
   ..\Drivers\CMSIS\Include\cmsis_armclang.h \
@@ -12,16 +12,15 @@ omni_c/controllerfunctions.o: \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\math.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\float.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\limits.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\arm_math_memory.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\none.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\utils.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\ControllerFunctions\arm_pid_init_q15.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\ControllerFunctions\arm_pid_init_q31.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\ControllerFunctions\arm_pid_reset_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\ControllerFunctions\arm_pid_reset_q15.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\ControllerFunctions\arm_pid_reset_q31.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\ControllerFunctions\arm_sin_cos_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\arm_common_tables.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\fast_math_functions.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\basic_math_functions.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\ControllerFunctions\arm_sin_cos_q31.c
+  ..\CMSIS\DSP\Inc\arm_math_memory.h ..\CMSIS\DSP\Inc\dsp\none.h \
+  ..\CMSIS\DSP\Inc\dsp\utils.h \
+  ..\CMSIS\DSP\Src\ControllerFunctions\arm_pid_init_q15.c \
+  ..\CMSIS\DSP\Src\ControllerFunctions\arm_pid_init_q31.c \
+  ..\CMSIS\DSP\Src\ControllerFunctions\arm_pid_reset_f32.c \
+  ..\CMSIS\DSP\Src\ControllerFunctions\arm_pid_reset_q15.c \
+  ..\CMSIS\DSP\Src\ControllerFunctions\arm_pid_reset_q31.c \
+  ..\CMSIS\DSP\Src\ControllerFunctions\arm_sin_cos_f32.c \
+  ..\CMSIS\DSP\Inc\arm_common_tables.h \
+  ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h \
+  ..\CMSIS\DSP\Src\ControllerFunctions\arm_sin_cos_q31.c

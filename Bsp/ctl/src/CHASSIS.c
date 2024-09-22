@@ -11,7 +11,6 @@
 
 #include "Read_Data.h"
 #include "ROOT.h"
-#include "bmi088.h"
 
 float mm = 0, nn = 0, xx = 0, yy = 0, rr = 0, cc = 0, ss = 0, tt = 0;
 

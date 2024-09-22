@@ -9,7 +9,6 @@
 #include "Read_Data.h"
 #include "VOFA.h"
 #include "ROOT.h"
-#include "bmi088.h"
 
 #define BUFFER_SIZE (255)
 

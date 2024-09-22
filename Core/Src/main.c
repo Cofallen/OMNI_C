@@ -18,11 +18,13 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
 #include "can.h"
 #include "dma.h"
 #include "spi.h"
 #include "tim.h"
 #include "usart.h"
+#include "usb_device.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -45,7 +47,6 @@
 #include "YU_MATH.h"
 #include "ROOT.h"
 #include "Read_Data.h"
-#include "bmi088.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -65,12 +66,12 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-bmi088_data_t cp = {0};
 
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+void MX_FREERTOS_Init(void);
 static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -120,6 +121,7 @@ int main(void)
   MX_USART3_UART_Init();
   MX_USART1_UART_Init();
   MX_USART6_UART_Init();
+  MX_TIM10_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -147,6 +149,13 @@ int main(void)
 
   /* USER CODE END 2 */
 
+  /* Call init function for freertos objects (in freertos.c) */
+  MX_FREERTOS_Init();
+
+  /* Start scheduler */
+  osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -154,10 +163,10 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-        ReadAccData(&cp.acc_data.acc_raw_data);
-        ReadAccSensorTime(&cp.acc_data.sensor_time);
-        ReadAccTemperature(&cp.acc_data.temperature);
-        ReadGyroData(&cp.gyro_data.gyro_raw_data);
+        // ReadAccData(&cp.acc_data.acc_raw_data);
+        // ReadAccSensorTime(&cp.acc_data.sensor_time);
+        // ReadAccTemperature(&cp.acc_data.temperature);
+        // ReadGyroData(&cp.gyro_data.gyro_raw_data);
   }
   /* USER CODE END 3 */
 }
@@ -186,7 +195,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLM = 6;
   RCC_OscInitStruct.PLL.PLLN = 168;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-  RCC_OscInitStruct.PLL.PLLQ = 4;
+  RCC_OscInitStruct.PLL.PLLQ = 7;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -217,7 +226,7 @@ static void MX_NVIC_Init(void)
   HAL_NVIC_SetPriority(USART1_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(USART1_IRQn);
   /* USART6_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(USART6_IRQn, 2, 0);
+  HAL_NVIC_SetPriority(USART6_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(USART6_IRQn);
 }
 

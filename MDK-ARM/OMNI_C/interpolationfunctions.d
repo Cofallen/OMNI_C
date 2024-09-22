@@ -1,8 +1,8 @@
 omni_c/interpolationfunctions.o: \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\InterpolationFunctions\InterpolationFunctions.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\InterpolationFunctions\arm_bilinear_interp_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\interpolation_functions.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\arm_math_types.h \
+  ..\CMSIS\DSP\Src\InterpolationFunctions\InterpolationFunctions.c \
+  ..\CMSIS\DSP\Src\InterpolationFunctions\arm_bilinear_interp_f32.c \
+  ..\CMSIS\DSP\Inc\dsp\interpolation_functions.h \
+  ..\CMSIS\DSP\Inc\arm_math_types.h \
   ..\Drivers\CMSIS\Include\cmsis_compiler.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdint.h \
   ..\Drivers\CMSIS\Include\cmsis_armclang.h \
@@ -12,15 +12,14 @@ omni_c/interpolationfunctions.o: \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\math.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\float.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\limits.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\arm_math_memory.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\none.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\utils.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\InterpolationFunctions\arm_bilinear_interp_q15.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\InterpolationFunctions\arm_bilinear_interp_q31.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\InterpolationFunctions\arm_bilinear_interp_q7.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\InterpolationFunctions\arm_linear_interp_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\InterpolationFunctions\arm_linear_interp_q15.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\InterpolationFunctions\arm_linear_interp_q31.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\InterpolationFunctions\arm_linear_interp_q7.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\InterpolationFunctions\arm_spline_interp_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\InterpolationFunctions\arm_spline_interp_init_f32.c
+  ..\CMSIS\DSP\Inc\arm_math_memory.h ..\CMSIS\DSP\Inc\dsp\none.h \
+  ..\CMSIS\DSP\Inc\dsp\utils.h \
+  ..\CMSIS\DSP\Src\InterpolationFunctions\arm_bilinear_interp_q15.c \
+  ..\CMSIS\DSP\Src\InterpolationFunctions\arm_bilinear_interp_q31.c \
+  ..\CMSIS\DSP\Src\InterpolationFunctions\arm_bilinear_interp_q7.c \
+  ..\CMSIS\DSP\Src\InterpolationFunctions\arm_linear_interp_f32.c \
+  ..\CMSIS\DSP\Src\InterpolationFunctions\arm_linear_interp_q15.c \
+  ..\CMSIS\DSP\Src\InterpolationFunctions\arm_linear_interp_q31.c \
+  ..\CMSIS\DSP\Src\InterpolationFunctions\arm_linear_interp_q7.c \
+  ..\CMSIS\DSP\Src\InterpolationFunctions\arm_spline_interp_f32.c \
+  ..\CMSIS\DSP\Src\InterpolationFunctions\arm_spline_interp_init_f32.c

@@ -1,8 +1,8 @@
 omni_c/supportfunctions.o: \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\SupportFunctions.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_barycenter_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\support_functions.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\arm_math_types.h \
+  ..\CMSIS\DSP\Src\SupportFunctions\SupportFunctions.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_barycenter_f32.c \
+  ..\CMSIS\DSP\Inc\dsp\support_functions.h \
+  ..\CMSIS\DSP\Inc\arm_math_types.h \
   ..\Drivers\CMSIS\Include\cmsis_compiler.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdint.h \
   ..\Drivers\CMSIS\Include\cmsis_armclang.h \
@@ -12,41 +12,67 @@ omni_c/supportfunctions.o: \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\math.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\float.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\limits.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\arm_math_memory.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\none.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\utils.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_bitonic_sort_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\PrivateInclude\arm_sorting.h \
-  ..\LIB\DRV\arm_math.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_bubble_sort_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_copy_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_copy_f64.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_copy_q15.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_copy_q31.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_copy_q7.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_fill_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_fill_f64.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_fill_q15.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_fill_q31.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_fill_q7.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_heap_sort_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_insertion_sort_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_merge_sort_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_merge_sort_init_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_quick_sort_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_selection_sort_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_sort_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_sort_init_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_weighted_sum_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_float_to_q15.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_float_to_q31.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_float_to_q7.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_q15_to_float.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_q15_to_q31.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_q15_to_q7.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_q31_to_float.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_q31_to_q15.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_q31_to_q7.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_q7_to_float.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_q7_to_q15.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\SupportFunctions\arm_q7_to_q31.c
+  ..\CMSIS\DSP\Inc\arm_math_memory.h ..\CMSIS\DSP\Inc\dsp\none.h \
+  ..\CMSIS\DSP\Inc\dsp\utils.h \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_bitonic_sort_f32.c \
+  ..\CMSIS\DSP\PrivateInclude\arm_sorting.h ..\CMSIS\DSP\Inc\arm_math.h \
+  ..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h \
+  ..\Drivers\CMSIS\Include\core_cm4.h \
+  ..\Drivers\CMSIS\Include\cmsis_version.h \
+  ..\Drivers\CMSIS\Include\mpu_armv7.h \
+  ..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h \
+  ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\interpolation_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\bayes_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\statistics_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\matrix_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\complex_math_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\controller_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\distance_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\svm_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\svm_defines.h \
+  ..\CMSIS\DSP\Inc\dsp\transform_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\filtering_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\quaternion_math_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\window_functions.h \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_bubble_sort_f32.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_copy_f32.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_copy_f64.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_copy_q15.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_copy_q31.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_copy_q7.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_fill_f32.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_fill_f64.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_fill_q15.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_fill_q31.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_fill_q7.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_heap_sort_f32.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_insertion_sort_f32.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_merge_sort_f32.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_merge_sort_init_f32.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_quick_sort_f32.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_selection_sort_f32.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_sort_f32.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_sort_init_f32.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_weighted_sum_f32.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_f64_to_float.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_f64_to_q31.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_f64_to_q15.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_f64_to_q7.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_float_to_f64.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_float_to_q15.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_float_to_q31.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_float_to_q7.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_q15_to_f64.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_q15_to_float.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_q15_to_q31.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_q15_to_q7.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_q31_to_f64.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_q31_to_float.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_q31_to_q15.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_q31_to_q7.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_q7_to_f64.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_q7_to_float.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_q7_to_q15.c \
+  ..\CMSIS\DSP\Src\SupportFunctions\arm_q7_to_q31.c

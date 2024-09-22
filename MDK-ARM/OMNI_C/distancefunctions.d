@@ -1,8 +1,8 @@
 omni_c/distancefunctions.o: \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\DistanceFunctions.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_boolean_distance.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\distance_functions.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\arm_math_types.h \
+  ..\CMSIS\DSP\Src\DistanceFunctions\DistanceFunctions.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_boolean_distance.c \
+  ..\CMSIS\DSP\Inc\dsp\distance_functions.h \
+  ..\CMSIS\DSP\Inc\arm_math_types.h \
   ..\Drivers\CMSIS\Include\cmsis_compiler.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdint.h \
   ..\Drivers\CMSIS\Include\cmsis_armclang.h \
@@ -12,32 +12,37 @@ omni_c/distancefunctions.o: \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\math.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\float.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\limits.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\arm_math_memory.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\none.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\utils.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\statistics_functions.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\basic_math_functions.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\fast_math_functions.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_boolean_distance_template.h \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_braycurtis_distance_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_canberra_distance_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_chebyshev_distance_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_chebyshev_distance_f64.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_cityblock_distance_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_cityblock_distance_f64.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_correlation_distance_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_cosine_distance_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_cosine_distance_f64.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_dice_distance.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_euclidean_distance_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_euclidean_distance_f64.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_hamming_distance.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_jaccard_distance.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_jensenshannon_distance_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_kulsinski_distance.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_minkowski_distance_f32.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_rogerstanimoto_distance.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_russellrao_distance.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_sokalmichener_distance.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_sokalsneath_distance.c \
-  D:\RoboMaster\SoftWare\MDK537\Package\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\DistanceFunctions\arm_yule_distance.c
+  ..\CMSIS\DSP\Inc\arm_math_memory.h ..\CMSIS\DSP\Inc\dsp\none.h \
+  ..\CMSIS\DSP\Inc\dsp\utils.h \
+  ..\CMSIS\DSP\Inc\dsp\statistics_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\matrix_functions.h \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_boolean_distance_template.h \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_braycurtis_distance_f32.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_canberra_distance_f32.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_chebyshev_distance_f32.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_chebyshev_distance_f64.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_cityblock_distance_f32.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_cityblock_distance_f64.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_correlation_distance_f32.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_cosine_distance_f32.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_cosine_distance_f64.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_dice_distance.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_euclidean_distance_f32.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_euclidean_distance_f64.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_hamming_distance.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_jaccard_distance.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_jensenshannon_distance_f32.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_kulsinski_distance.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_minkowski_distance_f32.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_rogerstanimoto_distance.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_russellrao_distance.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_sokalmichener_distance.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_sokalsneath_distance.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_yule_distance.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_dtw_distance_f32.c \
+  ..\CMSIS\DSP\Inc\dsp\matrix_utils.h \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_dtw_path_f32.c \
+  ..\CMSIS\DSP\Src\DistanceFunctions\arm_dtw_init_window_q7.c \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdlib.h

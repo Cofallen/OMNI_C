@@ -5,7 +5,6 @@
 #include "TIM_DEV.h"
 #include "MOTOR.h"
 #include "DEFINE.h"
-#include "bmi088.h"
 #include "DBUS.h"
 
 // 盛放原始can数据
@@ -58,10 +57,10 @@ void CAN_F_Recv(CAN_HandleTypeDef *hcan, uint32_t ID)
             MOTOR_F_Cal_Data(&MOTOR_V_GIMBAL[0], CANRxmsg);		
             MOTOR_F_Cal_Round(&MOTOR_V_GIMBAL[0]);
             
-			if (DBUS_V_DATA.REMOTE.S2_u8 == 3) // @TODO if little spining data accuracy enough, you can delete it.
-            {
-                MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE = (float)cp.gyro_data.scaleTransformInfinit[2];
-            }
+		// 	if (DBUS_V_DATA.REMOTE.S2_u8 == 1) // @TODO if little spining data accuracy enough, you can delete it.
+//        //    {
+//                MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE = (float)cp.gyro_data.scaleTransformInfinit[2];
+        //    }
             break;
         }
         case CAN_D_GIMBAL_PIT:

@@ -8,7 +8,6 @@
 #include "DEFINE.h"
 #include "PID.h"
 #include "ATTACK.h"
-#include "bmi088.h"
 
 uint8_t ROOT_V_MONITOR_DBUS = 0; // 离线判断参数
 TYPEDEF_MOTOR_PID FOLLOW_PID = {0};
@@ -44,7 +43,7 @@ uint8_t ROOT_F_PIDinit()
     const float PID_V_ATTACK_L_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
     const float PID_V_ATTACK_R_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
 
-    const float FOLLOW_PID_V[5] = {0.4f, 0.0f, 0.5f, 50.0f, 400.0f};
+    const float FOLLOW_PID_V[5] = {0.f, 0.0f, 0.0f, 50.0f, 400.0f};
 
     PID_F_Init(&MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].PID_S, PID_V_CHASSIS_SPEED);
     PID_F_Init(&MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].PID_S, PID_V_CHASSIS_SPEED);
@@ -81,8 +80,5 @@ void ROOT_F_Init()
     
 	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS = -1.0f;
 	
-    BMI088_INIT();
-    BMI088_CONF_INIT();
-    cp.gyro_data.scaleTransformInfinit[2] = MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;
-    cp.gyro_data.scaleTransform[2] = MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;
+    
 }

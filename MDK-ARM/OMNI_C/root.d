@@ -33,10 +33,11 @@ omni_c/root.o: ..\Bsp\extra\src\ROOT.c ..\Core\Inc\main.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h \
+  ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd.h \
+  ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_usb.h \
+  ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\string.h \
   ..\Bsp\extra\inc\ROOT.h ..\Bsp\ctl\inc\DBUS.h ..\Bsp\ctl\inc\MOTOR.h \
-  ..\Bsp\dev\inc\TIM_DEV.h ..\Bsp\extra\inc\DEFINE.h \
-  ..\Bsp\ctl\inc\PID.h ..\Bsp\ctl\inc\ATTACK.h \
-  ..\Bsp\extra\inc\JUDGEMENT.h ..\LIB\bmi088.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h \
-  ..\LIB\bmi088reg.h
+  ..\Bsp\dev\inc\TIM_DEV.h ..\Bsp\extra\inc\DEFINE.h ..\LIB\PID.h \
+  ..\LIB\struct_typedef.h ..\Bsp\ctl\inc\ATTACK.h \
+  ..\Bsp\extra\inc\JUDGEMENT.h

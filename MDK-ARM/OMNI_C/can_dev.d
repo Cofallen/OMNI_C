@@ -33,7 +33,8 @@ omni_c/can_dev.o: ..\Bsp\dev\src\CAN_DEV.c ..\Core\Inc\main.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h \
+  ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd.h \
+  ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_usb.h \
+  ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h \
   ..\Core\Inc\can.h ..\Bsp\dev\inc\CAN_DEV.h ..\Bsp\dev\inc\TIM_DEV.h \
-  ..\Bsp\ctl\inc\MOTOR.h ..\Bsp\extra\inc\DEFINE.h ..\LIB\bmi088.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h \
-  ..\LIB\bmi088reg.h ..\Bsp\ctl\inc\DBUS.h
+  ..\Bsp\ctl\inc\MOTOR.h ..\Bsp\extra\inc\DEFINE.h ..\Bsp\ctl\inc\DBUS.h
