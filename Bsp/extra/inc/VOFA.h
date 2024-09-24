@@ -35,5 +35,6 @@ typedef union
 
 extern void VOFA_F_Send(TYPEDEF_VOFA_UNION *VOFA, TYPEDEF_MOTOR *MOTOR);
 extern uint8_t VOFA_T_Send(int n, ...);
+extern uint8_t VOFA_T_SendTemp(int n, ...);
 
 #endif // !__VOFA_H__

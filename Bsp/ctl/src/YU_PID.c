@@ -6,6 +6,7 @@
 #include "MOTOR.h"
 #include "DEFINE.h"
 #include "YU_MATH.h"
+#include "TOP.h"
 
 /**
  * @brief               自己写的PID初始化，不用读配置文件
@@ -85,6 +86,14 @@ uint8_t PID_F_SC(TYPEDEF_MOTOR *MOTOR)
 {
     MOTOR->PID_S.OUT.ALL_OUT = PID_F_Cal(&MOTOR->PID_S, MOTOR->DATA.AIM, MOTOR->DATA.SPEED_NOW);
     MOTOR->DATA.CAN_SEND = (int16_t)PID_F_Cal(&MOTOR->PID_C, MOTOR->PID_S.OUT.ALL_OUT, MOTOR->DATA.CURRENT);
+    return ROOT_READY;
+}
+
+// gimbal yaw 双环pid
+uint8_t PID_F_G(TYPEDEF_MOTOR *MOTOR)
+{
+    MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&MOTOR->PID_A, MOTOR->DATA.AIM, Top[3]);
+    MOTOR->DATA.CAN_SEND = (int16_t)PID_F_Cal(&MOTOR->PID_S, MOTOR->PID_A.OUT.ALL_OUT, (float)MOTOR->DATA.SPEED_NOW);
     return ROOT_READY;
 }
 

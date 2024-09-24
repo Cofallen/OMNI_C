@@ -163,62 +163,62 @@
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT]</ItemText>
+          <ItemText>mm</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>cp,0x0A</ItemText>
+          <ItemText>DBUS_V_DATA,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>cc</ItemText>
+          <ItemText>imu_temp_pid</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>tt</ItemText>
+          <ItemText>attitude_flag</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>mm</ItemText>
+          <ItemText>pitch</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>DBUS_V_DATA,0x0A</ItemText>
+          <ItemText>roll</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
           <WinNumber>1</WinNumber>
-          <ItemText>imu_temp_pid</ItemText>
+          <ItemText>yaw</ItemText>
         </Ww>
         <Ww>
           <count>8</count>
           <WinNumber>1</WinNumber>
-          <ItemText>attitude_flag</ItemText>
+          <ItemText>Top</ItemText>
         </Ww>
         <Ww>
           <count>9</count>
           <WinNumber>1</WinNumber>
-          <ItemText>pitch</ItemText>
+          <ItemText>FOLLOW_PID</ItemText>
         </Ww>
         <Ww>
           <count>10</count>
           <WinNumber>1</WinNumber>
-          <ItemText>roll</ItemText>
+          <ItemText>nn</ItemText>
         </Ww>
         <Ww>
           <count>11</count>
           <WinNumber>1</WinNumber>
-          <ItemText>yaw</ItemText>
+          <ItemText>mm</ItemText>
         </Ww>
         <Ww>
           <count>12</count>
           <WinNumber>1</WinNumber>
-          <ItemText>yawInfinit</ItemText>
+          <ItemText>ANGLE_Relative</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>

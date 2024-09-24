@@ -1,6 +1,8 @@
 #ifndef __DBUS_H__
 #define __DBUS_H__
 
+#include "main.h"
+
 typedef struct TYPEDEF_DBUS // 遥控器数据结构体
 {
     uint8_t R_FLAG;

@@ -1,5 +1,6 @@
 #include "YU_MATH.h"
 #include <math.h>
+#include "DEFINE.h"
 
 float MATH_F_Sqrt(float DATA)
 {
@@ -37,5 +38,5 @@ void convertAngleToIndex(float angle, float *index) {
     }
 
     // 将角度转换为0-8191的索引
-    index[0] = (angle / 360.0f * 8192.0f);
+    *index = (angle / 360.0f * 8192.0f);
 }

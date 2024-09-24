@@ -12,6 +12,7 @@
 #include "ROOT.h"
 #include "ATTACK.h"
 #include "VOFA.h"
+#include "TOP.h"
 
 // 一些全局变量
 TYPEDEF_MOTOR MOTOR_V_CHASSIS[4] = {0}; // 底盘数据
@@ -33,15 +34,19 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if (htim->Instance == TIM4) // 云台 1ms
     {
         GIMBAL_F_Ctl(MOTOR_V_GIMBAL, &DBUS_V_DATA);
-        CAN_F_Send(&hcan2, 0x1FF, MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND,
+        // CAN_F_Send(&hcan2, 0x1FF, MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND,
+        //           MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
+        //           0,
+        //           0);
+        CAN_F_Send(&hcan2, 0x1FF, 0,
                   MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
                   0,
                   0);
 
-        VOFA_T_Send(4, 0.0f, 
-                     (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE,
-                     (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
-                     1.0f);
+        // VOFA_T_Send(4, 0.0f, 
+        //              (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE,
+        //              (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
+        //              1.0f);
 	//    VOFA_F_Send(&aa, &MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW]);
     }
     if (htim->Instance == TIM6) // 不知道 1ms
@@ -57,9 +62,26 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if (htim->Instance == TIM9) // 离线监测 1ms
     {
         ROOT_F_MONITOR_DBUS(&DBUS_V_DATA);
+        TOP_T_Monitor();
+        TOP_T_Cal();
+        // VOFA_T_SendTemp(10, 0.0f, 
+        //         (float)Top[0],
+        //         (float)Top[1],
+        //         (float)Top[2],
+        //         (float)Top[3],
+        //         (float)Top[4],
+        //         (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW,
+        //         (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE,
+        //         (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS,
+        //         1.0f);
+        VOFA_T_SendTemp(5, 0.0f, 
+                (float)Top[3],
+                (float)Top[4],
+                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
+                1.0f);
     }
     if (htim->Instance == TIM10) // 云台 0.01ms
     {
-        
+
     }
 }

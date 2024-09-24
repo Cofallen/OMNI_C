@@ -39,4 +39,5 @@ omni_c/yu_pid.o: ..\Bsp\ctl\src\YU_PID.c ..\Core\Inc\main.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\string.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdio.h \
   ..\Bsp\ctl\inc\YU_PID.h ..\Bsp\ctl\inc\MOTOR.h \
-  ..\Bsp\extra\inc\DEFINE.h ..\Bsp\extra\inc\YU_MATH.h
+  ..\Bsp\extra\inc\DEFINE.h ..\Bsp\extra\inc\YU_MATH.h \
+  ..\Bsp\ctl\inc\TOP.h

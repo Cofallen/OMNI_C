@@ -34,5 +34,5 @@ void MOTOR_F_Cal_Round(TYPEDEF_MOTOR *MOTOR)
     {
         MOTOR->DATA.LAPS--;
     }
-    MOTOR->DATA.ANGLE_INFINITE = (int32_t)((int)((MOTOR->DATA.LAPS + 1) << 13) + MOTOR->DATA.ANGLE_NOW);
+    MOTOR->DATA.ANGLE_INFINITE = (int32_t)((int)((MOTOR->DATA.LAPS) << 13) + MOTOR->DATA.ANGLE_NOW);
 }

@@ -8,11 +8,11 @@
 #include "DEFINE.h"
 #include "stdlib.h"
 
-// union 
-// {
-//     float DATA[11];
-//     int8_t TAIL[44];
-// }VOFA_T_DATA={0};
+union 
+{
+    float DATA[11];
+    int8_t TAIL[44];
+}VOFA_T_DATA={0};
 
 struct Data
 {
@@ -71,6 +71,31 @@ uint8_t VOFA_T_Send(int n, ...)
     free(VOFA_T_DATA->data);
     free(VOFA_T_DATA->tail);
     free(VOFA_T_DATA);
+
+    return ROOT_READY;
+}
+
+uint8_t VOFA_T_SendTemp(int n, ...)
+{
+    va_list list;
+    va_start(list, n);
+    
+    for (int i = 0; i < n; i++)
+    {
+        VOFA_T_DATA.DATA[i] = (float)va_arg(list, double);
+    }
+    va_end(list);
+
+    for (int i = n; i < 10; i++)
+    {
+        VOFA_T_DATA.DATA[i] = 0.0f;
+    }
+    VOFA_T_DATA.TAIL[0] = 0x00;
+    VOFA_T_DATA.TAIL[1] = 0x00;
+    VOFA_T_DATA.TAIL[2] = 0x80;
+    VOFA_T_DATA.TAIL[3] = 0x7f;
+    
+    HAL_UART_Transmit_DMA(&huart1, (uint8_t *)VOFA_T_DATA.TAIL, sizeof(VOFA_T_DATA));
 
     return ROOT_READY;
 }

@@ -8,6 +8,7 @@
 #include "DEFINE.h"
 #include "YU_PID.h"
 #include "ATTACK.h"
+#include "TOP.h"
 
 uint8_t ROOT_V_MONITOR_DBUS = 0; // 离线判断参数
 TYPEDEF_MOTOR_PID FOLLOW_PID = {0};
@@ -30,8 +31,8 @@ uint8_t ROOT_F_PIDinit()
 
 //    const float PID_V_GIMBAL_YAW_SPEED[5] = {68.8f, 0.001f, 26.0f, 900.0f, 20000.0f};
 //    const float PID_V_GIMBAL_YAW_ANGLE[5] = {1.115f, 0.001f, 5.1f, 500.0f, 30000.0f};
-	const float PID_V_GIMBAL_YAW_SPEED[5] = {470.8f, 0.0f, 0.0f, 900.0f, 30000.0f};
-    const float PID_V_GIMBAL_YAW_ANGLE[5] = {1.335f, 0.0002f, 0.0f, 500.0f, 50000.0f};
+	const float PID_V_GIMBAL_YAW_SPEED[5] = {100.8f, 0.0f, 0.0f, 900.0f, 20000.0f};
+    const float PID_V_GIMBAL_YAW_ANGLE[5] = {1.335f, 0.0f, 0.0f, 500.0f, 50000.0f};
 	
     const float PID_V_GIMBAL_PIT_SPEED[5] = {20.22f, 0.001f, 0, 1000.0f, 20000.0f};
     const float PID_V_GIMBAL_PIT_ANGLE[5] = {10.0f, 0, 0, 1000.0f, 3000.0f};
@@ -78,7 +79,7 @@ void ROOT_F_Init()
 	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;
     MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM = 5000.0f;
     
-	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS = -1.0f;
+	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS = 0;
 	
     
 }
