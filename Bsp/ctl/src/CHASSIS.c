@@ -28,6 +28,7 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {
     // 运动学解算
     float Vx = 0.0f, Vy = 0.0f, Vr = 0.0f, COMPONENT[2] = {1, 3};
+    float VX = 0.0f, VY = 0.0f;  // after rotating
     double PRIDICT = 0.0f;    // 底盘预测，前馈
     Vx =  (float)DBUS->REMOTE.CH0_int16;
     Vy =  (float)DBUS->REMOTE.CH1_int16;
@@ -48,20 +49,27 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
         Vr = -1000.0f;
     }
     ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;  // if add 4096
+    if (ANGLE_Relative > 4096)  
+    {
+        ANGLE_Relative -= 8192;
+    }
+    else if (ANGLE_Relative < -4096)
+    {
+        ANGLE_Relative += 8192;
+    }
+    
 
     ANGLE_Rad = ANGLE_Relative * MATH_D_RELATIVE_PARAM;
     ANGLE_Rada = ANGLE_Relative * MATH_D_RELATIVE_PARAM * 0.5f;
     // rotate matrix
     double COS = cos(ANGLE_Rad);
     double SIN = sin(ANGLE_Rad);
-    // double COS = cosl(ANGLE_Rad);
-    // double SIN = sinl(ANGLE_Rad);
     
-    // Vx = -Vy * SIN + Vx * COS;
-    // Vy =  Vy * COS + Vx * SIN;
+    VX = -Vy * SIN + Vx * COS;
+    VY =  Vy * COS + Vx * SIN;
     // ceshi
-    Vx =  Vy * SIN + Vx * COS;
-    Vy =  Vy * COS - Vx * SIN;
+    // VX =  Vy * SIN + Vx * COS;
+    // VY =  Vy * COS - Vx * SIN;
 
     // Vx = Vx * COS + Vy * ((COS * COS - SIN * SIN) / SIN);
     // Vy = Vx * SIN + Vy * COS;
@@ -70,10 +78,10 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     yy = Vy;
     
     // 运动学解算
-    MOTOR[MOTOR_D_CHASSIS_1].DATA.AIM = ( Vx - Vy - Vr * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
-    MOTOR[MOTOR_D_CHASSIS_2].DATA.AIM = (-Vx - Vy - Vr * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
-    MOTOR[MOTOR_D_CHASSIS_3].DATA.AIM = (-Vx + Vy - Vr * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
-    MOTOR[MOTOR_D_CHASSIS_4].DATA.AIM = ( Vx + Vy - Vr * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
+    MOTOR[MOTOR_D_CHASSIS_1].DATA.AIM = ( VX - VY - Vr * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
+    MOTOR[MOTOR_D_CHASSIS_2].DATA.AIM = (-VX - VY - Vr * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
+    MOTOR[MOTOR_D_CHASSIS_3].DATA.AIM = (-VX + VY - Vr * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
+    MOTOR[MOTOR_D_CHASSIS_4].DATA.AIM = ( VX + VY - Vr * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
 
     // pid 解算
     PID_F_S(&MOTOR[MOTOR_D_CHASSIS_1]);

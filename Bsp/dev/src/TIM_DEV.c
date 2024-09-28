@@ -69,10 +69,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         //         (float)Top[4],
         //         (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
         //         1.0f);
-        VOFA_T_SendTemp(9, 0.0f,
+        VOFA_T_SendTemp(10, 0.0f,
                     (float)xx,
                     (float)yy,
                     (float)ANGLE_Relative,
+                    (float)ANGLE_Rad,
                     (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.AIM,
                     (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.AIM,
                     (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.AIM,
