@@ -24,7 +24,9 @@
             "basic_math_functions.h": "c",
             "basic_math_functions_f16.h": "c",
             "fast_math_functions_f16.h": "c",
-            "stdarg.h": "c"
+            "stdarg.h": "c",
+            "chassis.h": "c",
+            "dbus.h": "c"
         }
     },
     "extensions": {}

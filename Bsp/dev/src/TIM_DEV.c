@@ -64,21 +64,20 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         ROOT_F_MONITOR_DBUS(&DBUS_V_DATA);
         TOP_T_Monitor();
         TOP_T_Cal();
-        // VOFA_T_SendTemp(10, 0.0f, 
-        //         (float)Top[0],
-        //         (float)Top[1],
-        //         (float)Top[2],
+        // VOFA_T_SendTemp(5, 0.0f,  // debug yaw pid with top[3]
         //         (float)Top[3],
         //         (float)Top[4],
-        //         (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW,
-        //         (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE,
-        //         (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS,
+        //         (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
         //         1.0f);
-        VOFA_T_SendTemp(5, 0.0f, 
-                (float)Top[3],
-                (float)Top[4],
-                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
-                1.0f);
+        VOFA_T_SendTemp(9, 0.0f,
+                    (float)xx,
+                    (float)yy,
+                    (float)ANGLE_Relative,
+                    (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.AIM,
+                    (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.AIM,
+                    (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.AIM,
+                    (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.AIM,
+                    1.0f);
     }
     if (htim->Instance == TIM10) // 云台 0.01ms
     {

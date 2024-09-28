@@ -220,6 +220,21 @@
           <WinNumber>1</WinNumber>
           <ItemText>ANGLE_Relative</ItemText>
         </Ww>
+        <Ww>
+          <count>13</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1]</ItemText>
+        </Ww>
+        <Ww>
+          <count>14</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>MOTOR_V_CHASSIS,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>15</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>MOTOR_V_ATTACK,0x0A</ItemText>
+        </Ww>
       </WatchWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
