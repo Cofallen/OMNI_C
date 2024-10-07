@@ -96,9 +96,9 @@ uint8_t ATTACK_F_JAM_Check(TYPEDEF_MOTOR *MOTOR)
 float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
 {
     // @veision 1 拟合
-    float a = 0.0f, b = 0.0f;
-    ATTACK_V_PARAM.SPEED = user_data.shoot_data.initial_speed * a + b;
-    return ATTACK_V_PARAM.SPEED;
+    // float a = 0.0f, b = 0.0f;
+    // ATTACK_V_PARAM.SPEED = user_data.shoot_data.initial_speed * a + b;
+    // return ATTACK_V_PARAM.SPEED;
 
     // @version 2, Use this code, this code is get the fire speed by judgement system
     // but the weakness is that the speed is not stable
@@ -128,8 +128,8 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
     // return MOTOR->DATA.AIM;
 
     // @veision 3, final code, this code is a stable speed
-    // MOTOR->DATA.AIM = 8000.0f;
-    // return MOTOR->DATA.AIM;
+    MOTOR->DATA.AIM = 3000.0f;
+    return MOTOR->DATA.AIM;
 }
 
 
@@ -146,16 +146,23 @@ uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     {
         MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM = ATTACK_F_JAM_Aim(&MOTOR[MOTOR_D_ATTACK_G], DBUS);
     }
-
-    MOTOR[MOTOR_D_ATTACK_L].DATA.AIM =  ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_L]);
-    MOTOR[MOTOR_D_ATTACK_L].DATA.AIM = -ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_R]);
+    if (DBUS_V_DATA.REMOTE.S2_u8 == 3)  
+    {
+        MOTOR[MOTOR_D_ATTACK_L].DATA.AIM = -ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_L]);
+        MOTOR[MOTOR_D_ATTACK_R].DATA.AIM = -ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_R]);
+    }
+    else
+    {
+        MOTOR[MOTOR_D_ATTACK_L].DATA.AIM = 0;
+        MOTOR[MOTOR_D_ATTACK_R].DATA.AIM = 0;
+    }
 
     // pid
     // PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_L]);
     // PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_R]);
-    PID_F_S(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_L]);
-    PID_F_S(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_R]);
-    PID_F_AS(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_G]);
+    PID_F_S(&MOTOR[MOTOR_D_ATTACK_L]);
+    PID_F_S(&MOTOR[MOTOR_D_ATTACK_R]);
+    PID_F_AS(&MOTOR[MOTOR_D_ATTACK_G]);
 
     return ROOT_READY;
 }
