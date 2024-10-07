@@ -4,10 +4,43 @@
 #include "DEFINE.h"
 #include "DBUS.h"
 #include "YU_PID.h"
+#include "YU_MATH.h"
+
+float DBUS_V_CH2[5] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f}; // last now error 3-count 4-status 
+float aim = 0;
 
 void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {
-    MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += -(float)DBUS->REMOTE.CH2_int16 * 0.02f;
+    // smooth finally some gaps
+    DBUS_V_CH2[NOW]  = (float)DBUS->REMOTE.CH2_int16;
+    DBUS_V_CH2[2] = MATH_D_ABS((DBUS_V_CH2[NOW] - DBUS_V_CH2[LAST]));
+
+    if ((DBUS_V_CH2[2] > 800) || DBUS_V_CH2[4] == 1.0f) // smooth transmation
+    {
+        if (DBUS_V_CH2[3] == 0.0f)
+        {
+            aim = DBUS_V_CH2[2];
+            DBUS_V_CH2[4] = 1.0f;
+        }
+        DBUS_V_CH2[3]++;
+        MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += aim * 0.001f;   // 1s
+
+        DBUS_V_CH2[LAST] = (float)DBUS_V_CH2[NOW];
+        
+        if (DBUS_V_CH2[3] >= 3)
+        {
+            DBUS_V_CH2[4] = 0.0f;
+            DBUS_V_CH2[3] = 0.0f;
+            DBUS_V_CH2[2] = 0.0f;
+        }
+    }
+    else
+    {
+        DBUS_V_CH2[4] = 0.0f;
+        MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += -(float)DBUS->REMOTE.CH2_int16 * 0.02f;
+    }
+    
+    // MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += -(float)DBUS->REMOTE.CH2_int16 * 0.02f;
     MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += -(float)DBUS->REMOTE.CH3_int16 * 0.01f;
 
     if (MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM > 5200)

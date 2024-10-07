@@ -37,7 +37,10 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     {   
         ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;  // if add 4096
         PRIDICT = DBUS->REMOTE.CH2_int16 * 4.0f;  // @TODO 预测模型待思考
-        Vr = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative);
+        if (Top[4] == 1.0f)
+        {
+            Vr = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative);
+        }
     }
     else if (DBUS->REMOTE.S2_u8 == 3)
     {
@@ -46,7 +49,7 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     else if (DBUS->REMOTE.S2_u8 == 2) // @TODO little spining go straight
     {
         PRIDICT = 0.0f;
-        Vr = -1000.0f;
+        Vr = -(float)DBUS->REMOTE.DIR_int16 * 1.5f;
     }
     ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;  // if add 4096
     if (ANGLE_Relative > 4096)  

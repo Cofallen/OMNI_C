@@ -29,22 +29,21 @@ uint8_t ROOT_F_PIDinit()
     const float PID_V_CHASSIS_SPEED[5] = {15.0f, 0.001f, 0, 2000.0f, 30000.0f};
     const float PID_V_CHASSIS_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
 
-//    const float PID_V_GIMBAL_YAW_SPEED[5] = {68.8f, 0.001f, 26.0f, 900.0f, 20000.0f};
-//    const float PID_V_GIMBAL_YAW_ANGLE[5] = {1.115f, 0.001f, 5.1f, 500.0f, 30000.0f};
-	const float PID_V_GIMBAL_YAW_SPEED[5] = {100.8f, 0.0f, 0.0f, 900.0f, 20000.0f};
-    const float PID_V_GIMBAL_YAW_ANGLE[5] = {1.335f, 0.0f, 0.0f, 500.0f, 50000.0f};
-	
+//	const float PID_V_GIMBAL_YAW_SPEED[5] = {355.0f, 0.0f, 0, 100.0f, 30000.0f};
+//    const float PID_V_GIMBAL_YAW_ANGLE[5] = {0.655f, 0.0f, 0.0001f, 200.0f, 2000.0f};
+	 const float PID_V_GIMBAL_YAW_SPEED[5] = {355.0f, 0.0f, 0.05f, 100.0f, 30000.0f};
+    const float PID_V_GIMBAL_YAW_ANGLE[5] = {0.4f, 0.0f, 0.0f, 200.0f, 2000.0f};
     const float PID_V_GIMBAL_PIT_SPEED[5] = {20.22f, 0.001f, 0, 1000.0f, 20000.0f};
     const float PID_V_GIMBAL_PIT_ANGLE[5] = {10.0f, 0, 0, 1000.0f, 3000.0f};
 
     const float PID_V_ATTACK_L_SPEED[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
     const float PID_V_ATTACK_R_SPEED[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
-    const float PID_V_ATTACK_G_SPEED[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
+    const float PID_V_ATTACK_G_SPEED[5] = {30.0f, 0, 0, 1000.0f, 3000.0f};
     const float PID_V_ATTACK_G_ANGLE[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
     const float PID_V_ATTACK_L_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
     const float PID_V_ATTACK_R_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
 
-    const float FOLLOW_PID_V[5] = {0.4f, 0.0f, 0.0f, 50.0f, 400.0f};
+    const float FOLLOW_PID_V[5] = {1.2f, 0.0f, 0.0f, 0.0f, 1000.0f};
 
     PID_F_Init(&MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].PID_S, PID_V_CHASSIS_SPEED);
     PID_F_Init(&MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].PID_S, PID_V_CHASSIS_SPEED);
@@ -75,7 +74,7 @@ uint8_t ROOT_F_PIDinit()
 void ROOT_F_Init()
 {
     ROOT_F_PIDinit();
-	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 1413;  // 云台初始化角度
+	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 1314;  // 云台初始化角度
 	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;
     MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM = 5000.0f;
     

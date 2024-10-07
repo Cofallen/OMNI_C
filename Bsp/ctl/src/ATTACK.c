@@ -30,7 +30,7 @@ uint8_t ATTACK_F_Init(TYPEDEF_MOTOR *MOTOR)
 
     // 数据初始化
     ATTACK_V_PARAM.SINGLE_ANGLE = 36864.0f;
-    // ATTACK_V_PARAM.SPEED = 3000.0f;
+    ATTACK_V_PARAM.SPEED = 3000.0f;
 
     // 电机初始化
     MOTOR[MOTOR_D_ATTACK_L].DATA.AIM = -ATTACK_V_PARAM.SPEED;
@@ -46,11 +46,11 @@ float ATTACK_F_JAM_Aim(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     if (LOCK == 0)
     {
         ATTACK_V_PARAM.COUNT = 1; // consist && single mode
-        if (DBUS->REMOTE.S2_u8 == DBUS_D_MOD_SINGLE)
+        if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SINGLE)
         {
             LOCK = 1; // 单发上锁
         }
-        else if (DBUS->REMOTE.S2_u8 == DBUS_D_MOD_SHUT)
+        else if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SHUT)
         {
             LOCK = 0; // 解锁
             ATTACK_V_PARAM.COUNT = 0;
@@ -151,8 +151,10 @@ uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     MOTOR[MOTOR_D_ATTACK_L].DATA.AIM = -ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_R]);
 
     // pid
-    PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_L]);
-    PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_R]);
+    // PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_L]);
+    // PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_R]);
+    PID_F_S(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_L]);
+    PID_F_S(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_R]);
     PID_F_AS(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_G]);
 
     return ROOT_READY;

@@ -124,6 +124,7 @@ __weak void StartIMUTask(void const * argument)
   /* init code for USB_DEVICE */
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN StartIMUTask */
+
   Imu_Init();
   portTickType currentIMU;
   currentIMU = xTaskGetTickCount();
