@@ -14,10 +14,12 @@ typedef struct
     float SINGLE_ANGLE; // 单发角度
     float SPEED;        // 摩擦轮角度
     int COUNT;
+    int8_t LOCK;
 }TYPEDEF_ATTACK_PARAM;
 
 extern TYPEDEF_ATTACK_PARAM ATTACK_V_PARAM;
 
 uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS);
+uint8_t ATTACK_F_Init(TYPEDEF_MOTOR *MOTOR);
 
 #endif // !__ATTACK_H__

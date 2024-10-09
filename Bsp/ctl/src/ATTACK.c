@@ -18,8 +18,6 @@
 
 TYPEDEF_ATTACK_PARAM ATTACK_V_PARAM = {0};
 
-int8_t LOCK = 0;
-
 int IOTA = 0; // test
 double M;     // test
 
@@ -43,25 +41,30 @@ uint8_t ATTACK_F_Init(TYPEDEF_MOTOR *MOTOR)
 // 根据遥控，获取拨弹目标值
 float ATTACK_F_JAM_Aim(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {
-    if (LOCK == 0)
+    if (ATTACK_V_PARAM.LOCK == 0)
     {
         ATTACK_V_PARAM.COUNT = 1; // consist && single mode
         if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SINGLE)
         {
-            LOCK = 1; // 单发上锁
+            ATTACK_V_PARAM.LOCK = 1; // 单发上锁
         }
         else if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SHUT)
         {
-            LOCK = 0; // 解锁
+            ATTACK_V_PARAM.LOCK = 0; // 解锁
             ATTACK_V_PARAM.COUNT = 0;
         }
     }
-    else if (LOCK == 1)
+    else if (ATTACK_V_PARAM.LOCK == 1)
     {
+        if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SHUT)
+        {
+            ATTACK_V_PARAM.LOCK = 0; // 解锁
+            ATTACK_V_PARAM.COUNT = 0;
+        }
         return MOTOR->DATA.AIM;
     }
 
-    MOTOR->DATA.AIM = (float)MOTOR->DATA.ANGLE_INFINITE + ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.COUNT;
+    MOTOR->DATA.AIM = (float)MOTOR->DATA.ANGLE_INFINITE - ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.COUNT;
     return MOTOR->DATA.AIM;
 }
 
@@ -136,16 +139,16 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
 // 总控制函数
 uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {
-    if (!ATTACK_F_JAM_Check(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_G]))
-    {
-        // 卡弹
-        MOTOR[MOTOR_D_ATTACK_G].DATA.AIM = (float)MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE - ATTACK_V_PARAM.SINGLE_ANGLE;
-        ATTACK_V_PARAM.TIME = 0; // 重置时间
-    }
-    else
-    {
+    // if (ATTACK_F_JAM_Check(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_G]))
+    // {
+    //     // 卡弹
+    //     MOTOR[MOTOR_D_ATTACK_G].DATA.AIM = (float)MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE - ATTACK_V_PARAM.SINGLE_ANGLE;
+    //     ATTACK_V_PARAM.TIME = 0; // 重置时间
+    // }
+    // else
+    // {
         MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM = ATTACK_F_JAM_Aim(&MOTOR[MOTOR_D_ATTACK_G], DBUS);
-    }
+    // }
     if (DBUS_V_DATA.REMOTE.S2_u8 == 3)  
     {
         MOTOR[MOTOR_D_ATTACK_L].DATA.AIM = -ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_L]);
@@ -160,8 +163,8 @@ uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     // pid
     // PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_L]);
     // PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_R]);
-    PID_F_S(&MOTOR[MOTOR_D_ATTACK_L]);
-    PID_F_S(&MOTOR[MOTOR_D_ATTACK_R]);
+    // PID_F_S(&MOTOR[MOTOR_D_ATTACK_L]);
+    // PID_F_S(&MOTOR[MOTOR_D_ATTACK_R]);
     PID_F_AS(&MOTOR[MOTOR_D_ATTACK_G]);
 
     return ROOT_READY;

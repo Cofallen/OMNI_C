@@ -26,7 +26,9 @@
             "fast_math_functions_f16.h": "c",
             "stdarg.h": "c",
             "chassis.h": "c",
-            "dbus.h": "c"
+            "dbus.h": "c",
+            "stdlib.h": "c",
+            "judgement.h": "c"
         }
     },
     "extensions": {}
