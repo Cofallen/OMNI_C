@@ -29,16 +29,16 @@ uint8_t ROOT_F_PIDinit()
     const float PID_V_CHASSIS_SPEED[5] = {15.0f, 0.001f, 0, 2000.0f, 30000.0f};
     const float PID_V_CHASSIS_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
 
-//	const float PID_V_GIMBAL_YAW_SPEED[5] = {355.0f, 0.0f, 0, 100.0f, 30000.0f};
-//    const float PID_V_GIMBAL_YAW_ANGLE[5] = {0.655f, 0.0f, 0.0001f, 200.0f, 2000.0f};
-	 const float PID_V_GIMBAL_YAW_SPEED[5] = {100.0f, 0.0f, 20.0f, 100.0f, 30000.0f};
-    const float PID_V_GIMBAL_YAW_ANGLE[5] = {0.8f, 0.0f, 0.0f, 200.0f, 657.0f};
+	const float PID_V_GIMBAL_YAW_SPEED[5] = {305.0f, 0.0f, 0, 100.0f, 30000.0f};
+    const float PID_V_GIMBAL_YAW_ANGLE[5] = {0.085f, 0.0f, 0.0f, 200.0f, 2000.0f};
+	// const float PID_V_GIMBAL_YAW_SPEED[5] = {100.0f, 0.0f, 20.0f, 100.0f, 30000.0f};
+    // const float PID_V_GIMBAL_YAW_ANGLE[5] = {0.8f, 0.0f, 0.0f, 200.0f, 657.0f};
     const float PID_V_GIMBAL_PIT_SPEED[5] = {20.22f, 0.001f, 0, 1000.0f, 20000.0f};
     const float PID_V_GIMBAL_PIT_ANGLE[5] = {10.0f, 0, 0, 1000.0f, 3000.0f};
 
     const float PID_V_ATTACK_L_SPEED[5] = {20.0f, 0, 0, 1000.0f, 20000.0f};
     const float PID_V_ATTACK_R_SPEED[5] = {20.0f, 0, 0, 1000.0f, 20000.0f};
-    const float PID_V_ATTACK_G_SPEED[5] = {5.0f, 0, 0, 1000.0f, 8000.0f};
+    const float PID_V_ATTACK_G_SPEED[5] = {10.0f, 0, 0, 1000.0f, 8000.0f};
     const float PID_V_ATTACK_G_ANGLE[5] = {1.0f, 0, 0, 1000.0f, 3000.0f};
     const float PID_V_ATTACK_L_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
     const float PID_V_ATTACK_R_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
@@ -74,12 +74,12 @@ uint8_t ROOT_F_PIDinit()
 void ROOT_F_Init()
 {
     ROOT_F_PIDinit();
-	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 1314;  // 云台初始化角度
+	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 1314 + 4096;  // 云台初始化角度
 	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;
     MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM = 5000.0f;
     
-	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS = 0;
+	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS = 1;   // @TODO when yaw init, aim 0->angle_init, make yaw shaking.
 	
-    ATTACK_F_Init(&ATTACK_V_PARAM);
+    ATTACK_F_Init(MOTOR_V_ATTACK);
     
 }

@@ -71,14 +71,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         //         (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
         //         (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].PID_A.OUT.ALL_OUT,
         //         1.0f);
-        VOFA_T_SendTemp(9, 0.0f,
-                    (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.AIM,
-                    (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.AIM,
+        VOFA_T_SendTemp(7, 0.0f,
                     (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM,
-                    (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW,
-                    (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.SPEED_LAST,
                     (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE,
-                    (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE,
+                    (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.SPEED_NOW,
+                    (float)ATTACK_V_PARAM.TIME,
+                    (float)ATTACK_V_PARAM.FLAG,
                     1.0f);
                   
     }
