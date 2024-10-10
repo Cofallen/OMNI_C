@@ -61,7 +61,16 @@ omni_c/main.o: ..\Core\Src\main.c ..\Core\Inc\main.h \
   ..\Bsp\ctl\inc\DBUS.h ..\Bsp\extra\inc\JUDGEMENT.h \
   ..\Bsp\ctl\inc\CAP.h ..\Bsp\ctl\inc\CHASSIS.h \
   ..\Bsp\extra\inc\DEFINE.h ..\Bsp\ctl\inc\GIMBAL.h ..\LIB\PID.h \
-  ..\LIB\struct_typedef.h ..\Bsp\ctl\inc\TOP.h ..\Bsp\dev\inc\TIM_DEV.h \
+  ..\LIB\struct_typedef.h ..\Bsp\ctl\inc\TOP.h ..\LIB\QuaternionEKF.h \
+  ..\LIB\kalman_filter.h ..\CMSIS\DSP\Inc\dsp\matrix_functions.h \
+  ..\CMSIS\DSP\Inc\arm_math_types.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\math.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\float.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\limits.h \
+  ..\CMSIS\DSP\Inc\arm_math_memory.h ..\CMSIS\DSP\Inc\dsp\none.h \
+  ..\CMSIS\DSP\Inc\dsp\utils.h \
+  ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h ..\Bsp\dev\inc\TIM_DEV.h \
   ..\Bsp\dev\inc\CAN_DEV.h ..\Bsp\dev\inc\USART_DEV.h \
   ..\Bsp\extra\inc\VISION.h ..\Bsp\extra\inc\VOFA.h \
   ..\Bsp\extra\inc\YU_MATH.h ..\Bsp\extra\inc\ROOT.h \

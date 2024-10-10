@@ -40,4 +40,15 @@ omni_c/chassis.o: ..\Bsp\ctl\src\CHASSIS.c ..\Core\Inc\main.h \
   ..\Bsp\ctl\inc\CHASSIS.h ..\Bsp\ctl\inc\DBUS.h ..\Bsp\ctl\inc\MOTOR.h \
   ..\Bsp\extra\inc\DEFINE.h ..\Bsp\extra\inc\YU_MATH.h \
   ..\Bsp\ctl\inc\YU_PID.h ..\Bsp\dev\inc\TIM_DEV.h ..\JUDGE\Read_Data.h \
-  ..\Core\Inc\usart.h ..\Bsp\extra\inc\ROOT.h ..\Bsp\ctl\inc\TOP.h
+  ..\Core\Inc\usart.h ..\Bsp\extra\inc\ROOT.h ..\Bsp\ctl\inc\TOP.h \
+  ..\LIB\QuaternionEKF.h ..\LIB\kalman_filter.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdlib.h \
+  ..\CMSIS\DSP\Inc\dsp\matrix_functions.h \
+  ..\CMSIS\DSP\Inc\arm_math_types.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\string.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\float.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\limits.h \
+  ..\CMSIS\DSP\Inc\arm_math_memory.h ..\CMSIS\DSP\Inc\dsp\none.h \
+  ..\CMSIS\DSP\Inc\dsp\utils.h \
+  ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h

@@ -54,8 +54,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
                   MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.CAN_SEND,
                   MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.CAN_SEND,
                   0);
-        // CAN_F_Send(&hcan2, 0x200, -1000,
-        //         1000,
+        // CAN_F_Send(&hcan2, 0x200, 2000,
+        //         2000,
         //         0,
         //         0);
 		//CAN_F_Send(&hcan1, 0x200, 1000, 1000, 1000, 1000);
@@ -65,19 +65,19 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         ROOT_F_MONITOR_DBUS(&DBUS_V_DATA);
         TOP_T_Monitor();
         TOP_T_Cal();
-        // VOFA_T_SendTemp(6, 0.0f,  // debug yaw pid with top[3]
-        //         (float)Top[3],
-        //         (float)Top[4],
-        //         (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
-        //         (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].PID_A.OUT.ALL_OUT,
-        //         1.0f);
-        VOFA_T_SendTemp(7, 0.0f,
-                    (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM,
-                    (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE,
-                    (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.SPEED_NOW,
-                    (float)ATTACK_V_PARAM.TIME,
-                    (float)ATTACK_V_PARAM.FLAG,
-                    1.0f);
+        VOFA_T_SendTemp(6, 0.0f,  // debug yaw pid with top[3]
+                (float)Top[3],
+                (float)Top[4],
+                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
+                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].PID_A.OUT.ALL_OUT,
+                1.0f);
+        // VOFA_T_SendTemp(7, 0.0f,
+        //             (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM,
+        //             (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE,
+        //             (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.SPEED_NOW,
+        //             (float)ATTACK_V_PARAM.TIME,
+        //             (float)ATTACK_V_PARAM.FLAG,
+        //             1.0f);
                   
     }
     if (htim->Instance == TIM10) // 云台 0.01ms

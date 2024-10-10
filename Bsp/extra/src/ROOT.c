@@ -29,15 +29,15 @@ uint8_t ROOT_F_PIDinit()
     const float PID_V_CHASSIS_SPEED[5] = {15.0f, 0.001f, 0, 2000.0f, 30000.0f};
     const float PID_V_CHASSIS_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
 
-	const float PID_V_GIMBAL_YAW_SPEED[5] = {305.0f, 0.0f, 0, 100.0f, 30000.0f};
-    const float PID_V_GIMBAL_YAW_ANGLE[5] = {0.085f, 0.0f, 0.0f, 200.0f, 2000.0f};
+	const float PID_V_GIMBAL_YAW_SPEED[5] = {375.0f, 0.0f, 0, 100.0f, 30000.0f};
+    const float PID_V_GIMBAL_YAW_ANGLE[5] = {1.35f, 0.0f, 0.0f, 200.0f, 2000.0f};
 	// const float PID_V_GIMBAL_YAW_SPEED[5] = {100.0f, 0.0f, 20.0f, 100.0f, 30000.0f};
     // const float PID_V_GIMBAL_YAW_ANGLE[5] = {0.8f, 0.0f, 0.0f, 200.0f, 657.0f};
     const float PID_V_GIMBAL_PIT_SPEED[5] = {20.22f, 0.001f, 0, 1000.0f, 20000.0f};
     const float PID_V_GIMBAL_PIT_ANGLE[5] = {10.0f, 0, 0, 1000.0f, 3000.0f};
 
-    const float PID_V_ATTACK_L_SPEED[5] = {20.0f, 0, 0, 1000.0f, 20000.0f};
-    const float PID_V_ATTACK_R_SPEED[5] = {20.0f, 0, 0, 1000.0f, 20000.0f};
+    const float PID_V_ATTACK_L_SPEED[5] = {5.0f, 0, 0, 1000.0f, 20000.0f};
+    const float PID_V_ATTACK_R_SPEED[5] = {5.0f, 0, 0, 1000.0f, 20000.0f};
     const float PID_V_ATTACK_G_SPEED[5] = {10.0f, 0, 0, 1000.0f, 8000.0f};
     const float PID_V_ATTACK_G_ANGLE[5] = {1.0f, 0, 0, 1000.0f, 3000.0f};
     const float PID_V_ATTACK_L_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};

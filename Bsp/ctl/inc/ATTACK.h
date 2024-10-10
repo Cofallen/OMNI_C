@@ -15,6 +15,7 @@ typedef struct
     float SPEED;        // 摩擦轮角度
     int COUNT;
     int8_t LOCK;
+    int8_t STATUS;      // jam status
 }TYPEDEF_ATTACK_PARAM;
 
 extern TYPEDEF_ATTACK_PARAM ATTACK_V_PARAM;

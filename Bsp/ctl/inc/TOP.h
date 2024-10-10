@@ -1,6 +1,8 @@
 #ifndef __TOP_H__
 #define __TOP_H__
 
+#include "QuaternionEKF.h"
+
 typedef struct TYPEDEF_TOP_DATA
 {
     float REALITY_ANGLE; // 真实角度//带圈数
@@ -26,6 +28,8 @@ typedef union TYPEDEF_TOP_DATA_UNION // 共用体(用于接受各种数据)(视�
 } TYPEDEF_TOP_DATA_UNION;
 
 extern float yaw, pitch, roll;
+extern QEKF_INS_t QEKF_INS;
+
 extern float Top[5];
 
 extern void TOP_T_Cal();

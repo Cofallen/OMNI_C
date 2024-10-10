@@ -37,6 +37,16 @@ omni_c/top.o: ..\Bsp\ctl\src\TOP.c ..\Core\Inc\main.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_usb.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\string.h \
-  ..\Bsp\ctl\inc\TOP.h ..\Bsp\extra\inc\DEFINE.h \
+  ..\Bsp\ctl\inc\TOP.h ..\LIB\QuaternionEKF.h ..\LIB\kalman_filter.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdlib.h \
+  ..\CMSIS\DSP\Inc\dsp\matrix_functions.h \
+  ..\CMSIS\DSP\Inc\arm_math_types.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\math.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\float.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\limits.h \
+  ..\CMSIS\DSP\Inc\arm_math_memory.h ..\CMSIS\DSP\Inc\dsp\none.h \
+  ..\CMSIS\DSP\Inc\dsp\utils.h \
+  ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h ..\Bsp\extra\inc\DEFINE.h \
   ..\Bsp\extra\inc\YU_MATH.h ..\Bsp\dev\inc\TIM_DEV.h \
   ..\Bsp\ctl\inc\MOTOR.h

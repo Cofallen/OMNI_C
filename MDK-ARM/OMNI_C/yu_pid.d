@@ -40,4 +40,14 @@ omni_c/yu_pid.o: ..\Bsp\ctl\src\YU_PID.c ..\Core\Inc\main.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdio.h \
   ..\Bsp\ctl\inc\YU_PID.h ..\Bsp\ctl\inc\MOTOR.h \
   ..\Bsp\extra\inc\DEFINE.h ..\Bsp\extra\inc\YU_MATH.h \
-  ..\Bsp\ctl\inc\TOP.h
+  ..\Bsp\ctl\inc\TOP.h ..\LIB\QuaternionEKF.h ..\LIB\kalman_filter.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdlib.h \
+  ..\CMSIS\DSP\Inc\dsp\matrix_functions.h \
+  ..\CMSIS\DSP\Inc\arm_math_types.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\math.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\float.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\limits.h \
+  ..\CMSIS\DSP\Inc\arm_math_memory.h ..\CMSIS\DSP\Inc\dsp\none.h \
+  ..\CMSIS\DSP\Inc\dsp\utils.h \
+  ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h
