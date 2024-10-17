@@ -28,7 +28,9 @@
             "chassis.h": "c",
             "dbus.h": "c",
             "stdlib.h": "c",
-            "judgement.h": "c"
+            "judgement.h": "c",
+            "vision.h": "c",
+            "quaternionekf.h": "c"
         }
     },
     "extensions": {}

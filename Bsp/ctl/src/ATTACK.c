@@ -43,15 +43,15 @@ uint8_t ATTACK_F_Init(TYPEDEF_MOTOR *MOTOR)
 // 根据遥控，获取拨弹目标值
 float ATTACK_F_JAM_Aim(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {
-    if (ATTACK_V_PARAM.LOCK == 0)
+    if (ATTACK_V_PARAM.LOCK == 0 )
     {
         ATTACK_V_PARAM.COUNT = 1; // consist && single mode
         if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SINGLE)
         {
             ATTACK_V_PARAM.LOCK = 1; // 单发上锁
         }
-        else if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SHUT)
-        {
+        else if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SHUT && ROOT_V_MONITOR_DBUS <= 50)
+        {   
             ATTACK_V_PARAM.LOCK = 0; // 解锁
             ATTACK_V_PARAM.COUNT = 0;
         }
@@ -60,6 +60,7 @@ float ATTACK_F_JAM_Aim(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     {
         if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SHUT)
         {
+        
             ATTACK_V_PARAM.LOCK = 0; // 解锁
             ATTACK_V_PARAM.COUNT = 0;
         }
@@ -76,7 +77,7 @@ uint8_t ATTACK_F_JAM_Check(TYPEDEF_MOTOR *MOTOR)
     float DIFF = MOTOR->DATA.AIM - (float)MOTOR->DATA.ANGLE_INFINITE;
     float EDGE = MATH_D_ABS((ATTACK_V_PARAM.SINGLE_ANGLE / 300.0f));
 
-    if (((MATH_D_ABS(DIFF) >= EDGE) && ((MATH_D_ABS(MOTOR->DATA.SPEED_NOW)) <= 20)))
+    if (((MATH_D_ABS(DIFF) >= EDGE) && ((MATH_D_ABS(MOTOR->DATA.SPEED_NOW)) <= 5)))
     {
         if (ATTACK_V_PARAM.TIME >= ATTACK_D_TIMEOUT)
         {
@@ -159,22 +160,12 @@ uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
         ATTACK_V_PARAM.FLAG = -ATTACK_V_PARAM.FLAG;
         ATTACK_V_PARAM.TIME = 0; // 重置时间
     }
-    if (DBUS_V_DATA.REMOTE.S2_u8 == 3)  
-    {
-        MOTOR[MOTOR_D_ATTACK_L].DATA.AIM = -ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_L]);
-        MOTOR[MOTOR_D_ATTACK_R].DATA.AIM = ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_R]);
-    }
-    else
-    {
-        MOTOR[MOTOR_D_ATTACK_L].DATA.AIM = 0;
-        MOTOR[MOTOR_D_ATTACK_R].DATA.AIM = 0;
-    }
 
     // pid
     // PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_L]);
     // PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_R]);
-    PID_F_S(&MOTOR[MOTOR_D_ATTACK_L]);
-    PID_F_S(&MOTOR[MOTOR_D_ATTACK_R]);
+//    PID_F_S(&MOTOR[MOTOR_D_ATTACK_L]);
+//    PID_F_S(&MOTOR[MOTOR_D_ATTACK_R]);
     PID_F_AS(&MOTOR[MOTOR_D_ATTACK_G]);
 
     return ROOT_READY;
