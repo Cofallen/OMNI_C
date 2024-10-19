@@ -29,7 +29,7 @@ void TOP_T_Cal()
     if (Top[4] == 1.0f)
     {
         convertAngleToIndex(yaw, &Top[NOW]);
-        Top[NOW] = Top[NOW] + abcdefg;
+        // Top[NOW] = Top[NOW] + abcdefg;
     }
     
     if (Top[NOW] - Top[LAST] > 4096)
@@ -55,6 +55,7 @@ void TOP_T_Monitor()
         Top[4] = 1.0f; // 1-open, online
     }
 
+<<<<<<< HEAD
     if (Top[4] == 0.0f) // offline
     {
         // top to motor angle
@@ -66,4 +67,14 @@ void TOP_T_Monitor()
         MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM = 0.0f;
 
     }
+=======
+    // if (Top[4] == 0.0f) // offline
+    // {
+    //     Top[NOW] = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW;
+    //     // Top[LAST] = MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_LAST;
+    //     Top[2] = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS;
+    //     // Top[3] = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE;
+    //     abcdefg = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW;
+    // }
+>>>>>>> 53d552833b8a0d771c79f53550db527ef748608a
 }
