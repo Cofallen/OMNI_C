@@ -25,7 +25,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     {
         if (Top[4] == 1.0f){
             CHASSIS_F_Ctl(MOTOR_V_CHASSIS, &DBUS_V_DATA);
-
         }
         // CHASSIS_F_Ctl(MOTOR_V_CHASSIS, &DBUS_V_DATA);
         CAN_F_Send(&hcan1, 0x200, MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
@@ -80,6 +79,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
                 (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
                 (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].PID_A.OUT.ALL_OUT,
                 1.0f);
+                // VOFA_T_SendTemp(4, 0.0f,  // debug yaw pid with top[3]
+                // (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM,
+                // (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].PID_S.OUT.ALL_OUT,
+                // 1.0f);
         // VOFA_T_SendTemp(7, 0.0f,
         //             (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM,
         //             (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE,

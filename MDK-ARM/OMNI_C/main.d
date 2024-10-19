@@ -72,6 +72,7 @@ omni_c/main.o: ..\Core\Src\main.c ..\Core\Inc\main.h \
   ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
   ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h ..\Bsp\dev\inc\TIM_DEV.h \
   ..\Bsp\dev\inc\CAN_DEV.h ..\Bsp\dev\inc\USART_DEV.h \
-  ..\Bsp\extra\inc\VISION.h ..\Bsp\extra\inc\VOFA.h \
-  ..\Bsp\extra\inc\YU_MATH.h ..\Bsp\extra\inc\ROOT.h \
-  ..\JUDGE\Read_Data.h
+  ..\Bsp\extra\inc\VISION.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h \
+  ..\Bsp\extra\inc\VOFA.h ..\Bsp\extra\inc\YU_MATH.h \
+  ..\Bsp\extra\inc\ROOT.h ..\JUDGE\Read_Data.h

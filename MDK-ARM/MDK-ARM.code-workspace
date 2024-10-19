@@ -4,32 +4,6 @@
             "path": "."
         }
     ],
-    "settings": {
-        "files.associations": {
-            "tim_dev.h": "c",
-            "pid.h": "c",
-            "read_data.h": "c",
-            "root.h": "c",
-            "yu_pid.h": "c",
-            "attack.h": "c",
-            "gimbal.h": "c",
-            "define.h": "c",
-            "motor.h": "c",
-            "yu_math.h": "c",
-            "top.h": "c",
-            "string.h": "c",
-            "main.h": "c",
-            "vofa.h": "c",
-            "dspfns.h": "c",
-            "basic_math_functions.h": "c",
-            "basic_math_functions_f16.h": "c",
-            "fast_math_functions_f16.h": "c",
-            "stdarg.h": "c",
-            "chassis.h": "c",
-            "dbus.h": "c",
-            "stdlib.h": "c",
-            "judgement.h": "c"
-        }
-    },
+    "settings": {},
     "extensions": {}
 }

@@ -37,9 +37,6 @@
                     "path": "../Core/Src/freertos.c"
                   },
                   {
-                    "path": "../Core/Src/can.c"
-                  },
-                  {
                     "path": "../Core/Src/dma.c"
                   },
                   {
@@ -47,6 +44,9 @@
                   },
                   {
                     "path": "../Core/Src/tim.c"
+                  },
+                  {
+                    "path": "../Core/Src/can.c"
                   },
                   {
                     "path": "../Core/Src/usart.c"
@@ -435,6 +435,96 @@
             "folders": []
           }
         ]
+      },
+      {
+        "name": "UI",
+        "files": [
+          {
+            "path": "../UI/ui_default_init0_0.c"
+          },
+          {
+            "path": "../UI/ui_default_init0_1.c"
+          },
+          {
+            "path": "../UI/ui_default_init0_2.c"
+          },
+          {
+            "path": "../UI/ui_default_init1_0.c"
+          },
+          {
+            "path": "../UI/ui_default_init2_0.c"
+          },
+          {
+            "path": "../UI/ui_default_init3_0.c"
+          },
+          {
+            "path": "../UI/ui_default_init4_0.c"
+          },
+          {
+            "path": "../UI/ui_default_init5_0.c"
+          },
+          {
+            "path": "../UI/ui_default_init5_1.c"
+          },
+          {
+            "path": "../UI/ui_default_init5_2.c"
+          },
+          {
+            "path": "../UI/ui_default_init5_3.c"
+          },
+          {
+            "path": "../UI/ui_default_init6_0.c"
+          },
+          {
+            "path": "../UI/ui_interface.c"
+          },
+          {
+            "path": "../UI/ui.h"
+          },
+          {
+            "path": "../UI/ui_default_init0_0.h"
+          },
+          {
+            "path": "../UI/ui_default_init0_1.h"
+          },
+          {
+            "path": "../UI/ui_default_init0_2.h"
+          },
+          {
+            "path": "../UI/ui_default_init1_0.h"
+          },
+          {
+            "path": "../UI/ui_default_init2_0.h"
+          },
+          {
+            "path": "../UI/ui_default_init3_0.h"
+          },
+          {
+            "path": "../UI/ui_default_init4_0.h"
+          },
+          {
+            "path": "../UI/ui_default_init5_0.h"
+          },
+          {
+            "path": "../UI/ui_default_init5_1.h"
+          },
+          {
+            "path": "../UI/ui_default_init5_2.h"
+          },
+          {
+            "path": "../UI/ui_default_init5_3.h"
+          },
+          {
+            "path": "../UI/ui_default_init6_0.h"
+          },
+          {
+            "path": "../UI/ui_interface.h"
+          },
+          {
+            "path": "../UI/ui_types.h"
+          }
+        ],
+        "folders": []
       }
     ]
   },

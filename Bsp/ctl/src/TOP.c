@@ -29,7 +29,7 @@ void TOP_T_Cal()
     if (Top[4] == 1.0f)
     {
         convertAngleToIndex(yaw, &Top[NOW]);
-        Top[NOW] = Top[NOW] + abcdefg;
+        // Top[NOW] = Top[NOW] + abcdefg;
     }
     
     if (Top[NOW] - Top[LAST] > 4096)
