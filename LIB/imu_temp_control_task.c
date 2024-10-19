@@ -109,6 +109,12 @@ void INS_Task()
             gyro_correct[0]+= gyro[0];
             gyro_correct[1]+= gyro[1];
             gyro_correct[2]+= gyro[2];
+			
+			gyro_correct[0] = -0.00311695272;
+			gyro_correct[1] = -0.00446876744;
+			gyro_correct[2] = -7.66990706e-05;
+			attitude_flag=2; //go to 2 state
+			
             correct_times++;
             if(correct_times>=correct_Time_define)
             {
@@ -124,10 +130,10 @@ void INS_Task()
     {
         // 100hz 的温度控制pid
         IMU_Temperature_Ctrl();
-//        attitude_flag=1;  //go to correct state
         static uint32_t temp_Ticks=0;
         if((fabsf(temp-Destination_TEMPERATURE)<0.5f)&&attitude_flag==0) //接近额定温度之差小于0.5° 开始计数
         {
+		  attitude_flag=1;  //go to correct state
           temp_Ticks++;
           if(temp_Ticks>temp_times)   //计数达到一定次数后 才进入0飘初始化 说明温度已经达到目标
           {

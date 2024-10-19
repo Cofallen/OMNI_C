@@ -159,7 +159,7 @@
           <Type>0</Type>
           <LineNumber>46</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134220562</Address>
+          <Address>134220710</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -175,7 +175,7 @@
           <Type>0</Type>
           <LineNumber>61</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134220662</Address>
+          <Address>134220810</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -191,7 +191,7 @@
           <Type>0</Type>
           <LineNumber>81</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134220994</Address>
+          <Address>134221142</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -268,6 +268,11 @@
           <count>12</count>
           <WinNumber>1</WinNumber>
           <ItemText>ATTACK_V_PARAM,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>13</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>gyro_correct</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
