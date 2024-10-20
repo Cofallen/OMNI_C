@@ -135,7 +135,14 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
     // return MOTOR->DATA.AIM;
 
     // @veision 3, final code, this code is a stable speed
-    MOTOR->DATA.AIM = 3000.0f;
+    if (DBUS_V_DATA.REMOTE.S1_u8 == 1 || DBUS_V_DATA.REMOTE.S1_u8 == 2)  // 3 is the fire button
+    {
+        MOTOR->DATA.AIM = ATTACK_V_PARAM.SPEED;
+    }
+    else
+    {
+        MOTOR->DATA.AIM = 0.0f;
+    }
     return MOTOR->DATA.AIM;
 }
 
@@ -159,16 +166,16 @@ uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
         ATTACK_V_PARAM.FLAG = -ATTACK_V_PARAM.FLAG;
         ATTACK_V_PARAM.TIME = 0; // 重置时间
     }
-    if (DBUS_V_DATA.REMOTE.S2_u8 == 3)  
-    {
+    // if (DBUS_V_DATA.REMOTE.S2_u8 == 3)  
+    // {
         MOTOR[MOTOR_D_ATTACK_L].DATA.AIM = -ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_L]);
         MOTOR[MOTOR_D_ATTACK_R].DATA.AIM = ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_R]);
-    }
-    else
-    {
-        MOTOR[MOTOR_D_ATTACK_L].DATA.AIM = 0;
-        MOTOR[MOTOR_D_ATTACK_R].DATA.AIM = 0;
-    }
+    // }
+    // else
+    // {
+    //     MOTOR[MOTOR_D_ATTACK_L].DATA.AIM = 0;
+    //     MOTOR[MOTOR_D_ATTACK_R].DATA.AIM = 0;
+    // }
 
     // pid
     // PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_L]);

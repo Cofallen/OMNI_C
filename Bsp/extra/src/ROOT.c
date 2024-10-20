@@ -12,6 +12,7 @@
 
 uint8_t ROOT_V_MONITOR_DBUS = 0; // 离线判断参数
 TYPEDEF_MOTOR_PID FOLLOW_PID = {0};
+TYPEDEF_MOTOR_PID TOP_OFF_S = {0}, TOP_OFF_A = {0};
 
 void ROOT_F_MONITOR_DBUS(TYPEDEF_DBUS *DBUS)
 {
@@ -20,13 +21,16 @@ void ROOT_F_MONITOR_DBUS(TYPEDEF_DBUS *DBUS)
     if (ROOT_V_MONITOR_DBUS >= 50) // 50ms
     {
         memset(&DBUS_V_DATA, 0, sizeof(DBUS_V_DATA));
+        memset(MOTOR_V_CHASSIS, 0, sizeof(MOTOR_V_CHASSIS));
+        memset(MOTOR_V_GIMBAL, 0, sizeof(MOTOR_V_GIMBAL));
+        memset(MOTOR_V_ATTACK, 0, sizeof(MOTOR_V_ATTACK));
     }
 }
 
 // 传pid参数
 uint8_t ROOT_F_PIDinit()
 {
-    const float PID_V_CHASSIS_SPEED[5] = {15.0f, 0.001f, 0, 2000.0f, 30000.0f};
+    const float PID_V_CHASSIS_SPEED[5] = {15.0f, 0.0f, 0, 2000.0f, 30000.0f};
     const float PID_V_CHASSIS_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
 
 	const float PID_V_GIMBAL_YAW_SPEED[5] = {375.0f, 0.0f, 0, 100.0f, 30000.0f};
@@ -43,7 +47,9 @@ uint8_t ROOT_F_PIDinit()
     const float PID_V_ATTACK_L_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
     const float PID_V_ATTACK_R_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
 
-    const float FOLLOW_PID_V[5] = {1.2f, 0.0f, 0.0f, 0.0f, 1000.0f};
+    const float FOLLOW_PID_V[5] = {1.5f, 0.0f, 0.0f, 0.0f, 2000.0f};
+    const float PID_V_TOP_OFF_S[5] = {100.5f, 0.0f, 0.0f, 0.0f, 30000.0f};
+    const float PID_V_TOP_OFF_A[5] = {1.5f, 0.0f, 0.0f, 0.0f, 2000.0f};
 
     PID_F_Init(&MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].PID_S, PID_V_CHASSIS_SPEED);
     PID_F_Init(&MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].PID_S, PID_V_CHASSIS_SPEED);
@@ -68,6 +74,8 @@ uint8_t ROOT_F_PIDinit()
     PID_F_Init(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].PID_C, PID_V_ATTACK_R_CURRENT);
 
     PID_F_Init(&FOLLOW_PID, FOLLOW_PID_V);
+    PID_F_Init(&TOP_OFF_S, PID_V_TOP_OFF_S);
+    PID_F_Init(&TOP_OFF_A, PID_V_TOP_OFF_A);
     return ROOT_READY;
 }
 

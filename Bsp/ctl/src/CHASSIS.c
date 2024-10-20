@@ -22,22 +22,20 @@ float temprate = 0.0f;
 double ANGLE_Rad, ANGLE_Rada = 0.0f;
 double ANGLE_Relative = 0.0f;
 
-float xx = 0.0f, yy = 0.0f;
-
 void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {
     // 运动学解算
     float Vx = 0.0f, Vy = 0.0f, Vr = 0.0f, COMPONENT[2] = {1, 3};
-    float VX = 0.0f, VY = 0.0f;  // after rotating
+    float ROTATE_VX = 0.0f, ROTATE_VY = 0.0f;  // 旋转矩阵
     double PRIDICT = 0.0f;    // 底盘预测，前馈
     Vx =  (float)DBUS->REMOTE.CH0_int16;
     Vy =  (float)DBUS->REMOTE.CH1_int16;
 
-    if (DBUS->REMOTE.S2_u8 == 1)  // @TODO + 底盘跟随判断 A&B + GEER挡位 // chassis folllow
+    if (DBUS->REMOTE.S2_u8 == 3 || DBUS->REMOTE.S2_u8 == 1)  // @TODO + 底盘跟随判断 A&B + GEER挡位 // chassis folllow
     {   
         ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;  // if add 4096
         PRIDICT = DBUS->REMOTE.CH2_int16 * 4.0f;  // @TODO 预测模型待思考
-        if (Top[4] == 1.0f && ((MATH_D_ABS(ANGLE_Relative) > 30.0f)))  // follow diff area
+        if (Top[4] == 1.0f && ((MATH_D_ABS(ANGLE_Relative) > 0.0f)))  // follow diff area
         {
             Vr = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative);
         }
@@ -46,14 +44,10 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
             Vr = 0.0f;
         }
     }
-    else if (DBUS->REMOTE.S2_u8 == 3)
-    {
-        PRIDICT = 0.0f;
-    }
     else if (DBUS->REMOTE.S2_u8 == 2) // @TODO little spining go straight
     {
         PRIDICT = 0.0f;
-        Vr = -(float)DBUS->REMOTE.DIR_int16 * 1.5f;
+        Vr = -(float)DBUS->REMOTE.DIR_int16 * 2.0f;
     }
     ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;  // if add 4096
     if (ANGLE_Relative > 4096)  
@@ -65,30 +59,20 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
         ANGLE_Relative += 8192;
     }
     
-
     ANGLE_Rad = ANGLE_Relative * MATH_D_RELATIVE_PARAM;
     ANGLE_Rada = ANGLE_Relative * MATH_D_RELATIVE_PARAM * 0.5f;
     // rotate matrix
     double COS = cos(ANGLE_Rad);
     double SIN = sin(ANGLE_Rad);
     
-    VX = -Vy * SIN + Vx * COS;
-    VY =  Vy * COS + Vx * SIN;
-    // ceshi
-    // VX =  Vy * SIN + Vx * COS;
-    // VY =  Vy * COS - Vx * SIN;
-
-    // Vx = Vx * COS + Vy * ((COS * COS - SIN * SIN) / SIN);
-    // Vy = Vx * SIN + Vy * COS;
-
-    xx = Vx;
-    yy = Vy;
+    ROTATE_VX = -Vy * SIN + Vx * COS;
+    ROTATE_VY =  Vy * COS + Vx * SIN;
     
     // 运动学解算
-    MOTOR[MOTOR_D_CHASSIS_1].DATA.AIM = ( VX - VY - Vr * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
-    MOTOR[MOTOR_D_CHASSIS_2].DATA.AIM = (-VX - VY - Vr * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
-    MOTOR[MOTOR_D_CHASSIS_3].DATA.AIM = (-VX + VY - Vr * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
-    MOTOR[MOTOR_D_CHASSIS_4].DATA.AIM = ( VX + VY - Vr * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
+    MOTOR[MOTOR_D_CHASSIS_1].DATA.AIM = ( ROTATE_VX - ROTATE_VY - Vr * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
+    MOTOR[MOTOR_D_CHASSIS_2].DATA.AIM = (-ROTATE_VX - ROTATE_VY - Vr * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
+    MOTOR[MOTOR_D_CHASSIS_3].DATA.AIM = (-ROTATE_VX + ROTATE_VY - Vr * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
+    MOTOR[MOTOR_D_CHASSIS_4].DATA.AIM = ( ROTATE_VX + ROTATE_VY - Vr * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
 
     // pid 解算
     PID_F_S(&MOTOR[MOTOR_D_CHASSIS_1]);

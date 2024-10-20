@@ -6,6 +6,7 @@
 
 extern uint8_t ROOT_V_MONITOR_DBUS;
 extern TYPEDEF_MOTOR_PID FOLLOW_PID;
+extern TYPEDEF_MOTOR_PID TOP_OFF_S, TOP_OFF_A;
 
 extern void ROOT_F_MONITOR_DBUS(TYPEDEF_DBUS *DBUS);
 extern uint8_t ROOT_F_PIDinit();
