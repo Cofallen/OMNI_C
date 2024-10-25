@@ -21,9 +21,9 @@ void ROOT_F_MONITOR_DBUS(TYPEDEF_DBUS *DBUS)
     if (ROOT_V_MONITOR_DBUS >= 50) // 50ms
     {
         memset(&DBUS_V_DATA, 0, sizeof(DBUS_V_DATA));
-        memset(MOTOR_V_CHASSIS, 0, sizeof(MOTOR_V_CHASSIS));
-        memset(MOTOR_V_GIMBAL, 0, sizeof(MOTOR_V_GIMBAL));
-        memset(MOTOR_V_ATTACK, 0, sizeof(MOTOR_V_ATTACK));
+        // memset(MOTOR_V_CHASSIS, 0, sizeof(MOTOR_V_CHASSIS));
+        // memset(MOTOR_V_GIMBAL, 0, sizeof(MOTOR_V_GIMBAL));
+        // memset(MOTOR_V_ATTACK, 0, sizeof(MOTOR_V_ATTACK));
     }
 }
 
@@ -40,8 +40,8 @@ uint8_t ROOT_F_PIDinit()
     const float PID_V_GIMBAL_PIT_SPEED[5] = {20.22f, 0.001f, 0, 1000.0f, 20000.0f};
     const float PID_V_GIMBAL_PIT_ANGLE[5] = {10.0f, 0, 0, 1000.0f, 3000.0f};
 
-    const float PID_V_ATTACK_L_SPEED[5] = {5.0f, 0, 0, 1000.0f, 20000.0f};
-    const float PID_V_ATTACK_R_SPEED[5] = {5.0f, 0, 0, 1000.0f, 20000.0f};
+    const float PID_V_ATTACK_L_SPEED[5] = {0.5f, 0, 0, 1000.0f, 10000.0f};
+    const float PID_V_ATTACK_R_SPEED[5] = {0.5f, 0, 0, 1000.0f, 10000.0f};
     const float PID_V_ATTACK_G_SPEED[5] = {10.0f, 0, 0, 1000.0f, 8000.0f};
     const float PID_V_ATTACK_G_ANGLE[5] = {1.0f, 0, 0, 1000.0f, 3000.0f};
     const float PID_V_ATTACK_L_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
