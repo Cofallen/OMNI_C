@@ -4,6 +4,7 @@
             "path": "."
         }
     ],
+<<<<<<< HEAD
     "settings": {
         "files.associations": {
             "ui_interface.h": "c",
@@ -13,5 +14,8 @@
             "top.h": "c"
         }
     },
+=======
+    "settings": {},
+>>>>>>> 03ee341c9e1b33c1fae92b02f0da2028df5df2ae
     "extensions": {}
 }

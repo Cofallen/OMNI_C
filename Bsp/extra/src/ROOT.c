@@ -20,6 +20,9 @@ void ROOT_F_MONITOR_DBUS(TYPEDEF_DBUS *DBUS)
     if (ROOT_V_MONITOR_DBUS >= 50) // 50ms
     {
         memset(&DBUS_V_DATA, 0, sizeof(DBUS_V_DATA));
+        memset(MOTOR_V_ATTACK, 0, sizeof(MOTOR_V_ATTACK));
+        // memset(MOTOR_V_CHASSIS, 0, sizeof(MOTOR_V_CHASSIS));
+        // memset(MOTOR_V_GIMBAL, 0, sizeof(MOTOR_V_GIMBAL));
     }
 }
 

@@ -23,8 +23,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim->Instance == TIM2) // 底盘 1ms
     {
-        CHASSIS_F_Ctl(MOTOR_V_CHASSIS, &DBUS_V_DATA);
-        while (Top[4] == 0){}
+        if (Top[4] == 1.0f){
+            CHASSIS_F_Ctl(MOTOR_V_CHASSIS, &DBUS_V_DATA);
+        }
+        // CHASSIS_F_Ctl(MOTOR_V_CHASSIS, &DBUS_V_DATA);
         CAN_F_Send(&hcan1, 0x200, MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
                   MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
                   MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
@@ -33,12 +35,16 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     }
     if (htim->Instance == TIM4) // 云台 1ms
     {
-        GIMBAL_F_Ctl(MOTOR_V_GIMBAL, &DBUS_V_DATA);
+        if (Top[4] == 1.0f) 
+        {
+            GIMBAL_F_Ctl(MOTOR_V_GIMBAL, &DBUS_V_DATA);
+        }
+        
+        // GIMBAL_F_Ctl(MOTOR_V_GIMBAL, &DBUS_V_DATA);
         // CAN_F_Send(&hcan2, 0x1FF, MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND,
         //           MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
         //           0,
         //           0);
-        while (Top[4] == 0){}
         CAN_F_Send(&hcan2, 0x1FF, 0,
                   MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
                   0,
@@ -52,7 +58,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if (htim->Instance == TIM6) // 不知道 1ms
     {
        ATTACK_F_Ctl(MOTOR_V_ATTACK, &DBUS_V_DATA);
-       while (Top[4] == 0){}
        CAN_F_Send(&hcan2, 0x200, MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.CAN_SEND,
                   MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.CAN_SEND,
                   MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.CAN_SEND,

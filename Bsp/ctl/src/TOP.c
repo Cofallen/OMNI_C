@@ -55,12 +55,15 @@ void TOP_T_Monitor()
         Top[4] = 1.0f; // 1-open, online
     }
 
-    // if (Top[4] == 0.0f) // offline
-    // {
-    //     Top[NOW] = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW;
-    //     // Top[LAST] = MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_LAST;
-    //     Top[2] = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS;
-    //     // Top[3] = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE;
-    //     abcdefg = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW;
-    // }
+    if (Top[4] == 0.0f) // offline
+    {
+        // top to motor angle
+        // Top[NOW] = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW;
+        // Top[2] = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS;
+        // abcdefg = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW;
+
+        // shut down motor
+        // MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM = 0.0f;
+
+    }
 }

@@ -98,7 +98,7 @@ void ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff)
 	buff[8] = data_tackle.U[3];
     //将请求的状态置于第九位中
 	//2023-06-02 22:54 | 自瞄/打符标志位
-    setbit(buff[9], 0, Send_t->COLOR &0x01);
+    setbit(&buff[9], 0, Send_t->COLOR &0x01);
     //2023-06-02 22:54 | 颜色
 	setbit(&buff[9] , 3 , Send_t->COLOR >> 4);
 
