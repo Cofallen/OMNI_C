@@ -1556,7 +1556,7 @@ Section Cross References
     can_dev.o(.text.CAN_Filter_Init) refers to stm32f4xx_hal_can.o(.text.HAL_CAN_ActivateNotification) for HAL_CAN_ActivateNotification
     can_dev.o(.text.CAN_Filter_Init) refers to can.o(.bss.hcan2) for hcan2
     can_dev.o(.ARM.exidx.text.CAN_Filter_Init) refers to can_dev.o(.text.CAN_Filter_Init) for [Anonymous Symbol]
-    usart_dev.o(.text.fputc) refers to usart.o(.bss.huart1) for huart1
+    usart_dev.o(.text.fputc) refers to usart.o(.bss.huart3) for huart3
     usart_dev.o(.text.fputc) refers to stm32f4xx_hal_uart.o(.text.HAL_UART_Transmit_DMA) for HAL_UART_Transmit_DMA
     usart_dev.o(.ARM.exidx.text.fputc) refers to usart_dev.o(.text.fputc) for [Anonymous Symbol]
     usart_dev.o(.text.USAR_UART_IDLECallback) refers to usart.o(.bss.huart6) for huart6
@@ -1842,14 +1842,14 @@ Section Cross References
     imu_temp_control_task.o(.text.Imu_Init) refers to quaternionekf.o(.text.IMU_QuaternionEKF_Init) for IMU_QuaternionEKF_Init
     imu_temp_control_task.o(.text.Imu_Init) refers to imu_temp_control_task.o(.bss.imu_temp_pid) for imu_temp_pid
     imu_temp_control_task.o(.text.Imu_Init) refers to imu_temp_control_task.o(.rodata.imu_temp_PID) for imu_temp_PID
-    imu_temp_control_task.o(.text.Imu_Init) refers to pid_1.o(.text.PID_init) for PID_init
+    imu_temp_control_task.o(.text.Imu_Init) refers to pid.o(.text.PID_init) for PID_init
     imu_temp_control_task.o(.text.Imu_Init) refers to tim.o(.bss.htim10) for htim10
     imu_temp_control_task.o(.text.Imu_Init) refers to stm32f4xx_hal_tim.o(.text.HAL_TIM_PWM_Start) for HAL_TIM_PWM_Start
     imu_temp_control_task.o(.text.Imu_Init) refers to bmi088driver.o(.text.BMI088_init) for BMI088_init
     imu_temp_control_task.o(.ARM.exidx.text.Imu_Init) refers to imu_temp_control_task.o(.text.Imu_Init) for [Anonymous Symbol]
     imu_temp_control_task.o(.text.IMU_Temperature_Ctrl) refers to imu_temp_control_task.o(.bss.temp) for temp
     imu_temp_control_task.o(.text.IMU_Temperature_Ctrl) refers to imu_temp_control_task.o(.bss.imu_temp_pid) for imu_temp_pid
-    imu_temp_control_task.o(.text.IMU_Temperature_Ctrl) refers to pid_1.o(.text.PID_calc) for PID_calc
+    imu_temp_control_task.o(.text.IMU_Temperature_Ctrl) refers to pid.o(.text.PID_calc) for PID_calc
     imu_temp_control_task.o(.text.IMU_Temperature_Ctrl) refers to tim.o(.bss.htim10) for htim10
     imu_temp_control_task.o(.ARM.exidx.text.IMU_Temperature_Ctrl) refers to imu_temp_control_task.o(.text.IMU_Temperature_Ctrl) for [Anonymous Symbol]
     imu_temp_control_task.o(.text.INS_Task) refers to imu_temp_control_task.o(.bss.gyro) for gyro
@@ -1870,9 +1870,9 @@ Section Cross References
     imu_temp_control_task.o(.text.INS_Task) refers to imu_temp_control_task.o(.text.IMU_Temperature_Ctrl) for IMU_Temperature_Ctrl
     imu_temp_control_task.o(.text.INS_Task) refers to imu_temp_control_task.o(.bss.INS_Task.temp_Ticks) for INS_Task.temp_Ticks
     imu_temp_control_task.o(.ARM.exidx.text.INS_Task) refers to imu_temp_control_task.o(.text.INS_Task) for [Anonymous Symbol]
-    pid_1.o(.ARM.exidx.text.PID_init) refers to pid_1.o(.text.PID_init) for [Anonymous Symbol]
-    pid_1.o(.ARM.exidx.text.PID_calc) refers to pid_1.o(.text.PID_calc) for [Anonymous Symbol]
-    pid_1.o(.ARM.exidx.text.PID_clear) refers to pid_1.o(.text.PID_clear) for [Anonymous Symbol]
+    pid.o(.ARM.exidx.text.PID_init) refers to pid.o(.text.PID_init) for [Anonymous Symbol]
+    pid.o(.ARM.exidx.text.PID_calc) refers to pid.o(.text.PID_calc) for [Anonymous Symbol]
+    pid.o(.ARM.exidx.text.PID_clear) refers to pid.o(.text.PID_clear) for [Anonymous Symbol]
     crc_dji.o(.text.Get_CRC8_Check_Sum) refers to crc_dji.o(.rodata.CRC8_TAB) for CRC8_TAB
     crc_dji.o(.ARM.exidx.text.Get_CRC8_Check_Sum) refers to crc_dji.o(.text.Get_CRC8_Check_Sum) for [Anonymous Symbol]
     crc_dji.o(.text.Verify_CRC8_Check_Sum) refers to crc_dji.o(.text.Get_CRC8_Check_Sum) for Get_CRC8_Check_Sum
@@ -6652,11 +6652,11 @@ Removing Unused input sections from the image.
     Removing imu_temp_control_task.o(.ARM.exidx.text.IMU_Temperature_Ctrl), (8 bytes).
     Removing imu_temp_control_task.o(.ARM.exidx.text.INS_Task), (8 bytes).
     Removing imu_temp_control_task.o(.bss.INS_task_local_handler), (4 bytes).
-    Removing pid_1.o(.text), (0 bytes).
-    Removing pid_1.o(.ARM.exidx.text.PID_init), (8 bytes).
-    Removing pid_1.o(.ARM.exidx.text.PID_calc), (8 bytes).
-    Removing pid_1.o(.text.PID_clear), (70 bytes).
-    Removing pid_1.o(.ARM.exidx.text.PID_clear), (8 bytes).
+    Removing pid.o(.text), (0 bytes).
+    Removing pid.o(.ARM.exidx.text.PID_init), (8 bytes).
+    Removing pid.o(.ARM.exidx.text.PID_calc), (8 bytes).
+    Removing pid.o(.text.PID_clear), (70 bytes).
+    Removing pid.o(.ARM.exidx.text.PID_clear), (8 bytes).
     Removing crc_dji.o(.text), (0 bytes).
     Removing crc_dji.o(.ARM.exidx.text.Get_CRC8_Check_Sum), (8 bytes).
     Removing crc_dji.o(.ARM.exidx.text.Verify_CRC8_Check_Sum), (8 bytes).
@@ -9076,7 +9076,7 @@ Image Symbol Table
     kalman_filter.c                          0x00000000   Number         0  kalman_filter.o ABSOLUTE
     list.c                                   0x00000000   Number         0  list.o ABSOLUTE
     main.c                                   0x00000000   Number         0  main.o ABSOLUTE
-    pid.c                                    0x00000000   Number         0  pid_1.o ABSOLUTE
+    pid.c                                    0x00000000   Number         0  pid.o ABSOLUTE
     port.c                                   0x00000000   Number         0  port.o ABSOLUTE
     queue.c                                  0x00000000   Number         0  queue.o ABSOLUTE
     spi.c                                    0x00000000   Number         0  spi.o ABSOLUTE
@@ -9399,8 +9399,8 @@ Image Symbol Table
     [Anonymous Symbol]                       0x0800a8b4   Section        0  yu_pid.o(.text.PID_F_G)
     [Anonymous Symbol]                       0x0800a914   Section        0  yu_pid.o(.text.PID_F_Init)
     [Anonymous Symbol]                       0x0800a960   Section        0  yu_pid.o(.text.PID_F_S)
-    [Anonymous Symbol]                       0x0800a99c   Section        0  pid_1.o(.text.PID_calc)
-    [Anonymous Symbol]                       0x0800abe8   Section        0  pid_1.o(.text.PID_init)
+    [Anonymous Symbol]                       0x0800a99c   Section        0  pid.o(.text.PID_calc)
+    [Anonymous Symbol]                       0x0800abe8   Section        0  pid.o(.text.PID_init)
     [Anonymous Symbol]                       0x0800ac70   Section        0  port.o(.text.PendSV_Handler)
     pxCurrentTCBConst                        0x0800acd0   Number         0  port.o(.text.PendSV_Handler)
     [Anonymous Symbol]                       0x0800acd4   Section        0  root.o(.text.ROOT_F_Init)
@@ -10158,8 +10158,8 @@ Image Symbol Table
     PID_F_G                                  0x0800a8b5   Thumb Code    96  yu_pid.o(.text.PID_F_G)
     PID_F_Init                               0x0800a915   Thumb Code    76  yu_pid.o(.text.PID_F_Init)
     PID_F_S                                  0x0800a961   Thumb Code    60  yu_pid.o(.text.PID_F_S)
-    PID_calc                                 0x0800a99d   Thumb Code   588  pid_1.o(.text.PID_calc)
-    PID_init                                 0x0800abe9   Thumb Code   126  pid_1.o(.text.PID_init)
+    PID_calc                                 0x0800a99d   Thumb Code   588  pid.o(.text.PID_calc)
+    PID_init                                 0x0800abe9   Thumb Code   126  pid.o(.text.PID_init)
     PendSV_Handler                           0x0800ac71   Thumb Code   100  port.o(.text.PendSV_Handler)
     ROOT_F_Init                              0x0800acd5   Thumb Code    62  root.o(.text.ROOT_F_Init)
     ROOT_F_MONITOR_DBUS                      0x0800ad15   Thumb Code    64  root.o(.text.ROOT_F_MONITOR_DBUS)
@@ -10772,8 +10772,8 @@ Memory Map of the image
     0x0800a8b4   0x0800a8b4   0x00000060   Code   RO         1615    .text.PID_F_G       yu_pid.o
     0x0800a914   0x0800a914   0x0000004c   Code   RO         1605    .text.PID_F_Init    yu_pid.o
     0x0800a960   0x0800a960   0x0000003c   Code   RO         1617    .text.PID_F_S       yu_pid.o
-    0x0800a99c   0x0800a99c   0x0000024c   Code   RO         1967    .text.PID_calc      pid_1.o
-    0x0800abe8   0x0800abe8   0x0000007e   Code   RO         1965    .text.PID_init      pid_1.o
+    0x0800a99c   0x0800a99c   0x0000024c   Code   RO         1967    .text.PID_calc      pid.o
+    0x0800abe8   0x0800abe8   0x0000007e   Code   RO         1965    .text.PID_init      pid.o
     0x0800ac66   0x0800ac66   0x0000000a   PAD
     0x0800ac70   0x0800ac70   0x00000064   Code   RO         4321    .text.PendSV_Handler  port.o
     0x0800acd4   0x0800acd4   0x0000003e   Code   RO         1741    .text.ROOT_F_Init   root.o
@@ -11087,93 +11087,6 @@ Memory Map of the image
     0x08012e44   0x08012e44   0x00000014   Code   RO         4311    .text.vPortEnableVFP  port.o
     0x08012e58   0x08012e58   0x00000056   Code   RO         4317    .text.vPortEnterCritical  port.o
     0x08012eae   0x08012eae   0x00000002   PAD
-<<<<<<< HEAD
-    0x08012eb0   0x08012eb0   0x000000ce   Code   RO         4276    .text.vPortFree     heap_4.o
-    0x08012f7e   0x08012f7e   0x00000002   PAD
-    0x08012f80   0x08012f80   0x00000044   Code   RO         4309    .text.vPortSetupTimerInterrupt  port.o
-    0x08012fc4   0x08012fc4   0x00000114   Code   RO         4028    .text.vTaskDelayUntil  tasks.o
-    0x080130d8   0x080130d8   0x000000ce   Code   RO         4054    .text.vTaskStartScheduler  tasks.o
-    0x080131a6   0x080131a6   0x00000002   PAD
-    0x080131a8   0x080131a8   0x00000010   Code   RO         4030    .text.vTaskSuspendAll  tasks.o
-    0x080131b8   0x080131b8   0x000000be   Code   RO         4046    .text.vTaskSwitchContext  tasks.o
-    0x08013276   0x08013276   0x00000002   PAD
-    0x08013278   0x08013278   0x00000156   Code   RO         4307    .text.xPortStartScheduler  port.o
-    0x080133ce   0x080133ce   0x00000002   PAD
-    0x080133d0   0x080133d0   0x0000003c   Code   RO         4323    .text.xPortSysTickHandler  port.o
-    0x0801340c   0x0801340c   0x0000009e   Code   RO         4020    .text.xTaskCreate   tasks.o
-    0x080134aa   0x080134aa   0x00000002   PAD
-    0x080134ac   0x080134ac   0x000000ce   Code   RO         4014    .text.xTaskCreateStatic  tasks.o
-    0x0801357a   0x0801357a   0x00000002   PAD
-    0x0801357c   0x0801357c   0x00000038   Code   RO         4090    .text.xTaskGetSchedulerState  tasks.o
-    0x080135b4   0x080135b4   0x00000014   Code   RO         4062    .text.xTaskGetTickCount  tasks.o
-    0x080135c8   0x080135c8   0x000001b8   Code   RO         4060    .text.xTaskIncrementTick  tasks.o
-    0x08013780   0x08013780   0x00000178   Code   RO         4034    .text.xTaskResumeAll  tasks.o
-    0x080138f8   0x080138f8   0x00000020   Code   RO         4847    i.__0printf         mc_w.l(printfa.o)
-    0x08013918   0x08013918   0x00000030   Code   RO         4951    i.__ARM_fpclassify  m_wm.l(fpclassify.o)
-    0x08013948   0x08013948   0x00000026   Code   RO         4953    i.__ARM_fpclassifyf  m_wm.l(fpclassifyf.o)
-    0x0801396e   0x0801396e   0x00000002   PAD
-    0x08013970   0x08013970   0x0000012c   Code   RO         4742    i.__hardfp_asinf    m_wm.l(asinf.o)
-    0x08013a9c   0x08013a9c   0x00000004   PAD
-    0x08013aa0   0x08013aa0   0x000000c8   Code   RO         4748    i.__hardfp_cos      m_wm.l(cos.o)
-    0x08013b68   0x08013b68   0x000000c8   Code   RO         4801    i.__hardfp_sin      m_wm.l(sin.o)
-    0x08013c30   0x08013c30   0x00000438   Code   RO         4972    i.__ieee754_rem_pio2  m_wm.l(rred.o)
-    0x08014068   0x08014068   0x00000170   Code   RO         4934    i.__kernel_cos      m_wm.l(cos_i.o)
-    0x080141d8   0x080141d8   0x000000f8   Code   RO         4969    i.__kernel_poly     m_wm.l(poly.o)
-    0x080142d0   0x080142d0   0x00000130   Code   RO         4980    i.__kernel_sin      m_wm.l(sin_i.o)
-    0x08014400   0x08014400   0x00000014   Code   RO         4938    i.__mathlib_dbl_infnan  m_wm.l(dunder.o)
-    0x08014414   0x08014414   0x00000004   PAD
-    0x08014418   0x08014418   0x00000020   Code   RO         4940    i.__mathlib_dbl_invalid  m_wm.l(dunder.o)
-    0x08014438   0x08014438   0x00000020   Code   RO         4943    i.__mathlib_dbl_underflow  m_wm.l(dunder.o)
-    0x08014458   0x08014458   0x00000006   Code   RO         4956    i.__mathlib_flt_infnan  m_wm.l(funder.o)
-    0x0801445e   0x0801445e   0x00000002   PAD
-    0x08014460   0x08014460   0x00000010   Code   RO         4958    i.__mathlib_flt_invalid  m_wm.l(funder.o)
-    0x08014470   0x08014470   0x00000010   Code   RO         4961    i.__mathlib_flt_underflow  m_wm.l(funder.o)
-    0x08014480   0x08014480   0x0000000e   Code   RO         5053    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x0801448e   0x0801448e   0x00000002   Code   RO         5054    i.__scatterload_null  mc_w.l(handlers.o)
-    0x08014490   0x08014490   0x0000000e   Code   RO         5055    i.__scatterload_zeroinit  mc_w.l(handlers.o)
-    0x0801449e   0x0801449e   0x00000002   PAD
-    0x080144a0   0x080144a0   0x0000000c   Code   RO         5019    i.__set_errno       mc_w.l(errno.o)
-    0x080144ac   0x080144ac   0x00000184   Code   RO         4854    i._fp_digits        mc_w.l(printfa.o)
-    0x08014630   0x08014630   0x000006dc   Code   RO         4855    i._printf_core      mc_w.l(printfa.o)
-    0x08014d0c   0x08014d0c   0x00000024   Code   RO         4856    i._printf_post_padding  mc_w.l(printfa.o)
-    0x08014d30   0x08014d30   0x0000002e   Code   RO         4857    i._printf_pre_padding  mc_w.l(printfa.o)
-    0x08014d5e   0x08014d5e   0x00000018   Code   RO         5045    i.fabs              m_wm.l(fabs.o)
-    0x08014d76   0x08014d76   0x0000003e   Code   RO         4815    i.sqrtf             m_wm.l(sqrtf.o)
-    0x08014db4   0x08014db4   0x00000004   PAD
-    0x08014db8   0x08014db8   0x00000030   Data   RO         4935    .constdata          m_wm.l(cos_i.o)
-    0x08014de8   0x08014de8   0x000000cc   Data   RO         4974    .constdata          m_wm.l(rred.o)
-    0x08014eb4   0x08014eb4   0x00000004   PAD
-    0x08014eb8   0x08014eb8   0x00000028   Data   RO         4981    .constdata          m_wm.l(sin_i.o)
-    0x08014ee0   0x08014ee0   0x0000001c   Data   RO           45    .rodata..L__const.MX_FREERTOS_Init.os_thread_def_IMUTask  freertos.o
-    0x08014efc   0x08014efc   0x00000014   Data   RO         1757    .rodata..L__const.ROOT_F_PIDinit.FOLLOW_PID_V  root.o
-    0x08014f10   0x08014f10   0x00000014   Data   RO         1754    .rodata..L__const.ROOT_F_PIDinit.PID_V_ATTACK_G_ANGLE  root.o
-    0x08014f24   0x08014f24   0x00000014   Data   RO         1753    .rodata..L__const.ROOT_F_PIDinit.PID_V_ATTACK_G_SPEED  root.o
-    0x08014f38   0x08014f38   0x00000014   Data   RO         1755    .rodata..L__const.ROOT_F_PIDinit.PID_V_ATTACK_L_CURRENT  root.o
-    0x08014f4c   0x08014f4c   0x00000014   Data   RO         1751    .rodata..L__const.ROOT_F_PIDinit.PID_V_ATTACK_L_SPEED  root.o
-    0x08014f60   0x08014f60   0x00000014   Data   RO         1756    .rodata..L__const.ROOT_F_PIDinit.PID_V_ATTACK_R_CURRENT  root.o
-    0x08014f74   0x08014f74   0x00000014   Data   RO         1752    .rodata..L__const.ROOT_F_PIDinit.PID_V_ATTACK_R_SPEED  root.o
-    0x08014f88   0x08014f88   0x00000014   Data   RO         1746    .rodata..L__const.ROOT_F_PIDinit.PID_V_CHASSIS_CURRENT  root.o
-    0x08014f9c   0x08014f9c   0x00000014   Data   RO         1745    .rodata..L__const.ROOT_F_PIDinit.PID_V_CHASSIS_SPEED  root.o
-    0x08014fb0   0x08014fb0   0x00000014   Data   RO         1750    .rodata..L__const.ROOT_F_PIDinit.PID_V_GIMBAL_PIT_ANGLE  root.o
-    0x08014fc4   0x08014fc4   0x00000014   Data   RO         1749    .rodata..L__const.ROOT_F_PIDinit.PID_V_GIMBAL_PIT_SPEED  root.o
-    0x08014fd8   0x08014fd8   0x00000014   Data   RO         1748    .rodata..L__const.ROOT_F_PIDinit.PID_V_GIMBAL_YAW_ANGLE  root.o
-    0x08014fec   0x08014fec   0x00000014   Data   RO         1747    .rodata..L__const.ROOT_F_PIDinit.PID_V_GIMBAL_YAW_SPEED  root.o
-    0x08015000   0x08015000   0x00000010   Data   RO         1515    .rodata.AHBPrescTable  system_stm32f4xx.o
-    0x08015010   0x08015010   0x00000008   Data   RO         1516    .rodata.APBPrescTable  system_stm32f4xx.o
-    0x08015018   0x08015018   0x00000100   Data   RO         1991    .rodata.CRC8_TAB    crc_dji.o
-    0x08015118   0x08015118   0x00000008   Data   RO          621    .rodata.DMA_CalcBaseAndBitshift.flagBitshiftOffset  stm32f4xx_hal_dma.o
-    0x08015120   0x08015120   0x00000090   Data   RO         1877    .rodata.IMU_QuaternionEKF_F  quaternionekf.o
-    0x080151b0   0x080151b0   0x00000028   Data   RO         2604    .rodata.atan2_coefs_f32  fastmathfunctions.o
-    0x080151d8   0x080151d8   0x00000008   Data   RO         1561    .rodata.cst8        chassis.o
-    0x080151e0   0x080151e0   0x0000000c   Data   RO         1948    .rodata.imu_temp_PID  imu_temp_control_task.o
-    0x080151ec   0x080151ec   0x00000804   Data   RO         2333    .rodata.sinTable_f32  commontables.o
-    0x080159f0   0x080159f0   0x00000005   Data   RO           19    .rodata.str1.1      main.o
-    0x080159f5   0x080159f5   0x00000008   Data   RO           44    .rodata.str1.1      freertos.o
-    0x080159fd   0x080159fd   0x00000042   Data   RO         3746    .rodata.str1.1      usbd_desc.o
-    0x08015a3f   0x08015a3f   0x00000005   Data   RO         4132    .rodata.str1.1      tasks.o
-    0x08015a44   0x08015a44   0x00000200   Data   RO         1994    .rodata.wCRC_Table1  crc_dji.o
-    0x08015c44   0x08015c44   0x00000020   Data   RO         5052    Region$$Table       anon$$obj.o
-=======
     0x08012eb0   0x08012eb0   0x0000004a   Code   RO         4319    .text.vPortExitCritical  port.o
     0x08012efa   0x08012efa   0x00000002   PAD
     0x08012efc   0x08012efc   0x000000ce   Code   RO         4276    .text.vPortFree     heap_4.o
@@ -11196,41 +11109,41 @@ Memory Map of the image
     0x08013600   0x08013600   0x00000014   Code   RO         4062    .text.xTaskGetTickCount  tasks.o
     0x08013614   0x08013614   0x000001b8   Code   RO         4060    .text.xTaskIncrementTick  tasks.o
     0x080137cc   0x080137cc   0x00000178   Code   RO         4034    .text.xTaskResumeAll  tasks.o
-    0x08013944   0x08013944   0x00000020   Code   RO         4846    i.__0printf         mc_w.l(printfa.o)
-    0x08013964   0x08013964   0x00000030   Code   RO         4950    i.__ARM_fpclassify  m_wm.l(fpclassify.o)
-    0x08013994   0x08013994   0x00000026   Code   RO         4952    i.__ARM_fpclassifyf  m_wm.l(fpclassifyf.o)
+    0x08013944   0x08013944   0x00000020   Code   RO         4847    i.__0printf         mc_w.l(printfa.o)
+    0x08013964   0x08013964   0x00000030   Code   RO         4951    i.__ARM_fpclassify  m_wm.l(fpclassify.o)
+    0x08013994   0x08013994   0x00000026   Code   RO         4953    i.__ARM_fpclassifyf  m_wm.l(fpclassifyf.o)
     0x080139ba   0x080139ba   0x00000002   PAD
-    0x080139bc   0x080139bc   0x0000012c   Code   RO         4741    i.__hardfp_asinf    m_wm.l(asinf.o)
-    0x08013ae8   0x08013ae8   0x000000c8   Code   RO         4747    i.__hardfp_cos      m_wm.l(cos.o)
-    0x08013bb0   0x08013bb0   0x000000c8   Code   RO         4800    i.__hardfp_sin      m_wm.l(sin.o)
-    0x08013c78   0x08013c78   0x00000438   Code   RO         4971    i.__ieee754_rem_pio2  m_wm.l(rred.o)
-    0x080140b0   0x080140b0   0x00000170   Code   RO         4933    i.__kernel_cos      m_wm.l(cos_i.o)
-    0x08014220   0x08014220   0x000000f8   Code   RO         4968    i.__kernel_poly     m_wm.l(poly.o)
-    0x08014318   0x08014318   0x00000130   Code   RO         4979    i.__kernel_sin      m_wm.l(sin_i.o)
-    0x08014448   0x08014448   0x00000014   Code   RO         4937    i.__mathlib_dbl_infnan  m_wm.l(dunder.o)
+    0x080139bc   0x080139bc   0x0000012c   Code   RO         4742    i.__hardfp_asinf    m_wm.l(asinf.o)
+    0x08013ae8   0x08013ae8   0x000000c8   Code   RO         4748    i.__hardfp_cos      m_wm.l(cos.o)
+    0x08013bb0   0x08013bb0   0x000000c8   Code   RO         4801    i.__hardfp_sin      m_wm.l(sin.o)
+    0x08013c78   0x08013c78   0x00000438   Code   RO         4972    i.__ieee754_rem_pio2  m_wm.l(rred.o)
+    0x080140b0   0x080140b0   0x00000170   Code   RO         4934    i.__kernel_cos      m_wm.l(cos_i.o)
+    0x08014220   0x08014220   0x000000f8   Code   RO         4969    i.__kernel_poly     m_wm.l(poly.o)
+    0x08014318   0x08014318   0x00000130   Code   RO         4980    i.__kernel_sin      m_wm.l(sin_i.o)
+    0x08014448   0x08014448   0x00000014   Code   RO         4938    i.__mathlib_dbl_infnan  m_wm.l(dunder.o)
     0x0801445c   0x0801445c   0x00000004   PAD
-    0x08014460   0x08014460   0x00000020   Code   RO         4939    i.__mathlib_dbl_invalid  m_wm.l(dunder.o)
-    0x08014480   0x08014480   0x00000020   Code   RO         4942    i.__mathlib_dbl_underflow  m_wm.l(dunder.o)
-    0x080144a0   0x080144a0   0x00000006   Code   RO         4955    i.__mathlib_flt_infnan  m_wm.l(funder.o)
+    0x08014460   0x08014460   0x00000020   Code   RO         4940    i.__mathlib_dbl_invalid  m_wm.l(dunder.o)
+    0x08014480   0x08014480   0x00000020   Code   RO         4943    i.__mathlib_dbl_underflow  m_wm.l(dunder.o)
+    0x080144a0   0x080144a0   0x00000006   Code   RO         4956    i.__mathlib_flt_infnan  m_wm.l(funder.o)
     0x080144a6   0x080144a6   0x00000002   PAD
-    0x080144a8   0x080144a8   0x00000010   Code   RO         4957    i.__mathlib_flt_invalid  m_wm.l(funder.o)
-    0x080144b8   0x080144b8   0x00000010   Code   RO         4960    i.__mathlib_flt_underflow  m_wm.l(funder.o)
-    0x080144c8   0x080144c8   0x0000000e   Code   RO         5052    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x080144d6   0x080144d6   0x00000002   Code   RO         5053    i.__scatterload_null  mc_w.l(handlers.o)
-    0x080144d8   0x080144d8   0x0000000e   Code   RO         5054    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x080144a8   0x080144a8   0x00000010   Code   RO         4958    i.__mathlib_flt_invalid  m_wm.l(funder.o)
+    0x080144b8   0x080144b8   0x00000010   Code   RO         4961    i.__mathlib_flt_underflow  m_wm.l(funder.o)
+    0x080144c8   0x080144c8   0x0000000e   Code   RO         5053    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x080144d6   0x080144d6   0x00000002   Code   RO         5054    i.__scatterload_null  mc_w.l(handlers.o)
+    0x080144d8   0x080144d8   0x0000000e   Code   RO         5055    i.__scatterload_zeroinit  mc_w.l(handlers.o)
     0x080144e6   0x080144e6   0x00000002   PAD
-    0x080144e8   0x080144e8   0x0000000c   Code   RO         5018    i.__set_errno       mc_w.l(errno.o)
-    0x080144f4   0x080144f4   0x00000184   Code   RO         4853    i._fp_digits        mc_w.l(printfa.o)
-    0x08014678   0x08014678   0x000006dc   Code   RO         4854    i._printf_core      mc_w.l(printfa.o)
-    0x08014d54   0x08014d54   0x00000024   Code   RO         4855    i._printf_post_padding  mc_w.l(printfa.o)
-    0x08014d78   0x08014d78   0x0000002e   Code   RO         4856    i._printf_pre_padding  mc_w.l(printfa.o)
-    0x08014da6   0x08014da6   0x00000018   Code   RO         5044    i.fabs              m_wm.l(fabs.o)
-    0x08014dbe   0x08014dbe   0x0000003e   Code   RO         4814    i.sqrtf             m_wm.l(sqrtf.o)
+    0x080144e8   0x080144e8   0x0000000c   Code   RO         5019    i.__set_errno       mc_w.l(errno.o)
+    0x080144f4   0x080144f4   0x00000184   Code   RO         4854    i._fp_digits        mc_w.l(printfa.o)
+    0x08014678   0x08014678   0x000006dc   Code   RO         4855    i._printf_core      mc_w.l(printfa.o)
+    0x08014d54   0x08014d54   0x00000024   Code   RO         4856    i._printf_post_padding  mc_w.l(printfa.o)
+    0x08014d78   0x08014d78   0x0000002e   Code   RO         4857    i._printf_pre_padding  mc_w.l(printfa.o)
+    0x08014da6   0x08014da6   0x00000018   Code   RO         5045    i.fabs              m_wm.l(fabs.o)
+    0x08014dbe   0x08014dbe   0x0000003e   Code   RO         4815    i.sqrtf             m_wm.l(sqrtf.o)
     0x08014dfc   0x08014dfc   0x00000004   PAD
-    0x08014e00   0x08014e00   0x00000030   Data   RO         4934    .constdata          m_wm.l(cos_i.o)
-    0x08014e30   0x08014e30   0x000000cc   Data   RO         4973    .constdata          m_wm.l(rred.o)
+    0x08014e00   0x08014e00   0x00000030   Data   RO         4935    .constdata          m_wm.l(cos_i.o)
+    0x08014e30   0x08014e30   0x000000cc   Data   RO         4974    .constdata          m_wm.l(rred.o)
     0x08014efc   0x08014efc   0x00000004   PAD
-    0x08014f00   0x08014f00   0x00000028   Data   RO         4980    .constdata          m_wm.l(sin_i.o)
+    0x08014f00   0x08014f00   0x00000028   Data   RO         4981    .constdata          m_wm.l(sin_i.o)
     0x08014f28   0x08014f28   0x0000001c   Data   RO           45    .rodata..L__const.MX_FREERTOS_Init.os_thread_def_IMUTask  freertos.o
     0x08014f44   0x08014f44   0x00000014   Data   RO         1757    .rodata..L__const.ROOT_F_PIDinit.FOLLOW_PID_V  root.o
     0x08014f58   0x08014f58   0x00000014   Data   RO         1754    .rodata..L__const.ROOT_F_PIDinit.PID_V_ATTACK_G_ANGLE  root.o
@@ -11259,8 +11172,7 @@ Memory Map of the image
     0x08015a45   0x08015a45   0x00000042   Data   RO         3746    .rodata.str1.1      usbd_desc.o
     0x08015a87   0x08015a87   0x00000005   Data   RO         4132    .rodata.str1.1      tasks.o
     0x08015a8c   0x08015a8c   0x00000200   Data   RO         1994    .rodata.wCRC_Table1  crc_dji.o
-    0x08015c8c   0x08015c8c   0x00000020   Data   RO         5051    Region$$Table       anon$$obj.o
->>>>>>> 03ee341c9e1b33c1fae92b02f0da2028df5df2ae
+    0x08015c8c   0x08015c8c   0x00000020   Data   RO         5052    Region$$Table       anon$$obj.o
 
 
     Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08015cb0, Size: 0x00007360, Max: 0x0001c000, ABSOLUTE, COMPRESSED[0x00000100])
@@ -11422,71 +11334,71 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-       926         16          0          0         24       5136   attack.o
-      1366          0          0         44          0       3142   bmi088driver.o
-       306          0          0          0          0       2473   bmi088middleware.o
-       544          0          0          0         84       6496   can.o
-       756         10          0          0         36       4212   can_dev.o
-      1544         84          8          0         32       4630   chassis.o
-       222          0          0          0          0      16238   cmsis_os.o
-         0          0       2052          0          0      10516   commontables.o
-       392          0        768          2          0       2143   crc_dji.o
-       414          0          0          0         75       3266   dbus.o
-       206          0          0          0          0       3364   dma.o
-      1562         28         40          0          0      16161   fastmathfunctions.o
-       148          0         36          0        600       2751   freertos.o
-       536         24          0          0         24       3166   gimbal.o
-       372          0          0          0          0       2289   gpio.o
-      1084          0          0          0      15392       4479   heap_4.o
-       836         32         12          0        137       2258   imu_temp_control_task.o
-      3368          0          0          0          4       7950   kalman_filter.o
-       296          0          0          0          0       2244   list.o
-       486          0          5          0          0       4751   main.o
-      2138          0          0          0          0      52016   matrixfunctions.o
-       156          0          0          0          0       1928   motor.o
-       714          0          0          0          0       2008   pid_1.o
-       996         16          0          4          5       3856   port.o
-      4354         52        144        144        624       8886   quaternionekf.o
-      3584          0          0          0        462      12501   read_data.o
-       900          0        260          0         45       3210   root.o
-       486          0          0          0        280       5115   spi.o
+       926         16          0          0         24       5107   attack.o
+      1366          0          0         44          0       3113   bmi088driver.o
+       306          0          0          0          0       2444   bmi088middleware.o
+       544          0          0          0         84       6467   can.o
+       756         10          0          0         36       4183   can_dev.o
+      1544         84          8          0         32       4601   chassis.o
+       222          0          0          0          0      16209   cmsis_os.o
+         0          0       2052          0          0      10487   commontables.o
+       392          0        768          2          0       2114   crc_dji.o
+       414          0          0          0         75       3237   dbus.o
+       206          0          0          0          0       3335   dma.o
+      1562         28         40          0          0      16133   fastmathfunctions.o
+       148          0         36          0        600       2722   freertos.o
+       536         24          0          0         24       3137   gimbal.o
+       372          0          0          0          0       2260   gpio.o
+      1084          0          0          0      15392       4451   heap_4.o
+       836         32         12          0        137       2229   imu_temp_control_task.o
+      3368          0          0          0          4       7922   kalman_filter.o
+       296          0          0          0          0       2215   list.o
+       486          0          5          0          0       4722   main.o
+      2138          0          0          0          0      51988   matrixfunctions.o
+       156          0          0          0          0       1899   motor.o
+       714          0          0          0          0       1979   pid.o
+       996         16          0          4          5       3827   port.o
+      4354         52        144        144        624       8858   quaternionekf.o
+      3584          0          0          0        462      12472   read_data.o
+       900          0        260          0         45       3181   root.o
+       486          0          0          0        280       5086   spi.o
         36          8        392          0       1024        852   startup_stm32f407xx.o
-       270          0          0          5          4       7137   stm32f4xx_hal.o
-      3088          0          0          0          0      11343   stm32f4xx_hal_can.o
-       482          0          0          0          0       9456   stm32f4xx_hal_cortex.o
-      2068          8          8          0          0       8497   stm32f4xx_hal_dma.o
-       996          0          0          0          0       5125   stm32f4xx_hal_gpio.o
-        88          0          0          0          0       3385   stm32f4xx_hal_msp.o
-      5136          0          0          0          0      14357   stm32f4xx_hal_pcd.o
-       192          0          0          0          0       4201   stm32f4xx_hal_pcd_ex.o
-      2646          0          0          0          0       7603   stm32f4xx_hal_rcc.o
-      1588          0          0          0          0      19693   stm32f4xx_hal_spi.o
-      4004         14          0          0          0      35781   stm32f4xx_hal_tim.o
-       306          0          0          0          0      15285   stm32f4xx_hal_tim_ex.o
-      3778          0          0          0          0      20139   stm32f4xx_hal_uart.o
-       398          0          0          0          0       3068   stm32f4xx_it.o
-      5572          0          0          0          0      19101   stm32f4xx_ll_usb.o
-        18          0         24          4          0       2553   system_stm32f4xx.o
-      3188          0          5          0        300      20945   tasks.o
-      1080          0          0          0        360       9083   tim.o
-       528          8          0          0       1620       4948   tim_dev.o
-       342         12          0          0         20       1634   top.o
-      1140          0          0          0        684       7839   usart.o
-       350          0          0          0          1       4140   usart_dev.o
-       118          0          0          0        732       3141   usb_device.o
-      2370         12          0        136          0      10771   usbd_cdc.o
-       206         36          0         20       4096       2622   usbd_cdc_if.o
-      1398          4          0          0       1836      14383   usbd_conf.o
-      2120          0          0          0          0       8956   usbd_core.o
-      3360         30          0          0          1       8544   usbd_ctlreq.o
-       572          0         66         76        512       3114   usbd_desc.o
-       232          0          0          0          0       4186   usbd_ioreq.o
-       172          0          0          0         44       3181   vofa.o
-       128         12          0          0          0       1258   yu_math.o
-       686          4          0          0          0       3710   yu_pid.o
+       270          0          0          5          4       7108   stm32f4xx_hal.o
+      3088          0          0          0          0      11314   stm32f4xx_hal_can.o
+       482          0          0          0          0       9427   stm32f4xx_hal_cortex.o
+      2068          8          8          0          0       8468   stm32f4xx_hal_dma.o
+       996          0          0          0          0       5096   stm32f4xx_hal_gpio.o
+        88          0          0          0          0       3356   stm32f4xx_hal_msp.o
+      5136          0          0          0          0      14328   stm32f4xx_hal_pcd.o
+       192          0          0          0          0       4172   stm32f4xx_hal_pcd_ex.o
+      2646          0          0          0          0       7574   stm32f4xx_hal_rcc.o
+      1588          0          0          0          0      19664   stm32f4xx_hal_spi.o
+      4004         14          0          0          0      35752   stm32f4xx_hal_tim.o
+       306          0          0          0          0      15256   stm32f4xx_hal_tim_ex.o
+      3778          0          0          0          0      20110   stm32f4xx_hal_uart.o
+       398          0          0          0          0       3039   stm32f4xx_it.o
+      5572          0          0          0          0      19072   stm32f4xx_ll_usb.o
+        18          0         24          4          0       2524   system_stm32f4xx.o
+      3188          0          5          0        300      20917   tasks.o
+      1080          0          0          0        360       9054   tim.o
+       528          8          0          0       1620       4919   tim_dev.o
+       342         12          0          0         20       1605   top.o
+      1140          0          0          0        684       7810   usart.o
+       350          0          0          0          1       4112   usart_dev.o
+       118          0          0          0        732       3112   usb_device.o
+      2370         12          0        136          0      10742   usbd_cdc.o
+       206         36          0         20       4096       2593   usbd_cdc_if.o
+      1398          4          0          0       1836      14354   usbd_conf.o
+      2120          0          0          0          0       8927   usbd_core.o
+      3360         30          0          0          1       8515   usbd_ctlreq.o
+       572          0         66         76        512       3085   usbd_desc.o
+       232          0          0          0          0       4157   usbd_ioreq.o
+       172          0          0          0         44       3153   vofa.o
+       128         12          0          0          0       1229   yu_math.o
+       686          4          0          0          0       3681   yu_pid.o
 
     ----------------------------------------------------------------------
-     77736        410       3852        444      29084     497216   Object Totals
+     77736        410       3852        444      29084     495455   Object Totals
          0          0         32          0          0          0   (incl. Generated)
        388          0          0          9         26          0   (incl. Padding)
 
@@ -11568,8 +11480,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     85112        844       4148        452      29084     498460   Grand Totals
-     85112        844       4148        256      29084     498460   ELF Image Totals (compressed)
+     85112        844       4148        452      29084     496699   Grand Totals
+     85112        844       4148        256      29084     496699   ELF Image Totals (compressed)
      85112        844       4148        256          0          0   ROM Totals
 
 ==============================================================================
