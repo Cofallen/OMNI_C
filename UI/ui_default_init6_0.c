@@ -3,12 +3,19 @@
 //
 
 #include "ui_default_init6_0.h"
+#include "read_data.h"
+#include "TIM_DEV.h"    
+#include "TOP.h"
+#include "define.h"
+#include "MOTOR.h"
 
 #define FRAME_ID 0
 #define GROUP_ID 6
 #define START_ID 0
 #define OBJ_NUM 7
 #define FRAME_OBJ_NUM 7
+
+float angle_relative = 0.0f;
 
 CAT(ui_, CAT(FRAME_OBJ_NUM, _frame_t)) ui_default_init6_0;
 ui_interface_line_t *ui_default_init6_Dynamic0 = (ui_interface_line_t *)&(ui_default_init6_0.data[0]);
@@ -112,9 +119,64 @@ void _ui_update_default_init6_0() {
     for (int i = 0; i < OBJ_NUM; i++) {
         ui_default_init6_0.data[i].operate_tpyel = 2;
     }
+    angle_relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;
+    //圆弧(云台底盘夹角)
+    ui_default_init6_Dynamic6->figure_tpye = 4;
+    ui_default_init6_Dynamic6->layer = 2;
+    ui_default_init6_Dynamic6->rx = 385;
+    ui_default_init6_Dynamic6->ry = 385;
+    ui_default_init6_Dynamic6->start_x = 958;
+    ui_default_init6_Dynamic6->start_y = 530;
+    ui_default_init6_Dynamic6->color = 6;
+    ui_default_init6_Dynamic6->width = 20;
+    ui_default_init6_Dynamic6->start_angle = 270 +angle_relative;
+    ui_default_init6_Dynamic6->end_angle = 310 +angle_relative;
 
+//高于或者低于量程的速度显示为黄色
+    if(MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW < 5000 || MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW>7000)
+    {
+    ui_default_init6_Dynamic0->figure_tpye = 0;
+    ui_default_init6_Dynamic0->layer = 2;
+    ui_default_init6_Dynamic0->start_x = 1591;
+    ui_default_init6_Dynamic0->start_y = 673;
+    ui_default_init6_Dynamic0->end_x = 1591;
+    ui_default_init6_Dynamic0->end_y = 774;
+    ui_default_init6_Dynamic0->color = 3;
+    ui_default_init6_Dynamic0->width = 130;
+    }
+     if(MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.SPEED_NOW < 5000 || MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.SPEED_NOW>7000)
+    {
+    ui_default_init6_Dynamic1->figure_tpye = 0;
+    ui_default_init6_Dynamic1->layer = 2;
+    ui_default_init6_Dynamic1->start_x = 1665;
+    ui_default_init6_Dynamic1->start_y = 673;
+    ui_default_init6_Dynamic1->end_x = 1665;
+    ui_default_init6_Dynamic1->end_y = 774;
+    ui_default_init6_Dynamic1->color = 3;
+    ui_default_init6_Dynamic1->width = 130;
+    }
+    //直线(摩擦轮速度)
+    ui_default_init6_Dynamic0->figure_tpye = 0;
+    ui_default_init6_Dynamic0->layer = 2;
+    ui_default_init6_Dynamic0->start_x = 1591;
+    ui_default_init6_Dynamic0->start_y = 673;
+    ui_default_init6_Dynamic0->end_x = 1591;
+    ui_default_init6_Dynamic0->end_y = 774;
+    ui_default_init6_Dynamic0->color = 6;
+    ui_default_init6_Dynamic0->width = 26;
+    //直线(摩擦轮速度)
+    ui_default_init6_Dynamic1->figure_tpye = 0;
+    ui_default_init6_Dynamic1->layer = 2;
+    ui_default_init6_Dynamic1->start_x = 1665;
+    ui_default_init6_Dynamic1->start_y = 673;
+    ui_default_init6_Dynamic1->end_x = 1665;
+    ui_default_init6_Dynamic1->end_y = 774;
+    ui_default_init6_Dynamic1->color = 6;
+    ui_default_init6_Dynamic1->width = 30;
     CAT(ui_proc_, CAT(FRAME_OBJ_NUM, _frame))(&ui_default_init6_0);
     SEND_MESSAGE((uint8_t *) &ui_default_init6_0, sizeof(ui_default_init6_0));
+
+
 }
 
 void _ui_remove_default_init6_0() {

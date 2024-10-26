@@ -37,4 +37,17 @@ omni_c/ui_default_init6_0.o: ..\UI\ui_default_init6_0.c \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_usb.h \
-  ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h
+  ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h \
+  ..\JUDGE\read_data.h ..\Bsp\dev\inc\TIM_DEV.h ..\Bsp\ctl\inc\MOTOR.h \
+  ..\Bsp\ctl\inc\TOP.h ..\LIB\QuaternionEKF.h ..\LIB\kalman_filter.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
+  ..\CMSIS\DSP\Inc\dsp\matrix_functions.h \
+  ..\CMSIS\DSP\Inc\arm_math_types.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\string.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\math.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\float.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\limits.h \
+  ..\CMSIS\DSP\Inc\arm_math_memory.h ..\CMSIS\DSP\Inc\dsp\none.h \
+  ..\CMSIS\DSP\Inc\dsp\utils.h \
+  ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
+  ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h ..\Bsp\extra\inc\define.h

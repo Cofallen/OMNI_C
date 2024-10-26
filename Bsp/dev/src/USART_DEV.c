@@ -29,7 +29,9 @@ extern DMA_HandleTypeDef hdma_usart6_rx;
 int fputc(int ch, FILE *f) // VOFA 的重定向
 {
     //HAL_UART_Transmit_IT(&huart1, (uint8_t *)&ch, 1);
-	  HAL_UART_Transmit_DMA(&huart1, (uint8_t *)&ch, 1);
+	//   HAL_UART_Transmit_DMA(&huart1, (uint8_t *)&ch, 1);
+      //debug串口空闲中断后的串口发送
+      HAL_UART_Transmit_DMA(&huart3, (uint8_t *)&ch, 1);
     return ch;
 }
 
@@ -60,6 +62,9 @@ void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
         
         DBUS_F_Cal(&DBUS_V_DATA);
         HAL_UART_Receive_DMA(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, sizeof(DBUS_V_UNION.GET_DATA));
+
+        //调试串口空闲中断接收以后的串口发送是否正常
+
     }
 
     // 裁判系统

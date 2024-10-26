@@ -40,4 +40,7 @@ union ReceiveDataUnion_typedef							//共用体(用于接受各种数据)(视�
 			int I;
 	};
 
+
+
+extern struct RUI_TYPEDEF_VISION VISION_V_DATA ;
 #endif // !__VISION_H__

@@ -94,8 +94,10 @@ uint8_t VOFA_T_SendTemp(int n, ...)
     VOFA_T_DATA.TAIL[1] = 0x00;
     VOFA_T_DATA.TAIL[2] = 0x80;
     VOFA_T_DATA.TAIL[3] = 0x7f;
-    
-    HAL_UART_Transmit_DMA(&huart1, (uint8_t *)VOFA_T_DATA.TAIL, sizeof(VOFA_T_DATA));
+    //调试串口3的空闲中断接收后是否能正常发送
+    // HAL_UART_Transmit_DMA(&huart1, (uint8_t *)VOFA_T_DATA.TAIL, sizeof(VOFA_T_DATA));
+
+    HAL_UART_Transmit_DMA(&huart3, (uint8_t *)VOFA_T_DATA.TAIL, sizeof(VOFA_T_DATA));
 
     return ROOT_READY;
 }

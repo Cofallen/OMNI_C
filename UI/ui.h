@@ -19,6 +19,7 @@ _ui_init_default_init0_0(); \
 _ui_init_default_init0_1(); \
 _ui_init_default_init0_2()
 
+//左静态表盘
 #define ui_update_default_init0() \
 _ui_update_default_init0_0(); \
 _ui_update_default_init0_1(); \
@@ -32,6 +33,7 @@ _ui_remove_default_init0_2()
 
 #include "ui_default_init1_0.h"
 
+//静态表盘刻度
 #define ui_init_default_init1() \
 _ui_init_default_init1_0()
 
@@ -43,7 +45,7 @@ _ui_remove_default_init1_0()
     
 
 #include "ui_default_init2_0.h"
-
+//数字
 #define ui_init_default_init2() \
 _ui_init_default_init2_0()
 
@@ -67,7 +69,8 @@ _ui_remove_default_init3_0()
     
 
 #include "ui_default_init4_0.h"
-
+//底盘状态指示静态
+//摩擦轮速度指示
 #define ui_init_default_init4() \
 _ui_init_default_init4_0()
 
@@ -89,6 +92,7 @@ _ui_init_default_init5_1(); \
 _ui_init_default_init5_2(); \
 _ui_init_default_init5_3()
 
+//自瞄模式指示
 #define ui_update_default_init5() \
 _ui_update_default_init5_0(); \
 _ui_update_default_init5_1(); \

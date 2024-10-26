@@ -46,6 +46,7 @@ void _ui_init_default_init4_0() {
     ui_default_init4_static41->width = 4;
     ui_default_init4_static41->end_x = 1617;
     ui_default_init4_static41->end_y = 773;
+   
 
     ui_default_init4_static42->figure_tpye = 1;
     ui_default_init4_static42->layer = 6;

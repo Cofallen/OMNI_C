@@ -125,3 +125,7 @@ void ui_proc_string_frame(ui_string_frame_t *msg) {
     msg->option.str_length = strlen(msg->option.string);
     msg->crc16 = calc_crc16((uint8_t *) msg, 58);
 }
+
+
+
+
