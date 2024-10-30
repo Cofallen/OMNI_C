@@ -115,13 +115,13 @@ int main(void)
   MX_CAN2_Init();
   MX_TIM2_Init();
   MX_TIM4_Init();
-  MX_TIM6_Init();
   MX_TIM9_Init();
   MX_SPI1_Init();
   MX_USART3_UART_Init();
   MX_USART1_UART_Init();
   MX_USART6_UART_Init();
   MX_TIM10_Init();
+  MX_TIM3_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -141,10 +141,10 @@ int main(void)
   
   HAL_TIM_Base_Start_IT(&htim2);
   HAL_TIM_Base_Start_IT(&htim4);
-  HAL_Delay(100);
-  HAL_TIM_Base_Start_IT(&htim6);
+  HAL_Delay(30);
+  HAL_TIM_Base_Start_IT(&htim3);
   HAL_TIM_Base_Start_IT(&htim9);
-  HAL_Delay(100);
+  HAL_Delay(30);
 
 
   /* USER CODE END 2 */
