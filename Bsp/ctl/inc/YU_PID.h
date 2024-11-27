@@ -12,5 +12,6 @@ extern uint8_t PID_F_SC(TYPEDEF_MOTOR *MOTOR);
 extern uint8_t PID_F_S(TYPEDEF_MOTOR *MOTOR);
 float PID_T_Cal(TYPEDEF_MOTOR_PID *PID, float TARGET, float REALVAL, int8_t mode);
 uint8_t PID_F_G(TYPEDEF_MOTOR *MOTOR);
+uint8_t PID_F_P(TYPEDEF_MOTOR *MOTOR);
 
 #endif // !__PID_H__
