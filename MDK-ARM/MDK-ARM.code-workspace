@@ -28,7 +28,16 @@
             "chassis.h": "c",
             "dbus.h": "c",
             "stdlib.h": "c",
-            "judgement.h": "c"
+            "judgement.h": "c",
+            "stm32f4xx_it.h": "c",
+            "freertos.h": "c",
+            "usart_dev.h": "c",
+            "task.h": "c",
+            "vision.h": "c",
+            "math.h": "c",
+            "stdbool.h": "c",
+            "can.h": "c",
+            "tim.h": "c"
         }
     },
     "extensions": {}

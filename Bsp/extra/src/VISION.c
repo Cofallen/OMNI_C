@@ -11,14 +11,15 @@
 union ReceiveDataUnion_typedef	data_tackle ={0};
 RUI_TYPEDEF_VISION VISION_V_DATA = {0};
 uint8_t temp1 = 0;
-uint8_t data[15] = {0} , i = 0;
+uint8_t Origin_data[15] = {0} , i = 0;
+uint8_t VISION_V_RXDATA[VISION_D_RECV] = {0};
 // 假设数据错位修正
-uint8_t VISION_F_Correct(uint8_t *RxData)
+uint8_t VISION_F_Correct(uint8_t *RxData , uint8_t * Origin_data)
 {
     uint8_t error = 0;
     for (int n = 0; n < VISION_D_RECV; n++)
     {
-        if (RxData[n] == 0xCD)
+        if (RxData[n] == 0xaa)
         {
             error = n;
             break;
@@ -26,7 +27,7 @@ uint8_t VISION_F_Correct(uint8_t *RxData)
     }
     for (int n = 0; n < VISION_D_RECV; n++)
     {
-        data[n] = RxData[error++];
+        Origin_data[n] = RxData[error++];
         if (error > 15)
         {
             error = 0;
@@ -37,36 +38,34 @@ uint8_t VISION_F_Correct(uint8_t *RxData)
 }
 
 // 视觉接收处理
-uint8_t VISION_F_Cal(uint8_t *RxData)
+uint8_t VISION_F_Cal(uint8_t *RxData,uint8_t * Origin_data, RUI_TYPEDEF_VISION* VISION_V_DATA)
 {
     // copy 修正错位
-    VISION_F_Correct(RxData);
-    if ((RxData[0] == 0xCD) && (RxData[VISION_D_RECV - 1] == 0xDC))
+    VISION_F_Correct(RxData,Origin_data);
+    if ((Origin_data[0] == 0xaa) && (RxData[VISION_D_RECV - 1] == 0xbb))
     {
         // 读取数据
-        if(data [14] == 0xDC && data[i++] == 0xCD)
-        {
-            data_tackle.U[0] = data[i++];
-            data_tackle.U[1] = data[i++];
-            data_tackle.U[2] = data[i++];
-            data_tackle.U[3] = data[i++];
-            VISION_V_DATA.RECEIVE.PIT_DATA= data_tackle.F;
+        
+            data_tackle.U[0] = Origin_data[i++];
+            data_tackle.U[1] = Origin_data[i++];
+            data_tackle.U[2] = Origin_data[i++];
+            data_tackle.U[3] = Origin_data[i++];
+            VISION_V_DATA->RECEIVE.PIT_DATA= data_tackle.F;
 
-            data_tackle.U[0] = data[i++];
-            data_tackle.U[1] = data[i++];
-            data_tackle.U[2] = data[i++];
-            data_tackle.U[3] = data[i++];
-            VISION_V_DATA.RECEIVE.YAW_DATA= data_tackle.F;
+            data_tackle.U[0] = Origin_data[i++];
+            data_tackle.U[1] = Origin_data[i++];
+            data_tackle.U[2] = Origin_data[i++];
+            data_tackle.U[3] = Origin_data[i++];
+            VISION_V_DATA->RECEIVE.YAW_DATA= data_tackle.F;
 
-            temp1 = data[i++];
+            temp1 = Origin_data[i++];
             //是否识别到目标
-            VISION_V_DATA.RECEIVE.TARGET= (temp1 & 0x10)>>4;//识别成功标志位
+            // VISION_V_DATA.RECEIVE.TARGET= (temp1 & 0x10)>>4;//识别成功标志位
+                VISION_V_DATA->RECEIVE.TARGET = getbit(temp1, 4, &temp1);
     
-           
-            
         }
         return ROOT_READY;
-    }
+    
     return ROOT_ERROR;
 }
 

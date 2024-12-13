@@ -5,7 +5,7 @@
 #include "DBUS.h"
 #include "YU_PID.h"
 #include "YU_MATH.h"
-
+#include "VISION.h"
 float DBUS_V_CH2[5] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f}; // last now error 3-count 4-status 
 float aim = 0;
 
@@ -55,4 +55,13 @@ void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     PID_F_G(&MOTOR[MOTOR_D_GIMBAL_YAW]);
     // PID_F_AS(&MOTOR[MOTOR_D_GIMBAL_YAW]);
     PID_F_AS(&MOTOR[MOTOR_D_GIMBAL_PIT]);
+}
+
+void AutoAim(RUI_TYPEDEF_VISION *VISION,TYPEDEF_MOTOR *MOTOR)
+{
+    if(DBUS_V_DATA.REMOTE.S2_u8 == 2)//暂定，看这个拨杆有没有被占用
+    {
+        MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += VISION->RECEIVE.YAW_DATA;
+        MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += VISION->RECEIVE.PIT_DATA;
+    }
 }

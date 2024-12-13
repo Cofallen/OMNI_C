@@ -52,3 +52,10 @@ void setbit(uint8_t* byte , int position , int value)
 		*byte &= ~mask;  // 将指定位置设置为0
 	}
 }
+
+int getbit(uint8_t byte , int position , int* value)
+{
+    unsigned char mask = 1 << position;  // 生成一个只有指定位置为1的掩码
+    *value = (byte & mask) >> position;  // 将指定位置的值取出
+    return *value;
+}

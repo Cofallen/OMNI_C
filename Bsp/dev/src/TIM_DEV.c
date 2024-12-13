@@ -13,12 +13,14 @@
 #include "ATTACK.h"
 #include "VOFA.h"
 #include "TOP.h"
+#include "VISION.h"
 
 // 一些全局变量
 TYPEDEF_MOTOR MOTOR_V_CHASSIS[4] = {0}; // 底盘数据
 TYPEDEF_MOTOR MOTOR_V_GIMBAL[2] = {0};  // 云台数据
 TYPEDEF_MOTOR MOTOR_V_ATTACK[3] = {0};  // 拨弹数据
-
+union RUI_U_VISION_SEND  VISION_V_SDDATA = {0};//视觉发送数据
+uint8_t sd_v_buff [16] = {0};
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim->Instance == TIM2) // 底盘 1ms
@@ -89,8 +91,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 					 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.CAN_SEND,
                      1.0f);
     }
-    if (htim->Instance == TIM10) // 云台 0.01ms
+    if (htim->Instance == TIM10) // 视觉通信
     {
-
+       VisionSendInit(&VISION_V_SDDATA);
+       ControltoVision(&VISION_V_SDDATA ,sd_v_buff);
     }
 }
