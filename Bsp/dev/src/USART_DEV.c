@@ -68,7 +68,7 @@ void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
         if (__HAL_UART_GET_FLAG(&huart6, UART_FLAG_IDLE) != RESET) // 判断是否是空闲中断
         {
             __HAL_UART_CLEAR_IDLEFLAG(&huart6); // 清楚空闲中断标志（否则会一直不断进入中断）
-            uint8_t VISION_F_Cal(RxData , Origin_data);
+    
             USAR_UART_IDLECallback(huart); // 调用中断处理函数
         }
     }
@@ -82,7 +82,7 @@ void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
          if (__HAL_UART_GET_FLAG(&huart1, UART_FLAG_IDLE) != RESET) // 判断是否是空闲中断
         {
             __HAL_UART_CLEAR_IDLEFLAG(&huart1); // 清楚空闲中断标志（否则会一直不断进入中断）
-            
+             VISION_F_Cal(VISION_V_RXDATA , Origin_data,&VISION_V_DATA);
             HAL_UART_DMAStop(&huart1); // 停止本次DMA传输                                            
            
         HAL_UART_Receive_DMA(&huart1, VISION_V_RXDATA,16); // 重启开始DMA传输 每次16字节数据
