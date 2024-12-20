@@ -5,6 +5,8 @@
 #include "TOP.h"
 #include "Read_Data.h"
 #include "math.h"
+#include "usbd_cdc_if.h"
+
 #define VISION_D_SEND 15
 #define VISION_D_RECV 16
 
@@ -61,7 +63,12 @@ uint8_t VISION_F_Cal(uint8_t *RxData,uint8_t * Origin_data, RUI_TYPEDEF_VISION* 
             temp1 = Origin_data[i++];
             //是否识别到目标
             // VISION_V_DATA.RECEIVE.TARGET= (temp1 & 0x10)>>4;//识别成功标志位
-                VISION_V_DATA->RECEIVE.TARGET = getbit(temp1, 4, &temp1);
+            VISION_V_DATA->RECEIVE.TARGET = getbit(temp1, 4, &temp1);
+            data_tackle.U[0] = Origin_data[i++];
+            data_tackle.U[1] = Origin_data[i++];
+            data_tackle.U[2] = Origin_data[i++];
+            data_tackle.U[3] = Origin_data[i++];
+            VISION_V_DATA->RECEIVE.TIME = data_tackle.F;
     
         }
         return ROOT_READY;
@@ -81,6 +88,7 @@ void VisionSendInit(union RUI_U_VISION_SEND*  Send_t)
 
 void ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff)
 {
+    uint8_t status;
    VisionSendInit(Send_t);
    buff[0] = 0xaa;
 	//确定pitch轴角度//并且发送角度值
@@ -109,6 +117,8 @@ void ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff)
     buff[14] = user_data.shoot_data.initial_speed;
     buff[15] = 0xbb;
 
-    HAL_UART_Transmit_DMA(&huart6,buff, 16);	           	        
+
+    status = CDC_Transmit_FS(buff, 16);
+    return status;
 
 }

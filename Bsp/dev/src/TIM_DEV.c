@@ -21,8 +21,10 @@ TYPEDEF_MOTOR MOTOR_V_GIMBAL[2] = {0};  // 云台数据
 TYPEDEF_MOTOR MOTOR_V_ATTACK[3] = {0};  // 拨弹数据
 union RUI_U_VISION_SEND  VISION_V_SDDATA = {0};//视觉发送数据
 uint8_t sd_v_buff [16] = {0};
+uint64_t RunTime = 0;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
+    ++RunTime;
     if (htim->Instance == TIM2) // 底盘 1ms
     {     
         CHASSIS_F_Ctl(MOTOR_V_CHASSIS, &DBUS_V_DATA);

@@ -7,7 +7,7 @@
 #include "DEFINE.h"
 #include "DBUS.h"
 #include "TOP.h"
-
+#include "VISION.h"
 // 盛放原始can数据
 uint8_t CANRxmsg[8] = {0};
 CAN_RxHeaderTypeDef CANRxheader;
@@ -57,7 +57,7 @@ void CAN_F_Recv(CAN_HandleTypeDef *hcan, uint32_t ID)
         {
             MOTOR_F_Cal_Data(&MOTOR_V_GIMBAL[0], CANRxmsg);		
             MOTOR_F_Cal_Round(&MOTOR_V_GIMBAL[0]);
-            
+            VISION_V_SDDATA.YAW_DATA = MOTOR_V_GIMBAL[0].DATA.ANGLE_INFINITE;
 			// if (DBUS_V_DATA.REMOTE.S2_u8 == 1) // @TODO if little spining data accuracy enough, you can delete it.
             // {
                 // MOTOR_V_GIMBAL[0].DATA.ANGLE_INFINITE = (int32_t)Top[3];
@@ -68,6 +68,7 @@ void CAN_F_Recv(CAN_HandleTypeDef *hcan, uint32_t ID)
         {
             MOTOR_F_Cal_Data(&MOTOR_V_GIMBAL[1], CANRxmsg);
             MOTOR_F_Cal_Round(&MOTOR_V_GIMBAL[1]);
+            VISION_V_SDDATA.PIT_DATA = MOTOR_V_GIMBAL[1].DATA.ANGLE_NOW;
             break;
         }
         case CAN_D_ATTACK_L:

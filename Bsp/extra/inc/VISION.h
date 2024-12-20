@@ -11,6 +11,7 @@ union RUI_U_VISION_RECEIVE
     float PIT_DATA;
     float YAW_DATA;
     bool TARGET;
+    unsigned int TIME;
   };
   uint8_t DATA[9];
 };
@@ -47,6 +48,7 @@ union ReceiveDataUnion_typedef							//共用体(用于接受各种数据)(视�
 extern struct RUI_TYPEDEF_VISION VISION_V_DATA ;
 extern uint8_t Origin_data[15];
 extern uint8_t VISION_V_RXDATA[16];
+
 
 
 uint8_t VISION_F_Cal(uint8_t *RxData,uint8_t * Origin_data, RUI_TYPEDEF_VISION* VISION_V_DATA);

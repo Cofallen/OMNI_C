@@ -5,8 +5,9 @@
 #include "MOTOR.h"
 
 // 全局变量声明
+extern RunTime;
 extern TYPEDEF_MOTOR MOTOR_V_CHASSIS[4];
 extern TYPEDEF_MOTOR MOTOR_V_GIMBAL[2];
 extern TYPEDEF_MOTOR MOTOR_V_ATTACK[3];
-
+extern union RUI_U_VISION_SEND VISION_V_SDDATA;
 #endif // !__TIM_DEV_H__
