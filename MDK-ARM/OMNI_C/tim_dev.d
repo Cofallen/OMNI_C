@@ -53,4 +53,5 @@ omni_c/tim_dev.o: ..\Bsp\dev\src\TIM_DEV.c ..\Core\Inc\main.h \
   ..\CMSIS\DSP\Inc\arm_math_memory.h ..\CMSIS\DSP\Inc\dsp\none.h \
   ..\CMSIS\DSP\Inc\dsp\utils.h \
   ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
-  ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h
+  ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h ..\Bsp\extra\inc\VISION.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h

@@ -51,4 +51,12 @@ omni_c/vision.o: ..\Bsp\extra\src\VISION.c ..\Core\Inc\main.h \
   ..\CMSIS\DSP\Inc\dsp\utils.h \
   ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
   ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h ..\JUDGE\Read_Data.h \
-  ..\Core\Inc\usart.h
+  ..\Core\Inc\usart.h ..\USB_DEVICE\App\usbd_cdc_if.h \
+  ..\Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Inc\usbd_cdc.h \
+  ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ioreq.h \
+  ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_def.h \
+  ..\USB_DEVICE\Target\usbd_conf.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdio.h \
+  ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_core.h \
+  ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h \
+  ..\Bsp\extra\inc\YU_MATH.h

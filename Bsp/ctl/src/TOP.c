@@ -6,7 +6,9 @@
 #include "YU_MATH.h"
 #include "TIM_DEV.h"
 
-float Top[5] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f}; // add by yu 1-now 0-last 2-laps 3-infinite 4-0-close/1-open
+// float Top[5] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f}; // add by yu 1-now 0-last 2-laps 3-infinite 4-0-close/1-open
+
+TYPEDEF_TOP TOP = {0};
 
 // 本代码根据瑞的代码修改而来
 void TOP_F_Cal(void *TOP, const uint8_t *DATA)
@@ -22,45 +24,47 @@ void TOP_F_Cal(void *TOP, const uint8_t *DATA)
     // TOP_DATA->PIT_ANGLE[NOW] = TOP_DATA_UNION.
 }
 
-float abcdefg = 0.0f;
+float currentAngle = 0.0f;
 
 void TOP_T_Cal()
 {
-    if (Top[4] == 1.0f)
+    if (TOP.yaw[4] == 1.0f)
     {
-        convertAngleToIndex(yaw, &Top[NOW]);
-        Top[NOW] = Top[NOW] + abcdefg;
+        convertAngleToIndex(yaw, &TOP.yaw[NOW]);
+        TOP.yaw[NOW] = TOP.yaw[NOW] + currentAngle;
     }
     
-    if (Top[NOW] - Top[LAST] > 4096)
+    if (TOP.yaw[NOW] - TOP.yaw[LAST] > 4096)
     {
-        Top[2]--;
+        TOP.yaw[2]--;
     }
-    else if (Top[NOW] - Top[LAST] < -4096)
+    else if (TOP.yaw[NOW] - TOP.yaw[LAST] < -4096)
     {
-        Top[2]++;
+        TOP.yaw[2]++;
     }
-    Top[3] = Top[2] * 8192.0f + Top[NOW];
-    Top[LAST] = Top[NOW];
+    TOP.yaw[3] = TOP.yaw[2] * 8192.0f + TOP.yaw[NOW];
+    TOP.yaw[LAST] = TOP.yaw[NOW];
+
+    TOP.pitch[1] = pitch;
 }
 
 void TOP_T_Monitor()
 {
     if (yaw == 0.0f && pitch == 0.0f)
     {
-        Top[4] = 0.0f; // 0-close, offline
+        TOP.yaw[4] = 0.0f; // 0-close, offline
     }
     else
     {
-        Top[4] = 1.0f; // 1-open, online
+        TOP.yaw[4] = 1.0f; // 1-open, online
     }
 
-    if (Top[4] == 0.0f) // offline
+    if (TOP.yaw[4] == 0.0f) // offline
     {
         // top to motor angle
-        Top[NOW] = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW;
-        Top[2] = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS;
-        abcdefg = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW;
+        TOP.yaw[NOW] = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW;
+        TOP.yaw[2] = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS;
+        currentAngle = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW;
 
         // shut down motor
         // MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM = 0.0f;

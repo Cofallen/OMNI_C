@@ -9,5 +9,6 @@
 float MATH_F_Sqrt(float DATA);
 float LimitRange(float value, float MAX_VALUE, float MIN_VALUE);
 void convertAngleToIndex(float angle, float *index);
+float convertInsexToAngle(float value);
 
 #endif // !__MATH_H__

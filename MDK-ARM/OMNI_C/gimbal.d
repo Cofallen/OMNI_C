@@ -38,4 +38,5 @@ omni_c/gimbal.o: ..\Bsp\ctl\src\GIMBAL.c ..\Core\Inc\main.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h \
   ..\Bsp\ctl\inc\GIMBAL.h ..\Bsp\ctl\inc\MOTOR.h ..\Bsp\ctl\inc\DBUS.h \
   ..\Bsp\extra\inc\DEFINE.h ..\Bsp\ctl\inc\YU_PID.h \
-  ..\Bsp\extra\inc\YU_MATH.h
+  ..\Bsp\extra\inc\YU_MATH.h ..\Bsp\extra\inc\VISION.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h

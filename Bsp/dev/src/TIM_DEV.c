@@ -13,31 +13,35 @@
 #include "ATTACK.h"
 #include "VOFA.h"
 #include "TOP.h"
+#include "VISION.h"
 
 // 一些全局变量
 TYPEDEF_MOTOR MOTOR_V_CHASSIS[4] = {0}; // 底盘数据
 TYPEDEF_MOTOR MOTOR_V_GIMBAL[2] = {0};  // 云台数据
 TYPEDEF_MOTOR MOTOR_V_ATTACK[3] = {0};  // 拨弹数据
 
+uint8_t sd_v_buff [16] = {0};
+uint64_t RunTime = 0;
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim->Instance == TIM2) // 底盘 1ms
     {     
-        CHASSIS_F_Ctl(MOTOR_V_CHASSIS, &DBUS_V_DATA);
-        CAN_F_Send(&hcan1, 0x200, MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
-                  MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
-                  MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
-                  MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
+        // CHASSIS_F_Ctl(MOTOR_V_CHASSIS, &DBUS_V_DATA);
+        // CAN_F_Send(&hcan1, 0x200, MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
+        //           MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
+        //           MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
+        //           MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
 		// CAN_F_Send(&hcan1, 0x200, 2000, 2000, 2000, 2000);
     }
     if (htim->Instance == TIM4) // 云台 1ms
     {      
-        GIMBAL_F_Ctl(MOTOR_V_GIMBAL, &DBUS_V_DATA);
-        CAN_F_Send(
-			&hcan2, 0x1FF, MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND,
-                  MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
-                  0,
-                  0);
+        // GIMBAL_F_Ctl(MOTOR_V_GIMBAL, &DBUS_V_DATA);
+        // CAN_F_Send(
+		// 	&hcan2, 0x1FF, MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND,
+        //           MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
+        //           0,
+        //           0);
         // CAN_F_Send(&hcan2, 0x1FF, 0,
         //           MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
         //           0,
@@ -50,11 +54,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     }
     if (htim->Instance == TIM3) // 不知道 1ms
     {      
-        ATTACK_F_Ctl(MOTOR_V_ATTACK, &DBUS_V_DATA);
-        CAN_F_Send(&hcan2, 0x200, MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.CAN_SEND,
-                  MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.CAN_SEND,
-                  MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.CAN_SEND,
-                  0);
+        // ATTACK_F_Ctl(MOTOR_V_ATTACK, &DBUS_V_DATA);
+        // CAN_F_Send(&hcan2, 0x200, MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.CAN_SEND,
+        //           MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.CAN_SEND,
+        //           MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.CAN_SEND,
+        //           0);
         // CAN_F_Send(&hcan2, 0x200, 0,
         //         0,
         //          0,
@@ -63,9 +67,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     }
     if (htim->Instance == TIM9) // 离线监测 1ms
     {
-        ROOT_F_MONITOR_DBUS(&DBUS_V_DATA);
-        TOP_T_Monitor();
-        TOP_T_Cal();
+        // ROOT_F_MONITOR_DBUS(&DBUS_V_DATA);
+        // TOP_T_Monitor();
+        // TOP_T_Cal();
 //        VOFA_T_SendTemp(6, 0.0f,  // debug yaw pid with top[3]
 //                (float)Top[3],
 //                (float)Top[4],
@@ -78,16 +82,19 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 //                     (float)ATTACK_V_PARAM.TIME,
 //                     (float)ATTACK_V_PARAM.FLAG,
 //						 1.0f);
-         VOFA_T_SendTemp(10, 0.0f,
-					 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.AIM,
-					 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.AIM,
-                     (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW,
-				     (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.SPEED_NOW,
-                     (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].PID_S.OUT.ALL_OUT,
-                     (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].PID_S.OUT.ALL_OUT,
-					 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.CAN_SEND,
-					 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.CAN_SEND,
-                     1.0f);
+        //  VOFA_T_SendTemp(10, 0.0f,
+		// 			 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.AIM,
+		// 			 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.AIM,
+        //              (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW,
+		// 		     (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.SPEED_NOW,
+        //              (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].PID_S.OUT.ALL_OUT,
+        //              (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].PID_S.OUT.ALL_OUT,
+		// 			 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.CAN_SEND,
+		// 			 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.CAN_SEND,
+        //              1.0f);
+
+        // VisionSendInit(&VISION_V_DATA.SEND);
+        // ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff);
     }
     if (htim->Instance == TIM10) // 云台 0.01ms
     {
