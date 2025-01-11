@@ -214,10 +214,14 @@ __weak void StartGimbalTask(void const * argument)
   for(;;)
   {
     GIMBAL_F_Ctl(MOTOR_V_GIMBAL, &DBUS_V_DATA);
-    CAN_F_Send(&hcan2, 0x1FF, MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND,
+    // CAN_F_Send(&hcan2, 0x1FF, MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND,
+    //             MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
+    //             0,
+    //             0);
+    CAN_F_Send(&hcan2, 0x1FF, 0,
                 MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
                 0,
-                0);
+                MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND);
     vTaskDelay(1);
   }
   /* USER CODE END StartGimbalTask */
