@@ -81,7 +81,8 @@ int ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff)
 	buff[11] = data_tackle.U[1];
 	buff[12] = data_tackle.U[2];
 	buff[13] = data_tackle.U[3];
-    buff[14] = user_data.shoot_data.initial_speed;
+    // buff[14] = user_data.shoot_data.initial_speed;
+    buff[14] = 99;
     buff[15] = 0xbb;
 
 

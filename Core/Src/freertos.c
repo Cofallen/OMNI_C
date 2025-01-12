@@ -266,22 +266,21 @@ __weak void StartMonitorTask(void const * argument)
     ROOT_F_MONITOR_DBUS(&DBUS_V_DATA);
     TOP_T_Monitor();
     TOP_T_Cal();
+    VisionSendInit(&VISION_V_DATA.SEND);
+    ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff);
+
+    VOFA_T_SendTemp(10, 0.0f,
+					 (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
+           (float)TOP.yaw[3],
+           (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
+           (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_INFINITE,
+           (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.AIM,
+           (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.SPEED_NOW,
+           0,
+           0,
+          1.0f);
     vTaskDelay(1);
-
-    // VOFA_T_SendTemp(10, 0.0f,
-		// 			 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.AIM,
-		// 			 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.AIM,
-    //                  (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW,
-		// 		     (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.SPEED_NOW,
-    //                  (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].PID_S.OUT.ALL_OUT,
-    //                  (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].PID_S.OUT.ALL_OUT,
-		// 			 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.CAN_SEND,
-		// 			 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.CAN_SEND,
-    //                  1.0f);
-
-    //     VisionSendInit(&VISION_V_DATA.SEND);
-    //     ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff);
-        vTaskDelay(1);
+    
   }
   /* USER CODE END StartMonitorTask */
 }

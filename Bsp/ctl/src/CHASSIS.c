@@ -25,16 +25,16 @@ double ANGLE_Relative = 0.0f;
 void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {
     // 运动学解算
-    float Vx = 0.0f, Vy = 0.0f, Vr = 0.0f, COMPONENT[2] = {1, 3};
+    float Vx = 0.0f, Vy = 0.0f, Vr = 0.0f, COMPONENT[2] = {1, 3.5};
     float ROTATE_VX = 0.0f, ROTATE_VY = 0.0f;  // 旋转矩阵
     double PRIDICT = 0.0f;    // 底盘预测，前馈
-    Vx =  (float)DBUS->REMOTE.CH0_int16;
-    Vy =  (float)DBUS->REMOTE.CH1_int16;
+    Vx =  (float)DBUS->REMOTE.CH0_int16 * 10.0f;
+    Vy =  (float)DBUS->REMOTE.CH1_int16 * 10.0f;
 
     if (DBUS->REMOTE.S2_u8 == 3 || DBUS->REMOTE.S2_u8 == 1)  // @TODO + 底盘跟随判断 A&B + GEER挡位 // chassis folllow
     {   
         ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;  // if add 4096
-        PRIDICT = DBUS->REMOTE.CH2_int16 * 4.0f;  // @TODO 预测模型待思考
+        PRIDICT = DBUS->REMOTE.CH2_int16 * 2.0f;  // @TODO 预测模型待思考
         if (TOP.yaw[4] == 1.0f && ((MATH_D_ABS(ANGLE_Relative) > 0.0f)))  // follow diff area
         {
             Vr = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative);
