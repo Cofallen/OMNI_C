@@ -3,7 +3,7 @@
 <title>Static Call Graph - [OMNI_C\OMNI_C.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image OMNI_C\OMNI_C.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6180002: Last Updated: Sun Jan 12 20:01:50 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6180002: Last Updated: Mon Jan 13 11:36:17 2025
 <BR><P>
 <H3>Maximum Stack Usage =        436 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -545,7 +545,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[c7]"></a>__aeabi_f2d</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, f2d.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartMonitorTask
+<BR><BR>[Called By]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartGimbalTask
 <LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CHASSIS_F_Ctl
 <LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_atan2_f32
 </UL>
@@ -555,7 +555,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_round
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VOFA_T_SendTemp
+<BR>[Called By]<UL><LI><a href="#[1b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VOFA_T_SendTemp
 <LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CHASSIS_F_Ctl
 </UL>
 
@@ -653,7 +653,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartAttackTask
 </UL>
 
-<P><STRONG><a name="[a0]"></a>ATTACK_F_FIRE_Aim</STRONG> (Thumb, 54 bytes, Stack size 4 bytes, attack.o(.text.ATTACK_F_FIRE_Aim))
+<P><STRONG><a name="[a0]"></a>ATTACK_F_FIRE_Aim</STRONG> (Thumb, 70 bytes, Stack size 4 bytes, attack.o(.text.ATTACK_F_FIRE_Aim))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = ATTACK_F_FIRE_Aim
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ATTACK_F_Ctl
@@ -1873,7 +1873,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VOFA_T_SendTemp
+<BR>[Called By]<UL><LI><a href="#[1b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VOFA_T_SendTemp
 <LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fputc
 </UL>
 
@@ -2319,10 +2319,12 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.rodata..L__const.MX_FREERTOS_Init.os_thread_def_chassisTask)
 </UL>
-<P><STRONG><a name="[84]"></a>StartGimbalTask</STRONG> (Thumb, 72 bytes, Stack size 24 bytes, freertos.o(.text.StartGimbalTask))
-<BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = StartGimbalTask &rArr; CAN_F_Send &rArr; HAL_CAN_AddTxMessage
+<P><STRONG><a name="[84]"></a>StartGimbalTask</STRONG> (Thumb, 272 bytes, Stack size 104 bytes, freertos.o(.text.StartGimbalTask))
+<BR><BR>[Stack]<UL><LI>Max Depth = 232<LI>Call Chain = StartGimbalTask &rArr; VOFA_T_SendTemp &rArr; HAL_UART_Transmit_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GIMBAL_F_Ctl
+<BR>[Calls]<UL><LI><a href="#[1b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VOFA_T_SendTemp
+<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+<LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GIMBAL_F_Ctl
 <LI><a href="#[1b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
 <LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN_F_Send
 </UL>
@@ -2331,23 +2333,21 @@ Global Symbols
 <P><STRONG><a name="[81]"></a>StartIMUTask</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, freertos.o(.text.StartIMUTask))
 <BR><BR>[Stack]<UL><LI>Max Depth = 388<LI>Call Chain = StartIMUTask &rArr; INS_Task &rArr; IMU_QuaternionEKF_Update &rArr; Kalman_Filter_Update &rArr; Kalman_Filter_SetK &rArr; arm_mat_inverse_f32
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelayUntil
+<BR>[Calls]<UL><LI><a href="#[1b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelayUntil
 <LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;INS_Task
-<LI><a href="#[1b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskGetTickCount
+<LI><a href="#[1b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskGetTickCount
 <LI><a href="#[188]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Imu_Init
 <LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_USB_DEVICE_Init
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.rodata..L__const.MX_FREERTOS_Init.os_thread_def_IMUTask)
 </UL>
-<P><STRONG><a name="[85]"></a>StartMonitorTask</STRONG> (Thumb, 320 bytes, Stack size 144 bytes, freertos.o(.text.StartMonitorTask))
-<BR><BR>[Stack]<UL><LI>Max Depth = 376<LI>Call Chain = StartMonitorTask &rArr; ControltoVision &rArr; CDC_Transmit_FS &rArr; USBD_CDC_TransmitPacket &rArr; USBD_LL_Transmit &rArr; HAL_PCD_EP_Transmit &rArr; USB_EPStartXfer &rArr; USB_WritePacket
+<P><STRONG><a name="[85]"></a>StartMonitorTask</STRONG> (Thumb, 66 bytes, Stack size 16 bytes, freertos.o(.text.StartMonitorTask))
+<BR><BR>[Stack]<UL><LI>Max Depth = 248<LI>Call Chain = StartMonitorTask &rArr; ControltoVision &rArr; CDC_Transmit_FS &rArr; USBD_CDC_TransmitPacket &rArr; USBD_LL_Transmit &rArr; HAL_PCD_EP_Transmit &rArr; USB_EPStartXfer &rArr; USB_WritePacket
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VOFA_T_SendTemp
-<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
-<LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ControltoVision
+<BR>[Calls]<UL><LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ControltoVision
 <LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VisionSendInit
-<LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TOP_T_Cal
-<LI><a href="#[1b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TOP_T_Monitor
+<LI><a href="#[1b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TOP_T_Cal
+<LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TOP_T_Monitor
 <LI><a href="#[1ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ROOT_F_MONITOR_DBUS
 <LI><a href="#[1b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
 </UL>
@@ -2436,7 +2436,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[15a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PWM_ConfigChannel
 </UL>
 
-<P><STRONG><a name="[1b8]"></a>TOP_T_Cal</STRONG> (Thumb, 280 bytes, Stack size 16 bytes, top.o(.text.TOP_T_Cal))
+<P><STRONG><a name="[1b9]"></a>TOP_T_Cal</STRONG> (Thumb, 280 bytes, Stack size 16 bytes, top.o(.text.TOP_T_Cal))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = TOP_T_Cal &rArr; convertAngleToIndex
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertAngleToIndex
@@ -2444,7 +2444,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartMonitorTask
 </UL>
 
-<P><STRONG><a name="[1b7]"></a>TOP_T_Monitor</STRONG> (Thumb, 178 bytes, Stack size 0 bytes, top.o(.text.TOP_T_Monitor))
+<P><STRONG><a name="[1b8]"></a>TOP_T_Monitor</STRONG> (Thumb, 178 bytes, Stack size 0 bytes, top.o(.text.TOP_T_Monitor))
 <BR><BR>[Called By]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartMonitorTask
 </UL>
 
@@ -3231,13 +3231,13 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[14]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CDC_Receive_FS
 </UL>
 
-<P><STRONG><a name="[1b9]"></a>VOFA_T_SendTemp</STRONG> (Thumb, 172 bytes, Stack size 40 bytes, vofa.o(.text.VOFA_T_SendTemp))
+<P><STRONG><a name="[1b5]"></a>VOFA_T_SendTemp</STRONG> (Thumb, 172 bytes, Stack size 40 bytes, vofa.o(.text.VOFA_T_SendTemp))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = VOFA_T_SendTemp &rArr; HAL_UART_Transmit_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
 </UL>
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
 <LI><a href="#[172]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit_DMA
 </UL>
-<BR>[Called By]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartMonitorTask
+<BR>[Called By]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartGimbalTask
 </UL>
 
 <P><STRONG><a name="[1b2]"></a>Verify_CRC16_Check_Sum</STRONG> (Thumb, 124 bytes, Stack size 32 bytes, crc_dji.o(.text.Verify_CRC16_Check_Sum))
@@ -3361,7 +3361,7 @@ Global Symbols
 <P><STRONG><a name="[1be]"></a>convertAngleToIndex</STRONG> (Thumb, 128 bytes, Stack size 8 bytes, yu_math.o(.text.convertAngleToIndex))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = convertAngleToIndex
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TOP_T_Cal
+<BR>[Called By]<UL><LI><a href="#[1b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TOP_T_Cal
 </UL>
 
 <P><STRONG><a name="[1f8]"></a>convertInsexToAngle</STRONG> (Thumb, 48 bytes, Stack size 8 bytes, yu_math.o(.text.convertInsexToAngle))
@@ -3543,7 +3543,7 @@ Global Symbols
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartChassisTask
 </UL>
 
-<P><STRONG><a name="[1b6]"></a>vTaskDelayUntil</STRONG> (Thumb, 276 bytes, Stack size 48 bytes, tasks.o(.text.vTaskDelayUntil))
+<P><STRONG><a name="[1b7]"></a>vTaskDelayUntil</STRONG> (Thumb, 276 bytes, Stack size 48 bytes, tasks.o(.text.vTaskDelayUntil))
 <BR><BR>[Stack]<UL><LI>Max Depth = 116<LI>Call Chain = vTaskDelayUntil &rArr; xTaskResumeAll &rArr; xTaskIncrementTick &rArr; vListInsertEnd
 </UL>
 <BR>[Calls]<UL><LI><a href="#[202]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvAddCurrentTaskToDelayedList
@@ -3565,7 +3565,7 @@ Global Symbols
 
 <P><STRONG><a name="[212]"></a>vTaskSuspendAll</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, tasks.o(.text.vTaskSuspendAll))
 <BR><BR>[Called By]<UL><LI><a href="#[1b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
-<LI><a href="#[1b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelayUntil
+<LI><a href="#[1b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelayUntil
 <LI><a href="#[211]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pvPortMalloc
 <LI><a href="#[20c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vPortFree
 </UL>
@@ -3624,7 +3624,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Handler
 </UL>
 
-<P><STRONG><a name="[1b5]"></a>xTaskGetTickCount</STRONG> (Thumb, 20 bytes, Stack size 4 bytes, tasks.o(.text.xTaskGetTickCount))
+<P><STRONG><a name="[1b6]"></a>xTaskGetTickCount</STRONG> (Thumb, 20 bytes, Stack size 4 bytes, tasks.o(.text.xTaskGetTickCount))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = xTaskGetTickCount
 </UL>
 <BR>[Called By]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartIMUTask
@@ -3652,7 +3652,7 @@ Global Symbols
 <LI><a href="#[207]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vPortEnterCritical
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
-<LI><a href="#[1b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelayUntil
+<LI><a href="#[1b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelayUntil
 <LI><a href="#[211]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pvPortMalloc
 <LI><a href="#[20c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vPortFree
 </UL>
@@ -4270,7 +4270,7 @@ Local Symbols
 <LI><a href="#[204]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vListInsertEnd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
-<LI><a href="#[1b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelayUntil
+<LI><a href="#[1b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelayUntil
 </UL>
 
 <P><STRONG><a name="[7f]"></a>prvIdleTask</STRONG> (Thumb, 56 bytes, Stack size 16 bytes, tasks.o(.text.prvIdleTask))

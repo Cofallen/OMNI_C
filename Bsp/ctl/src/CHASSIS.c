@@ -47,7 +47,7 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     else if (DBUS->REMOTE.S2_u8 == 2) // @TODO little spining go straight
     {
         PRIDICT = 0.0f;
-        Vr = -(float)DBUS->REMOTE.DIR_int16 * 2.0f;
+        Vr = -(float)DBUS->REMOTE.DIR_int16 * 3.0f;
     }
     ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;  // if add 4096
     if (ANGLE_Relative > 4096)  

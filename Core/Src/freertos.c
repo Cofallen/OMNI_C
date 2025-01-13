@@ -222,6 +222,17 @@ __weak void StartGimbalTask(void const * argument)
                 MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
                 0,
                 MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND);
+    VOFA_T_SendTemp(10, 0.0f,
+					 (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
+           (float)TOP.yaw[3],
+           (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
+           (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_INFINITE,
+           (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.AIM,
+           (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.SPEED_NOW,
+           0,
+           0,
+          1.0f);
+
     vTaskDelay(1);
   }
   /* USER CODE END StartGimbalTask */
@@ -269,16 +280,6 @@ __weak void StartMonitorTask(void const * argument)
     VisionSendInit(&VISION_V_DATA.SEND);
     ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff);
 
-    VOFA_T_SendTemp(10, 0.0f,
-					 (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
-           (float)TOP.yaw[3],
-           (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
-           (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_INFINITE,
-           (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.AIM,
-           (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.SPEED_NOW,
-           0,
-           0,
-          1.0f);
     vTaskDelay(1);
     
   }
