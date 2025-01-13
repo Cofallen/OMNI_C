@@ -30,8 +30,8 @@ typedef union TYPEDEF_TOP_DATA_UNION // 共用体(用于接受各种数据)(视�
 
 typedef struct TYPEDEF_TOP
 {
-    float yaw[5];   // add by yu 1-now 0-last 2-laps 3-infinite 4-0-close/1-open
-    float pitch[5]; // add by yu 1-now 0-last 2-laps 3-infinite 4-0-close/1-open
+    float yaw[6];   // add by yu 1-now 0-last 2-laps 3-infinite 4-0-close/1-open
+    float pitch[6]; // add by yu 1-now 0-last 2-laps 3-infinite 4-0-close/1-open
 }TYPEDEF_TOP;
 
 extern float yaw, pitch, roll;

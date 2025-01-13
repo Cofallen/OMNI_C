@@ -45,7 +45,8 @@ void TOP_T_Cal()
     TOP.yaw[3] = TOP.yaw[2] * 8192.0f + TOP.yaw[NOW];
     TOP.yaw[LAST] = TOP.yaw[NOW];
 
-    TOP.pitch[1] = pitch;
+    TOP.pitch[5] = pitch;
+    TOP.yaw[5] = yaw;
 }
 
 void TOP_T_Monitor()

@@ -45,8 +45,8 @@ uint8_t VISION_F_Cal(uint8_t *RxData)
 
 void VisionSendInit(union RUI_U_VISION_SEND*  Send_t)
 {
-    Send_t->PIT_DATA = TOP.pitch[1];
-    Send_t->YAW_DATA = convertInsexToAngle(TOP.yaw[1]);
+    Send_t->PIT_DATA = TOP.pitch[5];
+    Send_t->YAW_DATA = TOP.yaw[5];
     Send_t->INIT_FIRING_RATE =user_data.shoot_data.initial_speed;
     Send_t->FLAG = VISION_V_DATA.SEND.FLAG;
     Send_t->COLOR = VISION_V_DATA.SEND.COLOR;

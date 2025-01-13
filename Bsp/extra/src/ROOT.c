@@ -37,8 +37,8 @@ uint8_t ROOT_F_PIDinit()
     // const float PID_V_GIMBAL_YAW_ANGLE[5] = {1.35f, 0.0f, 0.0f, 200.0f, 2000.0f};
 	const float PID_V_GIMBAL_YAW_SPEED[5] = {600.0f, 0.0f, 0.5f, 100.0f, 10000.0f};
     const float PID_V_GIMBAL_YAW_ANGLE[5] = {0.36f, 0.0f, 0.0f, 200.0f, 2000.0f};
-    const float PID_V_GIMBAL_PIT_SPEED[5] = {160.0f, 0.0f, 0, 1000.0f, 30000.0f};
-    const float PID_V_GIMBAL_PIT_ANGLE[5] = {1.35f, 0, 0, 1000.0f, 40000.0f};
+    const float PID_V_GIMBAL_PIT_SPEED[5] = {120.0f, 0.0f, 0, 1000.0f, 30000.0f};
+    const float PID_V_GIMBAL_PIT_ANGLE[5] = {0.85f, 0.001f, 0, 1000.0f, 10000.0f};
 
     const float PID_V_ATTACK_L_SPEED[5] = {5.0f, 0, 0, 1000.0f, 15000.0f};
     const float PID_V_ATTACK_R_SPEED[5] = {5.0f, 0, 0, 1000.0f, 15000.0f};

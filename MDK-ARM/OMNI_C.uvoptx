@@ -175,7 +175,7 @@
           <Type>0</Type>
           <LineNumber>137</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134292896</Address>
+          <Address>134292736</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -191,7 +191,7 @@
           <Type>0</Type>
           <LineNumber>139</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134292914</Address>
+          <Address>134292750</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -207,7 +207,7 @@
           <Type>0</Type>
           <LineNumber>142</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134292942</Address>
+          <Address>134292762</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -223,7 +223,7 @@
           <Type>0</Type>
           <LineNumber>143</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134292954</Address>
+          <Address>134292774</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -239,7 +239,7 @@
           <Type>0</Type>
           <LineNumber>145</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134292974</Address>
+          <Address>134292794</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -252,22 +252,6 @@
         </Bp>
         <Bp>
           <Number>6</Number>
-          <Type>0</Type>
-          <LineNumber>272</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>../Core/Src/freertos.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>7</Number>
           <Type>0</Type>
           <LineNumber>23</LineNumber>
           <EnabledFlag>0</EnabledFlag>
@@ -283,7 +267,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>8</Number>
+          <Number>7</Number>
           <Type>0</Type>
           <LineNumber>26</LineNumber>
           <EnabledFlag>0</EnabledFlag>
@@ -299,7 +283,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>9</Number>
+          <Number>8</Number>
           <Type>0</Type>
           <LineNumber>23</LineNumber>
           <EnabledFlag>0</EnabledFlag>
@@ -315,7 +299,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>10</Number>
+          <Number>9</Number>
           <Type>0</Type>
           <LineNumber>26</LineNumber>
           <EnabledFlag>0</EnabledFlag>
@@ -370,7 +354,7 @@
         <Ww>
           <count>7</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Top</ItemText>
+          <ItemText>Top,0x10</ItemText>
         </Ww>
         <Ww>
           <count>8</count>
