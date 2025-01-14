@@ -42,6 +42,7 @@
 #include "VOFA.h"
 #include "TOP.h"
 #include "VISION.h"
+#include "Read_Data.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -68,6 +69,7 @@ osThreadId chassisTaskHandle;
 osThreadId gimbalTaskHandle;
 osThreadId attackTaskHandle;
 osThreadId monitorTaskHandle;
+osThreadId visionTaskHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -79,6 +81,7 @@ void StartChassisTask(void const * argument);
 void StartGimbalTask(void const * argument);
 void StartAttackTask(void const * argument);
 void StartMonitorTask(void const * argument);
+void StartvisionTask(void const * argument);
 
 extern void MX_USB_DEVICE_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
@@ -145,6 +148,10 @@ void MX_FREERTOS_Init(void) {
   /* definition and creation of monitorTask */
   osThreadDef(monitorTask, StartMonitorTask, osPriorityIdle, 0, 128);
   monitorTaskHandle = osThreadCreate(osThread(monitorTask), NULL);
+
+  /* definition and creation of visionTask */
+  osThreadDef(visionTask, StartvisionTask, osPriorityIdle, 0, 128);
+  visionTaskHandle = osThreadCreate(osThread(visionTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -227,17 +234,18 @@ __weak void StartGimbalTask(void const * argument)
     //        (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CURRENT,
     //        (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CURRENT,
     //        (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CURRENT,
-    //        (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
-    //        (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
+    //        (float)VISION_V_DATA.RECEIVE.YAW_DATA,
+    //        (float)VISION_V_DATA.RECEIVE.PIT_DATA,
     //        (float)TOP.pitch[5],
     //        (float)TOP.yaw[5],
-          // 1.0f);
+    //       1.0f);
 
-                 VOFA_T_SendTemp(5, 0.0f,  // debug yaw pid with top[3]
-               (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW,
-               (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
-               (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].PID_A.OUT.ALL_OUT,
-               1.0f);
+              //    VOFA_T_SendTemp(6, 0.0f,  // debug yaw pid with top[3]
+              //  (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW,
+              //  (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
+              //  (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].PID_A.OUT.ALL_OUT,
+              //  (float)TOP.pitch[5],
+              //  1.0f);
 
     vTaskDelay(1);
   }
@@ -283,13 +291,37 @@ __weak void StartMonitorTask(void const * argument)
     ROOT_F_MONITOR_DBUS(&DBUS_V_DATA);
     TOP_T_Monitor();
     TOP_T_Cal();
-    VisionSendInit(&VISION_V_DATA.SEND);
-    ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff);
-
     vTaskDelay(1);
-    
   }
   /* USER CODE END StartMonitorTask */
+}
+
+/* USER CODE BEGIN Header_StartvisionTask */
+/**
+* @brief Function implementing the visionTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartvisionTask */
+__weak void StartvisionTask(void const * argument)
+{
+  /* USER CODE BEGIN StartvisionTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff);
+    VOFA_T_Vision();
+    // VOFA_T_SendTemp(8, 0.0f,  // debug yaw pid with top[3]
+    //           (float)user_data.shoot_data.initial_speed,
+    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW,
+    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.SPEED_NOW,
+    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.AIM,
+    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM,
+    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE,
+    //           1.0f);
+    vTaskDelay(1);
+  }
+  /* USER CODE END StartvisionTask */
 }
 
 /* Private application code --------------------------------------------------*/

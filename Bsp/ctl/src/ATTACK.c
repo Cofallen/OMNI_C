@@ -33,7 +33,7 @@ uint8_t ATTACK_F_Init(TYPEDEF_MOTOR *MOTOR)
 
     // 数据初始化
     ATTACK_V_PARAM.SINGLE_ANGLE = 36864.0f;
-    ATTACK_V_PARAM.SPEED = 7000.0f;
+    ATTACK_V_PARAM.SPEED = 8300.0f;
 
     ATTACK_V_PARAM.FLAG = 1;
 
@@ -72,7 +72,7 @@ float ATTACK_F_JAM_Aim(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     }
     if (DBUS->REMOTE.S2_u8)
     {
-        MOTOR->DATA.AIM = (float)MOTOR->DATA.ANGLE_INFINITE + ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.COUNT;
+        MOTOR->DATA.AIM = (float)MOTOR->DATA.ANGLE_INFINITE + ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.COUNT * 1.0f;
     }
     
     // MOTOR->DATA.AIM = (float)MOTOR->DATA.ANGLE_INFINITE - ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.COUNT;
@@ -145,7 +145,7 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
 
     // @veision 3, final code, this code is a stable speed
     // if (DBUS_V_DATA.REMOTE.S1_u8 == 1 || DBUS_V_DATA.REMOTE.S1_u8 == 2)  // 3 is the fire button
-    if (DBUS_V_DATA.REMOTE.S2_u8 == 2 || DBUS_V_DATA.REMOTE.S2_u8 == 1)  // 3 is the fire button
+    if (DBUS_V_DATA.REMOTE.S2_u8 == 2)  // 3 is the fire button
     {
         MOTOR->DATA.AIM = ATTACK_V_PARAM.SPEED;
     }

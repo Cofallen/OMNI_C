@@ -47,6 +47,7 @@
 #include "YU_MATH.h"
 #include "ROOT.h"
 #include "Read_Data.h"
+#include "usbd_cdc_if.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -114,14 +115,11 @@ int main(void)
   MX_CAN1_Init();
   MX_CAN2_Init();
   MX_TIM2_Init();
-  MX_TIM4_Init();
-  MX_TIM9_Init();
   MX_SPI1_Init();
   MX_USART3_UART_Init();
   MX_USART1_UART_Init();
   MX_USART6_UART_Init();
   MX_TIM10_Init();
-  MX_TIM3_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -140,12 +138,7 @@ int main(void)
   // HAL_UART_Transmit_DMA(&huart1, (uint8_t *)&DBUS_V_UNION.GET_DATA, sizeof(DBUS_V_UNION.GET_DATA));
   
   HAL_TIM_Base_Start_IT(&htim2);
-  HAL_TIM_Base_Start_IT(&htim4);
   HAL_Delay(30);
-  HAL_TIM_Base_Start_IT(&htim3);
-  HAL_TIM_Base_Start_IT(&htim9);
-  HAL_Delay(30);
-
 
   /* USER CODE END 2 */
 
@@ -163,10 +156,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-        // ReadAccData(&cp.acc_data.acc_raw_data);
-        // ReadAccSensorTime(&cp.acc_data.sensor_time);
-        // ReadAccTemperature(&cp.acc_data.temperature);
-        // ReadGyroData(&cp.gyro_data.gyro_raw_data);
+    
   }
   /* USER CODE END 3 */
 }
@@ -233,6 +223,30 @@ static void MX_NVIC_Init(void)
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM1 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM1) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+  if (htim->Instance == TIM2) // 底盘 1ms
+    {     
+      CDC_Transmit_FS(sd_v_buff, 16);
+    }
+  /* USER CODE END Callback 1 */
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.

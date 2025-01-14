@@ -8,7 +8,7 @@
 #include "usbd_cdc_if.h"
 #include "YU_MATH.h"
 
-#define VISION_D_SEND 15
+#define VISION_D_SEND 16
 #define VISION_D_RECV 15
 
 union ReceiveDataUnion_typedef	data_tackle ={0};
@@ -60,33 +60,33 @@ int ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff)
    buff[0] = 0xaa;
 	//确定pitch轴角度//并且发送角度值
 	data_tackle.F = Send_t->PIT_DATA;
+    // data_tackle.F = TOP.pitch[5];
 	buff[1] = data_tackle.U[0];
 	buff[2] = data_tackle.U[1];
 	buff[3] = data_tackle.U[2];
 	buff[4] = data_tackle.U[3];
 	//确定yaw轴角度//并且发送角度值
 	data_tackle.F = Send_t->YAW_DATA;
+    // data_tackle.F = TOP.yaw[5];
 	buff[5] = data_tackle.U[0];
 	buff[6] = data_tackle.U[1];
 	buff[7] = data_tackle.U[2];
 	buff[8] = data_tackle.U[3];
     //将请求的状态置于第九位中
 	//2023-06-02 22:54 | 自瞄/打符标志位
-    setbit(&buff[9], 0, Send_t->COLOR &0x01);
-    //2023-06-02 22:54 | 颜色
-	setbit(&buff[9] , 3 , Send_t->COLOR >> 4);
-
-    data_tackle.I = Send_t->TIME;
+    // setbit(&buff[9], 0, Send_t->COLOR &0x01);
+    // //2023-06-02 22:54 | 颜色
+	// setbit(&buff[9] , 3 , Send_t->COLOR >> 4);
+    buff[9] = 9;
+    data_tackle.F = 555.555;
 	buff[10] = data_tackle.U[0];
 	buff[11] = data_tackle.U[1];
 	buff[12] = data_tackle.U[2];
 	buff[13] = data_tackle.U[3];
-    // buff[14] = user_data.shoot_data.initial_speed;
-    buff[14] = 99;
+    buff[14] = 0x13;
     buff[15] = 0xbb;
 
-
-    status = CDC_Transmit_FS(buff, 16);
-    return status;
+    // status = CDC_Transmit_FS(buff, 16);
+    // return status;
 
 }

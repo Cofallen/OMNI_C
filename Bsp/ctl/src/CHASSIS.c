@@ -31,7 +31,7 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     Vx =  (float)DBUS->REMOTE.CH0_int16 * 10.0f;
     Vy =  (float)DBUS->REMOTE.CH1_int16 * 10.0f;
 
-    if (DBUS->REMOTE.S2_u8 == 3 || DBUS->REMOTE.S2_u8 == 1)  // @TODO + 底盘跟随判断 A&B + GEER挡位 // chassis folllow
+    if ( DBUS->REMOTE.S2_u8 == 1)  // @TODO + 底盘跟随判断 A&B + GEER挡位 // chassis folllow
     {   
         ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;  // if add 4096
         PRIDICT = DBUS->REMOTE.CH2_int16 * 2.0f;  // @TODO 预测模型待思考
@@ -44,7 +44,7 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
             Vr = 0.0f;
         }
     }
-    else if (DBUS->REMOTE.S2_u8 == 2) // @TODO little spining go straight
+    else if (DBUS->REMOTE.S2_u8 == 3 || DBUS->REMOTE.S2_u8 == 2) // @TODO little spining go straight
     {
         PRIDICT = 0.0f;
         Vr = -(float)DBUS->REMOTE.DIR_int16 * 3.0f;

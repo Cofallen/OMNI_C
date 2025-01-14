@@ -6,6 +6,7 @@
 #include "YU_PID.h"
 #include "YU_MATH.h"
 #include "VISION.h"
+#include "TOP.h"
 
 float DBUS_V_CH2[5] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f}; // last now error 3-count 4-status 
 float aim = 0;
@@ -41,14 +42,15 @@ void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
         MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += -(float)DBUS->REMOTE.CH2_int16 * 0.02f;
     }
     
-    // MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += -(float)DBUS->REMOTE.CH2_int16 * 0.02f;
+//    MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += -(float)DBUS->REMOTE.CH2_int16 * 0.02f;
     MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += -(float)DBUS->REMOTE.CH3_int16 * 0.01f;
 
 
     // 自瞄修正
-    // MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += VISION_V_DATA.RECEIVE.YAW_DATA * 0.1f;
-    // MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += VISION_V_DATA.RECEIVE.PIT_DATA * 0.1f;
-    //
+    //  MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += VISION_V_DATA.RECEIVE.YAW_DATA * 0.1f;
+    //  MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += VISION_V_DATA.RECEIVE.PIT_DATA * 0.1f;
+    // MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM +=  10 * 0.1f;
+    // MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += TOP.pitch[5] * 0.1f;
 
     // if (MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM > 5200)
     // {

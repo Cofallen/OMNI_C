@@ -68,4 +68,5 @@ omni_c/freertos.o: ..\Core\Src\freertos.c \
   ..\CMSIS\DSP\Inc\dsp\utils.h \
   ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
   ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h ..\Bsp\extra\inc\VISION.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h \
+  ..\JUDGE\Read_Data.h ..\Core\Inc\usart.h
