@@ -39,6 +39,7 @@ extern QEKF_INS_t QEKF_INS;
 
 // extern float Top[5];
 extern TYPEDEF_TOP TOP;
+extern float currentAngle; // 陀螺仪yaw偏差角度
 
 extern void TOP_T_Cal();
 extern void TOP_T_Monitor();

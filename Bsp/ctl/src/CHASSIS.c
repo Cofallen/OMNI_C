@@ -13,13 +13,10 @@
 #include "ROOT.h"
 #include "YU_MATH.h"
 #include "TOP.h"
-// #include "dsp/fast_math_functions_f16.h"
-
-float temprate = 0.0f;
 
 // 本代码为全向轮底盘运动基本代码
 
-double ANGLE_Rad, ANGLE_Rada = 0.0f;
+double ANGLE_Rad = 0.0f;
 double ANGLE_Relative = 0.0f;
 
 void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
@@ -31,9 +28,11 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     Vx =  (float)DBUS->REMOTE.CH0_int16 * 10.0f;
     Vy =  (float)DBUS->REMOTE.CH1_int16 * 10.0f;
 
-    if ( DBUS->REMOTE.S2_u8 == 1)  // @TODO + 底盘跟随判断 A&B + GEER挡位 // chassis folllow
+    ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;  // if add 4096
+    spinLittleRound(&ANGLE_Relative);
+
+    if (DBUS->REMOTE.S2_u8 == 1)  // @TODO + 底盘跟随判断 A&B + GEER挡位 // chassis folllow
     {   
-        ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;  // if add 4096
         PRIDICT = DBUS->REMOTE.CH2_int16 * 2.0f;  // @TODO 预测模型待思考
         if (TOP.yaw[4] == 1.0f && ((MATH_D_ABS(ANGLE_Relative) > 0.0f)))  // follow diff area
         {
@@ -49,18 +48,8 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
         PRIDICT = 0.0f;
         Vr = -(float)DBUS->REMOTE.DIR_int16 * 3.0f;
     }
-    ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;  // if add 4096
-    if (ANGLE_Relative > 4096)  
-    {
-        ANGLE_Relative -= 8192;
-    }
-    else if (ANGLE_Relative < -4096)
-    {
-        ANGLE_Relative += 8192;
-    }
     
     ANGLE_Rad = ANGLE_Relative * MATH_D_RELATIVE_PARAM;
-    ANGLE_Rada = ANGLE_Relative * MATH_D_RELATIVE_PARAM * 0.5f;
     // rotate matrix
     double COS = cos(ANGLE_Rad);
     double SIN = sin(ANGLE_Rad);

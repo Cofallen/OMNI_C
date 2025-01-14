@@ -49,6 +49,19 @@ float convertInsexToAngle(float value)
     return result;
 }
 
+// 走小圈
+float spinLittleRound(double *input)
+{
+    if (*input > 4096.0f)  
+    {
+        *input -= 8192.0f;
+    }
+    else if (*input < -4096.0f)
+    {
+        *input += 8192.0f;
+    }
+    return *input;
+}
 
 void setbit(uint8_t* byte , int position , int value)
 {

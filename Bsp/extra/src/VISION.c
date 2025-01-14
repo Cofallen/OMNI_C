@@ -11,9 +11,12 @@
 #define VISION_D_SEND 16
 #define VISION_D_RECV 15
 
+#define VISION_D_MONITOR_LEN 30
 union ReceiveDataUnion_typedef	data_tackle ={0};
 RUI_TYPEDEF_VISION VISION_V_DATA = {0};
-// int a = sizeof(VISION_V_DATA);
+float VisionMonitor[VISION_D_MONITOR_LEN] = {0}; // 只看YAW数据是否变化判断离线
+int VISION_Monitor_IOTA = 0;
+
 // 视觉接收处理
 uint8_t VISION_F_Cal(uint8_t *RxData)
 {
@@ -37,6 +40,8 @@ uint8_t VISION_F_Cal(uint8_t *RxData)
 
         memcpy(VISION_V_DATA.OriginData, RxData, VISION_D_RECV);
         VISION_V_DATA.RECEIVE.TARGET= (VISION_V_DATA.OriginData[9] & 0x10)>>4;//识别成功标志位
+
+        VISION_V_DATA.RECV_FLAG = ROOT_READY;
 
         return ROOT_READY;
     }
@@ -89,4 +94,42 @@ int ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff)
     // status = CDC_Transmit_FS(buff, 16);
     // return status;
 
+}
+
+int errcount = 0;
+void VISION_F_Monitor()
+{
+    if (VISION_V_DATA.RECV_FLAG == ROOT_ERROR)
+    {
+        VISION_V_DATA.RECV_OutTime++;
+        if (VISION_V_DATA.RECV_OutTime >= 1000000)  // 防止越界
+        {
+            VISION_V_DATA.RECV_OutTime = 500;
+        }
+        
+    }
+    if (VISION_V_DATA.RECV_FLAG == ROOT_READY)
+    {
+        VISION_V_DATA.RECV_OutTime = 0;
+    }
+
+    VisionMonitor[VISION_Monitor_IOTA++] = VISION_V_DATA.RECEIVE.YAW_DATA;
+    if (VISION_Monitor_IOTA >= (VISION_D_MONITOR_LEN - 1))
+    {
+        VISION_Monitor_IOTA = 0;
+    }
+    
+    int err = 0;
+    for (int i = 1; i < VISION_D_MONITOR_LEN; i++)
+    {
+        if(VisionMonitor[i] == VisionMonitor[i - 1])
+            err++;
+    }
+    
+    errcount = err;
+    if ((VISION_V_DATA.RECV_OutTime >= 500) || (err >= (VISION_D_MONITOR_LEN - 3))) // 500ms
+    {
+        VISION_V_DATA.RECV_FLAG = ROOT_ERROR;
+        memset(&VISION_V_DATA.RECEIVE, 0, sizeof(VISION_V_DATA.RECEIVE));
+    }
 }

@@ -36,6 +36,8 @@ typedef struct RUI_TYPEDEF_VISION
   union RUI_U_VISION_RECEIVE RECEIVE;
   union RUI_U_VISION_SEND SEND;
   uint8_t OriginData[15];
+  uint8_t RECV_FLAG;
+  int RECV_OutTime;
 } RUI_TYPEDEF_VISION;
 
 union ReceiveDataUnion_typedef							//共用体(用于接受各种数据)(视觉，陀螺仪)
@@ -51,5 +53,6 @@ extern struct RUI_TYPEDEF_VISION VISION_V_DATA ;
 uint8_t VISION_F_Cal(uint8_t *RxData);
 int ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff);
 void VisionSendInit(union RUI_U_VISION_SEND*  Send_t);
+void VISION_F_Monitor();
 
 #endif // !__VISION_H__

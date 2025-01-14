@@ -43,6 +43,7 @@
 #include "TOP.h"
 #include "VISION.h"
 #include "Read_Data.h"
+#include "YU_MATH.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -229,16 +230,14 @@ __weak void StartGimbalTask(void const * argument)
                 MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
                 0,
                 MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND);
-    // VOFA_T_SendTemp(10, 0.0f,
-		// 			 (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CURRENT,
-    //        (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CURRENT,
-    //        (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CURRENT,
-    //        (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CURRENT,
-    //        (float)VISION_V_DATA.RECEIVE.YAW_DATA,
-    //        (float)VISION_V_DATA.RECEIVE.PIT_DATA,
-    //        (float)TOP.pitch[5],
-    //        (float)TOP.yaw[5],
-    //       1.0f);
+    VOFA_T_SendTemp(8, 0.0f,
+           (float)VISION_V_DATA.RECV_OutTime,
+           (float)VISION_V_DATA.RECV_FLAG,
+           (float)(VISION_V_DATA.RECEIVE.YAW_DATA + TOP.yaw[2] * 8192.0f),
+           (float)VISION_V_DATA.RECEIVE.PIT_DATA,
+           (float)(MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM * 0.04394531f),
+           (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
+          1.0f);
 
               //    VOFA_T_SendTemp(6, 0.0f,  // debug yaw pid with top[3]
               //  (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW,
@@ -290,6 +289,7 @@ __weak void StartMonitorTask(void const * argument)
   {
     ROOT_F_MONITOR_DBUS(&DBUS_V_DATA);
     TOP_T_Monitor();
+    VISION_F_Monitor();
     TOP_T_Cal();
     vTaskDelay(1);
   }
@@ -310,7 +310,7 @@ __weak void StartvisionTask(void const * argument)
   for(;;)
   {
     ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff);
-    VOFA_T_Vision();
+    // VOFA_T_Vision();
     // VOFA_T_SendTemp(8, 0.0f,  // debug yaw pid with top[3]
     //           (float)user_data.shoot_data.initial_speed,
     //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW,

@@ -64,11 +64,7 @@ void TOP_T_Monitor()
     {
         // top to motor angle
         TOP.yaw[NOW] = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW;
-        TOP.yaw[2] = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS;
-        currentAngle = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW;
-
-        // shut down motor
-        // MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM = 0.0f;
-
+        TOP.yaw[2] = 0;
+        currentAngle = 0;
     }
 }

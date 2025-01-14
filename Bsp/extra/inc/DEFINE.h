@@ -63,4 +63,9 @@
 #define ROOT_READY 1
 #define ROOT_ERROR 0
 
+
+// 编译命令，用于调试
+#define OLDHEAD 1
+// #define OMNI 0
+
 #endif // !__DEFINE_H__

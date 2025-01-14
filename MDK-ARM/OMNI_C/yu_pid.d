@@ -51,4 +51,5 @@ omni_c/yu_pid.o: ..\Bsp\ctl\src\YU_PID.c ..\Core\Inc\main.h \
   ..\CMSIS\DSP\Inc\dsp\utils.h \
   ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
   ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h ..\Bsp\extra\inc\ROOT.h \
-  ..\Bsp\ctl\inc\DBUS.h
+  ..\Bsp\ctl\inc\DBUS.h ..\Bsp\extra\inc\VISION.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h
