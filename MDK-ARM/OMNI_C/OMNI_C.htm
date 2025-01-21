@@ -3,7 +3,7 @@
 <title>Static Call Graph - [OMNI_C\OMNI_C.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image OMNI_C\OMNI_C.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6180002: Last Updated: Wed Jan 15 00:19:17 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6180002: Last Updated: Tue Jan 21 16:26:41 2025
 <BR><P>
 <H3>Maximum Stack Usage =        468 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -400,13 +400,13 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[176]"></a>__aeabi_memcpy4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[17d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_Update
-<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_Measure
-<LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;H_K_R_Adjustment
+<BR><BR>[Called By]<UL><LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;H_K_R_Adjustment
 <LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IMU_QuaternionEKF_Update
 <LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IMU_QuaternionEKF_Init
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IMU_QuaternionEKF_xhatUpdate
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IMU_QuaternionEKF_Observe
+<LI><a href="#[17d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_Update
+<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_Measure
 </UL>
 
 <P><STRONG><a name="[235]"></a>__aeabi_memcpy8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text), UNUSED)
@@ -424,16 +424,16 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memset
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ROOT_F_MONITOR_DBUS
-<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_Init
 <LI><a href="#[1c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USAR_UART_JudgeCallback
+<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_Init
 </UL>
 
 <P><STRONG><a name="[177]"></a>__aeabi_memclr4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[1bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
-<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_Measure
-<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_Init
 <LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;H_K_R_Adjustment
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IMU_QuaternionEKF_SetH
+<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_Measure
+<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_Init
 <LI><a href="#[7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CDC_Init
 </UL>
 
@@ -952,8 +952,8 @@ Global Symbols
 <LI><a href="#[194]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_CAN2_Init
 <LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_CAN1_Init
 <LI><a href="#[1bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
-<LI><a href="#[1da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_Init
 <LI><a href="#[12d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_ResetCallback
+<LI><a href="#[1da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_Init
 </UL>
 
 <P><STRONG><a name="[d3]"></a>GIMBAL_F_Ctl</STRONG> (Thumb, 560 bytes, Stack size 24 bytes, gimbal.o(.text.GIMBAL_F_Ctl))
@@ -1445,15 +1445,15 @@ Global Symbols
 <LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PCD_WriteEmptyTxFifo
 <LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PCD_EP_OutSetupPacket_int
 <LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PCD_EP_OutXfrComplete_int
-<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_DisconnectCallback
-<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_ConnectCallback
-<LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_ISOINIncompleteCallback
 <LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_ISOOUTIncompleteCallback
 <LI><a href="#[127]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_ResumeCallback
 <LI><a href="#[128]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_SuspendCallback
 <LI><a href="#[12d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_ResetCallback
 <LI><a href="#[12e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_SOFCallback
 <LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_DataInStageCallback
+<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_DisconnectCallback
+<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_ConnectCallback
+<LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_ISOINIncompleteCallback
 </UL>
 <BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OTG_FS_IRQHandler
 </UL>
@@ -1913,8 +1913,8 @@ Global Symbols
 <P><STRONG><a name="[17c]"></a>IMU_QuaternionEKF_Update</STRONG> (Thumb, 1420 bytes, Stack size 80 bytes, quaternionekf.o(.text.IMU_QuaternionEKF_Update))
 <BR><BR>[Stack]<UL><LI>Max Depth = 356<LI>Call Chain = IMU_QuaternionEKF_Update &rArr; Kalman_Filter_Update &rArr; Kalman_Filter_SetK &rArr; arm_mat_inverse_f32
 </UL>
-<BR>[Calls]<UL><LI><a href="#[17d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_Update
-<LI><a href="#[17e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_atan2_f32
+<BR>[Calls]<UL><LI><a href="#[17e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_atan2_f32
+<LI><a href="#[17d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_Update
 <LI><a href="#[17f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_asinf
 <LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
@@ -2712,12 +2712,12 @@ Global Symbols
 <P><STRONG><a name="[104]"></a>USBD_LL_DataInStage</STRONG> (Thumb, 402 bytes, Stack size 40 bytes, usbd_core.o(.text.USBD_LL_DataInStage))
 <BR><BR>[Stack]<UL><LI>Max Depth = 208<LI>Call Chain = USBD_LL_DataInStage &rArr; USBD_CtlContinueSendData &rArr; USBD_LL_Transmit &rArr; HAL_PCD_EP_Transmit &rArr; USB_EPStartXfer &rArr; USB_WritePacket
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_PrepareReceive
-<LI><a href="#[1d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_StallEP
-<LI><a href="#[1d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CtlReceiveStatus
+<BR>[Calls]<UL><LI><a href="#[1d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CtlReceiveStatus
 <LI><a href="#[1d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CtlContinueSendData
 <LI><a href="#[1de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CoreFindEP
 <LI><a href="#[1dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_RunTestMode
+<LI><a href="#[1ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_PrepareReceive
+<LI><a href="#[1d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_StallEP
 </UL>
 <BR>[Called By]<UL><LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_DataInStageCallback
 </UL>
@@ -2844,11 +2844,11 @@ Global Symbols
 <P><STRONG><a name="[13f]"></a>USBD_LL_SetupStage</STRONG> (Thumb, 148 bytes, Stack size 24 bytes, usbd_core.o(.text.USBD_LL_SetupStage))
 <BR><BR>[Stack]<UL><LI>Max Depth = 264<LI>Call Chain = USBD_LL_SetupStage &rArr; USBD_StdDevReq &rArr; USBD_GetDescriptor &rArr; USBD_CtlSendData &rArr; USBD_LL_Transmit &rArr; HAL_PCD_EP_Transmit &rArr; USB_EPStartXfer &rArr; USB_WritePacket
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_StallEP
-<LI><a href="#[1e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_StdEPReq
+<BR>[Calls]<UL><LI><a href="#[1e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_StdEPReq
 <LI><a href="#[1e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_StdItfReq
 <LI><a href="#[1e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_StdDevReq
 <LI><a href="#[1e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_ParseSetupRequest
+<LI><a href="#[1d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_StallEP
 </UL>
 <BR>[Called By]<UL><LI><a href="#[13e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_SetupStageCallback
 </UL>
@@ -2945,13 +2945,13 @@ Global Symbols
 <P><STRONG><a name="[1e7]"></a>USBD_StdEPReq</STRONG> (Thumb, 940 bytes, Stack size 56 bytes, usbd_ctlreq.o(.text.USBD_StdEPReq))
 <BR><BR>[Stack]<UL><LI>Max Depth = 224<LI>Call Chain = USBD_StdEPReq &rArr; USBD_CtlSendData &rArr; USBD_LL_Transmit &rArr; HAL_PCD_EP_Transmit &rArr; USB_EPStartXfer &rArr; USB_WritePacket
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_IsStallEP
-<LI><a href="#[1db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_ClearStallEP
-<LI><a href="#[1d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_StallEP
-<LI><a href="#[1cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CtlSendData
+<BR>[Calls]<UL><LI><a href="#[1cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CtlSendData
 <LI><a href="#[1cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CtlError
 <LI><a href="#[1cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CtlSendStatus
 <LI><a href="#[1de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CoreFindEP
+<LI><a href="#[1ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_IsStallEP
+<LI><a href="#[1db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_ClearStallEP
+<LI><a href="#[1d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_StallEP
 </UL>
 <BR>[Called By]<UL><LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_SetupStage
 </UL>
@@ -3255,52 +3255,52 @@ Global Symbols
 <P><STRONG><a name="[182]"></a>arm_mat_add_f32</STRONG> (Thumb, 104 bytes, Stack size 36 bytes, matrixfunctions.o(.text.arm_mat_add_f32))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = arm_mat_add_f32
 </UL>
-<BR>[Called By]<UL><LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_xhatUpdate
+<BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IMU_QuaternionEKF_xhatUpdate
+<LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_xhatUpdate
 <LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_SetK
 <LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_PminusUpdate
 <LI><a href="#[191]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_xhatMinusUpdate
-<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IMU_QuaternionEKF_xhatUpdate
 </UL>
 
 <P><STRONG><a name="[17b]"></a>arm_mat_init_f32</STRONG> (Thumb, 40 bytes, Stack size 12 bytes, matrixfunctions.o(.text.arm_mat_init_f32))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = arm_mat_init_f32
 </UL>
-<BR>[Called By]<UL><LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_Init
-<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IMU_QuaternionEKF_Init
+<BR>[Called By]<UL><LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IMU_QuaternionEKF_Init
+<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_Init
 </UL>
 
 <P><STRONG><a name="[183]"></a>arm_mat_inverse_f32</STRONG> (Thumb, 1480 bytes, Stack size 236 bytes, matrixfunctions.o(.text.arm_mat_inverse_f32))
 <BR><BR>[Stack]<UL><LI>Max Depth = 236<LI>Call Chain = arm_mat_inverse_f32
 </UL>
-<BR>[Called By]<UL><LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_SetK
-<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IMU_QuaternionEKF_xhatUpdate
+<BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IMU_QuaternionEKF_xhatUpdate
+<LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_SetK
 </UL>
 
 <P><STRONG><a name="[181]"></a>arm_mat_mult_f32</STRONG> (Thumb, 272 bytes, Stack size 72 bytes, matrixfunctions.o(.text.arm_mat_mult_f32))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = arm_mat_mult_f32
 </UL>
-<BR>[Called By]<UL><LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_P_Update
+<BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IMU_QuaternionEKF_xhatUpdate
+<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_P_Update
 <LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_xhatUpdate
 <LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_SetK
 <LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_PminusUpdate
 <LI><a href="#[191]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_xhatMinusUpdate
-<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IMU_QuaternionEKF_xhatUpdate
 </UL>
 
 <P><STRONG><a name="[185]"></a>arm_mat_sub_f32</STRONG> (Thumb, 104 bytes, Stack size 36 bytes, matrixfunctions.o(.text.arm_mat_sub_f32))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = arm_mat_sub_f32
 </UL>
-<BR>[Called By]<UL><LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_P_Update
+<BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IMU_QuaternionEKF_xhatUpdate
+<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_P_Update
 <LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_xhatUpdate
-<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IMU_QuaternionEKF_xhatUpdate
 </UL>
 
 <P><STRONG><a name="[180]"></a>arm_mat_trans_f32</STRONG> (Thumb, 138 bytes, Stack size 40 bytes, matrixfunctions.o(.text.arm_mat_trans_f32))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = arm_mat_trans_f32
 </UL>
-<BR>[Called By]<UL><LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_SetK
+<BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IMU_QuaternionEKF_xhatUpdate
+<LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_SetK
 <LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Kalman_Filter_PminusUpdate
-<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IMU_QuaternionEKF_xhatUpdate
 </UL>
 
 <P><STRONG><a name="[ae]"></a>bmi088_accel_init</STRONG> (Thumb, 398 bytes, Stack size 40 bytes, bmi088driver.o(.text.bmi088_accel_init))
@@ -4090,12 +4090,12 @@ Local Symbols
 <P><STRONG><a name="[7b]"></a>IMU_QuaternionEKF_xhatUpdate</STRONG> (Thumb, 1632 bytes, Stack size 56 bytes, quaternionekf.o(.text.IMU_QuaternionEKF_xhatUpdate))
 <BR><BR>[Stack]<UL><LI>Max Depth = 292<LI>Call Chain = IMU_QuaternionEKF_xhatUpdate &rArr; arm_mat_inverse_f32
 </UL>
-<BR>[Calls]<UL><LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_mat_sub_f32
+<BR>[Calls]<UL><LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_cos_f32
+<LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_mat_sub_f32
 <LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_mat_inverse_f32
 <LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_mat_trans_f32
 <LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_mat_add_f32
 <LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_mat_mult_f32
-<LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_cos_f32
 <LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> quaternionekf.o(.text.IMU_QuaternionEKF_Init)
@@ -4283,9 +4283,9 @@ Local Symbols
 <P><STRONG><a name="[1ea]"></a>USBD_SetAddress</STRONG> (Thumb, 140 bytes, Stack size 24 bytes, usbd_ctlreq.o(.text.USBD_SetAddress))
 <BR><BR>[Stack]<UL><LI>Max Depth = 184<LI>Call Chain = USBD_SetAddress &rArr; USBD_CtlSendStatus &rArr; USBD_LL_Transmit &rArr; HAL_PCD_EP_Transmit &rArr; USB_EPStartXfer &rArr; USB_WritePacket
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_SetUSBAddress
-<LI><a href="#[1cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CtlError
+<BR>[Calls]<UL><LI><a href="#[1cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CtlError
 <LI><a href="#[1cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CtlSendStatus
+<LI><a href="#[1e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_SetUSBAddress
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_StdDevReq
 </UL>

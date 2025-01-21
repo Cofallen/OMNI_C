@@ -3633,9 +3633,9 @@
       </Doc>
       <Doc>
         <Name>../Core/Src/main.c</Name>
-        <ColumnNumber>23</ColumnNumber>
+        <ColumnNumber>17</ColumnNumber>
         <TopLine>115</TopLine>
-        <CurrentLine>132</CurrentLine>
+        <CurrentLine>127</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
@@ -3768,9 +3768,9 @@
       </Doc>
       <Doc>
         <Name>..\Bsp\extra\src\chassis_power_control.c</Name>
-        <ColumnNumber>0</ColumnNumber>
-        <TopLine>34</TopLine>
-        <CurrentLine>37</CurrentLine>
+        <ColumnNumber>5</ColumnNumber>
+        <TopLine>40</TopLine>
+        <CurrentLine>59</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
