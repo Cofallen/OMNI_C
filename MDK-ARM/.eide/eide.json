@@ -56,6 +56,9 @@
                   },
                   {
                     "path": "../Core/Src/stm32f4xx_hal_msp.c"
+                  },
+                  {
+                    "path": "../Core/Src/stm32f4xx_hal_timebase_tim.c"
                   }
                 ],
                 "folders": []
@@ -240,6 +243,9 @@
           },
           {
             "path": "../Bsp/extra/src/ROOT.c"
+          },
+          {
+            "path": "../Bsp/extra/src/chassis_power_control.c"
           }
         ],
         "folders": []
@@ -435,6 +441,51 @@
             "folders": []
           }
         ]
+      },
+      {
+        "name": "UI",
+        "files": [
+          {
+            "path": "../UI/ui_default_init0_0.c"
+          },
+          {
+            "path": "../UI/ui_default_init0_1.c"
+          },
+          {
+            "path": "../UI/ui_default_init0_2.c"
+          },
+          {
+            "path": "../UI/ui_default_init1_0.c"
+          },
+          {
+            "path": "../UI/ui_default_init2_0.c"
+          },
+          {
+            "path": "../UI/ui_default_init3_0.c"
+          },
+          {
+            "path": "../UI/ui_default_init4_0.c"
+          },
+          {
+            "path": "../UI/ui_default_init5_0.c"
+          },
+          {
+            "path": "../UI/ui_default_init5_1.c"
+          },
+          {
+            "path": "../UI/ui_default_init5_2.c"
+          },
+          {
+            "path": "../UI/ui_default_init5_3.c"
+          },
+          {
+            "path": "../UI/ui_default_init6_0.c"
+          },
+          {
+            "path": "../UI/ui_interface.c"
+          }
+        ],
+        "folders": []
       }
     ]
   },

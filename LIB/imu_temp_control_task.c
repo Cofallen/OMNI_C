@@ -30,7 +30,8 @@ TaskHandle_t INS_task_local_handler;
 fp32 gyro[3], accel[3], temp;
 float gyro_correct[3]={0};
 float roll,pitch,yaw=0;
-uint8_t attitude_flag=0;
+//uint8_t attitude_flag=0;
+uint8_t attitude_flag=1;
 uint32_t correct_times=0;
 
 //kp, ki,kd three params
@@ -109,32 +110,38 @@ void INS_Task()
             gyro_correct[0]+= gyro[0];
             gyro_correct[1]+= gyro[1];
             gyro_correct[2]+= gyro[2];
-            correct_times++;
-            if(correct_times>=correct_Time_define)
-            {
-              gyro_correct[0]/=correct_Time_define;
-              gyro_correct[1]/=correct_Time_define;
-              gyro_correct[2]/=correct_Time_define;
-              attitude_flag=2; //go to 2 state
-            }
+			
+			gyro_correct[0] = -0.00311695272;
+			gyro_correct[1] = -0.00446876744;
+			gyro_correct[2] = -7.66990706e-05;
+			attitude_flag=2; //go to 2 state
+			
+            // correct_times++;
+            // if(correct_times>=correct_Time_define)
+            // {
+            //   gyro_correct[0]/=correct_Time_define;
+            //   gyro_correct[1]/=correct_Time_define;
+            //   gyro_correct[2]/=correct_Time_define;
+            //   attitude_flag=2; //go to 2 state
+            // }
         }
     }
 // temperature control
-    if ((count % 10) == 0)
-    {
-        // 100hz 的温度控制pid
-        IMU_Temperature_Ctrl();
-//        attitude_flag=1;  //go to correct state
-        static uint32_t temp_Ticks=0;
-        if((fabsf(temp-Destination_TEMPERATURE)<0.5f)&&attitude_flag==0) //接近额定温度之差小于0.5° 开始计数
-        {
-          temp_Ticks++;
-          if(temp_Ticks>temp_times)   //计数达到一定次数后 才进入0飘初始化 说明温度已经达到目标
-          {
-            attitude_flag=1;  //go to correct state
-          }
-        }
-    }
+    // if ((count % 10) == 0)
+    // {
+    //     // 100hz 的温度控制pid
+    //     IMU_Temperature_Ctrl();
+    //     static uint32_t temp_Ticks=0;
+    //     // if((fabsf(temp-Destination_TEMPERATURE)<0.5f)&&attitude_flag==0) //接近额定温度之差小于0.5° 开始计数
+    //     // {
+		//   // attitude_flag=1;  //go to correct state
+    //       temp_Ticks++;
+    //       if(temp_Ticks>temp_times)   //计数达到一定次数后 才进入0飘初始化 说明温度已经达到目标
+    //       {
+    //         attitude_flag=1;  //go to correct state
+    //       }
+    //     // }
+    // }
     count++;
 }
 

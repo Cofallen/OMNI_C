@@ -1,6 +1,6 @@
-name: Sync Local Repository
+# name: Sync Local Repository
 
-on:
+# on:
   # schedule:
   #   - cron: '2 * * * *' # 每小时运行一次
   # push:

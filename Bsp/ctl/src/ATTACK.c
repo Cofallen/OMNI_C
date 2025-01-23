@@ -13,6 +13,11 @@
 #include "VOFA.h"
 #include "stdlib.h"
 
+
+// delete later
+#include "CAN_DEV.h"
+#include "can.h"
+
 #define ATTACK_D_TIMEOUT 100
 #define ATTACK_D_SPEED 10
 
@@ -28,13 +33,13 @@ uint8_t ATTACK_F_Init(TYPEDEF_MOTOR *MOTOR)
 
     // 数据初始化
     ATTACK_V_PARAM.SINGLE_ANGLE = 36864.0f;
-    ATTACK_V_PARAM.SPEED = 3000.0f;
+    ATTACK_V_PARAM.SPEED = 8300.0f;
 
     ATTACK_V_PARAM.FLAG = 1;
 
     // 电机初始化
-    MOTOR[MOTOR_D_ATTACK_L].DATA.AIM = -ATTACK_V_PARAM.SPEED;
-    MOTOR[MOTOR_D_ATTACK_R].DATA.AIM =  ATTACK_V_PARAM.SPEED;
+    MOTOR[MOTOR_D_ATTACK_L].DATA.AIM =  0.0f;
+    MOTOR[MOTOR_D_ATTACK_R].DATA.AIM =  0.0f;
     MOTOR[MOTOR_D_ATTACK_G].DATA.AIM =  (float)MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE;
 
     return ROOT_READY;
@@ -65,8 +70,12 @@ float ATTACK_F_JAM_Aim(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
         }
         return MOTOR->DATA.AIM;
     }
-
-    MOTOR->DATA.AIM = (float)MOTOR->DATA.ANGLE_INFINITE - ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.COUNT;
+    if (DBUS->REMOTE.S2_u8)
+    {
+        MOTOR->DATA.AIM = (float)MOTOR->DATA.ANGLE_INFINITE + ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.COUNT * 1.0f;
+    }
+    
+    // MOTOR->DATA.AIM = (float)MOTOR->DATA.ANGLE_INFINITE - ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.COUNT;
     return MOTOR->DATA.AIM;
 }
 
@@ -135,7 +144,15 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
     // return MOTOR->DATA.AIM;
 
     // @veision 3, final code, this code is a stable speed
-    MOTOR->DATA.AIM = 3000.0f;
+    // if (DBUS_V_DATA.REMOTE.S1_u8 == 1 || DBUS_V_DATA.REMOTE.S1_u8 == 2)  // 3 is the fire button
+    if (DBUS_V_DATA.REMOTE.S2_u8 == 2)  // 3 is the fire button
+    {
+        MOTOR->DATA.AIM = ATTACK_V_PARAM.SPEED;
+    }
+    else
+    {
+        MOTOR->DATA.AIM = 0.0f;
+    }
     return MOTOR->DATA.AIM;
 }
 
@@ -159,16 +176,10 @@ uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
         ATTACK_V_PARAM.FLAG = -ATTACK_V_PARAM.FLAG;
         ATTACK_V_PARAM.TIME = 0; // 重置时间
     }
-    if (DBUS_V_DATA.REMOTE.S2_u8 == 3)  
-    {
-        MOTOR[MOTOR_D_ATTACK_L].DATA.AIM = -ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_L]);
-        MOTOR[MOTOR_D_ATTACK_R].DATA.AIM = ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_R]);
-    }
-    else
-    {
-        MOTOR[MOTOR_D_ATTACK_L].DATA.AIM = 0;
-        MOTOR[MOTOR_D_ATTACK_R].DATA.AIM = 0;
-    }
+    // shooting case when opposite to you l-r
+    
+    MOTOR[MOTOR_D_ATTACK_L].DATA.AIM =  ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_L]);
+    MOTOR[MOTOR_D_ATTACK_R].DATA.AIM = -ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_R]);
 
     // pid
     // PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_L]);

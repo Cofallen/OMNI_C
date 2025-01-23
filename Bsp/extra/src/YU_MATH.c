@@ -1,7 +1,7 @@
 #include "YU_MATH.h"
 #include <math.h>
 #include "DEFINE.h"
-
+#include "main.h"
 float MATH_F_Sqrt(float DATA)
 {
     if (DATA < 0)
@@ -39,4 +39,39 @@ void convertAngleToIndex(float angle, float *index) {
 
     // 将角度转换为0-8191的索引
     *index = (angle / 360.0f * 8192.0f);
+}
+
+// 0-8192->-180-180
+float convertInsexToAngle(float value) 
+{
+    // Convert the value from [-180, 180] to [0, 8192]
+    float result = (float)((value + 180.0f) * (8192.0f / 360.0f));
+    return result;
+}
+
+// 走小圈
+float spinLittleRound(double *input)
+{
+    if (*input > 4096.0f)  
+    {
+        *input -= 8192.0f;
+    }
+    else if (*input < -4096.0f)
+    {
+        *input += 8192.0f;
+    }
+    return *input;
+}
+
+void setbit(uint8_t* byte , int position , int value)
+{
+	unsigned char mask = 1 << position;  // 生成一个只有指定位置为1的掩码
+	if (value)
+	{
+		*byte |= mask;  // 将指定位置设置为1
+	}
+	else
+	{
+		*byte &= ~mask;  // 将指定位置设置为0
+	}
 }

@@ -7,7 +7,8 @@
 #include "DEFINE.h"
 #include "YU_MATH.h"
 #include "TOP.h"
-
+#include "ROOT.h"
+#include "VISION.h"
 /**
  * @brief               自己写的PID初始化，不用读配置文件
  * @details             传入PID基本参数， 通过数组
@@ -92,8 +93,24 @@ uint8_t PID_F_SC(TYPEDEF_MOTOR *MOTOR)
 // gimbal yaw 双环pid
 uint8_t PID_F_G(TYPEDEF_MOTOR *MOTOR)
 {
-    MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&MOTOR->PID_A, MOTOR->DATA.AIM, Top[3]);
-    MOTOR->DATA.CAN_SEND = (int16_t)PID_F_Cal(&MOTOR->PID_S, MOTOR->PID_A.OUT.ALL_OUT, ((float)QEKF_INS.Gyro[2] * 50.0f));
+    if (TOP.yaw[4] == 1.0f) // online
+    {
+        MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&MOTOR->PID_A, MOTOR->DATA.AIM, TOP.yaw[3]);
+        MOTOR->DATA.CAN_SEND = (int16_t)PID_F_Cal(&MOTOR->PID_S, MOTOR->PID_A.OUT.ALL_OUT, ((float)QEKF_INS.Gyro[2] * 50.0f));
+    }
+    else if (TOP.yaw[4] == 0.0f) // offline 
+    {
+        MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&TOP_OFF_A, MOTOR->DATA.AIM, TOP.yaw[3]);
+        MOTOR->DATA.CAN_SEND = (int16_t)PID_F_Cal(&TOP_OFF_S, MOTOR->PID_A.OUT.ALL_OUT, MOTOR->DATA.SPEED_NOW);
+    }
+    return ROOT_READY;
+}
+
+// gimbal pitch 双环pid
+uint8_t PID_F_P(TYPEDEF_MOTOR *MOTOR)
+{
+    MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&MOTOR->PID_A, MOTOR->DATA.AIM, (float)MOTOR->DATA.ANGLE_NOW);
+    MOTOR->DATA.CAN_SEND = (int16_t)PID_F_Cal(&MOTOR->PID_S, MOTOR->PID_A.OUT.ALL_OUT, (float)MOTOR->DATA.SPEED_NOW);
     return ROOT_READY;
 }
 
@@ -102,6 +119,19 @@ uint8_t PID_F_S(TYPEDEF_MOTOR *MOTOR)
 	MOTOR->PID_S.OUT.ALL_OUT = PID_F_Cal(&MOTOR->PID_S, MOTOR->DATA.AIM, MOTOR->DATA.SPEED_NOW);
 	MOTOR->DATA.CAN_SEND = (int16_t)(MOTOR->PID_S.OUT.ALL_OUT);
 	return ROOT_READY;
+}
+
+uint8_t PID_F_VISION_YAW(TYPEDEF_MOTOR *MOTOR)
+{
+    // 自瞄修正
+    // MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = VISION_V_DATA.RECEIVE.PIT_DATA *22.75f + 3000.0f;
+    // MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM +=  10 * 0.1f;
+    // MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += TOP.pitch[5] * 0.1f;
+
+    MOTOR->DATA.AIM = VISION_V_DATA.RECEIVE.YAW_DATA *22.755555f + TOP.yaw[2] * 8192.0f; // 
+    MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&VISION_PID_YAW_ANGLE, MOTOR->DATA.AIM, TOP.yaw[3]);
+    MOTOR->DATA.CAN_SEND = (int16_t)PID_F_Cal(&VISION_PID_YAW_SPEED, MOTOR->PID_A.OUT.ALL_OUT, ((float)QEKF_INS.Gyro[2] * 50.0f));
+    return ROOT_READY;
 }
 
 /// @brief enhanced PID

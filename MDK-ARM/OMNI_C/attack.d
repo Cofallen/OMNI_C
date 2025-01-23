@@ -41,4 +41,5 @@ omni_c/attack.o: ..\Bsp\ctl\src\ATTACK.c ..\Core\Inc\main.h \
   ..\Bsp\ctl\inc\YU_PID.h ..\Bsp\dev\inc\TIM_DEV.h \
   ..\Bsp\extra\inc\ROOT.h ..\Bsp\extra\inc\YU_MATH.h \
   ..\JUDGE\Read_Data.h ..\Core\Inc\usart.h ..\Bsp\extra\inc\VOFA.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdlib.h
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdlib.h \
+  ..\Bsp\dev\inc\CAN_DEV.h ..\Core\Inc\can.h

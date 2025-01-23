@@ -77,7 +77,7 @@ void Append_CRC8_Check_Sum( uint8_t *pchMessage, uint16_t dwLength)
 
 uint16_t CRC_INIT = 0xffff;
 
-const uint16_t wCRC_Table[256] =
+const uint16_t wCRC_Table1[256] =
 {
     0x0000, 0x1189, 0x2312, 0x329b, 0x4624, 0x57ad, 0x6536, 0x74bf,
     0x8c48, 0x9dc1, 0xaf5a, 0xbed3, 0xca6c, 0xdbe5, 0xe97e, 0xf8f7,
@@ -129,7 +129,7 @@ uint16_t Get_CRC16_Check_Sum(uint8_t *pchMessage,uint32_t dwLength,uint16_t wCRC
     while(dwLength--)
     {
         chData = *pchMessage++;
-        (wCRC) = ((uint16_t)(wCRC) >> 8) ^ wCRC_Table[((uint16_t)(wCRC) ^
+        (wCRC) = ((uint16_t)(wCRC) >> 8) ^ wCRC_Table1[((uint16_t)(wCRC) ^
                                    (uint16_t)(chData)) & 0x00ff];
     }
     return wCRC;

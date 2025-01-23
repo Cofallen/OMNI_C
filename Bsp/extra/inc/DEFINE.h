@@ -17,7 +17,7 @@
 #define CAN_D_TOP 0x101
 // 云台
 #define CAN_D_GIMBAL_YAW 0x206
-#define CAN_D_GIMBAL_PIT 0x205
+#define CAN_D_GIMBAL_PIT 0x208
 // 发射
 #define CAN_D_ATTACK_L 0x201
 #define CAN_D_ATTACK_R 0x202
@@ -62,5 +62,17 @@
 // ROOT信号，涉及程序运行状态
 #define ROOT_READY 1
 #define ROOT_ERROR 0
+
+
+// 编译命令，用于调试
+#define OLDHEAD 1
+// #define OMNI 0
+
+
+// 云台限度
+#define GIMBAL_PIT_MAX 3208
+#define GIMBAL_PIT_MIN 2543
+#define OMNI_PIT_MAX 5200
+#define OMNI_PIT_MIN 4270
 
 #endif // !__DEFINE_H__

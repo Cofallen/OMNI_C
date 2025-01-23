@@ -8,6 +8,8 @@
 #include "DEFINE.h"
 #include "stdlib.h"
 
+#include "TIM_DEV.h"
+
 union 
 {
     float DATA[11];
@@ -98,4 +100,10 @@ uint8_t VOFA_T_SendTemp(int n, ...)
     HAL_UART_Transmit_DMA(&huart1, (uint8_t *)VOFA_T_DATA.TAIL, sizeof(VOFA_T_DATA));
 
     return ROOT_READY;
+}
+
+
+void VOFA_T_Vision()
+{
+    HAL_UART_Transmit_DMA(&huart1, (uint8_t *)sd_v_buff, sizeof(sd_v_buff));
 }

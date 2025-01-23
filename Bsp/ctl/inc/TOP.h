@@ -27,10 +27,19 @@ typedef union TYPEDEF_TOP_DATA_UNION // 共用体(用于接受各种数据)(视�
     uint8_t GET_DATA[8];
 } TYPEDEF_TOP_DATA_UNION;
 
+
+typedef struct TYPEDEF_TOP
+{
+    float yaw[6];   // add by yu 1-now 0-last 2-laps 3-infinite 4-0-close/1-open
+    float pitch[6]; // add by yu 1-now 0-last 2-laps 3-infinite 4-0-close/1-open
+}TYPEDEF_TOP;
+
 extern float yaw, pitch, roll;
 extern QEKF_INS_t QEKF_INS;
 
-extern float Top[5];
+// extern float Top[5];
+extern TYPEDEF_TOP TOP;
+extern float currentAngle; // 陀螺仪yaw偏差角度
 
 extern void TOP_T_Cal();
 extern void TOP_T_Monitor();

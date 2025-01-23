@@ -27,7 +27,7 @@ typedef struct TYPEDEF_DBUS // 遥控器数据结构体
         float X_FLT;
         float X_FILTER; // 处理后使用的鼠标值
         float X_MAX;    // 记录鼠标的最大值用来校准鼠标
-        float Y_Flt;
+        float Y_FLT;
         float Y_FILTER; // 处理后使用的鼠标值
         float Y_MAX;    // 记录鼠标的最大值用来校准鼠标
         uint8_t R_STATE : 4;

@@ -26,6 +26,24 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "imu_temp_control_task.h"
+
+#include "main.h"
+#include "can.h"
+
+#include "TIM_DEV.h"
+#include "CAN_DEV.h"
+#include "MOTOR.h"
+#include "DEFINE.h"
+#include "CHASSIS.h"
+#include "DBUS.h"
+#include "GIMBAL.h"
+#include "ROOT.h"
+#include "ATTACK.h"
+#include "VOFA.h"
+#include "TOP.h"
+#include "VISION.h"
+#include "Read_Data.h"
+#include "YU_MATH.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,6 +66,11 @@
 
 /* USER CODE END Variables */
 osThreadId IMUTaskHandle;
+osThreadId chassisTaskHandle;
+osThreadId gimbalTaskHandle;
+osThreadId attackTaskHandle;
+osThreadId monitorTaskHandle;
+osThreadId visionTaskHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -55,6 +78,11 @@ osThreadId IMUTaskHandle;
 /* USER CODE END FunctionPrototypes */
 
 void StartIMUTask(void const * argument);
+void StartChassisTask(void const * argument);
+void StartGimbalTask(void const * argument);
+void StartAttackTask(void const * argument);
+void StartMonitorTask(void const * argument);
+void StartvisionTask(void const * argument);
 
 extern void MX_USB_DEVICE_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
@@ -106,6 +134,26 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(IMUTask, StartIMUTask, osPriorityNormal, 0, 512);
   IMUTaskHandle = osThreadCreate(osThread(IMUTask), NULL);
 
+  /* definition and creation of chassisTask */
+  osThreadDef(chassisTask, StartChassisTask, osPriorityIdle, 0, 256);
+  chassisTaskHandle = osThreadCreate(osThread(chassisTask), NULL);
+
+  /* definition and creation of gimbalTask */
+  osThreadDef(gimbalTask, StartGimbalTask, osPriorityIdle, 0, 256);
+  gimbalTaskHandle = osThreadCreate(osThread(gimbalTask), NULL);
+
+  /* definition and creation of attackTask */
+  osThreadDef(attackTask, StartAttackTask, osPriorityIdle, 0, 256);
+  attackTaskHandle = osThreadCreate(osThread(attackTask), NULL);
+
+  /* definition and creation of monitorTask */
+  osThreadDef(monitorTask, StartMonitorTask, osPriorityIdle, 0, 128);
+  monitorTaskHandle = osThreadCreate(osThread(monitorTask), NULL);
+
+  /* definition and creation of visionTask */
+  osThreadDef(visionTask, StartvisionTask, osPriorityIdle, 0, 128);
+  visionTaskHandle = osThreadCreate(osThread(visionTask), NULL);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -131,10 +179,149 @@ __weak void StartIMUTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-	INS_Task();
+    INS_Task();
     vTaskDelayUntil(&currentIMU,1);
   }
   /* USER CODE END StartIMUTask */
+}
+
+/* USER CODE BEGIN Header_StartChassisTask */
+/**
+* @brief Function implementing the chassisTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartChassisTask */
+__weak void StartChassisTask(void const * argument)
+{
+  /* USER CODE BEGIN StartChassisTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    CHASSIS_F_Ctl(MOTOR_V_CHASSIS, &DBUS_V_DATA);
+    CAN_F_Send(&hcan1, 0x200, MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
+                MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
+                MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
+                MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
+    vTaskDelay(1);
+  }
+  /* USER CODE END StartChassisTask */
+}
+
+/* USER CODE BEGIN Header_StartGimbalTask */
+/**
+* @brief Function implementing the gimbalTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartGimbalTask */
+__weak void StartGimbalTask(void const * argument)
+{
+  /* USER CODE BEGIN StartGimbalTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    GIMBAL_F_Ctl(MOTOR_V_GIMBAL, &DBUS_V_DATA, &VISION_V_DATA);
+    // CAN_F_Send(&hcan2, 0x1FF, MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND,
+    //             MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
+    //             0,
+    //             0);
+    CAN_F_Send(&hcan2, 0x1FF, 0,
+                MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
+                0,
+                MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND);
+    VOFA_T_SendTemp(8, 0.0f,
+           (float)VISION_V_DATA.RECV_OutTime,
+           (float)VISION_V_DATA.RECV_FLAG,
+           (float)(VISION_V_DATA.RECEIVE.YAW_DATA + TOP.yaw[2] * 8192.0f),
+           (float)VISION_V_DATA.RECEIVE.PIT_DATA,
+           (float)(MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM * 0.04394531f),
+           (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
+          1.0f);
+
+              //    VOFA_T_SendTemp(6, 0.0f,  // debug yaw pid with top[3]
+              //  (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW,
+              //  (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
+              //  (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].PID_A.OUT.ALL_OUT,
+              //  (float)TOP.pitch[5],
+              //  1.0f);
+
+    vTaskDelay(1);
+  }
+  /* USER CODE END StartGimbalTask */
+}
+
+/* USER CODE BEGIN Header_StartAttackTask */
+/**
+* @brief Function implementing the attackTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartAttackTask */
+__weak void StartAttackTask(void const * argument)
+{
+  /* USER CODE BEGIN StartAttackTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    ATTACK_F_Ctl(MOTOR_V_ATTACK, &DBUS_V_DATA);
+    CAN_F_Send(&hcan2, 0x200, MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.CAN_SEND,
+              MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.CAN_SEND,
+              MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.CAN_SEND,
+              0);
+    vTaskDelay(1);
+  }
+  /* USER CODE END StartAttackTask */
+}
+
+/* USER CODE BEGIN Header_StartMonitorTask */
+/**
+* @brief Function implementing the monitorTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartMonitorTask */
+__weak void StartMonitorTask(void const * argument)
+{
+  /* USER CODE BEGIN StartMonitorTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    ROOT_F_MONITOR_DBUS(&DBUS_V_DATA);
+    TOP_T_Monitor();
+    VISION_F_Monitor();
+    TOP_T_Cal();
+    vTaskDelay(1);
+  }
+  /* USER CODE END StartMonitorTask */
+}
+
+/* USER CODE BEGIN Header_StartvisionTask */
+/**
+* @brief Function implementing the visionTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartvisionTask */
+__weak void StartvisionTask(void const * argument)
+{
+  /* USER CODE BEGIN StartvisionTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff);
+    // VOFA_T_Vision();
+    // VOFA_T_SendTemp(8, 0.0f,  // debug yaw pid with top[3]
+    //           (float)user_data.shoot_data.initial_speed,
+    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW,
+    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.SPEED_NOW,
+    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.AIM,
+    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM,
+    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE,
+    //           1.0f);
+    vTaskDelay(1);
+  }
+  /* USER CODE END StartvisionTask */
 }
 
 /* Private application code --------------------------------------------------*/

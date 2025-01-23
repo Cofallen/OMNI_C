@@ -11,7 +11,12 @@
 #include "TOP.h"
 
 uint8_t ROOT_V_MONITOR_DBUS = 0; // 离线判断参数
-TYPEDEF_MOTOR_PID FOLLOW_PID = {0};
+TYPEDEF_MOTOR_PID FOLLOW_PID = {0};  // 底盘跟随
+TYPEDEF_MOTOR_PID TOP_OFF_S = {0}, TOP_OFF_A = {0}; // 陀螺仪离线，但因时间短，可考虑删除
+TYPEDEF_MOTOR_PID VISION_PID_YAW_SPEED;         // 视觉PID
+TYPEDEF_MOTOR_PID VISION_PID_YAW_ANGLE;
+TYPEDEF_MOTOR_PID VISION_PID_PIT_SPEED;
+TYPEDEF_MOTOR_PID VISION_PID_PIT_ANGLE;
 
 void ROOT_F_MONITOR_DBUS(TYPEDEF_DBUS *DBUS)
 {
@@ -20,30 +25,40 @@ void ROOT_F_MONITOR_DBUS(TYPEDEF_DBUS *DBUS)
     if (ROOT_V_MONITOR_DBUS >= 50) // 50ms
     {
         memset(&DBUS_V_DATA, 0, sizeof(DBUS_V_DATA));
+        // memset(MOTOR_V_CHASSIS, 0, sizeof(MOTOR_V_CHASSIS));
+        // memset(MOTOR_V_GIMBAL, 0, sizeof(MOTOR_V_GIMBAL));
+        // memset(MOTOR_V_ATTACK, 0, sizeof(MOTOR_V_ATTACK));
     }
 }
 
 // 传pid参数
 uint8_t ROOT_F_PIDinit()
 {
-    const float PID_V_CHASSIS_SPEED[5] = {15.0f, 0.001f, 0, 2000.0f, 30000.0f};
+    const float PID_V_CHASSIS_SPEED[5] = {15.0f, 0.0f, 0, 2000.0f, 30000.0f};
     const float PID_V_CHASSIS_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
 
-	const float PID_V_GIMBAL_YAW_SPEED[5] = {375.0f, 0.0f, 0, 100.0f, 30000.0f};
-    const float PID_V_GIMBAL_YAW_ANGLE[5] = {1.35f, 0.0f, 0.0f, 200.0f, 2000.0f};
-	// const float PID_V_GIMBAL_YAW_SPEED[5] = {100.0f, 0.0f, 20.0f, 100.0f, 30000.0f};
-    // const float PID_V_GIMBAL_YAW_ANGLE[5] = {0.8f, 0.0f, 0.0f, 200.0f, 657.0f};
-    const float PID_V_GIMBAL_PIT_SPEED[5] = {20.22f, 0.001f, 0, 1000.0f, 20000.0f};
-    const float PID_V_GIMBAL_PIT_ANGLE[5] = {10.0f, 0, 0, 1000.0f, 3000.0f};
+	// const float PID_V_GIMBAL_YAW_SPEED[5] = {375.0f, 0.0f, 0, 100.0f, 30000.0f};
+    // const float PID_V_GIMBAL_YAW_ANGLE[5] = {1.35f, 0.0f, 0.0f, 200.0f, 2000.0f};
+	const float PID_V_GIMBAL_YAW_SPEED[5] = {600.0f, 0.0f, 0.5f, 100.0f, 10000.0f};
+    const float PID_V_GIMBAL_YAW_ANGLE[5] = {0.36f, 0.0f, 0.0f, 200.0f, 2000.0f};
+    const float PID_V_GIMBAL_PIT_SPEED[5] = {130.0f, 0.0f, 0, 1000.0f, 20000.0f};
+    const float PID_V_GIMBAL_PIT_ANGLE[5] = {0.85f, 0.0007f, 0, 1000.0f, 3000.0f};
 
-    const float PID_V_ATTACK_L_SPEED[5] = {5.0f, 0, 0, 1000.0f, 20000.0f};
-    const float PID_V_ATTACK_R_SPEED[5] = {5.0f, 0, 0, 1000.0f, 20000.0f};
-    const float PID_V_ATTACK_G_SPEED[5] = {10.0f, 0, 0, 1000.0f, 8000.0f};
-    const float PID_V_ATTACK_G_ANGLE[5] = {1.0f, 0, 0, 1000.0f, 3000.0f};
+    const float PID_V_ATTACK_L_SPEED[5] = {7.0f, 0, 0, 1000.0f, 20000.0f};
+    const float PID_V_ATTACK_R_SPEED[5] = {7.0f, 0, 0, 1000.0f, 20000.0f};
+    const float PID_V_ATTACK_G_SPEED[5] = {10.0f, 0, 0, 1000.0f, 20000.0f};
+    const float PID_V_ATTACK_G_ANGLE[5] = {1.0f, 0, 0, 1000.0f, 4500.0f};  // 拨盘角度AIM控制弹频，3000-13.3Hz,4500-16.99Hz,5000(2single)-23.3Hz占比约1/3
     const float PID_V_ATTACK_L_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
     const float PID_V_ATTACK_R_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
 
-    const float FOLLOW_PID_V[5] = {1.2f, 0.0f, 0.0f, 0.0f, 1000.0f};
+    const float FOLLOW_PID_V[5] = {1.5f, 0.0f, 0.0f, 0.0f, 2000.0f};
+    const float PID_V_TOP_OFF_S[5] = {100.5f, 0.0f, 0.0f, 0.0f, 30000.0f};
+    const float PID_V_TOP_OFF_A[5] = {1.5f, 0.0f, 0.0f, 0.0f, 2000.0f};
+
+    const float PID_V_VISION_YAW_SPEED[5] = {300.0f, 0.0f, 0.5f, 100.0f, 10000.0f};
+    const float PID_V_VISION_YAW_ANGLE[5] = {0.36f, 0.0f, 0.0f, 200.0f, 2000.0f};
+    const float PID_V_VISION_PIT_SPEED[5] = {130.0f, 0.0f, 0, 1000.0f, 20000.0f};
+    const float PID_V_VISION_PIT_ANGLE[5] = {0.85f, 0.0007f, 0, 1000.0f, 3000.0f};
 
     PID_F_Init(&MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].PID_S, PID_V_CHASSIS_SPEED);
     PID_F_Init(&MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].PID_S, PID_V_CHASSIS_SPEED);
@@ -68,18 +83,31 @@ uint8_t ROOT_F_PIDinit()
     PID_F_Init(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].PID_C, PID_V_ATTACK_R_CURRENT);
 
     PID_F_Init(&FOLLOW_PID, FOLLOW_PID_V);
+    PID_F_Init(&TOP_OFF_S, PID_V_TOP_OFF_S);
+    PID_F_Init(&TOP_OFF_A, PID_V_TOP_OFF_A);
+    PID_F_Init(&VISION_PID_YAW_SPEED, PID_V_VISION_YAW_SPEED);
+    PID_F_Init(&VISION_PID_YAW_ANGLE, PID_V_VISION_YAW_ANGLE);
+    PID_F_Init(&VISION_PID_PIT_SPEED, PID_V_VISION_PIT_SPEED);
+    PID_F_Init(&VISION_PID_PIT_ANGLE, PID_V_VISION_PIT_ANGLE);
     return ROOT_READY;
 }
 
 void ROOT_F_Init()
 {
     ROOT_F_PIDinit();
-	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 1314 + 4096;  // 云台初始化角度
-	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;
-    MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM = 5000.0f;
-    
-	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS = 1;   // @TODO when yaw init, aim 0->angle_init, make yaw shaking.
-	
     ATTACK_F_Init(MOTOR_V_ATTACK);
-    
+
+    #ifdef OLDHEAD
+    MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 6060;  // 云台初始化角度
+    MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM = 3000.0f;
+	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS = 1;   // @TODO when yaw init, aim 0->angle_init, make yaw shaking.
+	#endif
+
+    #ifdef OMNI
+    MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 1314 + 4096;
+    MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM = 3000.0f;
+    MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS = 1; 
+    // pid反馈值取自编码器时电机能够上电稳定到对应位置，取自陀螺仪则注释
+	// MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;
+    #endif
 }

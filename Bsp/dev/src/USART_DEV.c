@@ -33,9 +33,10 @@ int fputc(int ch, FILE *f) // VOFA 的重定向
     return ch;
 }
 
-uint8_t data_length; // 声明外部变量
+// 裁判系统控制
+uint8_t data_length; // 裁判系统缓冲区长度
 
-void USAR_UART_IDLECallback(UART_HandleTypeDef *huart)
+void USAR_UART_JudgeCallback(UART_HandleTypeDef *huart)
 {
     HAL_UART_DMAStop(&huart6); // 停止本次DMA传输                                            
 
@@ -48,7 +49,7 @@ void USAR_UART_IDLECallback(UART_HandleTypeDef *huart)
     HAL_UART_Receive_DMA(&huart6, (uint8_t *)ALL_RX.Data, 255); // 重启开始DMA传输 每次255字节数据
 }
 
-// 移植的函数
+// 串口中断函数
 void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
 {
     if (huart->Instance == USART3) // 遥控DBUS
@@ -69,7 +70,7 @@ void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
         {
             __HAL_UART_CLEAR_IDLEFLAG(&huart6); // 清楚空闲中断标志（否则会一直不断进入中断）
             
-            USAR_UART_IDLECallback(huart); // 调用中断处理函数
+            USAR_UART_JudgeCallback(huart); // 调用中断处理函数
         }
     }
 
@@ -87,7 +88,6 @@ void USER_UART3_IRQHandler()
     HAL_UART_DMAStop(&huart3);
     
     // 使能接受
-    
     ROOT_V_MONITOR_DBUS = 0; //  离线判断参数清零
     
     DBUS_F_Cal(&DBUS_V_DATA);
