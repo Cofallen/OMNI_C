@@ -13,7 +13,7 @@
 
 #define VISION_D_MONITOR_LEN 30
 union ReceiveDataUnion_typedef	data_tackle ={0};
-RUI_TYPEDEF_VISION VISION_V_DATA = {0};
+TYPEDEF_VISION VISION_V_DATA = {0};
 float VisionMonitor[VISION_D_MONITOR_LEN] = {0}; // 只看YAW数据是否变化判断离线
 int VISION_Monitor_IOTA = 0;
 
@@ -93,7 +93,7 @@ int ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff)
 
     // status = CDC_Transmit_FS(buff, 16);
     // return status;
-
+    return ROOT_READY;
 }
 
 int errcount = 0;

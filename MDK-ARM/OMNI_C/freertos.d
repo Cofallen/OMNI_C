@@ -54,6 +54,8 @@ omni_c/freertos.o: ..\Core\Src\freertos.c \
   ..\Bsp\dev\inc\TIM_DEV.h ..\Bsp\ctl\inc\MOTOR.h \
   ..\Bsp\dev\inc\CAN_DEV.h ..\Bsp\extra\inc\DEFINE.h \
   ..\Bsp\ctl\inc\CHASSIS.h ..\Bsp\ctl\inc\DBUS.h ..\Bsp\ctl\inc\GIMBAL.h \
+  ..\Bsp\extra\inc\VISION.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h \
   ..\Bsp\extra\inc\ROOT.h ..\Bsp\ctl\inc\ATTACK.h \
   ..\Bsp\extra\inc\JUDGEMENT.h ..\Bsp\extra\inc\VOFA.h \
   ..\Bsp\ctl\inc\TOP.h ..\LIB\QuaternionEKF.h ..\LIB\kalman_filter.h \
@@ -67,6 +69,5 @@ omni_c/freertos.o: ..\Core\Src\freertos.c \
   ..\CMSIS\DSP\Inc\arm_math_memory.h ..\CMSIS\DSP\Inc\dsp\none.h \
   ..\CMSIS\DSP\Inc\dsp\utils.h \
   ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
-  ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h ..\Bsp\extra\inc\VISION.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h \
-  ..\JUDGE\Read_Data.h ..\Core\Inc\usart.h ..\Bsp\extra\inc\YU_MATH.h
+  ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h ..\JUDGE\Read_Data.h \
+  ..\Core\Inc\usart.h ..\Bsp\extra\inc\YU_MATH.h

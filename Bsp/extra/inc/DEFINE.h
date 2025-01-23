@@ -68,4 +68,11 @@
 #define OLDHEAD 1
 // #define OMNI 0
 
+
+// 云台限度
+#define GIMBAL_PIT_MAX 3208
+#define GIMBAL_PIT_MIN 2543
+#define OMNI_PIT_MAX 5200
+#define OMNI_PIT_MIN 4270
+
 #endif // !__DEFINE_H__

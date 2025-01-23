@@ -221,7 +221,7 @@ __weak void StartGimbalTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    GIMBAL_F_Ctl(MOTOR_V_GIMBAL, &DBUS_V_DATA);
+    GIMBAL_F_Ctl(MOTOR_V_GIMBAL, &DBUS_V_DATA, &VISION_V_DATA);
     // CAN_F_Send(&hcan2, 0x1FF, MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND,
     //             MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
     //             0,

@@ -11,9 +11,41 @@
 float DBUS_V_CH2[5] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f}; // last now error 3-count 4-status 
 float aim = 0;
 
-void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
+void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, TYPEDEF_VISION *VISION)
 {
-    // smooth finally some gaps
+    switch (VISION->RECV_FLAG)
+    {
+    case ROOT_ERROR:  // 遥控
+        {
+            MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += -(float)DBUS->REMOTE.CH2_int16 * 0.02f - MATH_D_LIMIT(1, -1, DBUS->MOUSE.X_FLT * 0.01f) + (float) (DBUS->KEY_BOARD.E - DBUS->KEY_BOARD.Q ) * 0.8f;
+            MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += -(float)DBUS->REMOTE.CH3_int16 * 0.01f - DBUS->MOUSE.Y_FLT * 0.01f;
+            MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = MATH_D_LIMIT(GIMBAL_PIT_MAX, GIMBAL_PIT_MIN, MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM);
+            PID_F_G(&MOTOR[MOTOR_D_GIMBAL_YAW]);
+            PID_F_P(&MOTOR[MOTOR_D_GIMBAL_PIT]);
+        }
+        break;
+
+    case ROOT_READY:
+        {
+            PID_F_VISION_YAW(&MOTOR[MOTOR_D_GIMBAL_YAW]);
+            // MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = VISION->RECEIVE.PIT_DATA *22.755555f;
+            // MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = MATH_D_LIMIT(GIMBAL_PIT_MAX, GIMBAL_PIT_MIN, MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM);
+            // PID_F_P(&MOTOR[MOTOR_D_GIMBAL_PIT]);
+        }
+        break;
+    
+    default:
+        break;
+    }
+   
+}
+
+
+
+// 采用一次函数调整，效果很差
+void remoteFilter(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
+{
+// smooth finally some gaps
     DBUS_V_CH2[NOW]  = (float)DBUS->REMOTE.CH2_int16;
     DBUS_V_CH2[2] = MATH_D_ABS((DBUS_V_CH2[NOW] - DBUS_V_CH2[LAST]));
 
@@ -41,34 +73,4 @@ void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
         DBUS_V_CH2[4] = 0.0f;
         MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += -(float)DBUS->REMOTE.CH2_int16 * 0.02f;
     }
-    
-//    MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += -(float)DBUS->REMOTE.CH2_int16 * 0.02f;
-    MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += -(float)DBUS->REMOTE.CH3_int16 * 0.01f;
-
-
-    // if (MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM > 5200)
-    // {
-    //     MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = 5200;
-    // }
-    // else if (MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM < 4270)
-    // {
-    //     MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = 4270;
-    // }
-    if (MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM > 3208)
-    {
-        MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = 3208;
-    }
-    else if (MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM < 2543)
-    {
-        MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = 2543;
-    }
-
-    if (VISION_V_DATA.RECV_FLAG)
-    {
-        PID_F_VISION_YAW(&MOTOR[MOTOR_D_GIMBAL_YAW]);
-        // PID_F_P(&MOTOR[MOTOR_D_GIMBAL_PIT]);
-        return;
-    }    
-    PID_F_G(&MOTOR[MOTOR_D_GIMBAL_YAW]);
-    PID_F_P(&MOTOR[MOTOR_D_GIMBAL_PIT]);
 }

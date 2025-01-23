@@ -124,20 +124,15 @@ uint8_t PID_F_S(TYPEDEF_MOTOR *MOTOR)
 uint8_t PID_F_VISION_YAW(TYPEDEF_MOTOR *MOTOR)
 {
     // 自瞄修正
-    static int temp = 0;
     // MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = VISION_V_DATA.RECEIVE.PIT_DATA *22.75f + 3000.0f;
     // MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM +=  10 * 0.1f;
     // MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += TOP.pitch[5] * 0.1f;
 
-    if (VISION_V_DATA.RECV_FLAG)
-    {
-        MOTOR->DATA.AIM = VISION_V_DATA.RECEIVE.YAW_DATA *22.755555f + TOP.yaw[2] * 8192.0f; // 
-        MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&VISION_PID_YAW_ANGLE, MOTOR->DATA.AIM, TOP.yaw[3]);
-        MOTOR->DATA.CAN_SEND = (int16_t)PID_F_Cal(&VISION_PID_YAW_SPEED, MOTOR->PID_A.OUT.ALL_OUT, ((float)QEKF_INS.Gyro[2] * 50.0f));
-    }
+    MOTOR->DATA.AIM = VISION_V_DATA.RECEIVE.YAW_DATA *22.755555f + TOP.yaw[2] * 8192.0f; // 
+    MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&VISION_PID_YAW_ANGLE, MOTOR->DATA.AIM, TOP.yaw[3]);
+    MOTOR->DATA.CAN_SEND = (int16_t)PID_F_Cal(&VISION_PID_YAW_SPEED, MOTOR->PID_A.OUT.ALL_OUT, ((float)QEKF_INS.Gyro[2] * 50.0f));
     return ROOT_READY;
 }
-
 
 /// @brief enhanced PID
 /// @param mode 1: trapezoidal integration

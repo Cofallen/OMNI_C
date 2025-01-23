@@ -22,46 +22,52 @@ double ANGLE_Relative = 0.0f;
 void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {
     // 运动学解算
-    float Vx = 0.0f, Vy = 0.0f, Vr = 0.0f, COMPONENT[2] = {1, 3.5};
+    float VX = 0.0f, VY = 0.0f, VR = 0.0f, COMPONENT[2] = {1, 3.5};
     float ROTATE_VX = 0.0f, ROTATE_VY = 0.0f;  // 旋转矩阵
     double PRIDICT = 0.0f;    // 底盘预测，前馈
-    Vx =  (float)DBUS->REMOTE.CH0_int16 * 10.0f;
-    Vy =  (float)DBUS->REMOTE.CH1_int16 * 10.0f;
 
     ANGLE_Relative = (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_NOW - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT;  // if add 4096
     spinLittleRound(&ANGLE_Relative);
-
-    if (DBUS->REMOTE.S2_u8 == 1)  // @TODO + 底盘跟随判断 A&B + GEER挡位 // chassis folllow
-    {   
-        PRIDICT = DBUS->REMOTE.CH2_int16 * 2.0f;  // @TODO 预测模型待思考
-        if (TOP.yaw[4] == 1.0f && ((MATH_D_ABS(ANGLE_Relative) > 0.0f)))  // follow diff area
-        {
-            Vr = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative);
-        }
-        else
-        {
-            Vr = 0.0f;
-        }
-    }
-    else if (DBUS->REMOTE.S2_u8 == 3 || DBUS->REMOTE.S2_u8 == 2) // @TODO little spining go straight
-    {
-        PRIDICT = 0.0f;
-        Vr = -(float)DBUS->REMOTE.DIR_int16 * 3.0f;
-    }
-    
     ANGLE_Rad = ANGLE_Relative * MATH_D_RELATIVE_PARAM;
+
+    VX =  (float)((DBUS->REMOTE.CH0_int16) + (DBUS->KEY_BOARD.D - DBUS->KEY_BOARD.A) * 660.0f) * 10.0f;
+    VY =  (float)((DBUS->REMOTE.CH1_int16) + (DBUS->KEY_BOARD.W - DBUS->KEY_BOARD.S) * 660.0f) * 10.0f;
+    VR = -(float)((DBUS->REMOTE.DIR_int16) + (DBUS->KEY_BOARD.SHIFT) * 660.0f) * 3.0f;
+
+    if (DBUS->KEY_BOARD.V)
+    {
+        VR *= 0.4f;
+    }
+
+    // if (DBUS->REMOTE.S2_u8 == 1)  // @TODO + 底盘跟随判断 A&B + GEER挡位 // chassis folllow
+    // {   
+    //     PRIDICT = DBUS->REMOTE.CH2_int16 * 2.0f;  // @TODO 预测模型待思考
+    //     if (TOP.yaw[4] == 1.0f && ((MATH_D_ABS(ANGLE_Relative) > 0.0f)))  // 死区0
+    //     {
+    //         VR = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative);
+    //     }
+    //     else if (DBUS->REMOTE.S2_u8 == 3 || DBUS->REMOTE.S2_u8 == 2) // @TODO little spining go straight
+    //     {
+    //         PRIDICT = 0.0f;
+    //         VR = -(float)DBUS->REMOTE.DIR_int16 * 3.0f;
+    //     }
+    // }
+    
+    // PRIDICT = DBUS->REMOTE.CH2_int16 * 2.0f;  // @TODO 待测试，如若没成功，取消上面注释。将这两行注释
+    (!DBUS->REMOTE.DIR_int16)?(PRIDICT = DBUS->REMOTE.CH2_int16 * 2.0f,VR = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative)):(PRIDICT = 0.0f);     // 分离 滚轮影响小陀螺
+
     // rotate matrix
     double COS = cos(ANGLE_Rad);
     double SIN = sin(ANGLE_Rad);
     
-    ROTATE_VX = -Vy * SIN + Vx * COS;
-    ROTATE_VY =  Vy * COS + Vx * SIN;
+    ROTATE_VX = -VY * SIN + VX * COS;
+    ROTATE_VY =  VY * COS + VX * SIN;
     
     // 运动学解算
-    MOTOR[MOTOR_D_CHASSIS_1].DATA.AIM = ( ROTATE_VX - ROTATE_VY - Vr * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
-    MOTOR[MOTOR_D_CHASSIS_2].DATA.AIM = (-ROTATE_VX - ROTATE_VY - Vr * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
-    MOTOR[MOTOR_D_CHASSIS_3].DATA.AIM = (-ROTATE_VX + ROTATE_VY - Vr * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
-    MOTOR[MOTOR_D_CHASSIS_4].DATA.AIM = ( ROTATE_VX + ROTATE_VY - Vr * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
+    MOTOR[MOTOR_D_CHASSIS_1].DATA.AIM = ( ROTATE_VX - ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
+    MOTOR[MOTOR_D_CHASSIS_2].DATA.AIM = (-ROTATE_VX - ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
+    MOTOR[MOTOR_D_CHASSIS_3].DATA.AIM = (-ROTATE_VX + ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
+    MOTOR[MOTOR_D_CHASSIS_4].DATA.AIM = ( ROTATE_VX + ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
 
     // pid 解算
     PID_F_S(&MOTOR[MOTOR_D_CHASSIS_1]);
