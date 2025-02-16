@@ -75,3 +75,20 @@ void setbit(uint8_t* byte , int position , int value)
 		*byte &= ~mask;  // 将指定位置设置为0
 	}
 }
+
+// 鼠标滤波
+float mouseFilter(float last, float now, float thresholdValue)
+{
+    //减小平滑滤波值会增大对于细小毛刺的过滤程度
+    //增加尖峰滤波值会增大对于尖峰数值的响应程度
+    const float SENSITIVL_FILTER = 0.8f;    //尖峰滤波值//小于1
+    const float NUMB_FILTER = 0.2f;    //平滑滤波值//小于1
+
+    if (((MATH_D_ABS(last)) - (MATH_D_ABS(now))) >= thresholdValue)
+    {
+        return (float) ( now * SENSITIVL_FILTER + last * ( 1 - SENSITIVL_FILTER ));
+    } else
+    {
+        return (float) ( now * NUMB_FILTER + last * ( 1 - NUMB_FILTER ));
+    }
+}

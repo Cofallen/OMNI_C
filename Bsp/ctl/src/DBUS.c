@@ -3,6 +3,7 @@
 
 #include "DBUS.h"
 #include "ROOT.h"
+#include "YU_MATH.h"
 
 // 遥控全局变量
 TYPEDEF_DBUS DBUS_V_DATA = {0};
@@ -42,6 +43,26 @@ void DBUS_F_Cal(TYPEDEF_DBUS *DBUS)
     DBUS->KEY_BOARD.CTRL = (uint8_t)(DBUS_V_UNION.DATA_NEATEN.KEY_CTRL);
 
     // @TODO mouse to add
+    DBUS->MOUSE.X_FLT = mouseFilter(DBUS->MOUSE.X_FLT, (float) DBUS_V_UNION.DATA_NEATEN.MOUSE_X, 500);
+    DBUS->MOUSE.Y_FLT = mouseFilter(DBUS->MOUSE.Y_FLT, (float) DBUS_V_UNION.DATA_NEATEN.MOUSE_Y, 500);
+
+    if (DBUS_V_UNION.DATA_NEATEN.MOUSE_L == 1)
+    {
+        if (DBUS->MOUSE.L_PRESS_TIME < 20)
+        {
+            DBUS->MOUSE.L_PRESS_TIME++;
+            DBUS->MOUSE.L_STATE = 1; // 短按
+        } else
+        {
+            DBUS->MOUSE.L_STATE = 2; // 长按
+        }
+    } else
+    {
+        DBUS->MOUSE.L_PRESS_TIME = 0;
+        DBUS->MOUSE.L_STATE = 0; // 无按
+    }
+    //鼠标右键无需长按判断，控制自瞄
+    DBUS->MOUSE.R_STATE = DBUS_V_UNION.DATA_NEATEN.MOUSE_R;
 
     // @TODO l/r flag to control atatck
 

@@ -36,6 +36,7 @@ uint8_t ATTACK_F_Init(TYPEDEF_MOTOR *MOTOR)
     ATTACK_V_PARAM.SPEED = 8300.0f;
 
     ATTACK_V_PARAM.FLAG = 1;
+    ATTACK_V_PARAM.LOCK = 1; // 默认上锁，保证在未收到遥控数据时拨盘不动
 
     // 电机初始化
     MOTOR[MOTOR_D_ATTACK_L].DATA.AIM =  0.0f;
@@ -51,11 +52,11 @@ float ATTACK_F_JAM_Aim(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     if (ATTACK_V_PARAM.LOCK == 0)
     {
         ATTACK_V_PARAM.COUNT = 1; // consist && single mode
-        if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SINGLE)
+        if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SINGLE || (DBUS->MOUSE.L_STATE == 1)) // 单发
         {
             ATTACK_V_PARAM.LOCK = 1; // 单发上锁
         }
-        else if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SHUT)
+        else if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SHUT || DBUS->MOUSE.L_STATE == 0) // @todo 有了l_state可以将ATTACK_V_PARAM.LOCK初始化去了
         {
             ATTACK_V_PARAM.LOCK = 0; // 解锁
             ATTACK_V_PARAM.COUNT = 0;
@@ -63,14 +64,14 @@ float ATTACK_F_JAM_Aim(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     }
     else if (ATTACK_V_PARAM.LOCK == 1)
     {
-        if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SHUT)
+        if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SHUT || DBUS->MOUSE.L_STATE == 0)
         {
             ATTACK_V_PARAM.LOCK = 0; // 解锁
-            ATTACK_V_PARAM.COUNT = 0;
+            ATTACK_V_PARAM.COUNT = 0; // @todo 好像这一句没用?
         }
         return MOTOR->DATA.AIM;
     }
-    if (DBUS->REMOTE.S2_u8)
+    if (DBUS->REMOTE.S2_u8) // @todo 这个应该是debug用的，记得删了条件
     {
         MOTOR->DATA.AIM = (float)MOTOR->DATA.ANGLE_INFINITE + ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.COUNT * 1.0f;
     }
@@ -145,7 +146,7 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
 
     // @veision 3, final code, this code is a stable speed
     // if (DBUS_V_DATA.REMOTE.S1_u8 == 1 || DBUS_V_DATA.REMOTE.S1_u8 == 2)  // 3 is the fire button
-    if (DBUS_V_DATA.REMOTE.S2_u8 == 2)  // 3 is the fire button
+    if (DBUS_V_DATA.REMOTE.S2_u8 == 2 || DBUS_V_DATA.KEY_BOARD.CTRL == 1)  // 3 is the fire button
     {
         MOTOR->DATA.AIM = ATTACK_V_PARAM.SPEED;
     }
