@@ -57,11 +57,6 @@ void CAN_F_Recv(CAN_HandleTypeDef *hcan, uint32_t ID)
         {
             MOTOR_F_Cal_Data(&MOTOR_V_GIMBAL[0], CANRxmsg);		
             MOTOR_F_Cal_Round(&MOTOR_V_GIMBAL[0]);
-            
-			// if (DBUS_V_DATA.REMOTE.S2_u8 == 1) // @TODO if little spining data accuracy enough, you can delete it.
-            // {
-                // MOTOR_V_GIMBAL[0].DATA.ANGLE_INFINITE = (int32_t)Top[3];
-            // }
             break;
         }
         case CAN_D_GIMBAL_PIT:

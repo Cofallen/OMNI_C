@@ -14,8 +14,6 @@
 #include "YU_MATH.h"
 #include "TOP.h"
 
-// 本代码为全向轮底盘运动基本代码
-
 double ANGLE_Rad = 0.0f;
 double ANGLE_Relative = 0.0f;
 
@@ -53,7 +51,7 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     //     }
     // }
     
-    // PRIDICT = DBUS->REMOTE.CH2_int16 * 2.0f;  // @TODO 待测试，如若没成功，取消上面注释。将这两行注释
+    // PRIDICT = DBUS->REMOTE.CH2_int16 * 2.0f;  // @TODO 待测试，如若没成功，取消上面注释。将这两行注释 2. VR的负号和-ANGLE_Relative的负号测试是否可以全换成正号
     (!DBUS->REMOTE.DIR_int16)?(PRIDICT = DBUS->REMOTE.CH2_int16 * 2.0f,VR = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative)):(PRIDICT = 0.0f);     // 分离 滚轮影响小陀螺
 
     // rotate matrix

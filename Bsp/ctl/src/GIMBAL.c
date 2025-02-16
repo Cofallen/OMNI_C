@@ -11,6 +11,9 @@
 float DBUS_V_CH2[5] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f}; // last now error 3-count 4-status 
 float aim = 0;
 
+// 选一个模式写：
+// 1. 重写pid，加入是否开启视觉参数，实现两套pid
+// 2. 增加pid_f_vision_pitch，用四套pid
 void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, TYPEDEF_VISION *VISION)
 {
     switch (VISION->RECV_FLAG)
