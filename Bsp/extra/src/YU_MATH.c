@@ -92,3 +92,59 @@ float mouseFilter(float last, float now, float thresholdValue)
         return (float) ( now * NUMB_FILTER + last * ( 1 - NUMB_FILTER ));
     }
 }
+
+int ReturnSymbol(int16_t data)
+{
+	if (data>0)
+		return 1;
+	else if (data<0)
+		return -1;
+	else
+		return 0;
+}
+
+int abs_int(int16_t data)
+{
+	data = data * ReturnSymbol(data);
+
+	return data;
+}
+
+float SectionLimit_f(float max , float min , float data)
+{
+	float temp = 0.0f;
+	if (max >= min)
+	{
+		if (data >= max)
+		{
+			return max;
+		}
+		else if (data <= min)
+		{
+			return min;
+		}
+		else
+		{
+			return data;
+		}
+	}
+	else
+	{
+		temp = min;
+		min = max;
+		max = temp;
+
+		if (data >= max)
+		{
+			return max;
+		}
+		else if (data <= min)
+		{
+			return min;
+		}
+		else
+		{
+			return data;
+		}
+	}
+}

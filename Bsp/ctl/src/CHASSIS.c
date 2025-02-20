@@ -18,6 +18,8 @@
 double ANGLE_Rad = 0.0f;
 double ANGLE_Relative = 0.0f;
 
+int mod = 0;
+		
 void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {
     // 运动学解算
@@ -59,8 +61,12 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     PID_F_S(&MOTOR[MOTOR_D_CHASSIS_2]);
     PID_F_S(&MOTOR[MOTOR_D_CHASSIS_3]);
     PID_F_S(&MOTOR[MOTOR_D_CHASSIS_4]);
-
-    chassis_power_control(0);
+//    mod = (((DBUS_V_DATA.REMOTE.S1_u8 - 1) == 0) ? 1 : 0);
+			if(DBUS_V_DATA.REMOTE.S1_u8 == 1)
+    chassis_power_control(1);
+			else
+				chassis_power_control(0);
+			
 }
 
 // The following code is for reference ZJU Power Control

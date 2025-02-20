@@ -24,12 +24,12 @@ fp32 constant = 4.081f;                  // a 增大这个系数可以减小功�
 void chassis_power_control(uint8_t cap_state)
 {
     //*可编辑部分*begin*//
-    const uint16_t PowerCompensation = 10;  //正常模式下的功率补偿
+    const uint16_t PowerCompensation = 60;  //正常模式下的功率补偿
     const uint16_t SuperMaxPower = 150;	    //超级电容下的功率补偿
     const uint16_t capValt = 140;	         //强制退出的电压阈值
     //*可编辑部分*end*//
 
-	uint16_t max_power_limit = 0;  //最大功率限制
+	uint16_t max_power_limit = 120;  //最大功率限制
 	fp32 chassis_max_power = 0;
 	fp32 input_power = 0;		    // 输入功率（裁判系统）
 	fp32 initial_give_power[4];     // 初始功率由PID计算以及电机数据得到

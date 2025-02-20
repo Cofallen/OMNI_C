@@ -44,6 +44,8 @@
 #include "VISION.h"
 #include "Read_Data.h"
 #include "YU_MATH.h"
+#include "chassis_power_control.h"
+#include "tim.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -203,6 +205,7 @@ __weak void StartChassisTask(void const * argument)
                 MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
                 MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
                 MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
+		CapSendInit(60 , user_data.power_heat_data.chassis_power , user_data.power_heat_data.chassis_voltage);
     vTaskDelay(1);
   }
   /* USER CODE END StartChassisTask */

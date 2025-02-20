@@ -57,7 +57,7 @@
 "omni_c\quaternionekf.o"
 "omni_c\user_lib.o"
 "omni_c\imu_temp_control_task.o"
-"omni_c\pid_1.o"
+"omni_c\pid.o"
 "omni_c\crc_dji.o"
 "omni_c\read_data.o"
 "omni_c\write_data.o"

@@ -7,6 +7,7 @@
 #include "DEFINE.h"
 #include "DBUS.h"
 #include "TOP.h"
+#include "CAP.h"
 
 // 盛放原始can数据
 uint8_t CANRxmsg[8] = {0};
@@ -44,6 +45,12 @@ void CAN_F_Recv(CAN_HandleTypeDef *hcan, uint32_t ID)
         case CAN_D_CHASSIS_4:
             MOTOR_F_Cal_Data(&MOTOR_V_CHASSIS[3], CANRxmsg);
             break;
+				 case 0x240:
+            {
+                // 电容
+                CanManage_cap(CANRxmsg, &capData_t.capGetDate);
+                break;
+            }
         default:
             break;
         }
