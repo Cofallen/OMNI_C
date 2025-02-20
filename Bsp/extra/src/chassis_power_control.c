@@ -29,7 +29,7 @@ void chassis_power_control(uint8_t cap_state)
     const uint16_t capValt = 140;	         //强制退出的电压阈值
     //*可编辑部分*end*//
 
-	uint16_t max_power_limit = 50;  //最大功率限制
+	uint16_t max_power_limit = 0;  //最大功率限制
 	fp32 chassis_max_power = 0;
 	fp32 input_power = 0;		    // 输入功率（裁判系统）
 	fp32 initial_give_power[4];     // 初始功率由PID计算以及电机数据得到
@@ -40,11 +40,9 @@ void chassis_power_control(uint8_t cap_state)
 
     chassis_power = user_data.power_heat_data.chassis_power;		// 得到底盘功率
     chassis_power_buffer = user_data.power_heat_data.buffer_energy;	// 得到缓冲能量
-    // max_power_limit = user_data.power_heat_data.max_power_limit;    // 得到最大功率限制
-    max_power_limit = 150;    // @TODO 有时间测试一下是否能够限制，移植的代码 user.data 没有这个参数
-
-    PID_buffer_init(&PID_Buffer);
-    PID_buffer(&PID_Buffer, chassis_power_buffer, 30);  // 缓冲能量闭环
+    // max_power_limit = user_data.robot_status.chassis_power_limit；    // 得到最大功率限制
+    // PID_buffer_init(&PID_Buffer);
+    // PID_buffer(&PID_Buffer, chassis_power_buffer, 30);  // 缓冲能量闭环
 
     chassis_max_power = input_power;
 
@@ -158,6 +156,7 @@ void chassis_power_limit(TYPEDEF_MOTOR *chassis_power_limit)
             chassis_power_limit -> PID_S.OUT.ALL_OUT = temp;
         }
     }
+    chassis_power_limit->DATA.CAN_SEND = (int16_t)chassis_power_limit->PID_S.OUT.ALL_OUT;
 }
 
 /**

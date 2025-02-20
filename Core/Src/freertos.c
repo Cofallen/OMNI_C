@@ -239,13 +239,6 @@ __weak void StartGimbalTask(void const * argument)
            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
           1.0f);
 
-              //    VOFA_T_SendTemp(6, 0.0f,  // debug yaw pid with top[3]
-              //  (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW,
-              //  (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
-              //  (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].PID_A.OUT.ALL_OUT,
-              //  (float)TOP.pitch[5],
-              //  1.0f);
-
     vTaskDelay(1);
   }
   /* USER CODE END StartGimbalTask */

@@ -13,6 +13,7 @@
 #include "ROOT.h"
 #include "YU_MATH.h"
 #include "TOP.h"
+#include "chassis_power_control.h"
 
 double ANGLE_Rad = 0.0f;
 double ANGLE_Relative = 0.0f;
@@ -36,22 +37,8 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     {
         VR *= 0.4f;
     }
-
-    // if (DBUS->REMOTE.S2_u8 == 1)  // @TODO + 底盘跟随判断 A&B + GEER挡位 // chassis folllow
-    // {   
-    //     PRIDICT = DBUS->REMOTE.CH2_int16 * 2.0f;  // @TODO 预测模型待思考
-    //     if (TOP.yaw[4] == 1.0f && ((MATH_D_ABS(ANGLE_Relative) > 0.0f)))  // 死区0
-    //     {
-    //         VR = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative);
-    //     }
-    //     else if (DBUS->REMOTE.S2_u8 == 3 || DBUS->REMOTE.S2_u8 == 2) // @TODO little spining go straight
-    //     {
-    //         PRIDICT = 0.0f;
-    //         VR = -(float)DBUS->REMOTE.DIR_int16 * 3.0f;
-    //     }
-    // }
     
-    // PRIDICT = DBUS->REMOTE.CH2_int16 * 2.0f;  // @TODO 待测试，如若没成功，取消上面注释。将这两行注释 2. VR的负号和-ANGLE_Relative的负号测试是否可以全换成正号
+    // @TODO 2. VR的负号和-ANGLE_Relative的负号测试是否可以全换成正号
     (!DBUS->REMOTE.DIR_int16)?(PRIDICT = DBUS->REMOTE.CH2_int16 * 2.0f,VR = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative)):(PRIDICT = 0.0f);     // 分离 滚轮影响小陀螺
 
     // rotate matrix
@@ -72,6 +59,8 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     PID_F_S(&MOTOR[MOTOR_D_CHASSIS_2]);
     PID_F_S(&MOTOR[MOTOR_D_CHASSIS_3]);
     PID_F_S(&MOTOR[MOTOR_D_CHASSIS_4]);
+
+    chassis_power_control(0);
 }
 
 // The following code is for reference ZJU Power Control

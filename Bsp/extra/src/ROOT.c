@@ -55,7 +55,7 @@ uint8_t ROOT_F_PIDinit()
     const float PID_V_TOP_OFF_S[5] = {100.5f, 0.0f, 0.0f, 0.0f, 30000.0f};
     const float PID_V_TOP_OFF_A[5] = {1.5f, 0.0f, 0.0f, 0.0f, 2000.0f};
 
-    const float PID_V_VISION_YAW_SPEED[5] = {300.0f, 0.0f, 0.5f, 100.0f, 10000.0f};
+    const float PID_V_VISION_YAW_SPEED[5] = {100.0f, 0.0f, 0.5f, 100.0f, 10000.0f};
     const float PID_V_VISION_YAW_ANGLE[5] = {0.36f, 0.0f, 0.0f, 200.0f, 2000.0f};
     const float PID_V_VISION_PIT_SPEED[5] = {130.0f, 0.0f, 0, 1000.0f, 20000.0f};
     const float PID_V_VISION_PIT_ANGLE[5] = {0.85f, 0.0007f, 0, 1000.0f, 3000.0f};

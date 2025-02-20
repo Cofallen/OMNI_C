@@ -91,7 +91,7 @@ int ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff)
     buff[14] = 0x13;
     buff[15] = 0xbb;
 
-    // status = CDC_Transmit_FS(buff, 16);
+    status = CDC_Transmit_FS(buff, 16);
     // return status;
     return ROOT_READY;
 }
@@ -127,6 +127,7 @@ void VISION_F_Monitor()
     }
     
     errcount = err;
+      
     if ((VISION_V_DATA.RECV_OutTime >= 500) || (err >= (VISION_D_MONITOR_LEN - 3))) // 500ms
     {
         VISION_V_DATA.RECV_FLAG = ROOT_ERROR;
