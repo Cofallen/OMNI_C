@@ -6,6 +6,8 @@
 #include "CAN_DEV.h"
 #include "read_data.h"
 #include "define.h"
+#include "YU_MATH.h"
+
 float  Inter=0;
 int  temp_cap_time=0;
 struct capDate_typdef capData_t ={ 0 };

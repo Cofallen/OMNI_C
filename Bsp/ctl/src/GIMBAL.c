@@ -10,32 +10,60 @@
 
 float DBUS_V_CH2[5] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f}; // last now error 3-count 4-status 
 float aim = 0;
+#include "TIM_DEV.h"
 
 // 选一个模式写：
 // 1. 重写pid，加入是否开启视觉参数，实现两套pid
 // 2. 增加pid_f_vision_pitch，用四套pid
 void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, TYPEDEF_VISION *VISION)
 {
-    int mod = (DBUS_V_DATA.REMOTE.S2_u8 - 1) & (DBUS_V_DATA.KEY_BOARD.G - 1);
-    switch (VISION->RECV_FLAG)
+    // int EXIT = (MATH_D_ABS((DBUS_V_DATA.REMOTE.S2_u8 - 2)) && (DBUS_V_DATA.KEY_BOARD.G - 1));
+    // VISION->RECV_FLAG = 1;
+    // int mod = VISION_V_DATA.RECEIVE.TARGET && EXIT ? ROOT_ERROR: ROOT_READY;
+    static float currentAngle = 0.0f;
+    switch (DBUS->REMOTE.S2_u8)
     {
-    case ROOT_ERROR:  // 遥控
+    case 3:  // 遥控
         {
-           MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += -(float)DBUS->REMOTE.CH2_int16 * 0.02f - MATH_D_LIMIT(1, -1, DBUS->MOUSE.X_FLT * 0.01f) + (float) (DBUS->KEY_BOARD.E - DBUS->KEY_BOARD.Q ) * 0.8f;
-           MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += -(float)DBUS->REMOTE.CH3_int16 * 0.01f - DBUS->MOUSE.Y_FLT * 0.01f;
+           MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += (-(float)DBUS->REMOTE.CH2_int16 * 0.02f - MATH_D_LIMIT(1, -1, DBUS->MOUSE.X_FLT * 0.01f) + (float) (DBUS->KEY_BOARD.E - DBUS->KEY_BOARD.Q ) * 0.8f + (float)currentAngle);
+           currentAngle = 0.0f;
+           MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += -(float)DBUS->REMOTE.CH3_int16 * 0.003f - DBUS->MOUSE.Y_FLT * 0.01f;
+        //    MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = 0;
            MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = MATH_D_LIMIT(GIMBAL_PIT_MAX, GIMBAL_PIT_MIN, MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM);
            PID_F_G(&MOTOR[MOTOR_D_GIMBAL_YAW]);
-           PID_F_P(&MOTOR[MOTOR_D_GIMBAL_PIT]);
+           PID_F_P_T(&MOTOR[MOTOR_D_GIMBAL_PIT]);
         }
         break;
 
-    case ROOT_READY:
+    case 4:
         {
-            PID_F_VISION_YAW(&MOTOR[MOTOR_D_GIMBAL_YAW]);
-            // MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = VISION->RECEIVE.PIT_DATA *22.755555f;
-            // MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = MATH_D_LIMIT(GIMBAL_PIT_MAX, GIMBAL_PIT_MIN, MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM);
-            // PID_F_P(&MOTOR[MOTOR_D_GIMBAL_PIT]);
+            MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM = TOP.yaw[3];
+            PID_F_G(&MOTOR[MOTOR_D_GIMBAL_YAW]);
+            // MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = GIMBAL_PIT_MAX;
+            // PID_F_P_T(&MOTOR[MOTOR_D_GIMBAL_PIT]);
+            // VISION_V_DATA.RECEIVE.YAW_DATA = -40.0f; // moni
+            // VISION_V_DATA.RECEIVE.TARGET = 1;  // moni
+            // if(VISION_V_DATA.RECEIVE.TARGET){
+                //  PID_F_VISION_YAW(&MOTOR[MOTOR_D_GIMBAL_YAW]);
+                // PID_T_G(&MOTOR[MOTOR_D_GIMBAL_YAW]);
+            // }
+           
+            // MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = - VISION->RECEIVE.PIT_DATA * 22.75556f; // 2875.5这看卢子瑞加了负号，所以我添上了
+        //    MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += -(float)DBUS->REMOTE.CH3_int16 * 0.003f - DBUS->MOUSE.Y_FLT * 0.01f;
+        //     MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = MATH_D_LIMIT(GIMBAL_PIT_MAX, GIMBAL_PIT_MIN, MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM);
+            // PID_F_VISION_PIT(&MOTOR[MOTOR_D_GIMBAL_PIT]);
+			// PID_F_P_T(&MOTOR[MOTOR_D_GIMBAL_PIT]);
+            currentAngle = TOP.yaw[5];
         }
+        break;
+
+    case 2:
+    {
+        MOTOR[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND = 0;
+        MOTOR[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND = 0;
+        // MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.AIM = 0.0f;
+        // MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.AIM = 0.0f;
+    }
         break;
     
     default:

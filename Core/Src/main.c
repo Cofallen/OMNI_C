@@ -243,7 +243,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 1 */
   if (htim->Instance == TIM2) // 底盘 1ms
     {     
-      // CDC_Transmit_FS(sd_v_buff, 16);
+      CDC_Transmit_FS(sd_v_buff, 16);
     }
   /* USER CODE END Callback 1 */
 }

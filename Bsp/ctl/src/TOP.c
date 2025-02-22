@@ -31,6 +31,7 @@ void TOP_T_Cal()
     if (TOP.yaw[4] == 1.0f)
     {
         convertAngleToIndex(yaw, &TOP.yaw[NOW]);
+        convertAngleToIndex(pitch, &TOP.pitch[NOW]);
         TOP.yaw[NOW] = TOP.yaw[NOW] + currentAngle;
     }
     
@@ -67,4 +68,28 @@ void TOP_T_Monitor()
         TOP.yaw[2] = 0;
         currentAngle = 0;
     }
+}
+
+void TOP_T_Cal_T()
+{
+    if (TOP.yaw[4] == 1.0f)
+    {
+        convertAngleToIndex(-yaw, &TOP.yaw[NOW]);
+        convertAngleToIndex(pitch, &TOP.pitch[NOW]);
+        TOP.yaw[NOW] = TOP.yaw[NOW] + currentAngle;
+    }
+    
+    if (TOP.yaw[NOW] - TOP.yaw[LAST] < 4096)
+    {
+        TOP.yaw[2]++;
+    }
+    else if (TOP.yaw[NOW] - TOP.yaw[LAST] > -4096)
+    {
+        TOP.yaw[2]--;
+    }
+    TOP.yaw[3] = TOP.yaw[2] * 8192.0f + TOP.yaw[NOW];
+    TOP.yaw[LAST] = TOP.yaw[NOW];
+
+    TOP.pitch[5] = pitch;
+    TOP.yaw[5] = -yaw;
 }

@@ -4,6 +4,7 @@
 #include "stdbool.h"
 
 // #pragma pack(push, 1)
+#include "main.h"
 union RUI_U_VISION_RECEIVE
 {
   struct
@@ -38,6 +39,7 @@ typedef struct TYPEDEF_VISION
   uint8_t OriginData[15];
   uint8_t RECV_FLAG;
   int RECV_OutTime;
+  float VISION_V_YAWERROR;
 }TYPEDEF_VISION;
 
 union ReceiveDataUnion_typedef							//共用体(用于接受各种数据)(视觉，陀螺仪)

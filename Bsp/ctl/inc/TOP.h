@@ -43,5 +43,6 @@ extern float currentAngle; // 陀螺仪yaw偏差角度
 
 extern void TOP_T_Cal();
 extern void TOP_T_Monitor();
+void TOP_T_Cal_T();
 
 #endif // !__TOP_H__

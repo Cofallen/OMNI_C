@@ -1,8 +1,8 @@
 --cpu=Cortex-M4.fp.sp
 "omni_c\startup_stm32f407xx.o"
 "omni_c\main.o"
-"omni_c\gpio.o"
 "omni_c\freertos.o"
+"omni_c\gpio.o"
 "omni_c\can.o"
 "omni_c\dma.o"
 "omni_c\spi.o"

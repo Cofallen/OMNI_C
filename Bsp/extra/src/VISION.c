@@ -91,7 +91,7 @@ int ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff)
     buff[14] = 0x13;
     buff[15] = 0xbb;
 
-    status = CDC_Transmit_FS(buff, 16);
+    // status = CDC_Transmit_FS(buff, 16);
     // return status;
     return ROOT_READY;
 }
