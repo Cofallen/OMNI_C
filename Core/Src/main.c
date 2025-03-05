@@ -135,7 +135,7 @@ int main(void)
   HAL_UART_Receive_DMA(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, sizeof(DBUS_V_UNION.GET_DATA));
 
   printf("ok\r\n");  // huart1 
-  // HAL_UART_Transmit_DMA(&huart1, (uint8_t *)&DBUS_V_UNION.GET_DATA, sizeof(DBUS_V_UNION.GET_DATA));
+  HAL_UART_Transmit_DMA(&huart1, (uint8_t *)sd_v_buff, sizeof(sd_v_buff));
   
   HAL_TIM_Base_Start_IT(&htim2);
   HAL_Delay(30);

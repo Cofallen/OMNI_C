@@ -101,7 +101,7 @@ int ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff, uint8_t ty
     if (type == 0)
         status = CDC_Transmit_FS(buff, 16);
     else if (type == 1)
-        status = HAL_UART_Transmit(&huart1, buff, 16, 0xffff);
+        status = HAL_UART_Transmit_DMA(&huart1, buff, 16);
 
     return ROOT_READY;
 }
