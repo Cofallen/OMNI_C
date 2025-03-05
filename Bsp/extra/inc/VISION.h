@@ -52,8 +52,8 @@ union ReceiveDataUnion_typedef							//共用体(用于接受各种数据)(视�
 
 extern struct TYPEDEF_VISION VISION_V_DATA;
 
-uint8_t VISION_F_Cal(uint8_t *RxData);
-int ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff);
+uint8_t VISION_F_Cal(uint8_t *RxData, uint8_t type);
+int ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff, uint8_t type);
 void VisionSendInit(union RUI_U_VISION_SEND*  Send_t);
 void VISION_F_Monitor();
 
