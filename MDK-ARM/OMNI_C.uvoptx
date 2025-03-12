@@ -173,22 +173,6 @@
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>87</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
-          <Address>134225056</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Bsp\extra\src\VISION.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\OMNI_C\../Bsp/extra/src/VISION.c\87</Expression>
-        </Bp>
-        <Bp>
-          <Number>2</Number>
-          <Type>0</Type>
           <LineNumber>61</LineNumber>
           <EnabledFlag>0</EnabledFlag>
           <Address>134220904</Address>
@@ -203,39 +187,7 @@
           <Expression>\\OMNI_C\../Bsp/ctl/src/ATTACK.c\61</Expression>
         </Bp>
         <Bp>
-          <Number>3</Number>
-          <Type>0</Type>
-          <LineNumber>74</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
-          <Address>134287750</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Bsp\dev\src\USART_DEV.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\OMNI_C\../Bsp/dev/src/USART_DEV.c\74</Expression>
-        </Bp>
-        <Bp>
-          <Number>4</Number>
-          <Type>0</Type>
-          <LineNumber>71</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
-          <Address>134287714</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Bsp\dev\src\USART_DEV.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\OMNI_C\../Bsp/dev/src/USART_DEV.c\71</Expression>
-        </Bp>
-        <Bp>
-          <Number>5</Number>
+          <Number>2</Number>
           <Type>0</Type>
           <LineNumber>51</LineNumber>
           <EnabledFlag>0</EnabledFlag>
@@ -251,50 +203,18 @@
           <Expression>\\OMNI_C\../Bsp/dev/src/CAN_DEV.c\51</Expression>
         </Bp>
         <Bp>
-          <Number>6</Number>
+          <Number>3</Number>
           <Type>0</Type>
-          <LineNumber>40</LineNumber>
+          <LineNumber>35</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134226780</Address>
+          <Address>0</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
+          <BreakIfRCount>0</BreakIfRCount>
           <Filename>..\Bsp\ctl\src\GIMBAL.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\OMNI_C\../Bsp/ctl/src/GIMBAL.c\40</Expression>
-        </Bp>
-        <Bp>
-          <Number>7</Number>
-          <Type>0</Type>
-          <LineNumber>132</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\Bsp\ctl\src\YU_PID.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>8</Number>
-          <Type>0</Type>
-          <LineNumber>58</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>startup_stm32f407xx.s</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
@@ -490,6 +410,21 @@
           <WinNumber>1</WinNumber>
           <ItemText>VISION_PID_YAW_SPEED</ItemText>
         </Ww>
+        <Ww>
+          <count>38</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>buff</ItemText>
+        </Ww>
+        <Ww>
+          <count>39</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>VISION_V_DATA,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>40</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>sd_v_buff,0x0A</ItemText>
+        </Ww>
       </WatchWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
@@ -497,7 +432,7 @@
       <DebugFlag>
         <trace>0</trace>
         <periodic>1</periodic>
-        <aLwin>1</aLwin>
+        <aLwin>0</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>

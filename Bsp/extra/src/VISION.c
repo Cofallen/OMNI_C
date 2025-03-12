@@ -17,6 +17,7 @@ TYPEDEF_VISION VISION_V_DATA = {0};
 float VisionMonitor[VISION_D_MONITOR_LEN] = {0}; // 只看YAW数据是否变化判断离线
 int VISION_Monitor_IOTA = 0;
 
+
 // 视觉接收处理
 uint8_t VISION_F_Cal(uint8_t *RxData)
 {
@@ -62,35 +63,72 @@ int ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff)
 {
     uint8_t status;
    VisionSendInit(Send_t);
-   buff[0] = 0xaa;
-	//确定pitch轴角度//并且发送角度值
-	data_tackle.F = Send_t->PIT_DATA;
-    // data_tackle.F = TOP.pitch[5];
-	buff[1] = data_tackle.U[0];
-	buff[2] = data_tackle.U[1];
-	buff[3] = data_tackle.U[2];
-	buff[4] = data_tackle.U[3];
-	//确定yaw轴角度//并且发送角度值
-	data_tackle.F = Send_t->YAW_DATA;
-    // data_tackle.F = TOP.yaw[5];
-	buff[5] = data_tackle.U[0];
-	buff[6] = data_tackle.U[1];
-	buff[7] = data_tackle.U[2];
-	buff[8] = data_tackle.U[3];
-    //将请求的状态置于第九位中
-	//2023-06-02 22:54 | 自瞄/打符标志位
-    // setbit(&buff[9], 0, Send_t->COLOR &0x01);
-    // //2023-06-02 22:54 | 颜色
-	// setbit(&buff[9] , 3 , Send_t->COLOR >> 4);
-    buff[9] = 9;
-    data_tackle.F = 555.555;
-	buff[10] = data_tackle.U[0];
-	buff[11] = data_tackle.U[1];
-	buff[12] = data_tackle.U[2];
-	buff[13] = data_tackle.U[3];
-    buff[14] = 0x13;
-    buff[15] = 0xbb;
+//    buff[0] = 0xcd;
+//	//确定pitch轴角度//并且发送角度值
+////	data_tackle.F = 0;
+//    data_tackle.F = Send_t->PIT_DATA;
+//	buff[1] = data_tackle.U[0];
+//	buff[2] = data_tackle.U[1];
+//	buff[3] = data_tackle.U[2];
+//	buff[4] = data_tackle.U[3];
+//	//确定yaw轴角度//并且发送角度值
+////	data_tackle.F = 0;
+//    data_tackle.F = Send_t->YAW_DATA;
+//	buff[5] = data_tackle.U[0];
+//	buff[6] = data_tackle.U[1];
+//	buff[7] = data_tackle.U[2];
+//	buff[8] = data_tackle.U[3];
+//   //将请求的状态置于第九位中
+//	//2023-06-02 22:54 | 自瞄/打符标志位
+//   // setbit(&buff[9], 0, Send_t->COLOR &0x01);
+//   // //2023-06-02 22:54 | 颜色
+//	// setbit(&buff[9] , 3 , Send_t->COLOR >> 4);
+//   buff[9] = 3;
+//   data_tackle.F = 0xff;
+//	buff[10] = data_tackle.U[0];
+//	buff[11] = data_tackle.U[1];
+//	buff[12] = data_tackle.U[2];
+//	buff[13] = data_tackle.U[3];
+//   buff[14] = 0x05;
+//   buff[15] = 0xbb;
+		// buff[16] = 0xbb;
+//  while(HAL_UART_GetState(&huart1) == HAL_UART_STATE_BUSY_TX){
+//    HAL_UART_Transmit_DMA(&huart1, (uint8_t *)buff, 16);
+//	}
+  buff[0] = 0xcd;
+ 	//确定pitch轴角度//并且发送角度值
+ 	data_tackle.F = Send_t->PIT_DATA;
+     // data_tackle.F = TOP.pitch[5];
+ 	buff[1] = data_tackle.U[0];
+ 	buff[2] = data_tackle.U[1];
+ 	buff[3] = data_tackle.U[2];
+ 	buff[4] = data_tackle.U[3];
+ 	//确定yaw轴角度//并且发送角度值
+ 	data_tackle.F = Send_t->YAW_DATA;
+     // data_tackle.F = TOP.yaw[5];
+ 	buff[5] = data_tackle.U[0];
+ 	buff[6] = data_tackle.U[1];
+ 	buff[7] = data_tackle.U[2];     
+ 	buff[8] = data_tackle.U[3];
+     //将请求的状态置于第九位中
+ 	//2023-06-02 22:54 | 自瞄/打符标志位
+     // setbit(&buff[9], 0, Send_t->COLOR &0x01);
+     // //2023-06-02 22:54 | 颜色
+ 	// setbit(&buff[9] , 3 , Send_t->COLOR >> 4);
+     buff[9] = 9;
+     data_tackle.F = 0;
+// 	buff[10] = data_tackle.U[0];
+// 	buff[11] = data_tackle.U[1];
+// 	buff[12] = data_tackle.U[2];
+// 	buff[13] = data_tackle.U[3];
+	buff[10] = 2;
+ 	buff[11] = 3;
+ 	buff[12] = 4;
+ 	buff[13] = 5;
+     buff[14] = 0x12;
+     buff[15] = 0xdc;
 
+ HAL_UART_Transmit_DMA(&huart1, (uint8_t *)buff, 16);
     // status = CDC_Transmit_FS(buff, 16);
     // return status;
     return ROOT_READY;

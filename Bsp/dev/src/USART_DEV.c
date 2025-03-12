@@ -9,6 +9,7 @@
 #include "Read_Data.h"
 #include "VOFA.h"
 #include "ROOT.h"
+#include "VISION.h"
 
 #define BUFFER_SIZE (255)
 
@@ -76,6 +77,8 @@ void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
 
     if (huart->Instance == USART1) // 视觉模块/VOFA测试模块 tx: white rx: purple
     {
+        HAL_UART_Receive_DMA(&huart1, (uint8_t *)&VISION_V_DATA.RECEIVE, sizeof(VISION_V_DATA.RECEIVE));
+        VISION_F_Cal((uint8_t *)&VISION_V_DATA.RECEIVE);
         // VOFA_T_Send(4, 0, 
         //     (float)cp.gyro_data.gyro_raw_data.yaw,
         //     (float)cp.gyro_data.absolute[2],
