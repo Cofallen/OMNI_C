@@ -326,9 +326,9 @@ __weak void StartvisionTask(void const * argument)
       // input
 	  if(xSemaphoreTake(binarySemHandle, pdMS_TO_TICKS(1000)) == pdTRUE)
     {
-      ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff);
+      // ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff, 1);
       xSemaphoreGive(binarySemHandle);
-	}
+	  }
 //    }
     // VOFA_T_Vision();
     // VOFA_T_SendTemp(8, 0.0f,  // debug yaw pid with top[3]

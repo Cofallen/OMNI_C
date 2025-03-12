@@ -17,12 +17,23 @@ TYPEDEF_VISION VISION_V_DATA = {0};
 float VisionMonitor[VISION_D_MONITOR_LEN] = {0}; // 只看YAW数据是否变化判断离线
 int VISION_Monitor_IOTA = 0;
 
+<<<<<<< HEAD
 
 // 视觉接收处理
 uint8_t VISION_F_Cal(uint8_t *RxData)
+=======
+/// @brief 视觉接收
+/// @param RxData 原始数据
+/// @param type 类型 0:虚拟串口 1:USART1
+/// @return 
+uint8_t VISION_F_Cal(uint8_t *RxData, uint8_t type)
+>>>>>>> 2bf38771a34d139edd02a2abd78849721126889d
 {
     if ((RxData[0] == 0xaa) && (RxData[VISION_D_RECV - 1] == 0xbb))
     {
+        if (type == 0) // 虚拟串口需要从缓冲区中读取数据
+            memcpy(VISION_V_DATA.OriginData, RxData, VISION_D_RECV); 
+
         // 读取数据
         data_tackle.U[0] = VISION_V_DATA.OriginData[1];
         data_tackle.U[1] = VISION_V_DATA.OriginData[2];
@@ -36,12 +47,8 @@ uint8_t VISION_F_Cal(uint8_t *RxData)
         data_tackle.U[3] = VISION_V_DATA.OriginData[8];
         VISION_V_DATA.RECEIVE.YAW_DATA= data_tackle.F;
 
-        // temp1 = VISION_V_DATA.OriginData[i++];
-        //是否识别到目标
-
-        memcpy(VISION_V_DATA.OriginData, RxData, VISION_D_RECV);
+        //是否识别到目标    
         VISION_V_DATA.RECEIVE.TARGET= (VISION_V_DATA.OriginData[9] & 0x10)>>4;//识别成功标志位
-
         VISION_V_DATA.RECV_FLAG = ROOT_READY;
 
         return ROOT_READY;
@@ -59,7 +66,12 @@ void VisionSendInit(union RUI_U_VISION_SEND*  Send_t)
     Send_t->TIME = VISION_V_DATA.SEND.TIME;
 }
 
-int ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff)
+/// @brief 视觉发送
+/// @param Send_t 发送变量
+/// @param buff 发送处理数据
+/// @param type 类型 0:虚拟串口 1:USART1
+/// @return 
+int ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff, uint8_t type)
 {
     uint8_t status;
    VisionSendInit(Send_t);
@@ -128,9 +140,17 @@ int ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff)
      buff[14] = 0x12;
      buff[15] = 0xdc;
 
+<<<<<<< HEAD
  HAL_UART_Transmit_DMA(&huart1, (uint8_t *)buff, 16);
     // status = CDC_Transmit_FS(buff, 16);
     // return status;
+=======
+    if (type == 0)
+        status = CDC_Transmit_FS(buff, 16);
+    else if (type == 1)
+        status = HAL_UART_Transmit_DMA(&huart1, buff, 16);
+
+>>>>>>> 2bf38771a34d139edd02a2abd78849721126889d
     return ROOT_READY;
 }
 

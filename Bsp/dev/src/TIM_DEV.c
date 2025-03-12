@@ -20,7 +20,7 @@ TYPEDEF_MOTOR MOTOR_V_CHASSIS[4] = {0}; // 底盘数据
 TYPEDEF_MOTOR MOTOR_V_GIMBAL[2] = {0};  // 云台数据
 TYPEDEF_MOTOR MOTOR_V_ATTACK[3] = {0};  // 拨弹数据
 
-uint8_t sd_v_buff[16] = {0};
+uint8_t sd_v_buff[16] = {0}; // 视觉串口发送实际数据
 uint64_t RunTime = 0;
 
 // void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)

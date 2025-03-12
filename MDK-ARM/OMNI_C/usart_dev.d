@@ -37,8 +37,16 @@ omni_c/usart_dev.o: ..\Bsp\dev\src\USART_DEV.c ..\Core\Inc\usart.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_usb.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h \
   ..\Bsp\ctl\inc\DBUS.h ..\Bsp\dev\inc\USART_DEV.h \
+<<<<<<< HEAD
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\string.h ..\JUDGE\Read_Data.h \
   ..\Bsp\extra\inc\VOFA.h ..\Bsp\ctl\inc\MOTOR.h ..\Bsp\extra\inc\ROOT.h \
   ..\Bsp\extra\inc\VISION.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdbool.h
+=======
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdio.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\string.h \
+  ..\JUDGE\Read_Data.h ..\Bsp\extra\inc\VOFA.h ..\Bsp\ctl\inc\MOTOR.h \
+  ..\Bsp\extra\inc\ROOT.h ..\Bsp\extra\inc\VISION.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h
+>>>>>>> 2bf38771a34d139edd02a2abd78849721126889d
