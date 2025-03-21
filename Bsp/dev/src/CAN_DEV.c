@@ -121,6 +121,8 @@ void CAN_F_Send(CAN_HandleTypeDef *hcan, int16_t stdid, int16_t num1, int16_t nu
     Data[6] = ((num4) >> 8);
     Data[7] = (num4);
 
+    if (DBUS_V_DATA.IS_OFF)
+        return;
     HAL_CAN_AddTxMessage(hcan, &CANTxmsg, Data, &Mailbox);
 }
 

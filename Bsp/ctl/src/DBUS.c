@@ -65,6 +65,7 @@ void DBUS_F_Cal(TYPEDEF_DBUS *DBUS)
     DBUS->MOUSE.R_STATE = DBUS_V_UNION.DATA_NEATEN.MOUSE_R;
 
     // @TODO l/r flag to control atatck
+    DBUS_V_DATA.IS_OFF = 0;
 
 }
 
@@ -76,4 +77,5 @@ void DBUS_F_Cal(TYPEDEF_DBUS *DBUS)
 void DBUS_F_Offline(TYPEDEF_DBUS *DBUS)
 {
     memset(DBUS, 0, sizeof(TYPEDEF_DBUS));
+    DBUS->IS_OFF = 1;
 }

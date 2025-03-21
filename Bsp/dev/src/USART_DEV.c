@@ -59,7 +59,6 @@ void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
         HAL_UART_DMAStop(&huart3);
         
         ROOT_V_MONITOR_DBUS = 0; //  离线判断参数清零
-        
         DBUS_F_Cal(&DBUS_V_DATA);
         HAL_UART_Receive_DMA(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, sizeof(DBUS_V_UNION.GET_DATA));
     }

@@ -93,8 +93,8 @@ int ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff, uint8_t ty
 	buff[11] = data_tackle.U[1];
 	buff[12] = data_tackle.U[2];
 	buff[13] = data_tackle.U[3];
-    buff[14] = 0x13;
-    buff[15] = 0xbb;
+    buff[14] = 0x12;
+    buff[15] = 0xdc;
 
     if (type == 0)
         status = CDC_Transmit_FS(buff, 16);

@@ -208,9 +208,9 @@ __weak void StartChassisTask(void const * argument)
   {
     CHASSIS_F_Ctl(MOTOR_V_CHASSIS, &DBUS_V_DATA);
     CAN_F_Send(&hcan1, 0x200, MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
-               MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
-               MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
-               MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
+              MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
+              MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
+              MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
 		// CapSendInit(40 , user_data.power_heat_data.chassis_power , user_data.power_heat_data.chassis_voltage);
     vTaskDelay(1);
   }
@@ -247,16 +247,16 @@ __weak void StartGimbalTask(void const * argument)
       //       (float)(TOP.yaw[5] * 22.75555f),
       //       (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].PID_S.OUT.ALL_OUT,
       //       99.0f);
-      VOFA_T_SendTemp(9, 0.0f,
-            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
-            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
-            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
-            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND,
-            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.SPEED_NOW,
-            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.SPEED_NOW,
-            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.SPEED_NOW,
-            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.SPEED_NOW,
-            99.0f);
+      // VOFA_T_SendTemp(9, 0.0f,
+      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
+      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
+      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
+      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND,
+      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.SPEED_NOW,
+      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.SPEED_NOW,
+      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.SPEED_NOW,
+      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.SPEED_NOW,
+      //       99.0f);
       // VOFA_T_SendTemp(8, 0.0f,
       //   (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
       //   (float)TOP.yaw[3],
@@ -340,14 +340,15 @@ __weak void StartvisionTask(void const * argument)
 	  }
 //    }
     // VOFA_T_Vision();
-    // VOFA_T_SendTemp(8, 0.0f,  // debug yaw pid with top[3]
-    //           (float)user_data.shoot_data.initial_speed,
-    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW,
-    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.SPEED_NOW,
-    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.AIM,
-    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM,
-    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE,
-    //           1.0f);
+    VOFA_T_SendTemp(9, 0.0f,  // debug yaw pid with top[3]
+              (float)user_data.shoot_data.initial_speed,
+              (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW,
+              (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.SPEED_NOW,
+              (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.AIM,
+              (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM,
+              (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE,
+              (float)DBUS_V_DATA.IS_OFF,
+              1.0f);
     vTaskDelay(1);
   }
  
