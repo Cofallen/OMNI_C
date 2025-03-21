@@ -51,6 +51,8 @@ void CAN_F_Recv(CAN_HandleTypeDef *hcan, uint32_t ID)
                 CanManage_cap(CANRxmsg, &capData_t.capGetDate);
                 break;
             }
+				 
+					 
         default:
             break;
         }

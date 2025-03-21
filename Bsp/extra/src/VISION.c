@@ -69,7 +69,7 @@ int ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff, uint8_t ty
 {
     uint8_t status;
    VisionSendInit(Send_t);
-   buff[0] = 0xcd;
+    buff[0] = 0xcd;
 	//pitch
 	data_tackle.F = Send_t->PIT_DATA;
 	buff[1] = data_tackle.U[0];

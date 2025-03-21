@@ -77,7 +77,7 @@ void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
 
     if (huart->Instance == USART1) // 视觉模块/VOFA测试模块 tx: white rx: purple
     {
-        VISION_F_Cal(VISION_V_DATA.OriginData, 1);
+        // VISION_F_Cal(VISION_V_DATA.OriginData, 1);
     }
 }
 

@@ -66,6 +66,12 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     chassis_power_control(1);
 			else
 				chassis_power_control(0);
+
+                //正常使用电容
+                // chassis_power_control(DBUS_V_DATA.REMOTE.S1_u8 == 1 && capData_t.capSetData.dataNeaten.power_key ==1 &&capData_t.capSetData.dataNeaten.out_switch == 1) ;
+       
+    
+        
 			
 }
 
