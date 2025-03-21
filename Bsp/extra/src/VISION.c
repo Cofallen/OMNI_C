@@ -69,17 +69,15 @@ int ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff, uint8_t ty
 {
     uint8_t status;
    VisionSendInit(Send_t);
-   buff[0] = 0xaa;
-	//确定pitch轴角度//并且发送角度值
+   buff[0] = 0xcd;
+	//pitch
 	data_tackle.F = Send_t->PIT_DATA;
-    // data_tackle.F = TOP.pitch[5];
 	buff[1] = data_tackle.U[0];
 	buff[2] = data_tackle.U[1];
 	buff[3] = data_tackle.U[2];
 	buff[4] = data_tackle.U[3];
-	//确定yaw轴角度//并且发送角度值
+	//yaw
 	data_tackle.F = Send_t->YAW_DATA;
-    // data_tackle.F = TOP.yaw[5];
 	buff[5] = data_tackle.U[0];
 	buff[6] = data_tackle.U[1];
 	buff[7] = data_tackle.U[2];
@@ -90,7 +88,7 @@ int ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff, uint8_t ty
     // //2023-06-02 22:54 | 颜色
 	// setbit(&buff[9] , 3 , Send_t->COLOR >> 4);
     buff[9] = 9;
-    data_tackle.F = 555.555;
+    data_tackle.F = 0xff;
 	buff[10] = data_tackle.U[0];
 	buff[11] = data_tackle.U[1];
 	buff[12] = data_tackle.U[2];

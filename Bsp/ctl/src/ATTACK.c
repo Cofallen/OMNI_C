@@ -146,7 +146,7 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
 
     // @veision 3, final code, this code is a stable speed
     // if (DBUS_V_DATA.REMOTE.S1_u8 == 1 || DBUS_V_DATA.REMOTE.S1_u8 == 2)  // 3 is the fire button
-    if (DBUS_V_DATA.REMOTE.S2_u8 == 4 || DBUS_V_DATA.KEY_BOARD.CTRL == 1)  // 3 is the fire button
+    if (DBUS_V_DATA.REMOTE.S2_u8 == 1 || DBUS_V_DATA.KEY_BOARD.CTRL == 1)  // 3 is the fire button
     {
         MOTOR->DATA.AIM = ATTACK_V_PARAM.SPEED;
     }
@@ -179,8 +179,8 @@ uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     }
     // shooting case when opposite to you l-r
     
-    MOTOR[MOTOR_D_ATTACK_L].DATA.AIM = -ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_L]);
-    MOTOR[MOTOR_D_ATTACK_R].DATA.AIM =  ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_R]);
+    MOTOR[MOTOR_D_ATTACK_L].DATA.AIM =  ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_L]);
+    MOTOR[MOTOR_D_ATTACK_R].DATA.AIM = -ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_R]);
 
     // pid
     // PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_L]);

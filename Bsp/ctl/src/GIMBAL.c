@@ -31,29 +31,16 @@ void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, TYPEDEF_VISION *VISI
         //    MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = 0;
            MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = MATH_D_LIMIT(GIMBAL_PIT_MAX, GIMBAL_PIT_MIN, MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM);
            PID_F_G(&MOTOR[MOTOR_D_GIMBAL_YAW]);
-           PID_F_P_T(&MOTOR[MOTOR_D_GIMBAL_PIT]);
+          PID_F_P_T(&MOTOR[MOTOR_D_GIMBAL_PIT]);
         }
         break;
 
-    case 4:
+    case 1:  // 视觉
         {
-            MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM = TOP.yaw[3];
-            PID_F_G(&MOTOR[MOTOR_D_GIMBAL_YAW]);
-            // MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = GIMBAL_PIT_MAX;
-            // PID_F_P_T(&MOTOR[MOTOR_D_GIMBAL_PIT]);
-            // VISION_V_DATA.RECEIVE.YAW_DATA = -40.0f; // moni
-            // VISION_V_DATA.RECEIVE.TARGET = 1;  // moni
-            // if(VISION_V_DATA.RECEIVE.TARGET){
-                //  PID_F_VISION_YAW(&MOTOR[MOTOR_D_GIMBAL_YAW]);
-                // PID_T_G(&MOTOR[MOTOR_D_GIMBAL_YAW]);
-            // }
-           
-            // MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = - VISION->RECEIVE.PIT_DATA * 22.75556f; // 2875.5这看卢子瑞加了负号，所以我添上了
-        //    MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += -(float)DBUS->REMOTE.CH3_int16 * 0.003f - DBUS->MOUSE.Y_FLT * 0.01f;
-        //     MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = MATH_D_LIMIT(GIMBAL_PIT_MAX, GIMBAL_PIT_MIN, MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM);
-            // PID_F_VISION_PIT(&MOTOR[MOTOR_D_GIMBAL_PIT]);
-			// PID_F_P_T(&MOTOR[MOTOR_D_GIMBAL_PIT]);
-            currentAngle = TOP.yaw[5];
+            // MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM = TOP.yaw[3];
+            // PID_F_G(&MOTOR[MOTOR_D_GIMBAL_YAW]);
+            MOTOR[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND = 0;
+            // currentAngle = TOP.yaw[5];
         }
         break;
 
