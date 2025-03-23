@@ -23,9 +23,9 @@ void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, TYPEDEF_VISION *VISI
     {
     case 3:; case 1:  // 遥控
         {
-            MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += (-(float)DBUS->REMOTE.CH2_int16 * 0.02f - MATH_D_LIMIT(1, -1, DBUS->MOUSE.X_FLT * 0.01f) + (float) (DBUS->KEY_BOARD.E - DBUS->KEY_BOARD.Q ) * 0.8f + (float)currentAngle);
+            MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += (-(float)DBUS->REMOTE.CH2_int16 * 0.04f - MATH_D_LIMIT(1, -1, DBUS->MOUSE.X_FLT * 0.01f) + (float) (DBUS->KEY_BOARD.E - DBUS->KEY_BOARD.Q ) * 0.8f + (float)currentAngle);
             currentAngle = 0.0f;
-            MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += -(float)DBUS->REMOTE.CH3_int16 * 0.003f - DBUS->MOUSE.Y_FLT * 0.01f;
+            MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += -(float)DBUS->REMOTE.CH3_int16 * 0.006f - DBUS->MOUSE.Y_FLT * 0.01f;
             MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = MATH_D_LIMIT(GIMBAL_PIT_MAX, GIMBAL_PIT_MIN, MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM);
         
             PID_F_G(&MOTOR[MOTOR_D_GIMBAL_YAW]);

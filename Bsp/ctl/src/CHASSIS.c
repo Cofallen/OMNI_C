@@ -21,12 +21,12 @@ double ANGLE_Relative = 0.0f;
 int mod = 0;
 		
 // 新增宏定义
-#define FRONT_WHEEL_THRESHOLD  800.0f    // 前轮离地电流阈值
-#define FRONT_POWER_POWER       0.3f      // 前轮功率降低系数
-#define REAR_POWER_BOOST       1.5f      // 后轮功率提升系数
+#define FRONT_WHEEL_THRESHOLD  5000.0f    // 前轮离地电流阈值
+#define FRONT_POWER_POWER       0.1f      // 前轮功率降低系数
+#define REAR_POWER_BOOST       1.2f      // 后轮功率提升系数
 
 #define FILTER_COEF 0.9f         // 低通滤波系数
-#define FRONT_LIFT_THRESHOLD 400.0f  // 前后轮电流差阈值
+#define FRONT_LIFT_THRESHOLD 5000.0f  // 前后轮电流差阈值
 #define LIFT_TIME_THRESHOLD 100      // 连续检测次数阈值
 #define LANDING_TIME_THRESHOLD 50    // 着地确认次数阈值
 
@@ -37,10 +37,10 @@ int16_t lift_counter = 0;
 int16_t landing_counter = 0;
 uint8_t real_lift_state = 0;    // 0=地面, 1=飞坡中
 
-// 电机索引宏定义（需根据实际硬件配置验证）
-#define FRONT_LEFT    MOTOR_D_CHASSIS_4  // 电机3
-#define FRONT_RIGHT   MOTOR_D_CHASSIS_1  // 电机4
-#define REAR_LEFT     MOTOR_D_CHASSIS_3  // 电机1
+// 电机索引宏定义 （头超前背向）
+#define FRONT_LEFT    MOTOR_D_CHASSIS_4  // 电机4
+#define FRONT_RIGHT   MOTOR_D_CHASSIS_1  // 电机1
+#define REAR_LEFT     MOTOR_D_CHASSIS_3  // 电机3
 #define REAR_RIGHT    MOTOR_D_CHASSIS_2  // 电机2
 
 
@@ -73,17 +73,47 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     
     ROTATE_VX = -VY * SIN + VX * COS;
     ROTATE_VY =  VY * COS + VX * SIN;
+
+    // 飞坡控制
     
+    // 运动学解算
+    (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_CHASSIS_1].DATA.AIM = 0) : (MOTOR[MOTOR_D_CHASSIS_1].DATA.AIM = ( ROTATE_VX - ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT);
+    (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_CHASSIS_2].DATA.AIM = 0) : (MOTOR[MOTOR_D_CHASSIS_2].DATA.AIM = (-ROTATE_VX - ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT);
+    (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_CHASSIS_3].DATA.AIM = 0) : (MOTOR[MOTOR_D_CHASSIS_3].DATA.AIM = (-ROTATE_VX + ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT);
+    (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_CHASSIS_4].DATA.AIM = 0) : (MOTOR[MOTOR_D_CHASSIS_4].DATA.AIM = ( ROTATE_VX + ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT);
+
+    CHASSIS_F_Lifited(MOTOR, DBUS);
+
+    // pid 解算
+    PID_F_S(&MOTOR[MOTOR_D_CHASSIS_1]);
+    PID_F_S(&MOTOR[MOTOR_D_CHASSIS_2]);
+    PID_F_S(&MOTOR[MOTOR_D_CHASSIS_3]);
+    PID_F_S(&MOTOR[MOTOR_D_CHASSIS_4]);
+    // mod = (((DBUS_V_DATA.REMOTE.S1_u8 - 1) == 0) ? 1 : 0);
+	// 		if(DBUS_V_DATA.REMOTE.S1_u8 == 1)
+    //          chassis_power_control(1);
+	// 		else
+	chassis_power_control(0, DBUS->is_front_lifted);
+
+    //正常使用电容
+    // chassis_power_control(DBUS_V_DATA.REMOTE.S1_u8 == 1 && capData_t.capSetData.dataNeaten.power_key ==1 &&capData_t.capSetData.dataNeaten.out_switch == 1) ;
+			
+}
+
+
+
+static void CHASSIS_F_Lifited(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
+{
     /* 新增飞坡控制逻辑 */
     // 读取前轮电流绝对值（单位：mA）
-    float front_left_current = MATH_D_ABS((float)MOTOR[FRONT_LEFT].DATA.CURRENT);
+    float front_left_current  = MATH_D_ABS((float)MOTOR[FRONT_LEFT].DATA.CURRENT);
     float front_right_current = MATH_D_ABS((float)MOTOR[FRONT_RIGHT].DATA.CURRENT);
-    float rear_left_current = MATH_D_ABS((float)MOTOR[REAR_LEFT].DATA.CURRENT);
-    float rear_right_current = MATH_D_ABS((float)MOTOR[REAR_RIGHT].DATA.CURRENT);
+    float rear_left_current   = MATH_D_ABS((float)MOTOR[REAR_LEFT].DATA.CURRENT);
+    float rear_right_current  = MATH_D_ABS((float)MOTOR[REAR_RIGHT].DATA.CURRENT);
 
     // 计算前左和后左电流绝对值之差，前右和后右电流绝对值之差，前左和前右电流绝对值之差
-    float front_current_diff = fabsf(front_left_current - front_right_current);
-    float rear_current_diff = fabsf(rear_left_current - rear_right_current);
+    float front_current_diff = MATH_D_ABS((front_left_current - front_right_current));
+    float rear_current_diff  = MATH_D_ABS((rear_left_current - rear_right_current));
     /* 新增 start*/
     // 1. 低通滤波平滑电流数据
     filtered_currents[0] = FILTER_COEF * filtered_currents[0] + (1.0f - FILTER_COEF) * front_left_current;
@@ -93,8 +123,8 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 
     // 2. 计算前后轮平均电流
     float front_avg_current = (filtered_currents[0] + filtered_currents[1]) * 0.5f;
-    float rear_avg_current = (filtered_currents[2] + filtered_currents[3]) * 0.5f;
-    float current_diff = fabsf(front_avg_current - rear_avg_current);
+    float rear_avg_current  = (filtered_currents[2] + filtered_currents[3]) * 0.5f;
+    float current_diff = MATH_D_ABS((front_avg_current - rear_avg_current));
 
     // 3. 状态机判断，避免抖动
     uint8_t current_state = (current_diff > FRONT_LIFT_THRESHOLD);
@@ -120,130 +150,44 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     DBUS->is_front_lifted = real_lift_state;
     /* 新增 end */
 
-    // // 如果前左和后左电流绝对值之差和前右和后右电流绝对值之差都大于阈值，则认为前轮离地
-    // DBUS->is_front_lifted = (front_current_diff > FRONT_WHEEL_THRESHOLD) && (rear_current_diff > FRONT_WHEEL_THRESHOLD);
-
-    // 修改后的功率分配逻辑
-
-    // if(DBUS->is_front_lifted && !DBUS->IS_OFF && DBUS->REMOTE.S1_u8 == 2)//暂时注释发射，复用拨杆
-    // {
-    //     // 前轮离地状态：提升后轮功率
-    //     float boosted_rear_left = MOTOR[REAR_LEFT].DATA.AIM * REAR_POWER_BOOST;
-    //     float boosted_rear_right = MOTOR[REAR_RIGHT].DATA.AIM * REAR_POWER_BOOST;
-
-    //     // 应用功率调整并关闭前轮
-    //     MOTOR[REAR_LEFT].DATA.AIM = boosted_rear_left;
-    //     MOTOR[REAR_RIGHT].DATA.AIM = boosted_rear_right;
-    //     MOTOR[FRONT_LEFT].DATA.AIM = 0;
-    //     MOTOR[FRONT_RIGHT].DATA.AIM = 0;
-
-    // }
-
-    if(0)
+    if(DBUS->is_front_lifted && !DBUS->IS_OFF)  // 移除了拨杆限制，使算法自动工作
     {
+        // 根据离地程度动态调整功率提升系数 (1.5-2.5倍)
+        float boost_factor = fminf(2.5f, 1.5f + current_diff / 1000.0f);
         
+        // 平滑过渡：逐渐减少前轮功率，增加后轮功率
+        static float front_power_scale = 1.0f;
+        static float rear_power_scale = 1.0f;
+        
+        // 更新功率比例 (平滑过渡)
+        front_power_scale = front_power_scale * 0.9f;  // 前轮功率逐渐降为0
+        rear_power_scale = 1.0f + (boost_factor - 1.0f) * (1.0f - front_power_scale);
+        
+        // 应用功率调整
+        MOTOR[FRONT_LEFT].DATA.AIM *= front_power_scale;
+        MOTOR[FRONT_RIGHT].DATA.AIM *= front_power_scale;
+        MOTOR[REAR_LEFT].DATA.AIM *= rear_power_scale;
+        MOTOR[REAR_RIGHT].DATA.AIM *= rear_power_scale;
+        // MOTOR[FRONT_LEFT].DATA.AIM *= FRONT_POWER_POWER;
+        // MOTOR[FRONT_RIGHT].DATA.AIM *= FRONT_POWER_POWER;
+        // MOTOR[REAR_LEFT].DATA.AIM *= REAR_POWER_BOOST;
+        // MOTOR[REAR_RIGHT].DATA.AIM *= REAR_POWER_BOOST;
     }
     else
     {
-    (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_CHASSIS_1].DATA.AIM = 0) : (MOTOR[MOTOR_D_CHASSIS_1].DATA.AIM = ( ROTATE_VX - ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT);
-    (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_CHASSIS_2].DATA.AIM = 0) : (MOTOR[MOTOR_D_CHASSIS_2].DATA.AIM = (-ROTATE_VX - ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT);
-    (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_CHASSIS_3].DATA.AIM = 0) : (MOTOR[MOTOR_D_CHASSIS_3].DATA.AIM = (-ROTATE_VX + ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT);
-    (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_CHASSIS_4].DATA.AIM = 0) : (MOTOR[MOTOR_D_CHASSIS_4].DATA.AIM = ( ROTATE_VX + ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT);
-    }
-    // 运动学解算
-    // (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_CHASSIS_1].DATA.AIM = 0) : (MOTOR[MOTOR_D_CHASSIS_1].DATA.AIM = ( ROTATE_VX - ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT);
-    // (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_CHASSIS_2].DATA.AIM = 0) : (MOTOR[MOTOR_D_CHASSIS_2].DATA.AIM = (-ROTATE_VX - ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT);
-    // (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_CHASSIS_3].DATA.AIM = 0) : (MOTOR[MOTOR_D_CHASSIS_3].DATA.AIM = (-ROTATE_VX + ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT);
-    // (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_CHASSIS_4].DATA.AIM = 0) : (MOTOR[MOTOR_D_CHASSIS_4].DATA.AIM = ( ROTATE_VX + ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT);
-    // MOTOR[MOTOR_D_CHASSIS_1].DATA.AIM = ( ROTATE_VX - ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
-    // MOTOR[MOTOR_D_CHASSIS_2].DATA.AIM = (-ROTATE_VX - ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
-    // MOTOR[MOTOR_D_CHASSIS_3].DATA.AIM = (-ROTATE_VX + ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
-    // MOTOR[MOTOR_D_CHASSIS_4].DATA.AIM = ( ROTATE_VX + ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT;
-
-    // pid 解算
-    PID_F_S(&MOTOR[MOTOR_D_CHASSIS_1]);
-    PID_F_S(&MOTOR[MOTOR_D_CHASSIS_2]);
-    PID_F_S(&MOTOR[MOTOR_D_CHASSIS_3]);
-    PID_F_S(&MOTOR[MOTOR_D_CHASSIS_4]);
-//    mod = (((DBUS_V_DATA.REMOTE.S1_u8 - 1) == 0) ? 1 : 0);
-	// 		if(DBUS_V_DATA.REMOTE.S1_u8 == 1)
-    // chassis_power_control(1);
-	// 		else
-				chassis_power_control(0);
-
-                //正常使用电容
-                // chassis_power_control(DBUS_V_DATA.REMOTE.S1_u8 == 1 && capData_t.capSetData.dataNeaten.power_key ==1 &&capData_t.capSetData.dataNeaten.out_switch == 1) ;
-       
-    
+        // 平地状态：平滑恢复正常功率分配
+        static float front_power_scale = 0.0f;
+        static float rear_power_scale = 2.0f;
         
-			
-}
-
-// The following code is for reference ZJU Power Control
-// Reference Site: https://zju-helloworld.github.io/Wiki/
-// fitting function :
-// P = \omega * M + P_{loss}
-//              M = k_{M} * i_{q}, consultation, k_{M} = 0.3 Nm/A
-//                  P_{loss} = R * i^2
-//                             R = p_{1} = 0.1249
-//                                 p_{2} = -0.007836 -> 0
-//                                 p_{3} = 5.952, circuit power
-// @TODO using karman filter -> k 
-// using function predict
-
-struct CHASSIS_F_PwrLimit
-{
-    float Pwr;
-    float Z;
-    float k;
-    float R;
-    float PwrSum;
-    float PwrPred[4];
-}CHASSIS_V_PwrLimit;
-
-
-void CHASSIS_F_PwrLimitInit()
-{
-
-}
-
-
-void CHASSIS_F_PwrLimitCalc(TYPEDEF_MOTOR *MOTOR)
-{
-    CHASSIS_V_PwrLimit.Pwr = user_data.power_heat_data.chassis_power;
-    CHASSIS_V_PwrLimit.Z   = user_data.power_heat_data.buffer_energy;
-
-    CHASSIS_V_PwrLimit.R = 0.3f;
-    CHASSIS_V_PwrLimit.k = 0.1249f;  // @TODO k need to calculate by karman filter
-    CHASSIS_V_PwrLimit.PwrSum = 0.0f;
-
-    // dimension transform
-    float current[4] = {0.0f};
-    for (int i = 0; i < 4; i++)
-    {
-        // dimension transform
-        current[i] = MOTOR[i].DATA.CURRENT * 0.001220703125f;
-        CHASSIS_V_PwrLimit.PwrPred[i] = CHASSIS_V_PwrLimit.k * current[i] * MOTOR[i].DATA.SPEED_NOW \
-                        + CHASSIS_V_PwrLimit.R * current[i] * current[i];
-        if (CHASSIS_V_PwrLimit.PwrPred < 0)
-            continue;
-        CHASSIS_V_PwrLimit.PwrSum += CHASSIS_V_PwrLimit.PwrPred[i];
-    }
-    CHASSIS_V_PwrLimit.PwrSum += CHASSIS_V_PwrLimit.Pwr;
-
-    // @TODO no consider the cap
-    CHASSIS_V_PwrLimit.PwrSum -= CHASSIS_V_PwrLimit.Z;
-
-    if (CHASSIS_V_PwrLimit.PwrSum > CHASSIS_V_PwrLimit.Pwr)
-    {
-        float scale = CHASSIS_V_PwrLimit.Pwr / CHASSIS_V_PwrLimit.PwrSum;
-        for (int i = 0; i < 4; i++)
-        {
-            CHASSIS_V_PwrLimit.PwrPred[i] *= scale;
+        // 缓慢恢复
+        front_power_scale = fminf(1.0f, front_power_scale + 0.05f);
+        rear_power_scale = 1.0f + (rear_power_scale - 1.0f) * 0.9f;
+        
+        if (front_power_scale < 0.95f) {  // 仅在过渡期应用功率调整
+            MOTOR[FRONT_LEFT].DATA.AIM *= front_power_scale;
+            MOTOR[FRONT_RIGHT].DATA.AIM *= front_power_scale;
+            MOTOR[REAR_LEFT].DATA.AIM *= rear_power_scale;
+            MOTOR[REAR_RIGHT].DATA.AIM *= rear_power_scale;
         }
     }
-
-    // @TODO limit the power to motor
-    
-    
 }

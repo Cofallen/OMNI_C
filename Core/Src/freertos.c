@@ -208,10 +208,10 @@ __weak void StartChassisTask(void const * argument)
   for(;;)
   {
     CHASSIS_F_Ctl(MOTOR_V_CHASSIS, &DBUS_V_DATA);
-    //  CAN_F_Send(&hcan1, 0x200, MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
-    //            MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
-    //            MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
-    //            MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
+    CAN_F_Send(&hcan1, 0x200, MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
+               MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
+               MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
+               MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
 		// CapSendInit(40 , user_data.power_heat_data.chassis_power , user_data.power_heat_data.chassis_voltage);
     vTaskDelay(1);
   }
@@ -239,24 +239,27 @@ __weak void StartGimbalTask(void const * argument)
                 0,
                 MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND);
       // 自瞄查看数据
-      VOFA_T_SendTemp(10, 0.0f,
-            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE,
-            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW,
-            (float)VISION_V_DATA.RECV_FLAG,
-            (float)VISION_V_DATA.RECEIVE.TARGET,
-            (float)VISION_V_DATA.RECEIVE.YAW_DATA,
-            (float)TOP.yaw[5],
-            (float)(TOP.yaw[5] * 22.75555f),
-            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].PID_S.OUT.ALL_OUT,
-            99.0f);
-      // 飞坡查看数据
-      // VOFA_T_SendTemp(7, 0.0f,
-      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CURRENT,
-      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CURRENT,
-      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CURRENT,
-      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CURRENT,
-      //       (float)DBUS_V_DATA.is_front_lifted,
+      // VOFA_T_SendTemp(10, 0.0f,
+      //       (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE,
+      //       (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW,
+      //       (float)VISION_V_DATA.RECV_FLAG,
+      //       (float)VISION_V_DATA.RECEIVE.TARGET,
+      //       (float)VISION_V_DATA.RECEIVE.YAW_DATA,
+      //       (float)TOP.yaw[5],
+      //       (float)(TOP.yaw[5] * 22.75555f),
+      //       (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].PID_S.OUT.ALL_OUT,
       //       99.0f);
+      // 飞坡查看数据
+      VOFA_T_SendTemp(10, 0.0f,
+            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CURRENT,
+            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CURRENT,
+            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CURRENT,
+            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CURRENT,
+            (float)DBUS_V_DATA.is_front_lifted,
+            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.AIM,
+            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.AIM,
+            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.AIM,
+            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.AIM);
       // 飞坡匿名查看数据
       // niming(0xF1, 
       //       (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CURRENT,

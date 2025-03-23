@@ -21,7 +21,7 @@ fp32 constant = 4.081f;                  // a 增大这个系数可以减小功�
   * @time: 24-4-1			
   * @ReadMe: 放在底盘PID解算后即可
 */ 
-void chassis_power_control(uint8_t cap_state)
+void chassis_power_control(uint8_t cap_state, uint8_t is_flying)
 {
     //*可编辑部分*begin*//
     const uint16_t PowerCompensation = 0;  //正常模式下的功率补偿
@@ -66,12 +66,37 @@ void chassis_power_control(uint8_t cap_state)
     initial_give_power[2] = get_initial_power(&MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3]);
     initial_give_power[3] = get_initial_power(&MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4]);
 
-    for(uint8_t i = 0; i < 4; i++)
+    /* user add start*/
+    // 飞坡状态下的功率分配策略
+    if(is_flying)
     {
-        if (initial_give_power[i] < 0) // 不考虑负功(反向电动势)
-			continue;
-		initial_total_power += initial_give_power[i]; // 获得底盘总功率
+        // 飞坡时功率分配优先级: 后轮 > 前轮
+        initial_give_power[0] *= 0.0f;  // 前轮功率降低
+        initial_give_power[1] *= 0.0f;  // 前轮功率降低
+        initial_give_power[2] *= 1.2f;  // 后轮功率提升
+        initial_give_power[3] *= 1.2f;  // 后轮功率提升
+        
+        // 重新计算总功率
+        initial_total_power = 0;
+        for(uint8_t i = 0; i < 4; i++)
+        {
+            if (initial_give_power[i] < 0) // 不考虑负功(反向电动势)
+                continue;
+            initial_total_power += initial_give_power[i]; // 获得底盘总功率
+        }
     }
+    else
+    {
+        // 非飞坡时功率分配策略
+        initial_total_power = 0;
+        for(uint8_t i = 0; i < 4; i++)
+        {
+            if (initial_give_power[i] < 0) // 不考虑负功(反向电动势)
+                continue;
+            initial_total_power += initial_give_power[i]; // 获得底盘总功率
+        }
+    }
+    /* user add end */
 
 	if (initial_total_power > chassis_max_power) // 确定是否大于最大功率
 	{
