@@ -22,7 +22,20 @@ int mod = 0;
 		
 // 新增宏定义
 #define FRONT_WHEEL_THRESHOLD  800.0f    // 前轮离地电流阈值
+#define FRONT_POWER_POWER       0.3f      // 前轮功率降低系数
 #define REAR_POWER_BOOST       1.5f      // 后轮功率提升系数
+
+#define FILTER_COEF 0.9f         // 低通滤波系数
+#define FRONT_LIFT_THRESHOLD 400.0f  // 前后轮电流差阈值
+#define LIFT_TIME_THRESHOLD 100      // 连续检测次数阈值
+#define LANDING_TIME_THRESHOLD 50    // 着地确认次数阈值
+
+// 滤波后的电流值
+float filtered_currents[4] = {0.0f};
+// 飞坡状态计数器
+int16_t lift_counter = 0;
+int16_t landing_counter = 0;
+uint8_t real_lift_state = 0;    // 0=地面, 1=飞坡中
 
 // 电机索引宏定义（需根据实际硬件配置验证）
 #define FRONT_LEFT    MOTOR_D_CHASSIS_4  // 电机3
@@ -63,18 +76,52 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     
     /* 新增飞坡控制逻辑 */
     // 读取前轮电流绝对值（单位：mA）
-    float front_left_current = fabsf(MOTOR[FRONT_LEFT].DATA.CURRENT);
-    float front_right_current = fabsf(MOTOR[FRONT_RIGHT].DATA.CURRENT);
-    float rear_left_current = fabsf(MOTOR[REAR_LEFT].DATA.CURRENT);
-    float rear_right_current = fabsf(MOTOR[REAR_RIGHT].DATA.CURRENT);
+    float front_left_current = MATH_D_ABS((float)MOTOR[FRONT_LEFT].DATA.CURRENT);
+    float front_right_current = MATH_D_ABS((float)MOTOR[FRONT_RIGHT].DATA.CURRENT);
+    float rear_left_current = MATH_D_ABS((float)MOTOR[REAR_LEFT].DATA.CURRENT);
+    float rear_right_current = MATH_D_ABS((float)MOTOR[REAR_RIGHT].DATA.CURRENT);
 
     // 计算前左和后左电流绝对值之差，前右和后右电流绝对值之差，前左和前右电流绝对值之差
     float front_current_diff = fabsf(front_left_current - front_right_current);
     float rear_current_diff = fabsf(rear_left_current - rear_right_current);
-    // float front_avg_current = (front_left_current + front_right_current) * 0.5f;
+    /* 新增 start*/
+    // 1. 低通滤波平滑电流数据
+    filtered_currents[0] = FILTER_COEF * filtered_currents[0] + (1.0f - FILTER_COEF) * front_left_current;
+    filtered_currents[1] = FILTER_COEF * filtered_currents[1] + (1.0f - FILTER_COEF) * front_right_current;
+    filtered_currents[2] = FILTER_COEF * filtered_currents[2] + (1.0f - FILTER_COEF) * rear_left_current;
+    filtered_currents[3] = FILTER_COEF * filtered_currents[3] + (1.0f - FILTER_COEF) * rear_right_current;
 
-    // 如果前左和后左电流绝对值之差和前右和后右电流绝对值之差都大于阈值，则认为前轮离地
-    DBUS->is_front_lifted = (front_current_diff > FRONT_WHEEL_THRESHOLD) && (rear_current_diff > FRONT_WHEEL_THRESHOLD);
+    // 2. 计算前后轮平均电流
+    float front_avg_current = (filtered_currents[0] + filtered_currents[1]) * 0.5f;
+    float rear_avg_current = (filtered_currents[2] + filtered_currents[3]) * 0.5f;
+    float current_diff = fabsf(front_avg_current - rear_avg_current);
+
+    // 3. 状态机判断，避免抖动
+    uint8_t current_state = (current_diff > FRONT_LIFT_THRESHOLD);
+
+    // 4. 状态确认机制
+    if (current_state && !real_lift_state) {
+        lift_counter++;
+        landing_counter = 0;
+        if (lift_counter >= LIFT_TIME_THRESHOLD) {
+            real_lift_state = 1;  // 确认飞坡状态
+            lift_counter = LIFT_TIME_THRESHOLD;  // 防止溢出
+        }
+    } else if (!current_state && real_lift_state) {
+        landing_counter++;
+        lift_counter = 0;
+        if (landing_counter >= LANDING_TIME_THRESHOLD) {
+            real_lift_state = 0;  // 确认着地状态
+            landing_counter = LANDING_TIME_THRESHOLD;  // 防止溢出
+        }
+    }
+
+    // 5. 更新状态标志位
+    DBUS->is_front_lifted = real_lift_state;
+    /* 新增 end */
+
+    // // 如果前左和后左电流绝对值之差和前右和后右电流绝对值之差都大于阈值，则认为前轮离地
+    // DBUS->is_front_lifted = (front_current_diff > FRONT_WHEEL_THRESHOLD) && (rear_current_diff > FRONT_WHEEL_THRESHOLD);
 
     // 修改后的功率分配逻辑
 

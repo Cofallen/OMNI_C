@@ -43,11 +43,11 @@ uint8_t ROOT_F_PIDinit()
     const float PID_V_GIMBAL_YAW_ANGLE[5] = {0.36f, 0.0f, 0.0f, 200.0f, 2000.0f};
 //    const float PID_V_GIMBAL_PIT_SPEED[5] = {130.0f, 0.0f, 0, 1000.0f, 20000.0f};
 //    const float PID_V_GIMBAL_PIT_ANGLE[5] = {0.85f, 0.0007f, 0, 1000.0f, 3000.0f};
-	const float PID_V_GIMBAL_PIT_SPEED[5] = {50.0f, 0.0f, 0, 1000.0f, 20000.0f};
-    const float PID_V_GIMBAL_PIT_ANGLE[5] = {0.85f, 0.0007f, 0, 1000.0f, 3000.0f};
+	const float PID_V_GIMBAL_PIT_SPEED[5] = {100.0f, 0.001f, 0, 1000.0f, 30000.0f};
+    const float PID_V_GIMBAL_PIT_ANGLE[5] = {0.85f, 0.0007f, 0, 1000.0f, 7000.0f};
 
-    const float PID_V_ATTACK_L_SPEED[5] = {7.0f, 0, 0, 1000.0f, 20000.0f};
-    const float PID_V_ATTACK_R_SPEED[5] = {7.0f, 0, 0, 1000.0f, 20000.0f};
+    const float PID_V_ATTACK_L_SPEED[5] = {14.0f, 0, 0, 1000.0f, 30000.0f};
+    const float PID_V_ATTACK_R_SPEED[5] = {14.0f, 0, 0, 1000.0f, 30000.0f};
     const float PID_V_ATTACK_G_SPEED[5] = {10.0f, 0, 0, 1000.0f, 20000.0f};
     const float PID_V_ATTACK_G_ANGLE[5] = {1.0f, 0, 0, 1000.0f, 4500.0f};  // 拨盘角度AIM控制弹频，3000-13.3Hz,4500-16.99Hz,5000(2single)-23.3Hz占比约1/3
     const float PID_V_ATTACK_L_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
@@ -57,10 +57,10 @@ uint8_t ROOT_F_PIDinit()
     const float PID_V_TOP_OFF_S[5] = {100.5f, 0.0f, 0.0f, 0.0f, 30000.0f};
     const float PID_V_TOP_OFF_A[5] = {1.5f, 0.0f, 0.0f, 0.0f, 2000.0f};
 
-    const float PID_V_VISION_YAW_SPEED[5] = {100.0f, 0.0f, 0.5f, 100.0f, 10000.0f};
-    const float PID_V_VISION_YAW_ANGLE[5] = {0.36f, 0.0f, 0.0f, 200.0f, 2000.0f};
-    const float PID_V_VISION_PIT_SPEED[5] = {130.0f, 0.0f, 0, 1000.0f, 20000.0f};
-    const float PID_V_VISION_PIT_ANGLE[5] = {0.85f, 0.0007f, 0, 1000.0f, 3000.0f};
+    const float PID_V_VISION_YAW_SPEED[5] = {60.0f, 0.0001f, 0.0f, 100.0f, 30000.0f};
+    const float PID_V_VISION_YAW_ANGLE[5] = {9.0f, 0.0f, 0.0f, 200.0f, 8000.0f};
+    const float PID_V_VISION_PIT_SPEED[5] = {60.0f, 0.0f, 0, 1000.0f, 20000.0f};
+    const float PID_V_VISION_PIT_ANGLE[5] = {15.0f, 0.0f, 0, 1000.0f, 8000.0f};
 
     PID_F_Init(&MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].PID_S, PID_V_CHASSIS_SPEED);
     PID_F_Init(&MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].PID_S, PID_V_CHASSIS_SPEED);

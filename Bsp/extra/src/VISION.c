@@ -23,7 +23,7 @@ int VISION_Monitor_IOTA = 0;
 /// @return 
 uint8_t VISION_F_Cal(uint8_t *RxData, uint8_t type)
 {
-    if ((RxData[0] == 0xaa) && (RxData[VISION_D_RECV - 1] == 0xbb))
+    if ((RxData[0] == 0xcd) && (RxData[VISION_D_RECV - 1] == 0xdc))
     {
         if (type == 0) // 虚拟串口需要从缓冲区中读取数据
             memcpy(VISION_V_DATA.OriginData, RxData, VISION_D_RECV); 

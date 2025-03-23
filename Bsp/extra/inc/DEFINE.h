@@ -71,7 +71,7 @@
 
 // 云台限度
 #define GIMBAL_PIT_MAX 3305  //-100
-#define GIMBAL_PIT_MIN 3042  //300
+#define GIMBAL_PIT_MIN 2600  //300
 #define OMNI_PIT_MAX 5200
 #define OMNI_PIT_MIN 4270
 

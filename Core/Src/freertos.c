@@ -208,10 +208,10 @@ __weak void StartChassisTask(void const * argument)
   for(;;)
   {
     CHASSIS_F_Ctl(MOTOR_V_CHASSIS, &DBUS_V_DATA);
-    CAN_F_Send(&hcan1, 0x200, MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
-              MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
-              MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
-              MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
+    //  CAN_F_Send(&hcan1, 0x200, MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
+    //            MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
+    //            MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
+    //            MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
 		// CapSendInit(40 , user_data.power_heat_data.chassis_power , user_data.power_heat_data.chassis_voltage);
     vTaskDelay(1);
   }
@@ -239,16 +239,16 @@ __weak void StartGimbalTask(void const * argument)
                 0,
                 MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND);
       // 自瞄查看数据
-      // VOFA_T_SendTemp(10, 0.0f,
-      //       (float)VISION_V_DATA.RECV_FLAG,
-      //       (float)VISION_V_DATA.RECEIVE.TARGET,
-      //       (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
-      //       (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
-      //       (float)VISION_V_DATA.RECEIVE.YAW_DATA,
-      //       (float)TOP.yaw[5],
-      //       (float)(TOP.yaw[5] * 22.75555f),
-      //       (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].PID_S.OUT.ALL_OUT,
-      //       99.0f);
+      VOFA_T_SendTemp(10, 0.0f,
+            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE,
+            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW,
+            (float)VISION_V_DATA.RECV_FLAG,
+            (float)VISION_V_DATA.RECEIVE.TARGET,
+            (float)VISION_V_DATA.RECEIVE.YAW_DATA,
+            (float)TOP.yaw[5],
+            (float)(TOP.yaw[5] * 22.75555f),
+            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].PID_S.OUT.ALL_OUT,
+            99.0f);
       // 飞坡查看数据
       // VOFA_T_SendTemp(7, 0.0f,
       //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CURRENT,
@@ -258,19 +258,19 @@ __weak void StartGimbalTask(void const * argument)
       //       (float)DBUS_V_DATA.is_front_lifted,
       //       99.0f);
       // 飞坡匿名查看数据
-      niming(0xF1, 
-            (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CURRENT,
-            (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CURRENT,
-            (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CURRENT,
-            (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CURRENT, // y1
-            (int16_t)DBUS_V_DATA.is_front_lifted,                     // y2
-            0,                                                       // y3
-            0, 0, 0,                                                // z1-z3
-            0);  
+      // niming(0xF1, 
+      //       (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CURRENT,
+      //       (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CURRENT,
+      //       (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CURRENT,
+      //       (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CURRENT, // y1
+      //       (int16_t)DBUS_V_DATA.is_front_lifted,                     // y2
+      //       0,                                                       // y3
+      //       0, 0, 0,                                                // z1-z3
+      //       0);  
       // send_sensor_data();                                                    // w
 //      xSemaphoreGive(binarySemHandle);
 //    }
-    vTaskDelay(1);
+    vTaskDelay(5);
   }
   /* USER CODE END StartGimbalTask */
 }
@@ -289,10 +289,10 @@ __weak void StartAttackTask(void const * argument)
   for(;;)
   {
     ATTACK_F_Ctl(MOTOR_V_ATTACK, &DBUS_V_DATA);
-//    CAN_F_Send(&hcan2, 0x200, MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.CAN_SEND,
-//             MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.CAN_SEND,
-//             MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.CAN_SEND,
-//             0);
+    CAN_F_Send(&hcan2, 0x200, MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.CAN_SEND,
+              MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.CAN_SEND,
+              MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.CAN_SEND,
+              0);
     vTaskDelay(1);
   }
   /* USER CODE END StartAttackTask */
