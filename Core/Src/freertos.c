@@ -258,16 +258,16 @@ __weak void StartGimbalTask(void const * argument)
       //       (float)DBUS_V_DATA.is_front_lifted,
       //       99.0f);
       // 飞坡匿名查看数据
-      // niming(0xF2, 
-      //       (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CURRENT,
-      //       (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CURRENT,
-      //       (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CURRENT,
-      //       (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CURRENT, // y1
-      //       (int16_t)DBUS_V_DATA.is_front_lifted,                     // y2
-      //       0,                                                       // y3
-      //       0, 0, 0,                                                // z1-z3
-      //       0);  
-      send_sensor_data();                                                    // w
+      niming(0xF1, 
+            (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CURRENT,
+            (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CURRENT,
+            (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CURRENT,
+            (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CURRENT, // y1
+            (int16_t)DBUS_V_DATA.is_front_lifted,                     // y2
+            0,                                                       // y3
+            0, 0, 0,                                                // z1-z3
+            0);  
+      // send_sensor_data();                                                    // w
 //      xSemaphoreGive(binarySemHandle);
 //    }
     vTaskDelay(1);
