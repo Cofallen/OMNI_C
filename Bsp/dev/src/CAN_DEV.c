@@ -45,7 +45,7 @@ void CAN_F_Recv(CAN_HandleTypeDef *hcan, uint32_t ID)
         case CAN_D_CHASSIS_4:
             MOTOR_F_Cal_Data(&MOTOR_V_CHASSIS[3], CANRxmsg);
             break;
-				 case 0x240:
+		case 0x240:
             {
                 // 电容
                 CanManage_cap(CANRxmsg, &capData_t.capGetDate);
@@ -121,8 +121,6 @@ void CAN_F_Send(CAN_HandleTypeDef *hcan, int16_t stdid, int16_t num1, int16_t nu
     Data[6] = ((num4) >> 8);
     Data[7] = (num4);
 
-    if (DBUS_V_DATA.IS_OFF)
-        return;
     HAL_CAN_AddTxMessage(hcan, &CANTxmsg, Data, &Mailbox);
 }
 

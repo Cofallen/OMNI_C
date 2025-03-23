@@ -8,7 +8,7 @@ typedef struct TYPEDEF_DBUS // 遥控器数据结构体
     uint8_t R_FLAG;
     uint8_t L_FLAG;
     uint8_t IS_OFF; // 是否离线
-
+    uint8_t is_front_lifted;
     // 遥控
     struct __packed
     {

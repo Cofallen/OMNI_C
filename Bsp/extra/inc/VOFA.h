@@ -38,4 +38,6 @@ extern uint8_t VOFA_T_Send(int n, ...);
 extern uint8_t VOFA_T_SendTemp(int n, ...);
 extern void VOFA_T_Vision();
 
+void niming(int16_t id, int16_t x1, int16_t x2, int16_t x3, int16_t y1, int16_t y2, int16_t y3, int16_t z1, int16_t z2, int16_t z3, int16_t w);
+
 #endif // !__VOFA_H__

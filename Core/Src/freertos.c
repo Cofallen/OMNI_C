@@ -46,6 +46,7 @@
 #include "YU_MATH.h"
 #include "chassis_power_control.h"
 #include "tim.h"
+#include "niming.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -237,6 +238,7 @@ __weak void StartGimbalTask(void const * argument)
                 MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
                 0,
                 MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND);
+      // 自瞄查看数据
       // VOFA_T_SendTemp(10, 0.0f,
       //       (float)VISION_V_DATA.RECV_FLAG,
       //       (float)VISION_V_DATA.RECEIVE.TARGET,
@@ -247,25 +249,25 @@ __weak void StartGimbalTask(void const * argument)
       //       (float)(TOP.yaw[5] * 22.75555f),
       //       (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].PID_S.OUT.ALL_OUT,
       //       99.0f);
-      // VOFA_T_SendTemp(9, 0.0f,
-      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
-      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
-      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
-      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND,
-      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.SPEED_NOW,
-      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.SPEED_NOW,
-      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.SPEED_NOW,
-      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.SPEED_NOW,
+      // 飞坡查看数据
+      // VOFA_T_SendTemp(7, 0.0f,
+      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CURRENT,
+      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CURRENT,
+      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CURRENT,
+      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CURRENT,
+      //       (float)DBUS_V_DATA.is_front_lifted,
       //       99.0f);
-      // VOFA_T_SendTemp(8, 0.0f,
-      //   (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
-      //   (float)TOP.yaw[3],
-      //   (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
-      //   (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
-      //   (float)TOP.pitch[1],
-      //   (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW,
-      //   (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND,
-      //   99.0f);
+      // 飞坡匿名查看数据
+      // niming(0xF2, 
+      //       (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CURRENT,
+      //       (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CURRENT,
+      //       (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CURRENT,
+      //       (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CURRENT, // y1
+      //       (int16_t)DBUS_V_DATA.is_front_lifted,                     // y2
+      //       0,                                                       // y3
+      //       0, 0, 0,                                                // z1-z3
+      //       0);  
+      send_sensor_data();                                                    // w
 //      xSemaphoreGive(binarySemHandle);
 //    }
     vTaskDelay(1);
@@ -287,10 +289,10 @@ __weak void StartAttackTask(void const * argument)
   for(;;)
   {
     ATTACK_F_Ctl(MOTOR_V_ATTACK, &DBUS_V_DATA);
-    CAN_F_Send(&hcan2, 0x200, MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.CAN_SEND,
-             MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.CAN_SEND,
-             MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.CAN_SEND,
-             0);
+//    CAN_F_Send(&hcan2, 0x200, MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.CAN_SEND,
+//             MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.CAN_SEND,
+//             MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.CAN_SEND,
+//             0);
     vTaskDelay(1);
   }
   /* USER CODE END StartAttackTask */
@@ -340,15 +342,15 @@ __weak void StartvisionTask(void const * argument)
 	  }
 //    }
     // VOFA_T_Vision();
-    VOFA_T_SendTemp(9, 0.0f,  // debug yaw pid with top[3]
-              (float)user_data.shoot_data.initial_speed,
-              (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW,
-              (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.SPEED_NOW,
-              (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.AIM,
-              (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM,
-              (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE,
-              (float)DBUS_V_DATA.IS_OFF,
-              1.0f);
+    // VOFA_T_SendTemp(9, 0.0f,  // debug yaw pid with top[3]
+    //           (float)user_data.shoot_data.initial_speed,
+    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW,
+    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.SPEED_NOW,
+    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.AIM,
+    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM,
+    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE,
+    //           (float)DBUS_V_DATA.IS_OFF,
+    //           1.0f);
     vTaskDelay(1);
   }
  

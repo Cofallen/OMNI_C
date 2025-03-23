@@ -50,6 +50,7 @@
 "omni_c\yu_math.o"
 "omni_c\root.o"
 "omni_c\chassis_power_control.o"
+"omni_c\niming.o"
 "omni_c\bmi088driver.o"
 "omni_c\bmi088middleware.o"
 "omni_c\bsp_imu_pwm.o"

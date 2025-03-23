@@ -924,6 +924,11 @@
               <FileType>1</FileType>
               <FilePath>..\Bsp\extra\src\chassis_power_control.c</FilePath>
             </File>
+            <File>
+              <FileName>niming.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Bsp\extra\src\niming.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

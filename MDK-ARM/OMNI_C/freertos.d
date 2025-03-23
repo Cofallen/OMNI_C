@@ -72,4 +72,4 @@ omni_c/freertos.o: ..\Core\Src\freertos.c \
   ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h ..\JUDGE\Read_Data.h \
   ..\Core\Inc\usart.h ..\Bsp\extra\inc\YU_MATH.h \
   ..\Bsp\extra\inc\chassis_power_control.h ..\Bsp\ctl\inc\CAP.h \
-  ..\Core\Inc\tim.h
+  ..\Core\Inc\tim.h ..\Bsp\extra\inc\niming.h

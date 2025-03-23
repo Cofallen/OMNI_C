@@ -107,3 +107,119 @@ void VOFA_T_Vision()
 {
     HAL_UART_Transmit_DMA(&huart1, (uint8_t *)sd_v_buff, sizeof(sd_v_buff));
 }
+
+
+
+// // niming function
+// uint8_t buffer[26] = {0};
+// void niming(int16_t id, int16_t x1, int16_t x2, int16_t x3, int16_t y1, int16_t y2, int16_t y3, int16_t z1, int16_t z2, int16_t z3, int16_t w)
+// {
+// //    if(id>0xfa || id<0xf1)
+// //        return;
+
+    
+//     uint8_t addCheck=0,sumCheck=0;
+
+//     memset(buffer, 0, sizeof(buffer));          //stdlib.h
+//     sumCheck=0,addCheck=0;
+
+//     buffer[0]=0xaa;         
+//     buffer[1]=0xff;         
+//     buffer[2]=id;         
+
+//     buffer[4]=(x1 & 0x00ff);
+//     buffer[5]=((x1>>8) & 0x00ff);
+
+//     buffer[6]=(x2 & 0x00ff);
+//     buffer[7]=((x2>>8) & 0x00ff);
+    
+//     buffer[8]=(x3 & 0x00ff);
+//     buffer[9]=((x3>>8) & 0x00ff);
+
+//     buffer[10]=(y1 & 0x00ff);
+//     buffer[11]=((y1>>8) & 0x00ff);
+
+//     buffer[12]=(y2 & 0x00ff);
+//     buffer[13]=((y2>>8) & 0x00ff);
+    
+//     buffer[14]=(y3 & 0x00ff);
+//     buffer[15]=((y3>>8) & 0x00ff);
+
+//     buffer[16]=(z1 & 0x00ff);
+//     buffer[17]=((z1>>8) & 0x00ff);
+
+//     buffer[18]=(z2 & 0x00ff);
+//     buffer[19]=((z2>>8) & 0x00ff);
+    
+//     buffer[20]=(z3 & 0x00ff);
+//     buffer[21]=((z3>>8) & 0x00ff);
+
+//     buffer[22]=(w & 0x00ff);
+//     buffer[23]=((w>>8) & 0x00ff);
+
+//     buffer[3]=20;
+
+//     for(int i=0;i<buffer[3]+4;i++)
+//     {
+//         sumCheck+=buffer[i];
+//         addCheck+=sumCheck;
+//     }
+
+//     buffer[24]=sumCheck & 0x000000ff;
+//     buffer[25]=addCheck & 0x000000ff;
+
+// 	HAL_UART_Transmit_DMA(&huart1,buffer,sizeof(buffer));
+// }
+
+
+// 匿名协议发送函数修正
+uint8_t buffer[26] = {0};
+void niming(int16_t id, int16_t x1, int16_t x2, int16_t x3, int16_t y1, int16_t y2, int16_t y3, 
+            int16_t z1, int16_t z2, int16_t z3, int16_t w)
+{
+    // 校验ID范围（根据协议要求）
+    if(id < 0xF1 || id > 0xFA)
+        return;
+
+    uint8_t sumCheck = 0, addCheck = 0;
+    memset(buffer, 0, sizeof(buffer));
+
+    // 帧头配置
+    buffer[0] = 0xAB;        // 帧头1
+    buffer[1] = 0xFF;        // 帧头2
+    buffer[2] = (uint8_t)id; // 功能码
+    buffer[3] = 20;          // 数据长度（20字节）
+
+    // 数据填充（小端模式）
+    buffer[4]  = (uint8_t)(x1 & 0xFF);
+    buffer[5]  = (uint8_t)(x1 >> 8);
+    buffer[6]  = (uint8_t)(x2 & 0xFF);
+    buffer[7]  = (uint8_t)(x2 >> 8);
+    buffer[8]  = (uint8_t)(x3 & 0xFF);
+    buffer[9]  = (uint8_t)(x3 >> 8);
+    buffer[10] = (uint8_t)(y1 & 0xFF);
+    buffer[11] = (uint8_t)(y1 >> 8);
+    buffer[12] = (uint8_t)(y2 & 0xFF);
+    buffer[13] = (uint8_t)(y2 >> 8);
+    buffer[14] = (uint8_t)(y3 & 0xFF);
+    buffer[15] = (uint8_t)(y3 >> 8);
+    buffer[16] = (uint8_t)(z1 & 0xFF);
+    buffer[17] = (uint8_t)(z1 >> 8);
+    buffer[18] = (uint8_t)(z2 & 0xFF);
+    buffer[19] = (uint8_t)(z2 >> 8);
+    buffer[20] = (uint8_t)(z3 & 0xFF);
+    buffer[21] = (uint8_t)(z3 >> 8);
+    buffer[22] = (uint8_t)(w & 0xFF);
+    buffer[23] = (uint8_t)(w >> 8);
+
+    // 校验和计算（sumCheck和addCheck双重校验）
+    for(int i = 0; i < 24; i++) { // 前24字节（0~23）
+        sumCheck += buffer[i];
+        addCheck += sumCheck;
+    }
+
+    buffer[24] = sumCheck & 0x000000ff; // 和校验
+    buffer[25] = addCheck & 0x000000ff; // 附加校验
+
+    HAL_UART_Transmit_DMA(&huart1, buffer, sizeof(buffer));
+}
