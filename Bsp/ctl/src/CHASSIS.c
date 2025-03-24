@@ -154,13 +154,13 @@ static void CHASSIS_F_Lifited(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     {
         // 根据离地程度动态调整功率提升系数 (1.5-2.5倍)
         float boost_factor = fminf(2.5f, 1.5f + current_diff / 1000.0f);
-        
+        float decrease_factor = 1.0f / boost_factor;
         // 平滑过渡：逐渐减少前轮功率，增加后轮功率
         static float front_power_scale = 1.0f;
         static float rear_power_scale = 1.0f;
         
         // 更新功率比例 (平滑过渡)
-        front_power_scale = front_power_scale * 0.9f;  // 前轮功率逐渐降为0
+        front_power_scale *= decrease_factor;  // 前轮功率逐渐降为0
         rear_power_scale = 1.0f + (boost_factor - 1.0f) * (1.0f - front_power_scale);
         
         // 应用功率调整
