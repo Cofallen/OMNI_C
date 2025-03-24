@@ -29,7 +29,12 @@ void chassis_power_control(uint8_t cap_state, uint8_t is_flying)
     const uint16_t capValt = 140;	         //强制退出的电压阈值
     //*可编辑部分*end*//
 
+    #ifdef LIFTED_DEBUG
 	uint16_t max_power_limit = 400;  //最大功率限制
+    #else
+    uint16_t max_power_limit = 60;  //最大功率限制
+    #endif // LIFTED_DEBUG
+    
 	fp32 chassis_max_power = 0;
 	fp32 input_power = 0;		    // 输入功率（裁判系统）
 	fp32 initial_give_power[4];     // 初始功率由PID计算以及电机数据得到

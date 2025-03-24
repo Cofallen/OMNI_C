@@ -250,16 +250,19 @@ __weak void StartGimbalTask(void const * argument)
       //       (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].PID_S.OUT.ALL_OUT,
       //       99.0f);
       // 飞坡查看数据
-      VOFA_T_SendTemp(10, 0.0f,
-            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CURRENT,
-            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CURRENT,
-            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CURRENT,
-            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CURRENT,
-            (float)DBUS_V_DATA.is_front_lifted,
-            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.AIM,
-            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.AIM,
-            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.AIM,
-            (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.AIM);
+      // VOFA_T_SendTemp(10, 0.0f,
+      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CURRENT,
+      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CURRENT,
+      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CURRENT,
+      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CURRENT,
+      //       (float)DBUS_V_DATA.is_front_lifted,
+      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.AIM,
+      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.AIM,
+      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.AIM,
+      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.AIM);
+        VOFA_T_SendTemp(10, 0.0f,
+                watch[0], watch[1], watch[2], watch[3], watch[4], watch[5], 
+                watch[6], watch[7], watch[8]);
       // 飞坡匿名查看数据
       // niming(0xF1, 
       //       (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CURRENT,

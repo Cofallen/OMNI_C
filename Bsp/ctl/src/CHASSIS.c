@@ -21,9 +21,8 @@ double ANGLE_Relative = 0.0f;
 int mod = 0;
 		
 // 新增宏定义
-#define FRONT_WHEEL_THRESHOLD  5000.0f    // 前轮离地电流阈值
-#define FRONT_POWER_POWER       0.1f      // 前轮功率降低系数
-#define REAR_POWER_BOOST       1.2f      // 后轮功率提升系数
+#define FRONT_POWER_POWER       0.0f     // 前轮功率最高降低系数
+#define REAR_POWER_BOOST        1.0f     // 后轮功率最低提升系数
 
 #define FILTER_COEF 0.9f         // 低通滤波系数
 #define FRONT_LIFT_THRESHOLD 5000.0f  // 前后轮电流差阈值
@@ -43,6 +42,7 @@ uint8_t real_lift_state = 0;    // 0=地面, 1=飞坡中
 #define REAR_LEFT     MOTOR_D_CHASSIS_3  // 电机3
 #define REAR_RIGHT    MOTOR_D_CHASSIS_2  // 电机2
 
+float watch[10] = {0};
 
 void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {
@@ -104,6 +104,9 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 
 static void CHASSIS_F_Lifited(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {
+    static float front_power_scale = 1.0f;
+    static float rear_power_scale = 1.0f;
+
     /* 新增飞坡控制逻辑 */
     // 读取前轮电流绝对值（单位：mA）
     float front_left_current  = MATH_D_ABS((float)MOTOR[FRONT_LEFT].DATA.CURRENT);
@@ -149,19 +152,17 @@ static void CHASSIS_F_Lifited(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     // 5. 更新状态标志位
     DBUS->is_front_lifted = real_lift_state;
     /* 新增 end */
-
+    
     if(DBUS->is_front_lifted && !DBUS->IS_OFF)  // 移除了拨杆限制，使算法自动工作
     {
         // 根据离地程度动态调整功率提升系数 (1.5-2.5倍)
         float boost_factor = fminf(2.5f, 1.5f + current_diff / 1000.0f);
         float decrease_factor = 1.0f / boost_factor;
+
         // 平滑过渡：逐渐减少前轮功率，增加后轮功率
-        static float front_power_scale = 1.0f;
-        static float rear_power_scale = 1.0f;
-        
         // 更新功率比例 (平滑过渡)
-        front_power_scale *= decrease_factor;  // 前轮功率逐渐降为0
-        rear_power_scale = 1.0f + (boost_factor - 1.0f) * (1.0f - front_power_scale);
+        front_power_scale = fmaxf(FRONT_POWER_POWER, front_power_scale * decrease_factor); // 限制最小值
+        rear_power_scale =  fmaxf(REAR_POWER_BOOST, 1.0f + (boost_factor - 1.0f) * (1.0f - front_power_scale));
         
         // 应用功率调整
         MOTOR[FRONT_LEFT].DATA.AIM *= front_power_scale;
@@ -176,18 +177,16 @@ static void CHASSIS_F_Lifited(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     else
     {
         // 平地状态：平滑恢复正常功率分配
-        static float front_power_scale = 0.0f;
-        static float rear_power_scale = 2.0f;
-        
         // 缓慢恢复
         front_power_scale = fminf(1.0f, front_power_scale + 0.05f);
-        rear_power_scale = 1.0f + (rear_power_scale - 1.0f) * 0.9f;
-        
-        if (front_power_scale < 0.95f) {  // 仅在过渡期应用功率调整
-            MOTOR[FRONT_LEFT].DATA.AIM *= front_power_scale;
-            MOTOR[FRONT_RIGHT].DATA.AIM *= front_power_scale;
-            MOTOR[REAR_LEFT].DATA.AIM *= rear_power_scale;
-            MOTOR[REAR_RIGHT].DATA.AIM *= rear_power_scale;
-        }
+        rear_power_scale  = fmaxf(1.0f, 1.0f + (rear_power_scale - 1.0f) * 0.9f);
     }
+
+    watch[0] = current_diff;
+    watch[1] = real_lift_state;
+    watch[2] = landing_counter;
+    watch[3] = lift_counter;
+    watch[4] = front_power_scale;
+    watch[5] = rear_power_scale;
+    
 }

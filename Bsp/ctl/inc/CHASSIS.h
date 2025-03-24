@@ -10,4 +10,5 @@ static void CHASSIS_F_Lifited(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS);
 extern float xx, yy;
 extern double ANGLE_Rad, ANGLE_Relative;
 
+extern float watch[10];
 #endif // !__CHASSIS_H__

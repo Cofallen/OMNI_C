@@ -67,7 +67,7 @@
 // 编译命令，用于调试
 #define OLDHEAD 1
 // #define OMNI 0
-
+#define LIFTED_DEBUG 0
 
 // 云台限度
 #define GIMBAL_PIT_MAX 3305  //-100
