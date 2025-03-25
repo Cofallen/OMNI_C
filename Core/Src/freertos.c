@@ -274,6 +274,11 @@ __weak void StartGimbalTask(void const * argument)
       //       0, 0, 0,                                                // z1-z3
       //       0);  
       // send_sensor_data();                                                    // w
+      // VOFA_T_Send(5, 1.0f,
+      //                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
+      //                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW,
+      //                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
+      //                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE);
 //      xSemaphoreGive(binarySemHandle);
 //    }
     vTaskDelay(5);

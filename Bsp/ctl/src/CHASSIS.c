@@ -21,8 +21,8 @@ double ANGLE_Relative = 0.0f;
 int mod = 0;
 		
 // 新增宏定义
-#define FRONT_POWER_POWER       0.0f     // 前轮功率最高降低系数
-#define REAR_POWER_BOOST        1.0f     // 后轮功率最低提升系数
+#define FRONT_POWER_POWER       0.7f     // 前轮功率最高降低系数
+#define REAR_POWER_BOOST        1.4f     // 后轮功率最低提升系数
 
 #define FILTER_COEF 0.9f         // 低通滤波系数
 #define FRONT_LIFT_THRESHOLD 5000.0f  // 前后轮电流差阈值
