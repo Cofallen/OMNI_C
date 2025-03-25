@@ -3,7 +3,7 @@
 <title>Static Call Graph - [OMNI_C\OMNI_C.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image OMNI_C\OMNI_C.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6180002: Last Updated: Tue Mar 25 23:23:04 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6180002: Last Updated: Wed Mar 26 04:03:38 2025
 <BR><P>
 <H3>Maximum Stack Usage =        476 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -836,7 +836,6 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartAttackTask
 <LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartGimbalTask
-<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartChassisTask
 </UL>
 
 <P><STRONG><a name="[c0]"></a>CAN_Filter_Init</STRONG> (Thumb, 228 bytes, Stack size 48 bytes, can_dev.o(.text.CAN_Filter_Init))
@@ -2326,16 +2325,15 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = StartAttackTask &rArr; CAN_F_Send &rArr; HAL_CAN_AddTxMessage
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ATTACK_F_Ctl
-<LI><a href="#[1ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
 <LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN_F_Send
+<LI><a href="#[1ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.rodata..L__const.MX_FREERTOS_Init.os_thread_def_attackTask)
 </UL>
-<P><STRONG><a name="[83]"></a>StartChassisTask</STRONG> (Thumb, 80 bytes, Stack size 24 bytes, freertos.o(.text.StartChassisTask))
-<BR><BR>[Stack]<UL><LI>Max Depth = 440<LI>Call Chain = StartChassisTask &rArr; CHASSIS_F_Ctl &rArr; chassis_power_control &rArr; chassis_power_limit &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+<P><STRONG><a name="[83]"></a>StartChassisTask</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, freertos.o(.text.StartChassisTask))
+<BR><BR>[Stack]<UL><LI>Max Depth = 432<LI>Call Chain = StartChassisTask &rArr; CHASSIS_F_Ctl &rArr; chassis_power_control &rArr; chassis_power_limit &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
-<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN_F_Send
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CHASSIS_F_Ctl
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.rodata..L__const.MX_FREERTOS_Init.os_thread_def_chassisTask)
@@ -2345,9 +2343,9 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VOFA_T_SendTemp
 <LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN_F_Send
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GIMBAL_F_Ctl
 <LI><a href="#[1ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
-<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN_F_Send
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.rodata..L__const.MX_FREERTOS_Init.os_thread_def_gimbalTask)
 </UL>
