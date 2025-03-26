@@ -246,6 +246,9 @@
           },
           {
             "path": "../Bsp/extra/src/chassis_power_control.c"
+          },
+          {
+            "path": "../Bsp/extra/src/niming.c"
           }
         ],
         "folders": []

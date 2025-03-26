@@ -135,7 +135,7 @@ int main(void)
   HAL_UART_Receive_DMA(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, sizeof(DBUS_V_UNION.GET_DATA));
 
   printf("ok\r\n");  // huart1 
-  // HAL_UART_Transmit_DMA(&huart1, (uint8_t *)&DBUS_V_UNION.GET_DATA, sizeof(DBUS_V_UNION.GET_DATA));
+  HAL_UART_Transmit_DMA(&huart1, (uint8_t *)sd_v_buff, sizeof(sd_v_buff));
   
   HAL_TIM_Base_Start_IT(&htim2);
   HAL_Delay(30);
@@ -243,7 +243,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 1 */
   if (htim->Instance == TIM2) // 底盘 1ms
     {     
-      CDC_Transmit_FS(sd_v_buff, 16);
+      // CDC_Transmit_FS(sd_v_buff, 16);
+      ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff, 0);
     }
   /* USER CODE END Callback 1 */
 }
