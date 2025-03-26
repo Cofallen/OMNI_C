@@ -4,6 +4,15 @@
             "path": "."
         }
     ],
-    "settings": {},
+    "settings": {
+        "files.associations": {
+            "*.h": "cpp",
+            "vision.h": "c",
+            "stdbool.h": "c",
+            "cstddef": "c",
+            "type_traits": "c",
+            "limits": "c"
+        }
+    },
     "extensions": {}
 }

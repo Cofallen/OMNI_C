@@ -52,4 +52,4 @@ omni_c/gimbal.o: ..\Bsp\ctl\src\GIMBAL.c ..\Core\Inc\main.h \
   ..\CMSIS\DSP\Inc\arm_math_memory.h ..\CMSIS\DSP\Inc\dsp\none.h \
   ..\CMSIS\DSP\Inc\dsp\utils.h \
   ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
-  ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h
+  ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h ..\Bsp\dev\inc\TIM_DEV.h

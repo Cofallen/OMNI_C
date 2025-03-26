@@ -23,7 +23,7 @@ typedef struct
 }PID_buffer_t;
 
 
-void chassis_power_control(uint8_t cap_state);
+void chassis_power_control(uint8_t cap_state, uint8_t is_flying);
 float get_initial_power(TYPEDEF_MOTOR *chassis_power_control);
 void chassis_power_limit(TYPEDEF_MOTOR *chassis_power_limit);
 void PID_buffer(PID_buffer_t *PID_buffer, fp32 power_buffer, fp32 temp);

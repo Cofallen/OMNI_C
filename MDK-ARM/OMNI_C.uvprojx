@@ -400,11 +400,6 @@
               <FilePath>../Core/Src/main.c</FilePath>
             </File>
             <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Core/Src/gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>freertos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/freertos.c</FilePath>
@@ -459,6 +454,11 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Core/Src/gpio.c</FilePath>
             </File>
             <File>
               <FileName>can.c</FileName>
@@ -923,6 +923,11 @@
               <FileName>chassis_power_control.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Bsp\extra\src\chassis_power_control.c</FilePath>
+            </File>
+            <File>
+              <FileName>niming.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Bsp\extra\src\niming.c</FilePath>
             </File>
           </Files>
         </Group>

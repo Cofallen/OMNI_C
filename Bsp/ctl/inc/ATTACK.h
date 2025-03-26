@@ -10,7 +10,7 @@
 typedef struct 
 {
     int32_t TIME;
-    int8_t FLAG;
+    int8_t FLAG;        // 卡弹变换方向
     float SINGLE_ANGLE; // 单发角度
     float SPEED;        // 摩擦轮角度
     int COUNT;

@@ -67,11 +67,11 @@
 // 编译命令，用于调试
 #define OLDHEAD 1
 // #define OMNI 0
-
+#define LIFTED_DEBUG 0
 
 // 云台限度
-#define GIMBAL_PIT_MAX 3208
-#define GIMBAL_PIT_MIN 2543
+#define GIMBAL_PIT_MAX 3305  //-100
+#define GIMBAL_PIT_MIN 2600  //300
 #define OMNI_PIT_MAX 5200
 #define OMNI_PIT_MIN 4270
 

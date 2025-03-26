@@ -49,4 +49,4 @@ omni_c/can_dev.o: ..\Bsp\dev\src\CAN_DEV.c ..\Core\Inc\main.h \
   ..\CMSIS\DSP\Inc\arm_math_memory.h ..\CMSIS\DSP\Inc\dsp\none.h \
   ..\CMSIS\DSP\Inc\dsp\utils.h \
   ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
-  ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h
+  ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h ..\Bsp\ctl\inc\CAP.h
