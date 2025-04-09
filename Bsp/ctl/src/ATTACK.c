@@ -9,6 +9,7 @@
 #include "ROOT.h"
 #include "YU_MATH.h"
 #include "Read_Data.h"
+#include "VISION.h"
 
 #include "VOFA.h"
 #include "stdlib.h"
@@ -56,12 +57,12 @@ float ATTACK_F_JAM_Aim(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
         {
             ATTACK_V_PARAM.LOCK = 1; // 单发上锁
         }
-        else if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_CONSIST || DBUS->MOUSE.L_STATE == 2) // @todo 有了l_state可以将ATTACK_V_PARAM.LOCK初始化去了
+        else if ((DBUS->REMOTE.S1_u8 == DBUS_D_MOD_CONSIST || DBUS->MOUSE.L_STATE == 2) && VISION_V_DATA.RECEIVE.fire)// @todo 有了l_state可以将ATTACK_V_PARAM.LOCK初始化去了
         {
             ATTACK_V_PARAM.LOCK = 0; // 解锁
             // ATTACK_V_PARAM.COUNT = 0;
         }
-        else if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SHUT) // @todo 这个应该是debug用的，记得删了条件
+        else if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SHUT || (!VISION_V_DATA.RECEIVE.fire)) // @todo 这个应该是debug用的，记得删了条件
         {
             ATTACK_V_PARAM.LOCK = 0; // 解锁
             ATTACK_V_PARAM.COUNT = 0; // @todo 好像这一句没用?
@@ -150,8 +151,8 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
     // return MOTOR->DATA.AIM;
 
     // @veision 3, final code, this code is a stable speed
-    // if (DBUS_V_DATA.REMOTE.S1_u8 == 1 || DBUS_V_DATA.REMOTE.S1_u8 == 2)  // 3 is the fire button
-    if (DBUS_V_DATA.KEY_BOARD.CTRL == 1)  // 3 is the fire button
+    // if (DBUS_V_DATA.REMOTE.S1_u8 == 1 || DBUS_V_DATA.REMOTE.S2_u8 == 2)  // 3 is the fire button
+    if (DBUS_V_DATA.KEY_BOARD.CTRL == 1 || DBUS_V_DATA.REMOTE.S2_u8 == 2)  // 3 is the fire button
     {
         MOTOR->DATA.AIM = ATTACK_V_PARAM.SPEED;
     }

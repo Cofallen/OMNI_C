@@ -33,16 +33,16 @@ void chassis_power_control(uint8_t cap_state, uint8_t is_flying)
     //*可编辑部分*end*//
 
     #ifdef LIFTED_DEBUG
+	uint16_t max_power_limit = 400;  //最大功率限制
 
-	uint16_t max_power_limit = 120;  //最大功率限制
+    #else
+    uint16_t max_power_limit = 120;  //最大功率限制
     if (capData_JHB.Receive_data_typedef.capVolt < 12.0f) // 电压低于12V时，电容不工作
     {
         max_power_limit = 60;
     }
-    
-    #else
-    uint16_t max_power_limit = 60;  //最大功率限制
     #endif // LIFTED_DEBUG
+    
     limitedPower = (fp32)max_power_limit;
 	fp32 chassis_max_power = 0;
 	fp32 input_power = 0;		    // 输入功率（裁判系统）

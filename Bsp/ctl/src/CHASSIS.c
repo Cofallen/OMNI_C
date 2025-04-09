@@ -8,6 +8,7 @@
 #include "DBUS.h"
 #include "YU_PID.h"
 #include "TIM_DEV.h"
+#include "VISION.h"
 
 #include "Read_Data.h"
 #include "ROOT.h"
@@ -47,7 +48,7 @@ float watch[10] = {0};
 void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {
     // 运动学解算
-    float VX = 0.0f, VY = 0.0f, VR = 0.0f, COMPONENT[2] = {1, 3.5};
+    float VX = 0.0f, VY = 0.0f, VR = 0.0f, COMPONENT[2] = {2.5, 3.5};
     float ROTATE_VX = 0.0f, ROTATE_VY = 0.0f;  // 旋转矩阵
     double PRIDICT = 0.0f;    // 底盘预测，前馈
 
@@ -65,8 +66,18 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     }
     
     // @TODO 2. VR的负号和-ANGLE_Relative的负号测试是否可以全换成正号
-    (!((DBUS->REMOTE.DIR_int16)||(DBUS->KEY_BOARD.SHIFT)))?(PRIDICT = DBUS->REMOTE.CH2_int16 * 2.0f,VR = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative)):(PRIDICT = 0.0f);     // 分离 滚轮影响小陀螺
+    (!((DBUS->REMOTE.DIR_int16)||(DBUS->KEY_BOARD.SHIFT)))?(PRIDICT = DBUS->REMOTE.CH2_int16 * 4.0f,VR = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative)):(PRIDICT = 0.0f);     // 分离 滚轮影响小陀螺
 
+    if (DBUS->REMOTE.S2_u8 == 1)
+    {
+//        VR = 660.0f;
+//        VISION_V_DATA.RECEIVE.fire = 1;
+    }
+    else
+    {
+//        VISION_V_DATA.RECEIVE.fire = 0;
+    }
+    
     // rotate matrix
     double COS = cos(ANGLE_Rad);
     double SIN = sin(ANGLE_Rad);

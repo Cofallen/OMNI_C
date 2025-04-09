@@ -13,6 +13,7 @@ union RUI_U_VISION_RECEIVE
     float PIT_DATA;
     float YAW_DATA;
     bool TARGET;
+    bool fire;
   };
   uint8_t DATA[15];
 };

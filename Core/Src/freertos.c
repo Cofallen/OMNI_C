@@ -204,7 +204,12 @@ __weak void StartIMUTask(void const * argument)
 __weak void StartChassisTask(void const * argument)
 {
   /* USER CODE BEGIN StartChassisTask */
+  #ifndef LIFTED_DEBUG
+  capData_JHB.Send_data_typedef.Send_data.switchControl = 0x01;  // 开启电容
+  #else
   capData_JHB.Send_data_typedef.Send_data.switchControl = 0x00;
+  #endif // LIFTED_DEBUG
+
   /* Infinite loop */
   for(;;)
   {
@@ -241,16 +246,16 @@ __weak void StartGimbalTask(void const * argument)
                 0,
                 MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND);
       // 自瞄查看数据
-      // VOFA_T_SendTemp(10, 0.0f,
-      //       (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE,
-      //       (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW,
-      //       (float)VISION_V_DATA.RECV_FLAG,
-      //       (float)VISION_V_DATA.RECEIVE.TARGET,
-      //       (float)VISION_V_DATA.RECEIVE.YAW_DATA,
-      //       (float)TOP.yaw[5],
-      //       (float)(TOP.yaw[5] * 22.75555f),
-      //       (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].PID_S.OUT.ALL_OUT,
-      //       99.0f);
+      VOFA_T_SendTemp(10, 0.0f,
+            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE,
+            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW,
+            (float)VISION_V_DATA.RECV_FLAG,
+            (float)VISION_V_DATA.RECEIVE.TARGET,
+            (float)VISION_V_DATA.RECEIVE.YAW_DATA,
+            (float)TOP.yaw[5],
+            (float)(TOP.yaw[5] * 22.75555f),
+            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].PID_S.OUT.ALL_OUT,
+            99.0f);
       // 飞坡查看数据
       // VOFA_T_SendTemp(10, 0.0f,
       //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CURRENT,
@@ -262,9 +267,9 @@ __weak void StartGimbalTask(void const * argument)
       //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.AIM,
       //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.AIM,
       //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.AIM);
-        VOFA_T_SendTemp(10, 0.0f,
-                watch[0], watch[1], watch[2], watch[3], watch[4], watch[5], 
-                watch[6], watch[7], watch[8]);
+        // VOFA_T_SendTemp(10, 0.0f,
+        //         watch[0], watch[1], watch[2], watch[3], watch[4], watch[5], 
+        //         watch[6], watch[7], watch[8]);
       // 飞坡匿名查看数据
       // niming(0xF1, 
       //       (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CURRENT,
@@ -276,7 +281,7 @@ __weak void StartGimbalTask(void const * argument)
       //       0, 0, 0,                                                // z1-z3
       //       0);  
       // send_sensor_data();                                                    // w
-      // VOFA_T_Send(5, 1.0f,
+      // VOFA_T_SendTemp(5, 1.0f,
       //                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
       //                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW,
       //                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,

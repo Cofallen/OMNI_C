@@ -26,13 +26,22 @@ void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, TYPEDEF_VISION *VISI
             #ifdef LIFTED_DEBUG
             MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += (-(float)DBUS->REMOTE.CH2_int16 * 0.04f - MATH_D_LIMIT(15, -15, DBUS->MOUSE.X_FLT * 0.2f) + (float) (-DBUS->KEY_BOARD.E + DBUS->KEY_BOARD.Q ) * 15.0f + (float)currentAngle);
             #else
-            MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += (-(float)DBUS->REMOTE.CH2_int16 * 0.08f - MATH_D_LIMIT(25, -25, DBUS->MOUSE.X_FLT * 0.5f) + (float) (-DBUS->KEY_BOARD.E + DBUS->KEY_BOARD.Q ) * 30.0f + (float)currentAngle);
+            MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += (-(float)DBUS->REMOTE.CH2_int16 * 0.03f - MATH_D_LIMIT(25, -25, DBUS->MOUSE.X_FLT * 0.5f) + (float) (-DBUS->KEY_BOARD.E + DBUS->KEY_BOARD.Q ) * 30.0f + (float)currentAngle);
             #endif
 
             currentAngle = 0.0f;
-            MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += -(float)DBUS->REMOTE.CH3_int16 * 0.01f + DBUS->MOUSE.Y_FLT * 0.06f;
+            MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += -(float)DBUS->REMOTE.CH3_int16 * 0.02f + DBUS->MOUSE.Y_FLT * 0.06f;
             MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = MATH_D_LIMIT(GIMBAL_PIT_MAX, GIMBAL_PIT_MIN, MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM);
-        
+            
+            if (MATH_D_ABS((MOTOR[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW - 3100.0f)) < 150.0f)
+            {
+                MOTOR[MOTOR_D_GIMBAL_PIT].PID_S.IN.KI = 0.15f;
+            }
+            else 
+            {
+                MOTOR[MOTOR_D_GIMBAL_PIT].PID_S.IN.KI = 0.45f;
+            }
+            
             PID_F_G(&MOTOR[MOTOR_D_GIMBAL_YAW]);
             PID_F_P_T(&MOTOR[MOTOR_D_GIMBAL_PIT]);
         }
@@ -48,11 +57,11 @@ void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, TYPEDEF_VISION *VISI
         {
             if(VISION_V_DATA.RECEIVE.TARGET){
                 PID_F_VISION_YAW(&MOTOR[MOTOR_D_GIMBAL_YAW]);
-				// PID_F_VISION_PIT(&MOTOR[MOTOR_D_GIMBAL_PIT]);
+				PID_F_VISION_PIT(&MOTOR[MOTOR_D_GIMBAL_PIT]);
             }
-                MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += -(float)DBUS->REMOTE.CH3_int16 * 0.01f - DBUS->MOUSE.Y_FLT * 0.01f;
-                MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = MATH_D_LIMIT(GIMBAL_PIT_MAX, GIMBAL_PIT_MIN, MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM);
-                PID_F_P_T(&MOTOR[MOTOR_D_GIMBAL_PIT]);
+                // MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += -(float)DBUS->REMOTE.CH3_int16 * 0.02f - DBUS->MOUSE.Y_FLT * 0.01f;
+                // MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = MATH_D_LIMIT(GIMBAL_PIT_MAX, GIMBAL_PIT_MIN, MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM);
+                // PID_F_P_T(&MOTOR[MOTOR_D_GIMBAL_PIT]);
             currentAngle = TOP.yaw[5];
         }
         break;

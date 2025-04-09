@@ -43,6 +43,7 @@ uint8_t VISION_F_Cal(uint8_t *RxData, uint8_t type)
 
         //是否识别到目标    
         VISION_V_DATA.RECEIVE.TARGET= (VISION_V_DATA.OriginData[9] & 0x10)>>4;//识别成功标志位
+        VISION_V_DATA.RECEIVE.fire = (VISION_V_DATA.OriginData[9] & 0x08)>>3;
         VISION_V_DATA.RECV_FLAG = ROOT_READY;
 
         return ROOT_READY;

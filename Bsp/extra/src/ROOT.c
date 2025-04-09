@@ -9,7 +9,7 @@
 #include "YU_PID.h"
 #include "ATTACK.h"
 #include "TOP.h"
-
+    
 uint8_t ROOT_V_MONITOR_DBUS = 0; // 离线判断参数
 TYPEDEF_MOTOR_PID FOLLOW_PID = {0};  // 底盘跟随
 TYPEDEF_MOTOR_PID TOP_OFF_S = {0}, TOP_OFF_A = {0}; // 陀螺仪离线，但因时间短，可考虑删除
@@ -43,9 +43,9 @@ uint8_t ROOT_F_PIDinit()
     const float PID_V_GIMBAL_YAW_ANGLE[5] = {0.36f, 0.0f, 0.0f, 200.0f, 2000.0f};
 //    const float PID_V_GIMBAL_PIT_SPEED[5] = {130.0f, 0.0f, 0, 1000.0f, 20000.0f};
 //    const float PID_V_GIMBAL_PIT_ANGLE[5] = {0.85f, 0.0007f, 0, 1000.0f, 3000.0f};
-	const float PID_V_GIMBAL_PIT_SPEED[5] = {100.0f, 0.001f, 0, 1000.0f, 30000.0f};
-    const float PID_V_GIMBAL_PIT_ANGLE[5] = {0.85f, 0.0007f, 0, 1000.0f, 7000.0f};
-
+	const float PID_V_GIMBAL_PIT_SPEED[5] = {100.0f, 20.0f, 0, 2000.0f, 30000.0f};
+    const float PID_V_GIMBAL_PIT_ANGLE[5] = {1.625f, 0.045f, 0.0f, 200.0f, 7000.0f};
+	
     const float PID_V_ATTACK_L_SPEED[5] = {14.0f, 0, 0, 1000.0f, 30000.0f};
     const float PID_V_ATTACK_R_SPEED[5] = {14.0f, 0, 0, 1000.0f, 30000.0f};
     const float PID_V_ATTACK_G_SPEED[5] = {10.0f, 0, 0, 1000.0f, 20000.0f};
@@ -53,14 +53,14 @@ uint8_t ROOT_F_PIDinit()
     const float PID_V_ATTACK_L_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
     const float PID_V_ATTACK_R_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
 
-    const float FOLLOW_PID_V[5] = {3.0f, 0.0f, 0.0f, 0.0f, 4000.0f};
+    const float FOLLOW_PID_V[5] = {2.0f, 0.0f, 0.0f, 0.0f, 3500.0f};
     const float PID_V_TOP_OFF_S[5] = {100.5f, 0.0f, 0.0f, 0.0f, 30000.0f};
     const float PID_V_TOP_OFF_A[5] = {1.5f, 0.0f, 0.0f, 0.0f, 2000.0f};
 
-    const float PID_V_VISION_YAW_SPEED[5] = {45.0f, 0.0001f, 0.0f, 100.0f, 30000.0f};
-    const float PID_V_VISION_YAW_ANGLE[5] = {7.0f, 0.0f, 0.0f, 200.0f, 8000.0f};
-    const float PID_V_VISION_PIT_SPEED[5] = {60.0f, 0.0f, 0, 1000.0f, 20000.0f};
-    const float PID_V_VISION_PIT_ANGLE[5] = {15.0f, 0.0f, 0, 1000.0f, 8000.0f};
+    const float PID_V_VISION_YAW_SPEED[5] = {300.0f, 0.0f, 70.0f, 0.0f, 29000.0f};
+    const float PID_V_VISION_YAW_ANGLE[5] = {3.80f, 0.0f, 10.0f, 0.0f, 10000.0f};
+    const float PID_V_VISION_PIT_SPEED[5] = {380.0f, 0.02f, 0, 1000.0f, 30000.0f};
+    const float PID_V_VISION_PIT_ANGLE[5] = {6.0f, 0.0f, 0, 1000.0f, 10000.0f};
 
     PID_F_Init(&MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].PID_S, PID_V_CHASSIS_SPEED);
     PID_F_Init(&MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].PID_S, PID_V_CHASSIS_SPEED);
@@ -100,8 +100,8 @@ void ROOT_F_Init()
     ATTACK_F_Init(MOTOR_V_ATTACK);
 
     #ifdef OLDHEAD
-    MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 3461.0f + 4096.0f;  // 云台初始化角度
-    MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM = 3062.0f;
+    MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 3422.0f + 4096.0f;  // 云台初始化角度
+    MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM = 2807.0f;
 	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS = 1;   // @TODO when yaw init, aim 0->angle_init, make yaw shaking.
 	#endif
 
