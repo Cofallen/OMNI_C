@@ -204,6 +204,7 @@ __weak void StartIMUTask(void const * argument)
 __weak void StartChassisTask(void const * argument)
 {
   /* USER CODE BEGIN StartChassisTask */
+  capData_JHB.Send_data_typedef.Send_data.switchControl = 0x00;
   /* Infinite loop */
   for(;;)
   {
@@ -213,6 +214,7 @@ __weak void StartChassisTask(void const * argument)
                MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
                MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
 		// CapSendInit(40 , user_data.power_heat_data.chassis_power , user_data.power_heat_data.chassis_voltage);
+    CapSend_new( user_data.power_heat_data.buffer_energy ,  user_data.power_heat_data.chassis_voltage);
     vTaskDelay(1);
   }
   /* USER CODE END StartChassisTask */

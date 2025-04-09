@@ -251,67 +251,68 @@
             "path": "../Bsp/extra/src/niming.c"
           }
         ],
-        "folders": []
-      },
-      {
-        "name": "LIB",
-        "files": [
+        "folders": [
           {
-            "path": "../LIB/BMI088driver.c"
-          },
-          {
-            "path": "../LIB/BMI088driver.h"
-          },
-          {
-            "path": "../LIB/BMI088Middleware.c"
-          },
-          {
-            "path": "../LIB/BMI088Middleware.h"
-          },
-          {
-            "path": "../LIB/BMI088reg.h"
-          },
-          {
-            "path": "../LIB/bsp_imu_pwm.c"
-          },
-          {
-            "path": "../LIB/bsp_imu_pwm.h"
-          },
-          {
-            "path": "../LIB/kalman_filter.c"
-          },
-          {
-            "path": "../LIB/kalman_filter.h"
-          },
-          {
-            "path": "../LIB/QuaternionEKF.c"
-          },
-          {
-            "path": "../LIB/QuaternionEKF.h"
-          },
-          {
-            "path": "../LIB/struct_typedef.h"
-          },
-          {
-            "path": "../LIB/user_lib.c"
-          },
-          {
-            "path": "../LIB/user_lib.h"
-          },
-          {
-            "path": "../LIB/imu_temp_control_task.c"
-          },
-          {
-            "path": "../LIB/imu_temp_control_task.h"
-          },
-          {
-            "path": "../LIB/pid.c"
-          },
-          {
-            "path": "../LIB/pid.h"
+            "name": "LIB",
+            "files": [
+              {
+                "path": "../LIB/BMI088driver.c"
+              },
+              {
+                "path": "../LIB/BMI088driver.h"
+              },
+              {
+                "path": "../LIB/BMI088Middleware.c"
+              },
+              {
+                "path": "../LIB/BMI088Middleware.h"
+              },
+              {
+                "path": "../LIB/BMI088reg.h"
+              },
+              {
+                "path": "../LIB/bsp_imu_pwm.c"
+              },
+              {
+                "path": "../LIB/bsp_imu_pwm.h"
+              },
+              {
+                "path": "../LIB/kalman_filter.c"
+              },
+              {
+                "path": "../LIB/kalman_filter.h"
+              },
+              {
+                "path": "../LIB/QuaternionEKF.c"
+              },
+              {
+                "path": "../LIB/QuaternionEKF.h"
+              },
+              {
+                "path": "../LIB/struct_typedef.h"
+              },
+              {
+                "path": "../LIB/user_lib.c"
+              },
+              {
+                "path": "../LIB/user_lib.h"
+              },
+              {
+                "path": "../LIB/imu_temp_control_task.c"
+              },
+              {
+                "path": "../LIB/imu_temp_control_task.h"
+              },
+              {
+                "path": "../LIB/pid.c"
+              },
+              {
+                "path": "../LIB/pid.h"
+              }
+            ],
+            "folders": []
           }
-        ],
-        "folders": []
+        ]
       },
       {
         "name": "JUDGE",

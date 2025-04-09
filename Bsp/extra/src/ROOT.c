@@ -100,7 +100,7 @@ void ROOT_F_Init()
     ATTACK_F_Init(MOTOR_V_ATTACK);
 
     #ifdef OLDHEAD
-    MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 3461.0f;  // 云台初始化角度
+    MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 3461.0f + 4096.0f;  // 云台初始化角度
     MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM = 3062.0f;
 	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS = 1;   // @TODO when yaw init, aim 0->angle_init, make yaw shaking.
 	#endif
