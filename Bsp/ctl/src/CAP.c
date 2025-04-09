@@ -7,46 +7,49 @@
 #include "read_data.h"
 #include "define.h"
 #include "YU_MATH.h"
+#include "chassis_power_control.h"
+#include "DBUS.h"
 
 float  Inter=0;
 int  temp_cap_time=0;
 struct capDate_typdef capData_t ={ 0 };
-/************************************************************ÍòÄÜ·Ö¸ô·û**************************************************************
-*	@author:			//ÕÔäø
-*	@performance:	//µçÈİ·¢ËÍ³õÊ¼»¯
-*	@parameter:		//×î´ó¹¦ÂÊ//·Åµç±êÖ¾Î»//µ±Ç°»º³å//µ±Ç°¹¦ÂÊ//µç³ØµçÑ¹
-*	@ReadMe:			//Ã¿´ÎÖ´ĞĞµçÈİ·¢ËÍÖ®Ç°¶¼ĞèÒªµ÷ÓÃÒ»´Î
+struct capData_JHB capData_JHB = { 0 };
+/************************************************************ï¿½ï¿½ï¿½Ü·Ö¸ï¿½ï¿½ï¿½**************************************************************
+*	@author:			//ï¿½ï¿½ï¿½ï¿½
+*	@performance:	//ï¿½ï¿½ï¿½İ·ï¿½ï¿½Í³ï¿½Ê¼ï¿½ï¿½
+*	@parameter:		//ï¿½ï¿½ï¿½ï¿½ï¿½//ï¿½Åµï¿½ï¿½Ö¾Î»//ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½//ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½//ï¿½ï¿½Øµï¿½Ñ¹
+*	@ReadMe:			//Ã¿ï¿½ï¿½Ö´ï¿½Ğµï¿½ï¿½İ·ï¿½ï¿½ï¿½Ö®Ç°ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
 ************************************************************************************************************************************/
 float shu_temp75 = 0.0f;
 void CapSendInit(uint8_t powerBuffer , uint8_t nowPower , uint16_t volt)
 {
-		//¼õÈıÊÇÒòÎª²ÃÅĞÏµÍ³×Ô¼ººÄµç3W×óÓÒ
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ÏµÍ³ï¿½Ô¼ï¿½ï¿½Äµï¿½3Wï¿½ï¿½ï¿½ï¿½
 	shu_temp75 = 250 * ((float) powerBuffer/60.0f);
 	shu_temp75 = SectionLimit_f(200.0f , 45.0f , shu_temp75);
 
-//	capData_t.capSetData.dataNeaten.maxPower = (uint32_t) user_data.robot_status.chassis_power_limit; //		//×î´ó¹¦ÂÊ
-	capData_t.capSetData.dataNeaten.maxPower = (uint32_t) 60; //		//×î´ó¹¦ÂÊ
-	capData_t.capSetData.dataNeaten.residueBuff = powerBuffer;	//	µ±Ç°»º³å
-	capData_t.capSetData.dataNeaten.outPower = nowPower;	//µ±Ç°¹¦ÂÊ
-	capData_t.capSetData.dataNeaten.volt = volt - 50;		//µç³ØµçÑ¹
+//	capData_t.capSetData.dataNeaten.maxPower = (uint32_t) user_data.robot_status.chassis_power_limit; //		//ï¿½ï¿½ï¿½ï¿½ï¿½
+	capData_t.capSetData.dataNeaten.maxPower = (uint32_t) 60; //		//ï¿½ï¿½ï¿½ï¿½ï¿½
+	capData_t.capSetData.dataNeaten.residueBuff = powerBuffer;	//	ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½
+	capData_t.capSetData.dataNeaten.outPower = nowPower;	//ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½
+	capData_t.capSetData.dataNeaten.volt = volt - 50;		//ï¿½ï¿½Øµï¿½Ñ¹
 	capData_t.capSetData.dataNeaten.power_key = 1;
-	capData_t.capSetData.dataNeaten.out_switch =1;//C¼ü×÷ÎªµçÈİÇ¿ÖÆ¿ª¹Ø£¬ÉÏËøÄ£Ê½¡£Ä¬ÈÏÀëÏß£¬°´Ò»ÏÂ´ò¿ª£¬
-	//³¬¼¶µçÈİ·¢ËÍº¯Êı
+	capData_t.capSetData.dataNeaten.out_switch =1;//Cï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Ç¿ï¿½Æ¿ï¿½ï¿½Ø£ï¿½ï¿½ï¿½ï¿½ï¿½Ä£Ê½ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½ï¿½ï¿½Ò»ï¿½Â´ò¿ª£ï¿½
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ·ï¿½ï¿½Íºï¿½ï¿½ï¿½
 	CAN_F_Send(&hcan1 , 0x1ff , capData_t.capSetData.sendData[0] , capData_t.capSetData.sendData[1] , \
 													capData_t.capSetData.sendData[2] , capData_t.capSetData.sendData[1] );
 }
 
-/************************************************************ÍòÄÜ·Ö¸ô·û**************************************************************
-*	@author:			//ÕÔäø
-*	@performance:	//µçÈİCAN½ÓÊÕ´¦Àíº¯Êı
-*	@parameter:		///can_data:CAN½ÓÊÕÊı×é¡£data£º³¬¼¶µçÈİ½ÓÊÕ½á¹¹Ìå
+/************************************************************ï¿½ï¿½ï¿½Ü·Ö¸ï¿½ï¿½ï¿½**************************************************************
+*	@author:			//ï¿½ï¿½ï¿½ï¿½
+*	@performance:	//ï¿½ï¿½ï¿½ï¿½CANï¿½ï¿½ï¿½Õ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+*	@parameter:		///can_data:CANï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¡£dataï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ½ï¿½ï¿½Õ½á¹¹ï¿½ï¿½
 *	@time:				//22-03-06
 *	@ReadMe:			//
 ************************************************************************************************************************************/
 void CanManage_cap(uint8_t* can_data , struct capGetData_typdef* data)
 {
 	int16_t nowpower=0;
-	//root_t.superCapRoot.time = 0;	//µçÈİÀëÏßÖØÖÃ
+	//root_t.superCapRoot.time = 0;	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	capData_t.capGetDate.capVolt = can_data[0]<<8 | can_data[1];
 	capData_t.capGetDate.capVolt=capData_t.capGetDate.capVolt*0.1f;
 	nowpower=can_data[2]<<8 | can_data[3];
@@ -55,4 +58,29 @@ void CanManage_cap(uint8_t* can_data , struct capGetData_typdef* data)
 	capData_t.capGetDate.outBoll=can_data[6]<<8 | can_data[7];
 	capData_t.capGetDate.cap_realy_out=capData_t.capGetDate.nowPower-user_data.power_heat_data.chassis_power;
 
+}
+
+void CanManage_cap_new(uint8_t* can_data , struct capData_JHB_Receive* data)
+{
+	int16_t nowpower=0;
+	//root_t.superCapRoot.time = 0;	//é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
+	capData_JHB.Receive_data_typedef.switchStatus = can_data[0];
+	capData_JHB.Receive_data_typedef.capStatus = can_data[1];
+	capData_JHB.Receive_data_typedef.wireVolt = (uint16_t)(can_data[2]<<8 | can_data[3])/100.0f;
+	capData_JHB.Receive_data_typedef.Power = (uint16_t)(can_data[4]<<8 | can_data[5])/100.0f;
+	capData_JHB.Receive_data_typedef.capVolt = (uint16_t)(can_data[6]<<8 | can_data[7])/100.0f;
+	
+}
+void CapSend_new(uint8_t powerBuffer , uint16_t volt)
+{
+		
+	// capData_JHB.Send_data_typedef.Send_data.powerLimit = (uint32_t)user_data.robot_status.chassis_power_limit/1.2f;	//é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿ?
+		capData_JHB.Send_data_typedef.Send_data.powerLimit = 55;
+	// capData_JHB.Send_data_typedef.Send_data.robotStatus = (user_data.robot_status.current_HP > 0) ? 1 : 0;
+	capData_JHB.Send_data_typedef.Send_data.robotStatus = 0x01;
+	// capData_JHB.Send_data_typedef.Send_data.bufferEnergy = (uint32_t) powerBuffer;	
+	capData_JHB.Send_data_typedef.Send_data.bufferEnergy = (uint32_t) powerBuffer;	
+	capData_JHB.Send_data_typedef.Send_data.Verify = 0xAA;//æ ‡å¿—ä½ä»…ä¾›äººå‚è€ƒï¼Œä¸åšæ ¡éªŒ
+	CAN_F_Send(&hcan1 , 0x252 , capData_JHB.Send_data_typedef.Data[0] , capData_JHB.Send_data_typedef.Data[1], \
+		0xAA, 0 );
 }

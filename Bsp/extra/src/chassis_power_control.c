@@ -14,6 +14,9 @@ fp32 a = 1.23e-07;						 // k1
 fp32 k2 = 1.453e-07;					 // k2
 fp32 constant = 4.081f;                  // a 增大这个系数可以减小功率，反之增加
 
+
+float limitedPower = 0; // 电容代码使用全局变量
+
 /**
   * @author: 楠
   * @performance: 功率控制总函数
@@ -30,11 +33,17 @@ void chassis_power_control(uint8_t cap_state, uint8_t is_flying)
     //*可编辑部分*end*//
 
     #ifdef LIFTED_DEBUG
-	uint16_t max_power_limit = 400;  //最大功率限制
+
+	uint16_t max_power_limit = 120;  //最大功率限制
+    if (capData_JHB.Receive_data_typedef.capVolt < 12.0f) // 电压低于12V时，电容不工作
+    {
+        max_power_limit = 60;
+    }
+    
     #else
     uint16_t max_power_limit = 60;  //最大功率限制
     #endif // LIFTED_DEBUG
-    
+    limitedPower = (fp32)max_power_limit;
 	fp32 chassis_max_power = 0;
 	fp32 input_power = 0;		    // 输入功率（裁判系统）
 	fp32 initial_give_power[4];     // 初始功率由PID计算以及电机数据得到

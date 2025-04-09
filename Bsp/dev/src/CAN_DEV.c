@@ -45,10 +45,11 @@ void CAN_F_Recv(CAN_HandleTypeDef *hcan, uint32_t ID)
         case CAN_D_CHASSIS_4:
             MOTOR_F_Cal_Data(&MOTOR_V_CHASSIS[3], CANRxmsg);
             break;
-		case 0x240:
+        case 0x288:
             {
                 // 电容
-                CanManage_cap(CANRxmsg, &capData_t.capGetDate);
+                // CanManage_cap(CANRxmsg, &capData_t.capGetDate);
+                CanManage_cap_new(CANRxmsg, &capData_JHB.Receive_data_typedef);
                 break;
             }
 				 

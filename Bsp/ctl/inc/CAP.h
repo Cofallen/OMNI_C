@@ -3,34 +3,34 @@
 #define df_SuperResidue capData_t.capGetDate.capVolt
 
 #include "main.h"
-struct capGetData_typdef	//½ÓÊÕµÄµçÈÝµÄÊý¾Ý
+struct capGetData_typdef	//ï¿½ï¿½ï¿½ÕµÄµï¿½ï¿½Ýµï¿½ï¿½ï¿½ï¿½ï¿½
 {
-	float buffer; 		//µçÈÝ»º³å
-	float capVolt;		//µçÈÝµçÑ¹
-	float nowPower;		//µ±Ç°×Ü¹¦ÂÊ
-	int16_t outBoll;	//µ±Ç°µçÈÝÊÇ·ñÔÚÊä³ö
-	float   cap_realy_out;    //µçÈÝµÄ¾»Êä³ö
+	float buffer; 		//ï¿½ï¿½ï¿½Ý»ï¿½ï¿½ï¿½
+	float capVolt;		//ï¿½ï¿½ï¿½Ýµï¿½Ñ¹
+	float nowPower;		//ï¿½ï¿½Ç°ï¿½Ü¹ï¿½ï¿½ï¿½
+	int16_t outBoll;	//ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	float   cap_realy_out;    //ï¿½ï¿½ï¿½ÝµÄ¾ï¿½ï¿½ï¿½ï¿½
 };
 
-union capSetData_typdef		//·¢¸øµçÈÝµÄÊý¾Ý//Ê¹ÓÃ¹²ÓÃÌåÕûºÏÊý¾Ý
+union capSetData_typdef		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½ï¿½ï¿½ï¿½ï¿½//Ê¹ï¿½Ã¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 {
 	struct
 	{
-		uint32_t residueBuff : 8;		//µ±Ç°»º³å
-		uint32_t maxPower : 8;		//×î´ó¹¦ÂÊ
-		uint32_t volt : 8;			//µ±Ç°µç³ØµçÑ¹£¬ÒòÎª×î´óµçÑ¹´óÓÚ25.5V£¬´¦ÀíÊ±¼ÓÒ»¸ö50
-		uint32_t outPower : 8;			//µ±Ç°×Ü¹¦ÂÊ
+		uint32_t residueBuff : 8;		//ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½
+		uint32_t maxPower : 8;		//ï¿½ï¿½ï¿½ï¿½ï¿½
+		uint32_t volt : 8;			//ï¿½ï¿½Ç°ï¿½ï¿½Øµï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½25.5Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ò»ï¿½ï¿½50
+		uint32_t outPower : 8;			//ï¿½ï¿½Ç°ï¿½Ü¹ï¿½ï¿½ï¿½
 		uint8_t  out_switch : 8;
 		uint8_t  power_key : 8;
 	}dataNeaten;
-	//CAN·¢ËÍµÄÊý¾Ý
+	//CANï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½
 	uint16_t sendData[3];
 };
 
-struct capData_typdef	//Ê¹ÓÃµ½µÄ³¬¼¶µçÈÝÊý¾Ý
+struct capData_typdef	//Ê¹ï¿½Ãµï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 {
-	uint32_t outPutState : 1;		//·Åµç×´Ì¬
-	uint32_t residueBuff : 8;		//µ±Ç°»º³å	
+	uint32_t outPutState : 1;		//ï¿½Åµï¿½×´Ì¬
+	uint32_t residueBuff : 8;		//ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½	
 };
 
 struct capDate_typdef
@@ -38,11 +38,49 @@ struct capDate_typdef
 	union capSetData_typdef capSetData;
 	struct capGetData_typdef capGetDate;
 };
+
+struct capData_JHB_Receive
+{
+	uint8_t  switchStatus;
+	uint8_t  capStatus;
+	float capVolt;
+	float Power;
+	float wireVolt;
+};
+
+union capData_JHB_Send
+{
+	struct 
+	{
+	uint32_t  powerLimit :8;
+	uint32_t  switchControl :8;
+
+	uint32_t robotStatus :8;
+	int32_t bufferEnergy:8;
+	
+	
+	
+	uint8_t Verify;
+	}Send_data;
+	
+	uint16_t Data[3];
+	
+};
+
+struct capData_JHB	
+{
+	union capData_JHB_Send Send_data_typedef;
+	struct capData_JHB_Receive Receive_data_typedef;
+};
+
 extern struct capDate_typdef capData_t;
+extern struct capData_JHB capData_JHB;
 
 extern int16_t shu_temp72;
-extern int16_t shu_temp2;	//µçÈÝ¿ªÆô¹Ø±Õ±êÖ¾Î»
+extern int16_t shu_temp2;	//ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½Ø±Õ±ï¿½Ö¾Î»
 
+extern void CanManage_cap_new(uint8_t* can_data , struct capData_JHB_Receive* data);
+extern  void CapSend_new(uint8_t powerBuffer  , uint16_t volt);
 extern void CapSendInit(uint8_t powerBuffer , uint8_t nowPower , uint16_t volt);
 extern void CanManage_cap(uint8_t* can_data , struct capGetData_typdef* data);
 extern void SuperCapTransation(uint8_t mod , int32_t setOut , uint64_t time);
