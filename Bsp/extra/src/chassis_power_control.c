@@ -39,7 +39,7 @@ void chassis_power_control(uint8_t cap_state, uint8_t is_flying)
     uint16_t max_power_limit = 120;  //最大功率限制
     if (capData_JHB.Receive_data_typedef.capVolt < 12.0f) // 电压低于12V时，电容不工作
     {
-        max_power_limit = 60;
+        max_power_limit = 55;
     }
     #endif // LIFTED_DEBUG
     

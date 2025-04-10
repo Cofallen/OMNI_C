@@ -35,7 +35,8 @@ void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, TYPEDEF_VISION *VISI
             
             if (MATH_D_ABS((MOTOR[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW - 3100.0f)) < 150.0f)
             {
-                MOTOR[MOTOR_D_GIMBAL_PIT].PID_S.IN.KI = 0.15f;
+                MOTOR[MOTOR_D_GIMBAL_PIT].PID_S.IN.KI = 0.0f;
+				MOTOR[MOTOR_D_GIMBAL_PIT].PID_S.IN.KP = 80.0f;
             }
             else 
             {

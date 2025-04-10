@@ -62,7 +62,7 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 
     if (DBUS->KEY_BOARD.V)
     {
-        VR *= 0.4f;
+//        VR *= 0.4f;
     }
     
     // @TODO 2. VR的负号和-ANGLE_Relative的负号测试是否可以全换成正号
@@ -70,8 +70,8 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 
     if (DBUS->REMOTE.S2_u8 == 1)
     {
-//        VR = 660.0f;
-//        VISION_V_DATA.RECEIVE.fire = 1;
+       VR = 660.0f;
+    //    VISION_V_DATA.RECEIVE.fire = 1;
     }
     else
     {
