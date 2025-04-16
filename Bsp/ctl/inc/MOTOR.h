@@ -3,6 +3,7 @@
 
 // 根据瑞代码精简所得
 #include "main.h"
+#include "feedforward.h"
 
 // 电机数据结构体打印模板
 typedef struct TYPEDEF_MOTOR_DATA
@@ -58,6 +59,7 @@ typedef struct
     TYPEDEF_MOTOR_PID PID_A; // 角度环
     TYPEDEF_MOTOR_PID PID_S; // 速度环
     TYPEDEF_MOTOR_PID PID_C; // 电流环
+    Feedforward_t PID_F;     // 前馈控制器
 } TYPEDEF_MOTOR;
 
 extern void MOTOR_F_Cal_Data(TYPEDEF_MOTOR *MOTOR, uint8_t *RxMessage);

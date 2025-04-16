@@ -14,6 +14,7 @@ union RUI_U_VISION_RECEIVE
     float YAW_DATA;
     bool TARGET;
     bool fire;
+    bool state;
   };
   uint8_t DATA[15];
 };
@@ -28,7 +29,8 @@ union RUI_U_VISION_SEND
     float INIT_FIRING_RATE; // 弹速
     int FLAG;            // 自瞄和能量机关切换标志位
     bool COLOR;             // TRUE是蓝色，FALSE是红色
-    unsigned int TIME;
+    uint32_t TIME;
+    uint8_t bulletSpeed;//
   };
   uint8_t DATA[21];
 };
@@ -47,7 +49,7 @@ union ReceiveDataUnion_typedef							//共用体(用于接受各种数据)(视�
 	{    
 			uint8_t U[4];
 			float F;
-			int I;
+			uint32_t I;
 	};
 
 

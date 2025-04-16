@@ -7,8 +7,13 @@
 #include "MOTOR.h"
 #include "DEFINE.h"
 #include "stdlib.h"
-
+#include "CHASSIS.h"
 #include "TIM_DEV.h"
+#include "Read_Data.h"
+#include "VISION.h"
+#include "TOP.h"
+#include "robot.h"
+#include "YU_PID.h"
 
 union 
 {
@@ -230,4 +235,74 @@ void niming(int16_t id, int16_t x1, int16_t x2, int16_t x3, int16_t y1, int16_t 
     buffer[25]=addCheck & 0x000000ff;
 
 	HAL_UART_Transmit_DMA(&huart1,buffer,sizeof(buffer));
+}
+
+/// @brief 
+/// @param mod 0 飞破 1 云台pid 2 飞坡电流 3 发射 4 视觉 5 飞坡匿名
+/// @param mod 
+void Vofa_intergrate(uint8_t mod) 
+{
+    switch (mod)
+    {
+    case 0:
+        VOFA_T_SendTemp(10, 0.0f,
+                watch[0], watch[1], watch[2], watch[3], watch[4], watch[5], 
+                watch[6], watch[7], watch[8]);
+        break;
+    case 1:
+        VOFA_T_SendTemp(5, 1.0f,
+                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
+                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW,
+                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
+                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE);
+        break;
+    case 2:
+        VOFA_T_SendTemp(10, 0.0f,
+                (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CURRENT,
+                (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CURRENT,
+                (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CURRENT,
+                (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CURRENT,
+                (float)DBUS_V_DATA.is_front_lifted,
+                (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.AIM,
+                (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.AIM,
+                (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.AIM,
+                (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.AIM);
+        break;
+    case 3:
+        VOFA_T_SendTemp(9, 0.0f,  // debug yaw pid with top[3]
+                (float)user_data.shoot_data.initial_speed,
+                (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW,
+                (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.SPEED_NOW,
+                (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.AIM,
+                (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM,
+                (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE,
+                (float)DBUS_V_DATA.IS_OFF,
+                1.0f);
+        break;
+    case 4:
+        VOFA_T_SendTemp(10, 0.0f,
+            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE,
+            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW,
+            (float)VISION_V_DATA.RECV_FLAG,
+            (float)VISION_V_DATA.RECEIVE.TARGET,
+            (float)VISION_V_DATA.RECEIVE.YAW_DATA,
+            (float)TOP.yaw[5],
+            (float)TOP.roll[5],
+            (float)(dt_pc),
+            99.0f);
+        break;
+    case 5:
+        niming(0xF1, 
+            (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CURRENT,
+            (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CURRENT,
+            (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CURRENT,
+            (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CURRENT, // y1
+            (int16_t)DBUS_V_DATA.is_front_lifted,                     // y2
+            0,                                                       // y3
+            0, 0, 0,                                                // z1-z3
+            0);  
+        break;
+    default:
+        break;
+    }
 }

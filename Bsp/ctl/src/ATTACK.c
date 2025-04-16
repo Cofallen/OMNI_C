@@ -47,42 +47,56 @@ uint8_t ATTACK_F_Init(TYPEDEF_MOTOR *MOTOR)
     return ROOT_READY;
 }
 
-// 根据遥控，获取拨弹目标值
-float ATTACK_F_JAM_Aim(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
+/**
+ * @brief 根据遥控/鼠标输入计算拨弹电机目标值
+ * @param MOTOR 拨弹电机指针
+ * @param DBUS 遥控器数据指
+ * @param autofire 视觉控制开火
+ * @return 目标角度值
+ */
+float ATTACK_F_JAM_Aim(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, uint8_t autofire)
 {
-    if (ATTACK_V_PARAM.LOCK == 0)
+    // 单发模式处理
+    if ((DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SINGLE || DBUS->MOUSE.L_STATE == 1) && ATTACK_V_PARAM.LOCK == 0)
     {
-        ATTACK_V_PARAM.COUNT = 1; // consist && single mode
-        if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SINGLE || (DBUS->MOUSE.L_STATE == 1)) // 单发
+        if (autofire == 0 || ((autofire ==1) && VISION_V_DATA.RECEIVE.fire))
         {
-            ATTACK_V_PARAM.LOCK = 1; // 单发上锁
-        }
-        else if ((DBUS->REMOTE.S1_u8 == DBUS_D_MOD_CONSIST || DBUS->MOUSE.L_STATE == 2) && VISION_V_DATA.RECEIVE.fire)// @todo 有了l_state可以将ATTACK_V_PARAM.LOCK初始化去了
-        {
-            ATTACK_V_PARAM.LOCK = 0; // 解锁
-            // ATTACK_V_PARAM.COUNT = 0;
-        }
-        else if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SHUT || (!VISION_V_DATA.RECEIVE.fire)) // @todo 这个应该是debug用的，记得删了条件
-        {
-            ATTACK_V_PARAM.LOCK = 0; // 解锁
-            ATTACK_V_PARAM.COUNT = 0; // @todo 好像这一句没用?
+            // 检测到单发请求且当前未锁定
+            ATTACK_V_PARAM.COUNT = 1;     // 增加一个弹丸的角度
+            ATTACK_V_PARAM.LOCK = 1;       // 锁定，防止连续触发
         }
     }
-    else if (ATTACK_V_PARAM.LOCK == 1)
+    // 连发模式处理
+    else if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_CONSIST || DBUS->MOUSE.L_STATE == 2)
     {
+        if (autofire == 0 || ((autofire ==1) && VISION_V_DATA.RECEIVE.fire))
+        {
+            // 视觉允许开火且为连发模式
+            ATTACK_V_PARAM.COUNT = 1; // 持续小量增加目标角度，形成连续转动
+            ATTACK_V_PARAM.LOCK = 0;       // 连发模式不锁定
+        }
+    }
+    // 关闭发射处理
+    else if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SHUT || DBUS->MOUSE.L_STATE == 0)
+    {
+        ATTACK_V_PARAM.LOCK = 0;       // 解锁
+        ATTACK_V_PARAM.COUNT = 0;
+    }
+
+    // 处理锁定状态
+    if (ATTACK_V_PARAM.LOCK == 1)
+    {
+        // 当处于锁定状态，检查是否可以解锁
         if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SHUT || DBUS->MOUSE.L_STATE == 0)
         {
-            ATTACK_V_PARAM.LOCK = 0; // 解锁
-            ATTACK_V_PARAM.COUNT = 0; // @todo 好像这一句没用?
+            ATTACK_V_PARAM.LOCK = 0;   // 解锁，为下一次发射做准备
         }
+        // 锁定状态下保持当前目标值
         return MOTOR->DATA.AIM;
     }
-    if (DBUS->REMOTE.S2_u8) // @todo 这个应该是debug用的，记得删了条件
-    {
-        MOTOR->DATA.AIM = (float)MOTOR->DATA.ANGLE_INFINITE - ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.COUNT * 1.0f;
-    }
-    
-    // MOTOR->DATA.AIM = (float)MOTOR->DATA.ANGLE_INFINITE - ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.COUNT;
+
+    // 计算新的电机目标角度
+    MOTOR->DATA.AIM = (float)MOTOR->DATA.ANGLE_INFINITE - ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.COUNT;
     return MOTOR->DATA.AIM;
 }
 
@@ -174,7 +188,7 @@ uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     
     if (ATTACK_V_PARAM.STATUS == 0)
     {
-        MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM = ATTACK_F_JAM_Aim(&MOTOR[MOTOR_D_ATTACK_G], DBUS);
+        MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM = ATTACK_F_JAM_Aim(&MOTOR[MOTOR_D_ATTACK_G], DBUS, 0);
     }
     if (!ATTACK_F_JAM_Check(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_G]))
     {

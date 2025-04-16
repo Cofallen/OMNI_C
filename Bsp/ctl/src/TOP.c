@@ -48,6 +48,7 @@ void TOP_T_Cal()
 
     TOP.pitch[5] = pitch;
     TOP.yaw[5] = yaw;
+    TOP.roll[5] = -roll;
 }
 
 void TOP_T_Monitor()

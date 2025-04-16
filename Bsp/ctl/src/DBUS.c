@@ -7,6 +7,7 @@
 
 // 遥控全局变量
 TYPEDEF_DBUS DBUS_V_DATA = {0};
+TYPEDEF_DBUS DBUS_V_DATA_LAST = {0};
 TYPEDEF_DBUS_UNION DBUS_V_UNION = {0}; // 共用体整合数据，待简化下成局部变量
 
 /**
@@ -67,6 +68,7 @@ void DBUS_F_Cal(TYPEDEF_DBUS *DBUS)
     // @TODO l/r flag to control atatck
     DBUS_V_DATA.IS_OFF = 0;
 
+    memcpy(&DBUS_V_DATA_LAST, &DBUS_V_DATA, sizeof(DBUS_V_DATA));
 }
 
 /**

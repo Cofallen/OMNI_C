@@ -20,8 +20,6 @@ omni_c/freertos.o: ..\Core\Src\freertos.c \
   ..\Drivers\CMSIS\Include\cmsis_version.h \
   ..\Drivers\CMSIS\Include\cmsis_compiler.h \
   ..\Drivers\CMSIS\Include\cmsis_armclang.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\arm_compat.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\arm_acle.h \
   ..\Drivers\CMSIS\Include\mpu_armv7.h \
   ..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h \
@@ -32,7 +30,11 @@ omni_c/freertos.o: ..\Core\Src\freertos.c \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_dma.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_dma_ex.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_cortex.h \
+  ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_adc.h \
+  ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_adc.h \
+  ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_adc_ex.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_can.h \
+  ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_crc.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash_ex.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash_ramfunc.h \
@@ -52,6 +54,7 @@ omni_c/freertos.o: ..\Core\Src\freertos.c \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\event_groups.h \
   ..\LIB\imu_temp_control_task.h ..\Core\Inc\can.h \
   ..\Bsp\dev\inc\TIM_DEV.h ..\Bsp\ctl\inc\MOTOR.h \
+  ..\Bsp\ctl\inc\feedforward.h ..\LIB\user_lib.h \
   ..\Bsp\dev\inc\CAN_DEV.h ..\Bsp\extra\inc\DEFINE.h \
   ..\Bsp\ctl\inc\CHASSIS.h ..\Bsp\ctl\inc\DBUS.h ..\Bsp\ctl\inc\GIMBAL.h \
   ..\Bsp\extra\inc\VISION.h \

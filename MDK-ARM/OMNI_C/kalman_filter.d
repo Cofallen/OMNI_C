@@ -5,8 +5,6 @@ omni_c/kalman_filter.o: ..\LIB\kalman_filter.c ..\LIB\kalman_filter.h \
   ..\CMSIS\DSP\Inc\arm_math_types.h \
   ..\Drivers\CMSIS\Include\cmsis_compiler.h \
   ..\Drivers\CMSIS\Include\cmsis_armclang.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\arm_compat.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\arm_acle.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\string.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\math.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\float.h \

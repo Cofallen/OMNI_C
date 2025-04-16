@@ -9,6 +9,8 @@
 #include "TOP.h"
 #include "ROOT.h"
 #include "VISION.h"
+#include "bsp_dwt.h"
+
 /**
  * @brief               自己写的PID初始化，不用读配置文件
  * @details             传入PID基本参数， 通过数组
@@ -95,13 +97,17 @@ uint8_t PID_F_G(TYPEDEF_MOTOR *MOTOR)
 {         
     if (TOP.yaw[4] == 1.0f) // online
     {
+        // MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&MOTOR->PID_A, MOTOR->DATA.AIM, TOP.yaw[3]);
+        // MOTOR->DATA.CAN_SEND = (int16_t)PID_F_Cal(&MOTOR->PID_S, MOTOR->PID_A.OUT.ALL_OUT, ((float)QEKF_INS.Gyro[2] * 50.0f));
+        // Feedforward_Calculate(&MOTOR->PID_F, MOTOR->DATA.AIM);
         MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&MOTOR->PID_A, MOTOR->DATA.AIM, TOP.yaw[3]);
-        MOTOR->DATA.CAN_SEND = (int16_t)PID_F_Cal(&MOTOR->PID_S, MOTOR->PID_A.OUT.ALL_OUT, ((float)QEKF_INS.Gyro[2] * 50.0f));
+        MOTOR->PID_S.OUT.ALL_OUT = PID_F_Cal(&MOTOR->PID_S, MOTOR->PID_A.OUT.ALL_OUT, ((float)QEKF_INS.Gyro[2] * 50.0f));
+        MOTOR->DATA.CAN_SEND     = (int16_t)PID_F_Cal(&MOTOR->PID_C, MOTOR->PID_S.OUT.ALL_OUT, MOTOR->DATA.CURRENT);
     }
     else if (TOP.yaw[4] == 0.0f) // offline 
     {
-        MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&TOP_OFF_A, MOTOR->DATA.AIM, TOP.yaw[3]);
-        MOTOR->DATA.CAN_SEND = (int16_t)PID_F_Cal(&TOP_OFF_S, MOTOR->PID_A.OUT.ALL_OUT, MOTOR->DATA.SPEED_NOW);
+        // MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&TOP_OFF_A, MOTOR->DATA.AIM, TOP.yaw[3]);
+        MOTOR->DATA.CAN_SEND = 0;
     }
     return ROOT_READY;
 }
@@ -245,4 +251,104 @@ float PID_T_Cal(TYPEDEF_MOTOR_PID *PID, float TARGET, float REALVAL, int8_t mode
     PID->OUT.ERROR[LAST] = PID->OUT.ERROR[NOW];
 
     return PID->OUT.ALL_OUT;
+}
+
+
+/*************************** FEEDFORWARD CONTROL *****************************/
+/**
+ * @brief          前馈控制初始化
+ * @param[in]      前馈控制结构体
+ * @param[in]      略
+ * @retval         返回空
+ */
+void Feedforward_Init(
+    Feedforward_t *ffc,
+    float max_out,
+    float *c,
+    float lpf_rc,
+    uint16_t ref_dot_ols_order,
+    uint16_t ref_ddot_ols_order)
+{
+    ffc->MaxOut = max_out;
+
+    // 设置前馈控制器参数 详见前馈控制结构体定义
+    // set parameters of feed-forward controller (see struct definition)
+    if (c != NULL && ffc != NULL)
+    {
+        ffc->c[0] = c[0];
+        ffc->c[1] = c[1];
+        ffc->c[2] = c[2];
+    }
+    else
+    {
+        ffc->c[0] = 0;
+        ffc->c[1] = 0;
+        ffc->c[2] = 0;
+        ffc->MaxOut = 0;
+    }
+
+    //低通滤波参数
+    ffc->LPF_RC = lpf_rc;
+
+    // 最小二乘提取信号微分初始化
+    // differential signal is distilled by OLS
+    ffc->Ref_dot_OLS_Order = ref_dot_ols_order;
+    ffc->Ref_ddot_OLS_Order = ref_ddot_ols_order;
+    if (ref_dot_ols_order > 2)
+        OLS_Init(&ffc->Ref_dot_OLS, ref_dot_ols_order);
+    if (ref_ddot_ols_order > 2)
+        OLS_Init(&ffc->Ref_ddot_OLS, ref_ddot_ols_order);
+
+    ffc->DWT_CNT = 0;
+
+    ffc->Output = 0;
+}
+
+/**
+ * @brief          PID计算
+ * @param[in]      PID结构体
+ * @param[in]      测量值
+ * @param[in]      期望值
+ * @retval         返回空
+ */
+float Feedforward_Calculate(Feedforward_t *ffc, float ref)
+{
+	//求离散后的单位时间
+    uint32_t tmp = ffc->DWT_CNT;
+    ffc->dt = DWT_GetDeltaT(&tmp);
+	//将期望值进行一阶低通滤波
+    ffc->Ref = ref * ffc->dt / (ffc->LPF_RC + ffc->dt) +
+               ffc->Ref * ffc->LPF_RC / (ffc->LPF_RC + ffc->dt);
+    /*公式解析
+    ffc->Ref = ref * ffc->dt / (ffc->LPF_RC + ffc->dt) + ffc->Ref * ffc->LPF_RC / (ffc->LPF_RC + ffc->dt);
+             = ref * (1/(LPF_RC/ffc->dt + 1)) + ffc->Ref * (1/(ffc->dt/LPF_RC + 1))
+             = ref * A + ffc->Ref * (1-A)
+    A   = 1/(LPF_RC/ffc->dt + 1)
+    1-A = 1/(ffc->dt/LPF_RC + 1)
+    注：https://blog.csdn.net/qq_37662088/article/details/125075600
+    */
+
+    // 计算一阶导数
+    // calculate first derivative
+    if (ffc->Ref_dot_OLS_Order > 2)
+        ffc->Ref_dot = OLS_Derivative(&ffc->Ref_dot_OLS, ffc->dt, ffc->Ref);
+    else
+        ffc->Ref_dot = (ffc->Ref - ffc->Last_Ref) / ffc->dt;
+    // 计算二阶导数
+    // calculate second derivative
+    if (ffc->Ref_ddot_OLS_Order > 2)
+        ffc->Ref_ddot = OLS_Derivative(&ffc->Ref_ddot_OLS, ffc->dt, ffc->Ref_dot);
+    else
+        ffc->Ref_ddot = (ffc->Ref_dot - ffc->Last_Ref_dot) / ffc->dt;
+    // 计算前馈控制输出
+    // calculate feed-forward controller output
+    ffc->Output = ffc->c[0] * ffc->Ref + ffc->c[1] * ffc->Ref_dot + ffc->c[2] * ffc->Ref_ddot;
+
+    ffc->Output = float_constrain(ffc->Output, -ffc->MaxOut, ffc->MaxOut);
+
+    ffc->Last_Ref = ffc->Ref;
+	
+    ffc->Last_Ref_dot = ffc->Ref_dot;
+
+    return ffc->Output;
 }

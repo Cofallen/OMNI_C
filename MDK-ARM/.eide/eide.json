@@ -37,7 +37,13 @@
                     "path": "../Core/Src/freertos.c"
                   },
                   {
+                    "path": "../Core/Src/adc.c"
+                  },
+                  {
                     "path": "../Core/Src/can.c"
+                  },
+                  {
+                    "path": "../Core/Src/crc.c"
                   },
                   {
                     "path": "../Core/Src/dma.c"
@@ -105,6 +111,12 @@
             "name": "STM32F4xx_HAL_Driver",
             "files": [
               {
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c"
+              },
+              {
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c"
+              },
+              {
                 "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd.c"
               },
               {
@@ -153,16 +165,22 @@
                 "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c"
               },
               {
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c"
+              },
+              {
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.c"
+              },
+              {
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_adc.c"
+              },
+              {
                 "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c"
               },
               {
+                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_crc.c"
+              },
+              {
                 "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c"
-              },
-              {
-                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c"
-              },
-              {
-                "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c"
               },
               {
                 "path": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c"
@@ -251,68 +269,76 @@
             "path": "../Bsp/extra/src/niming.c"
           }
         ],
-        "folders": [
+        "folders": []
+      },
+      {
+        "name": "LIB",
+        "files": [
           {
-            "name": "LIB",
-            "files": [
-              {
-                "path": "../LIB/BMI088driver.c"
-              },
-              {
-                "path": "../LIB/BMI088driver.h"
-              },
-              {
-                "path": "../LIB/BMI088Middleware.c"
-              },
-              {
-                "path": "../LIB/BMI088Middleware.h"
-              },
-              {
-                "path": "../LIB/BMI088reg.h"
-              },
-              {
-                "path": "../LIB/bsp_imu_pwm.c"
-              },
-              {
-                "path": "../LIB/bsp_imu_pwm.h"
-              },
-              {
-                "path": "../LIB/kalman_filter.c"
-              },
-              {
-                "path": "../LIB/kalman_filter.h"
-              },
-              {
-                "path": "../LIB/QuaternionEKF.c"
-              },
-              {
-                "path": "../LIB/QuaternionEKF.h"
-              },
-              {
-                "path": "../LIB/struct_typedef.h"
-              },
-              {
-                "path": "../LIB/user_lib.c"
-              },
-              {
-                "path": "../LIB/user_lib.h"
-              },
-              {
-                "path": "../LIB/imu_temp_control_task.c"
-              },
-              {
-                "path": "../LIB/imu_temp_control_task.h"
-              },
-              {
-                "path": "../LIB/pid.c"
-              },
-              {
-                "path": "../LIB/pid.h"
-              }
-            ],
-            "folders": []
+            "path": "../LIB/BMI088driver.c"
+          },
+          {
+            "path": "../LIB/BMI088driver.h"
+          },
+          {
+            "path": "../LIB/BMI088Middleware.c"
+          },
+          {
+            "path": "../LIB/BMI088Middleware.h"
+          },
+          {
+            "path": "../LIB/BMI088reg.h"
+          },
+          {
+            "path": "../LIB/bsp_imu_pwm.c"
+          },
+          {
+            "path": "../LIB/bsp_imu_pwm.h"
+          },
+          {
+            "path": "../LIB/kalman_filter.c"
+          },
+          {
+            "path": "../LIB/kalman_filter.h"
+          },
+          {
+            "path": "../LIB/QuaternionEKF.c"
+          },
+          {
+            "path": "../LIB/QuaternionEKF.h"
+          },
+          {
+            "path": "../LIB/struct_typedef.h"
+          },
+          {
+            "path": "../LIB/user_lib.c"
+          },
+          {
+            "path": "../LIB/user_lib.h"
+          },
+          {
+            "path": "../LIB/imu_temp_control_task.c"
+          },
+          {
+            "path": "../LIB/imu_temp_control_task.h"
+          },
+          {
+            "path": "../LIB/pid.c"
+          },
+          {
+            "path": "../LIB/pid.h"
+          },
+          {
+            "path": "../LIB/bsp_adc.c"
+          },
+          {
+            "path": "../LIB/bsp_buzzer.c"
+          },
+          {
+            "path": "../LIB/bsp_dwt.c"
           }
-        ]
+        ],
+        "folders": []
       },
       {
         "name": "JUDGE",
@@ -490,6 +516,15 @@
           }
         ],
         "folders": []
+      },
+      {
+        "name": "robot",
+        "files": [
+          {
+            "path": "../Bsp/extra/src/robot.c"
+          }
+        ],
+        "folders": []
       }
     ]
   },
@@ -653,6 +688,7 @@
           "../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F",
           "../Middlewares/ST/STM32_USB_Device_Library/Core/Inc",
           "../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc",
+          "../Bsp/robot/inc",
           "RTE/_OMNI_C"
         ],
         "libList": [],

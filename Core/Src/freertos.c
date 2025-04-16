@@ -181,15 +181,10 @@ __weak void StartIMUTask(void const * argument)
   /* init code for USB_DEVICE */
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN StartIMUTask */
-
-  Imu_Init();
-  portTickType currentIMU;
-  currentIMU = xTaskGetTickCount();
   /* Infinite loop */
   for(;;)
   {
-    INS_Task();
-    vTaskDelayUntil(&currentIMU,1);
+    
   }
   /* USER CODE END StartIMUTask */
 }
@@ -204,23 +199,10 @@ __weak void StartIMUTask(void const * argument)
 __weak void StartChassisTask(void const * argument)
 {
   /* USER CODE BEGIN StartChassisTask */
-  #ifndef LIFTED_DEBUG
-  capData_JHB.Send_data_typedef.Send_data.switchControl = 0x01;  // 开启电容
-  #else
-  capData_JHB.Send_data_typedef.Send_data.switchControl = 0x00;
-  #endif // LIFTED_DEBUG
-
   /* Infinite loop */
   for(;;)
   {
-    CHASSIS_F_Ctl(MOTOR_V_CHASSIS, &DBUS_V_DATA);
-    CAN_F_Send(&hcan1, 0x200, MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
-               MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
-               MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
-               MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
-		// CapSendInit(40 , user_data.power_heat_data.chassis_power , user_data.power_heat_data.chassis_voltage);
-    CapSend_new( user_data.power_heat_data.buffer_energy ,  user_data.power_heat_data.chassis_voltage);
-    vTaskDelay(1);
+    
   }
   /* USER CODE END StartChassisTask */
 }
@@ -235,60 +217,11 @@ __weak void StartChassisTask(void const * argument)
 __weak void StartGimbalTask(void const * argument)
 {
   /* USER CODE BEGIN StartGimbalTask */
-	MOTOR_V_GIMBAL[0].DATA.AIM = TOP.yaw[5];
   /* Infinite loop */
 	
   for(;;)
   {
-      GIMBAL_F_Ctl(MOTOR_V_GIMBAL, &DBUS_V_DATA, &VISION_V_DATA);
-      CAN_F_Send(&hcan2, 0x1FF, 0,
-                MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
-                0,
-                MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND);
-      // 自瞄查看数据
-      VOFA_T_SendTemp(10, 0.0f,
-            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE,
-            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW,
-            (float)VISION_V_DATA.RECV_FLAG,
-            (float)VISION_V_DATA.RECEIVE.TARGET,
-            (float)VISION_V_DATA.RECEIVE.YAW_DATA,
-            (float)TOP.yaw[5],
-            (float)(TOP.yaw[5] * 22.75555f),
-            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].PID_S.OUT.ALL_OUT,
-            99.0f);
-      // 飞坡查看数据
-      // VOFA_T_SendTemp(10, 0.0f,
-      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CURRENT,
-      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CURRENT,
-      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CURRENT,
-      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CURRENT,
-      //       (float)DBUS_V_DATA.is_front_lifted,
-      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.AIM,
-      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.AIM,
-      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.AIM,
-      //       (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.AIM);
-        // VOFA_T_SendTemp(10, 0.0f,
-        //         watch[0], watch[1], watch[2], watch[3], watch[4], watch[5], 
-        //         watch[6], watch[7], watch[8]);
-      // 飞坡匿名查看数据
-      // niming(0xF1, 
-      //       (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CURRENT,
-      //       (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CURRENT,
-      //       (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CURRENT,
-      //       (int16_t)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CURRENT, // y1
-      //       (int16_t)DBUS_V_DATA.is_front_lifted,                     // y2
-      //       0,                                                       // y3
-      //       0, 0, 0,                                                // z1-z3
-      //       0);  
-      // send_sensor_data();                                                    // w
-      // VOFA_T_SendTemp(5, 1.0f,
-      //                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
-      //                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW,
-      //                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
-      //                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE);
-//      xSemaphoreGive(binarySemHandle);
-//    }
-    vTaskDelay(5);
+      
   }
   /* USER CODE END StartGimbalTask */
 }
@@ -306,12 +239,7 @@ __weak void StartAttackTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    ATTACK_F_Ctl(MOTOR_V_ATTACK, &DBUS_V_DATA);
-    CAN_F_Send(&hcan2, 0x200, MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.CAN_SEND,
-              MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.CAN_SEND,
-              MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.CAN_SEND,
-              0);
-    vTaskDelay(1);
+    
   }
   /* USER CODE END StartAttackTask */
 }
@@ -329,14 +257,8 @@ __weak void StartMonitorTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {  
-    ROOT_F_MONITOR_DBUS(&DBUS_V_DATA);
-    TOP_T_Monitor();
-    // VISION_F_Monitor();
-    TOP_T_Cal();
-    // TOP_T_Cal_T();
-    vTaskDelay(1);
-  /* USER CODE END StartMonitorTask */
   }
+  /* USER CODE END StartMonitorTask */
 }
 
 /* USER CODE BEGIN Header_StartvisionTask */
@@ -352,26 +274,7 @@ __weak void StartvisionTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-      // input
-	  if(xSemaphoreTake(binarySemHandle, pdMS_TO_TICKS(1000)) == pdTRUE)
-    {
-      // ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff, 1);
-      xSemaphoreGive(binarySemHandle);
-	  }
-//    }
-    // VOFA_T_Vision();
-    // VOFA_T_SendTemp(9, 0.0f,  // debug yaw pid with top[3]
-    //           (float)user_data.shoot_data.initial_speed,
-    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW,
-    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.SPEED_NOW,
-    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.AIM,
-    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM,
-    //           (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE,
-    //           (float)DBUS_V_DATA.IS_OFF,
-    //           1.0f);
-    vTaskDelay(1);
   }
- 
   /* USER CODE END StartvisionTask */
 }
 

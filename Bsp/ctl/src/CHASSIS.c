@@ -96,10 +96,10 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     CHASSIS_F_Lifited(MOTOR, DBUS);
 
     // pid 解算
-    PID_F_S(&MOTOR[MOTOR_D_CHASSIS_1]);
-    PID_F_S(&MOTOR[MOTOR_D_CHASSIS_2]);
-    PID_F_S(&MOTOR[MOTOR_D_CHASSIS_3]);
-    PID_F_S(&MOTOR[MOTOR_D_CHASSIS_4]);
+    PID_F_SC(&MOTOR[MOTOR_D_CHASSIS_1]);
+    PID_F_SC(&MOTOR[MOTOR_D_CHASSIS_2]);
+    PID_F_SC(&MOTOR[MOTOR_D_CHASSIS_3]);
+    PID_F_SC(&MOTOR[MOTOR_D_CHASSIS_4]);
     // mod = (((DBUS_V_DATA.REMOTE.S1_u8 - 1) == 0) ? 1 : 0);
 	// 		if(DBUS_V_DATA.REMOTE.S1_u8 == 1)
     //          chassis_power_control(1);

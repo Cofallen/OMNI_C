@@ -19,7 +19,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "adc.h"
 #include "can.h"
+#include "crc.h"
 #include "dma.h"
 #include "spi.h"
 #include "tim.h"
@@ -89,6 +91,7 @@ static void MX_NVIC_Init(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -120,6 +123,10 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART6_UART_Init();
   MX_TIM10_Init();
+  MX_ADC1_Init();
+  MX_ADC3_Init();
+  MX_TIM4_Init();
+  MX_CRC_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -142,13 +149,14 @@ int main(void)
 
   /* USER CODE END 2 */
 
-  /* Call init function for freertos objects (in freertos.c) */
+  /* Call init function for freertos objects (in cmsis_os2.c) */
   MX_FREERTOS_Init();
 
   /* Start scheduler */
   osKernelStart();
 
   /* We should never get here as control is now taken by the scheduler */
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -237,7 +245,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 0 */
 
   /* USER CODE END Callback 0 */
-  if (htim->Instance == TIM1) {
+  if (htim->Instance == TIM1)
+  {
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
@@ -245,6 +254,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     {     
       // CDC_Transmit_FS(sd_v_buff, 16);
       ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff, 0);
+      RunTime ++;
+      VISION_V_DATA.SEND.TIME = RunTime;
     }
   /* USER CODE END Callback 1 */
 }
