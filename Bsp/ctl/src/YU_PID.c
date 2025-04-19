@@ -10,7 +10,7 @@
 #include "ROOT.h"
 #include "VISION.h"
 #include "bsp_dwt.h"
-
+float vision_aim = 0;
 /**
  * @brief               自己写的PID初始化，不用读配置文件
  * @details             传入PID基本参数， 通过数组
@@ -132,8 +132,8 @@ uint8_t PID_F_S(TYPEDEF_MOTOR *MOTOR)
 
 uint8_t PID_F_VISION_YAW(TYPEDEF_MOTOR *MOTOR)
 {
-    MOTOR->DATA.AIM = (VISION_V_DATA.RECEIVE.YAW_DATA); // 
-    MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&VISION_PID_YAW_ANGLE, MOTOR->DATA.AIM, (TOP.yaw[5]));
+    vision_aim = (VISION_V_DATA.RECEIVE.YAW_DATA); // 
+    MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&VISION_PID_YAW_ANGLE, vision_aim, (TOP.yaw[5]));
     MOTOR->DATA.CAN_SEND = (int16_t)PID_F_Cal(&VISION_PID_YAW_SPEED, -MOTOR->PID_A.OUT.ALL_OUT, ((float)QEKF_INS.Gyro[2] * 50.0f));
     return ROOT_READY;
 }
@@ -141,7 +141,7 @@ uint8_t PID_F_VISION_YAW(TYPEDEF_MOTOR *MOTOR)
 uint8_t PID_F_VISION_PIT(TYPEDEF_MOTOR *MOTOR)
 {
 	MOTOR->DATA.AIM = VISION_V_DATA.RECEIVE.PIT_DATA; //
-    MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&VISION_PID_PIT_ANGLE, MOTOR->DATA.AIM, (TOP.pitch[5]));
+    MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&VISION_PID_PIT_ANGLE, MOTOR->DATA.AIM, (TOP.roll[5]));
     MOTOR->DATA.CAN_SEND = (int16_t)PID_F_Cal(&VISION_PID_PIT_SPEED, -MOTOR->PID_A.OUT.ALL_OUT, (float)QEKF_INS.Gyro[0] * 50.0f);
     return ROOT_READY;
 }
@@ -149,8 +149,8 @@ uint8_t PID_F_VISION_PIT(TYPEDEF_MOTOR *MOTOR)
 
 uint8_t PID_F_P_T(TYPEDEF_MOTOR *MOTOR)
 {
-    MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&MOTOR->PID_A, MOTOR->DATA.AIM, (float)MOTOR->DATA.ANGLE_NOW);
-    MOTOR->DATA.CAN_SEND = (int16_t)PID_F_Cal(&MOTOR->PID_S, MOTOR->PID_A.OUT.ALL_OUT, (float)MOTOR->DATA.SPEED_NOW);
+    MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&MOTOR->PID_A, MOTOR->DATA.AIM, TOP.roll[5]);
+    MOTOR->DATA.CAN_SEND = (int16_t)PID_F_Cal(&MOTOR->PID_S, -MOTOR->PID_A.OUT.ALL_OUT, (float)QEKF_INS.Gyro[0] * 100.0f);
     return ROOT_READY;
 }
 

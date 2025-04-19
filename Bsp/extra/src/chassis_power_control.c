@@ -33,7 +33,7 @@ void chassis_power_control(uint8_t cap_state, uint8_t is_flying)
     //*可编辑部分*end*//
 
     #ifdef LIFTED_DEBUG
-	uint16_t max_power_limit = 120;  //最大功率限制
+	uint16_t max_power_limit = 60;  //最大功率限制
 
     #else
     uint16_t max_power_limit = 120;  //最大功率限制

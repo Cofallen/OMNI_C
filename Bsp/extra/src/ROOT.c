@@ -44,8 +44,8 @@ uint8_t ROOT_F_PIDinit()
     const float PID_V_GIMBAL_YAW_ANGLE[5] = {0.36f, 0.0f, 0.0f, 200.0f, 2000.0f};
 //    const float PID_V_GIMBAL_PIT_SPEED[5] = {130.0f, 0.0f, 0, 1000.0f, 20000.0f};
 //    const float PID_V_GIMBAL_PIT_ANGLE[5] = {0.85f, 0.0007f, 0, 1000.0f, 3000.0f};
-	const float PID_V_GIMBAL_PIT_SPEED[5] = {100.0f, 20.0f, 0, 2000.0f, 30000.0f};
-    const float PID_V_GIMBAL_PIT_ANGLE[5] = {1.625f, 0.045f, 0.0f, 200.0f, 7000.0f};
+	const float PID_V_GIMBAL_PIT_SPEED[5] = {200.0f, 0.02f, 0, 1000.0f, 20000.0f};
+    const float PID_V_GIMBAL_PIT_ANGLE[5] = {35.0f, 0.0f, 0, 1000.0f, 10000.0f};
 	
     const float PID_V_ATTACK_L_SPEED[5] = {14.0f, 0, 0, 1000.0f, 30000.0f};
     const float PID_V_ATTACK_R_SPEED[5] = {14.0f, 0, 0, 1000.0f, 30000.0f};
@@ -58,10 +58,10 @@ uint8_t ROOT_F_PIDinit()
     const float PID_V_TOP_OFF_S[5] = {100.5f, 0.0f, 0.0f, 0.0f, 30000.0f};
     const float PID_V_TOP_OFF_A[5] = {1.5f, 0.0f, 0.0f, 0.0f, 2000.0f};
 	
-    const float PID_V_VISION_YAW_SPEED[5] = {300.0f, 0.0f, 70.0f, 0.0f, 29000.0f};
-    const float PID_V_VISION_YAW_ANGLE[5] = {3.80f, 0.0f, 10.0f, 0.0f, 10000.0f};
+    const float PID_V_VISION_YAW_SPEED[5] = {400.0f, 0.0f, 10.0f, 0.0f, 29000.0f};
+    const float PID_V_VISION_YAW_ANGLE[5] = {2.2f, 0.005f, 10.0f, 320.0f, 12000.0f};
     const float PID_V_VISION_PIT_SPEED[5] = {300.0f, 0.02f, 0, 1000.0f, 20000.0f};
-    const float PID_V_VISION_PIT_ANGLE[5] = {6.0f, 0.0f, 0, 1000.0f, 10000.0f};
+    const float PID_V_VISION_PIT_ANGLE[5] = {10.0f, 0.0025f, 0, 320.0f, 10000.0f};
 
     float PID_V_GIMBAL_YAW_F[3] = {1.0f, 0.0f, 0.0f};
     float PID_V_GIMBAL_PIT_F[3] = {1.0f, 0.0f, 0.0f};
@@ -110,7 +110,7 @@ void ROOT_F_Init()
     _ui_init_default_init6_0();
     #ifdef OLDHEAD
     MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 3422.0f;  // 云台初始化角度
-    MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM = 3000.0f;
+    MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM = 0.0f;
 	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS = 1;   // @TODO when yaw init, aim 0->angle_init, make yaw shaking.
 	#endif
 

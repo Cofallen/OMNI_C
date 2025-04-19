@@ -266,7 +266,13 @@
             "path": "../Bsp/extra/src/chassis_power_control.c"
           },
           {
+            "path": "../Bsp/extra/src/robot.c"
+          },
+          {
             "path": "../Bsp/extra/src/niming.c"
+          },
+          {
+            "path": "../Bsp/extra/src/ui_update.c"
           }
         ],
         "folders": []
@@ -519,11 +525,7 @@
       },
       {
         "name": "robot",
-        "files": [
-          {
-            "path": "../Bsp/extra/src/robot.c"
-          }
-        ],
+        "files": [],
         "folders": []
       }
     ]
@@ -689,6 +691,7 @@
           "../Middlewares/ST/STM32_USB_Device_Library/Core/Inc",
           "../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc",
           "../Bsp/robot/inc",
+          "../UI",
           "RTE/_OMNI_C"
         ],
         "libList": [],

@@ -12,6 +12,7 @@ float LimitRange(float value, float MAX_VALUE, float MIN_VALUE);
 void convertAngleToIndex(float angle, float *index);
 float convertInsexToAngle(float value);
 float spinLittleRound(double *input);
+// float spinLittleRound_l(double *input);
 float mouseFilter(float last, float now, float thresholdValue);
 int abs_int(int16_t data);
 float SectionLimit_f(float max , float min , float data);

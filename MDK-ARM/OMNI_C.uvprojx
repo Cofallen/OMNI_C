@@ -1270,6 +1270,11 @@
               <FileType>1</FileType>
               <FilePath>..\Bsp\extra\src\niming.c</FilePath>
             </File>
+            <File>
+              <FileName>ui_update.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Bsp\extra\src\ui_update.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

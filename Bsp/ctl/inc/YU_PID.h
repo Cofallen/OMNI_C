@@ -21,5 +21,6 @@ uint8_t PID_F_P_T(TYPEDEF_MOTOR *MOTOR);
 void Feedforward_Init(Feedforward_t *ffc,float max_out,float *c,float lpf_rc,uint16_t ref_dot_ols_order,uint16_t ref_ddot_ols_order);
 float Feedforward_Calculate(Feedforward_t *ffc, float ref);
 
+extern float vision_aim;
 
 #endif // !__PID_H__

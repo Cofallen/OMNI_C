@@ -1,4 +1,5 @@
-omni_c/robot.o: ..\Bsp\extra\src\robot.c ..\Core\Inc\main.h \
+omni_c/ui_update.o: ..\Bsp\extra\src\ui_update.c \
+  ..\Bsp\extra\inc\ui_update.h ..\Core\Inc\main.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h \
   ..\Core\Inc\stm32f4xx_hal_conf.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h \
@@ -52,37 +53,12 @@ omni_c/robot.o: ..\Bsp\extra\src\robot.c ..\Core\Inc\main.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\queue.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\semphr.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\event_groups.h \
-  ..\Bsp\extra\inc\robot.h ..\LIB\imu_temp_control_task.h \
-  ..\Core\Inc\can.h ..\Bsp\dev\inc\TIM_DEV.h ..\Bsp\ctl\inc\MOTOR.h \
-  ..\Bsp\ctl\inc\feedforward.h ..\LIB\user_lib.h \
-  ..\Bsp\dev\inc\CAN_DEV.h ..\Bsp\extra\inc\DEFINE.h \
-  ..\Bsp\ctl\inc\CHASSIS.h ..\Bsp\ctl\inc\DBUS.h ..\Bsp\ctl\inc\GIMBAL.h \
-  ..\Bsp\extra\inc\VISION.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h \
-  ..\Bsp\extra\inc\ROOT.h ..\Bsp\ctl\inc\ATTACK.h \
-  ..\Bsp\extra\inc\JUDGEMENT.h ..\Bsp\extra\inc\VOFA.h \
-  ..\Bsp\ctl\inc\TOP.h ..\LIB\QuaternionEKF.h ..\LIB\kalman_filter.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdlib.h \
-  ..\CMSIS\DSP\Inc\dsp\matrix_functions.h \
-  ..\CMSIS\DSP\Inc\arm_math_types.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\string.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\math.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\float.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\limits.h \
-  ..\CMSIS\DSP\Inc\arm_math_memory.h ..\CMSIS\DSP\Inc\dsp\none.h \
-  ..\CMSIS\DSP\Inc\dsp\utils.h \
-  ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
-  ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h ..\JUDGE\Read_Data.h \
-  ..\Core\Inc\usart.h ..\Bsp\extra\inc\YU_MATH.h \
-  ..\Bsp\extra\inc\chassis_power_control.h ..\Bsp\ctl\inc\CAP.h \
-  ..\Core\Inc\tim.h ..\Bsp\extra\inc\niming.h \
-  ..\USB_DEVICE\App\usb_device.h \
-  ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_def.h \
-  ..\USB_DEVICE\Target\usbd_conf.h \
+  ..\UI\ui_default_init1_0.h ..\UI\ui_interface.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdio.h \
-  ..\LIB\bsp_dwt.h ..\Bsp\extra\inc\ui_update.h \
-  ..\UI\ui_default_init1_0.h ..\UI\ui_interface.h ..\UI\ui_types.h \
-  ..\UI\ui_default_init2_0.h ..\UI\ui_default_init3_0.h \
-  ..\UI\ui_default_init4_0.h ..\UI\ui_default_init5_0.h \
-  ..\UI\ui_default_init5_1.h ..\UI\ui_default_init5_2.h \
-  ..\UI\ui_default_init5_3.h ..\UI\ui_default_init6_0.h
+  ..\UI\ui_types.h ..\Core\Inc\usart.h ..\UI\ui_default_init2_0.h \
+  ..\UI\ui_default_init3_0.h ..\UI\ui_default_init4_0.h \
+  ..\UI\ui_default_init5_0.h ..\UI\ui_default_init5_1.h \
+  ..\UI\ui_default_init5_2.h ..\UI\ui_default_init5_3.h \
+  ..\UI\ui_default_init6_0.h ..\UI\ui_default_init0_0.h \
+  ..\UI\ui_default_init0_1.h ..\UI\ui_default_init0_2.h \
+  ..\Bsp\ctl\inc\DBUS.h

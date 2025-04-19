@@ -42,7 +42,7 @@ typedef struct TYPEDEF_VISION
   uint8_t OriginData[15];
   uint8_t RECV_FLAG;
   int RECV_OutTime;
-  float VISION_V_YAWERROR;
+  uint32_t block_Time;
 }TYPEDEF_VISION;
 
 union ReceiveDataUnion_typedef							//共用体(用于接受各种数据)(视觉，陀螺仪)

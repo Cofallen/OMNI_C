@@ -254,7 +254,8 @@ void Vofa_intergrate(uint8_t mod)
                 (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
                 (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW,
                 (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
-                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE);
+				(float)TOP.yaw[5]
+				);
         break;
     case 2:
         VOFA_T_SendTemp(10, 0.0f,
@@ -281,11 +282,11 @@ void Vofa_intergrate(uint8_t mod)
         break;
     case 4:
         VOFA_T_SendTemp(10, 0.0f,
-            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INFINITE,
-            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW,
-            (float)VISION_V_DATA.RECV_FLAG,
+            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
+            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
             (float)VISION_V_DATA.RECEIVE.TARGET,
             (float)VISION_V_DATA.RECEIVE.YAW_DATA,
+            (float)VISION_V_DATA.RECEIVE.PIT_DATA,
             (float)TOP.yaw[5],
             (float)TOP.roll[5],
             (float)(dt_pc),

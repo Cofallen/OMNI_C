@@ -28,6 +28,8 @@
 #include "usb_device.h"
 #include "bsp_dwt.h"
 
+#include "ui_update.h"
+
 // @todo 放到结构体里
 float dt_pc = 0;
 
@@ -57,10 +59,10 @@ void StartChassisTask(void const * argument)
   for(;;)
   {
     CHASSIS_F_Ctl(MOTOR_V_CHASSIS, &DBUS_V_DATA);
-//    CAN_F_Send(&hcan1, 0x200, MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
-//                MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
-//                MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
-//                MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
+    // CAN_F_Send(&hcan1, 0x200, MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
+    //            MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
+    //            MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
+    //            MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
 		// CapSendInit(40 , user_data.power_heat_data.chassis_power , user_data.power_heat_data.chassis_voltage);
     CapSend_new( user_data.power_heat_data.buffer_energy ,  user_data.power_heat_data.chassis_voltage);
     vTaskDelay(1);
@@ -73,7 +75,7 @@ void StartGimbalTask(void const * argument)
   dt_pc = 0;
   static uint32_t INS_DWT_Count = 0;
 	MOTOR_V_GIMBAL[0].DATA.AIM = TOP.yaw[5];
-  
+
   for(;;)
   {
       GIMBAL_F_Ctl(MOTOR_V_GIMBAL, &DBUS_V_DATA, &VISION_V_DATA);
@@ -82,7 +84,7 @@ void StartGimbalTask(void const * argument)
                 0,
                 MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND);
       // 自瞄查看数据
-      Vofa_intergrate(4);
+      Vofa_intergrate(1);
       dt_pc = (float)DWT_GetDeltaT(&INS_DWT_Count);
 //      xSemaphoreGive(binarySemHandle);
 //    }
@@ -107,6 +109,7 @@ void StartMonitorTask(void const * argument)
 {
   for(;;)
   {  
+
     ROOT_F_MONITOR_DBUS(&DBUS_V_DATA);
     TOP_T_Monitor();
     // VISION_F_Monitor();
@@ -118,14 +121,17 @@ void StartMonitorTask(void const * argument)
 
 void StartvisionTask(void const * argument)
 {
+  RobotUI_Static_Init();
   for(;;)
   {
       // input
-	  if(xSemaphoreTake(binarySemHandle, pdMS_TO_TICKS(1000)) == pdTRUE)
-      {  
-      // ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff, 1);
-      xSemaphoreGive(binarySemHandle);
-	  }
-    vTaskDelay(1);
+      // RobotUI_Dynamic();
+      RobotUI_Static_Init();
+	  // if(xSemaphoreTake(binarySemHandle, pdMS_TO_TICKS(1000)) == pdTRUE)
+    //   {  
+    //   // ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff, 1);
+    //   xSemaphoreGive(binarySemHandle);
+	  // }
+    vTaskDelay(2000);
   }
 }

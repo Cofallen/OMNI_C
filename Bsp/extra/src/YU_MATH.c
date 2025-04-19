@@ -63,6 +63,19 @@ float spinLittleRound(double *input)
     return *input;
 }
 
+// -180-180 走小圈
+// float spinLittleRound_l(double *input)
+// {
+// 	if (input[NOW] - input[LAST] > 180)
+// 	{
+// 		input[NOW] -= 360;
+// 	}
+// 	else if (input[NOW] - input[LAST] < -180)
+// 	{
+// 		input[NOW] -= 360;
+// 	}
+// 	return input[NOW];
+// }
 void setbit(uint8_t* byte , int position , int value)
 {
 	unsigned char mask = 1 << position;  // 生成一个只有指定位置为1的掩码
