@@ -11,4 +11,7 @@ extern float xx, yy;
 extern double ANGLE_Rad, ANGLE_Relative;
 
 extern float watch[10];
+
+static void CHASSIS_F_SoftStart(TYPEDEF_MOTOR *MOTOR);
+
 #endif // !__CHASSIS_H__

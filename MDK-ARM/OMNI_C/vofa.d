@@ -73,4 +73,4 @@ omni_c/vofa.o: ..\Bsp\extra\src\VOFA.c ..\Core\Inc\main.h \
   ..\CMSIS\DSP\Inc\dsp\utils.h \
   ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
   ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h ..\Bsp\extra\inc\robot.h \
-  ..\Bsp\ctl\inc\YU_PID.h
+  ..\Bsp\ctl\inc\YU_PID.h ..\Bsp\extra\inc\ROOT.h

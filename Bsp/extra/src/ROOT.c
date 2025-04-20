@@ -40,7 +40,7 @@ uint8_t ROOT_F_PIDinit()
 //	const float PID_V_GIMBAL_YAW_SPEED[5] = {17.0f, 0.0f, 0.5f, 100.0f, 10000.0f};//正常值
 //    const float PID_V_GIMBAL_YAW_ANGLE[5] = {9.0f, 0.0f, 0.0f, 200.0f, 5000.0f};
     const float PID_V_GIMBAL_YAW_CURRENT[5] = {1.0f, 0.0f, 0.0f, 200.0f, 30000.0f};
-    const float PID_V_GIMBAL_YAW_SPEED[5] = {400.0f, 0.0f, 0.5f, 100.0f, 30000.0f};//正常值
+    const float PID_V_GIMBAL_YAW_SPEED[5] = {800.0f, 0.0f, 0.5f, 100.0f, 30000.0f};//正常值
     const float PID_V_GIMBAL_YAW_ANGLE[5] = {0.36f, 0.0f, 0.0f, 200.0f, 2000.0f};
 //    const float PID_V_GIMBAL_PIT_SPEED[5] = {130.0f, 0.0f, 0, 1000.0f, 20000.0f};
 //    const float PID_V_GIMBAL_PIT_ANGLE[5] = {0.85f, 0.0007f, 0, 1000.0f, 3000.0f};
@@ -54,14 +54,14 @@ uint8_t ROOT_F_PIDinit()
     const float PID_V_ATTACK_L_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
     const float PID_V_ATTACK_R_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
 
-    const float FOLLOW_PID_V[5] = {2.0f, 0.0f, 0.0f, 0.0f, 3500.0f};
+    const float FOLLOW_PID_V[5] = {0.5f, 0.0f, 0.0f, 0.0f, 6000.0f};
     const float PID_V_TOP_OFF_S[5] = {100.5f, 0.0f, 0.0f, 0.0f, 30000.0f};
     const float PID_V_TOP_OFF_A[5] = {1.5f, 0.0f, 0.0f, 0.0f, 2000.0f};
 	
-    const float PID_V_VISION_YAW_SPEED[5] = {400.0f, 0.0f, 10.0f, 0.0f, 29000.0f};
-    const float PID_V_VISION_YAW_ANGLE[5] = {2.2f, 0.005f, 10.0f, 320.0f, 12000.0f};
+    const float PID_V_VISION_YAW_SPEED[5] = {700.0f, 0.0f, 10.0f, 0.0f, 29000.0f};
+    const float PID_V_VISION_YAW_ANGLE[5] = {2.2f, 0.007f, 10.0f, 320.0f, 12000.0f};
     const float PID_V_VISION_PIT_SPEED[5] = {300.0f, 0.02f, 0, 1000.0f, 20000.0f};
-    const float PID_V_VISION_PIT_ANGLE[5] = {10.0f, 0.0025f, 0, 320.0f, 10000.0f};
+    const float PID_V_VISION_PIT_ANGLE[5] = {10.0f, 0.0025f, 0, 420.0f, 10000.0f};
 
     float PID_V_GIMBAL_YAW_F[3] = {1.0f, 0.0f, 0.0f};
     float PID_V_GIMBAL_PIT_F[3] = {1.0f, 0.0f, 0.0f};

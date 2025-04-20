@@ -166,7 +166,7 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
 
     // @veision 3, final code, this code is a stable speed
     // if (DBUS_V_DATA.REMOTE.S1_u8 == 1 || DBUS_V_DATA.REMOTE.S2_u8 == 2)  // 3 is the fire button
-    if (DBUS_V_DATA.KEY_BOARD.CTRL == 1 || DBUS_V_DATA.REMOTE.S2_u8 == 8)  // 3 is the fire button
+    if (DBUS_V_DATA.KEY_BOARD.CTRL == 1 || DBUS_V_DATA.REMOTE.S2_u8 == 2)  // 3 is the fire button
     {
         MOTOR->DATA.AIM = ATTACK_V_PARAM.SPEED;
     }
@@ -304,7 +304,7 @@ double *ATTACK_T_FIT(int size)
             IOTA = 0;  // replace the head of array
         double error = array[0] * user_data.shoot_data.initial_speed + array[1] - MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW;
 
-        VOFA_T_Send(3, array[0], array[1], error);  // the place is not sure
+        VOFA_T_SendTemp(5, array[0], array[1], error, user_data.shoot_data.initial_speed, 5.0f);  // the place is not sure
     }
 
     free (bufferA);

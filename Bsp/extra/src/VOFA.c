@@ -14,6 +14,7 @@
 #include "TOP.h"
 #include "robot.h"
 #include "YU_PID.h"
+#include "ROOT.h"
 
 union 
 {
@@ -250,11 +251,12 @@ void Vofa_intergrate(uint8_t mod)
                 watch[6], watch[7], watch[8]);
         break;
     case 1:
-        VOFA_T_SendTemp(5, 1.0f,
+        VOFA_T_SendTemp(6, 1.0f,
                 (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
-                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW,
+                (float)TOP.roll[5],
                 (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
-				(float)TOP.yaw[5]
+				(float)TOP.yaw[3],
+                (float)DBUS_V_DATA.IS_OFF
 				);
         break;
     case 2:
@@ -283,10 +285,10 @@ void Vofa_intergrate(uint8_t mod)
     case 4:
         VOFA_T_SendTemp(10, 0.0f,
             (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
-            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
-            (float)VISION_V_DATA.RECEIVE.TARGET,
-            (float)VISION_V_DATA.RECEIVE.YAW_DATA,
-            (float)VISION_V_DATA.RECEIVE.PIT_DATA,
+            (float)vision_aim,
+            (float)VISION_V_DATA.RECEIVE.fire,
+            (float)VISION_PID_YAW_ANGLE.OUT.ERROR[NOW],
+            (float)VISION_PID_PIT_ANGLE.OUT.ERROR[NOW],
             (float)TOP.yaw[5],
             (float)TOP.roll[5],
             (float)(dt_pc),

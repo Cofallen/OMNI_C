@@ -21,19 +21,19 @@ void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, TYPEDEF_VISION *VISI
     case 3:; case 1:  // 遥控
         {
             #ifdef LIFTED_DEBUG
-            MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += (-(float)DBUS->REMOTE.CH2_int16 * 0.04f - MATH_D_LIMIT(15, -15, DBUS->MOUSE.X_FLT * 0.2f) + (float) (-DBUS->KEY_BOARD.E + DBUS->KEY_BOARD.Q ) * 15.0f);
+            MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += (-(float)DBUS->REMOTE.CH2_int16 * 0.008f - MATH_D_LIMIT(15, -15, DBUS->MOUSE.X_FLT * 0.08f) + (float) (-DBUS->KEY_BOARD.E + DBUS->KEY_BOARD.Q ) * 15.0f);
             #else
             MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += (-(float)DBUS->REMOTE.CH2_int16 * 0.03f - MATH_D_LIMIT(25, -25, DBUS->MOUSE.X_FLT * 0.5f) + (float) (-DBUS->KEY_BOARD.E + DBUS->KEY_BOARD.Q ) * 30.0f + (float)yawAngle);
             #endif
 
             yawAngle = 0.0f;
-            MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += (float)DBUS->REMOTE.CH3_int16 * 0.0015f + DBUS->MOUSE.Y_FLT * 0.06f;
+            MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM += (float)DBUS->REMOTE.CH3_int16 * 0.0003f - DBUS->MOUSE.Y_FLT * 0.004f;
             MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = MATH_D_LIMIT(GIMBAL_PIT_MAX, GIMBAL_PIT_MIN, MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM);
             
             if (MATH_D_ABS((MOTOR[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW + 18.0f)) < 0.5f)
             {
                 MOTOR[MOTOR_D_GIMBAL_PIT].PID_S.IN.KI = 0.001f;
-				MOTOR[MOTOR_D_GIMBAL_PIT].PID_S.IN.KP = 80.0f;
+				// MOTOR[MOTOR_D_GIMBAL_PIT].PID_S.IN.KP = 80.0f;
             }
             else 
             {
@@ -45,9 +45,12 @@ void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, TYPEDEF_VISION *VISI
         }
         break;
 
-    case 4:  // 发射
+    case 0:  // 发射
         {
-
+            (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM = TOP.yaw[3]) : (MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM = MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM); 
+            (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = TOP.roll[5]) : (MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM);
+            PID_F_G(&MOTOR[MOTOR_D_GIMBAL_YAW]);
+            PID_F_P_T(&MOTOR[MOTOR_D_GIMBAL_PIT]);
         }
         break;
 

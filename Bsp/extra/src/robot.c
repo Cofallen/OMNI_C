@@ -53,18 +53,18 @@ void StartChassisTask(void const * argument)
   #ifndef LIFTED_DEBUG
   capData_JHB.Send_data_typedef.Send_data.switchControl = 0x01;  // �?启电�?
   #else
-  capData_JHB.Send_data_typedef.Send_data.switchControl = 0x00;
+  capData_JHB.Send_data_typedef.Send_data.switchControl = 0x01;
   #endif // LIFTED_DEBUG
 
   for(;;)
   {
     CHASSIS_F_Ctl(MOTOR_V_CHASSIS, &DBUS_V_DATA);
-    // CAN_F_Send(&hcan1, 0x200, MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
-    //            MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
-    //            MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
-    //            MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
+    CAN_F_Send(&hcan1, 0x200, MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
+               MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
+               MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
+               MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
 		// CapSendInit(40 , user_data.power_heat_data.chassis_power , user_data.power_heat_data.chassis_voltage);
-    CapSend_new( user_data.power_heat_data.buffer_energy ,  user_data.power_heat_data.chassis_voltage);
+    
     vTaskDelay(1);
   }
 }
@@ -85,10 +85,11 @@ void StartGimbalTask(void const * argument)
                 MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND);
       // 自瞄查看数据
       Vofa_intergrate(1);
+      // ATTACK_T_FIT(20);
       dt_pc = (float)DWT_GetDeltaT(&INS_DWT_Count);
 //      xSemaphoreGive(binarySemHandle);
 //    }
-    vTaskDelay(5);
+    vTaskDelay(1);
   }
 }
 

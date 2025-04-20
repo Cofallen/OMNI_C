@@ -357,6 +357,11 @@
           <WinNumber>1</WinNumber>
           <ItemText>user_data,0x0A</ItemText>
         </Ww>
+        <Ww>
+          <count>37</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>FOLLOW_PID</ItemText>
+        </Ww>
       </WatchWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>

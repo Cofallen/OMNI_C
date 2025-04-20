@@ -26,7 +26,7 @@ int mod = 0;
 #define REAR_POWER_BOOST        1.4f     // 后轮功率最低提升系数
 
 #define FILTER_COEF 0.9f         // 低通滤波系数
-#define FRONT_LIFT_THRESHOLD 5000.0f  // 前后轮电流差阈值
+#define FRONT_LIFT_THRESHOLD 3000.0f  // 前后轮电流差阈值
 #define LIFT_TIME_THRESHOLD 100      // 连续检测次数阈值
 #define LANDING_TIME_THRESHOLD 50    // 着地确认次数阈值
 
@@ -45,10 +45,20 @@ uint8_t real_lift_state = 0;    // 0=地面, 1=飞坡中
 
 float watch[10] = {0};
 
+
+// 添加缓启动相关参数
+#define SOFT_START_RATE      0.08f   // 缓启动速率系数 (0.0-1.0)，越小越平滑
+#define SOFT_START_THRESHOLD 20.0f   // 小于此阈值时直接到达目标值
+
+// 上一次的电机目标值
+static float last_motor_aim[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+static uint8_t soft_start_init = 0;  // 是否已初始化
+
+
 void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {
     // 运动学解算
-    float VX = 0.0f, VY = 0.0f, VR = 0.0f, COMPONENT[2] = {2.5, 3.5};
+    float VX = 0.0f, VY = 0.0f, VR = 0.0f, COMPONENT[2] = {4.0, 3.5};
     float ROTATE_VX = 0.0f, ROTATE_VY = 0.0f;  // 旋转矩阵
     double PRIDICT = 0.0f;    // 底盘预测，前馈
 
@@ -66,11 +76,15 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     }
     
     // @TODO 2. VR的负号和-ANGLE_Relative的负号测试是否可以全换成正号
-    (!((DBUS->REMOTE.DIR_int16)||(DBUS->KEY_BOARD.SHIFT)))?(PRIDICT = DBUS->REMOTE.CH2_int16 * 4.0f,VR = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative)):(PRIDICT = 0.0f);     // 分离 滚轮影响小陀螺
+    if (DBUS->REMOTE.S2_u8 != 1)
+    {
+        (!((DBUS->REMOTE.DIR_int16)||(DBUS->KEY_BOARD.SHIFT)))?(PRIDICT = DBUS->REMOTE.CH2_int16 * 10.0f,VR = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative)):(PRIDICT = 0.0f);     // 分离 滚轮影响小陀螺
+    }
+    
 
     if (DBUS->REMOTE.S2_u8 == 1)
     {
-       VR = 440.0f;
+    //    VR = 440.0f;
     //    VISION_V_DATA.RECEIVE.fire = 1;
     }
     else
@@ -93,6 +107,7 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_CHASSIS_3].DATA.AIM = 0) : (MOTOR[MOTOR_D_CHASSIS_3].DATA.AIM = (-ROTATE_VX + ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT);
     (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_CHASSIS_4].DATA.AIM = 0) : (MOTOR[MOTOR_D_CHASSIS_4].DATA.AIM = ( ROTATE_VX + ROTATE_VY - VR * COMPONENT[0]) * COMPONENT[1] + PRIDICT);
 
+    CHASSIS_F_SoftStart(MOTOR);
     CHASSIS_F_Lifited(MOTOR, DBUS);
 
     // pid 解算
@@ -104,7 +119,7 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 	// 		if(DBUS_V_DATA.REMOTE.S1_u8 == 1)
     //          chassis_power_control(1);
 	// 		else
-	chassis_power_control(0, DBUS->is_front_lifted);
+	chassis_power_control(DBUS_V_DATA.REMOTE.S2_u8 == 1, DBUS->is_front_lifted);
 
     //正常使用电容
     // chassis_power_control(DBUS_V_DATA.REMOTE.S1_u8 == 1 && capData_t.capSetData.dataNeaten.power_key ==1 &&capData_t.capSetData.dataNeaten.out_switch == 1) ;
@@ -200,4 +215,33 @@ static void CHASSIS_F_Lifited(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     watch[4] = front_power_scale;
     watch[5] = rear_power_scale;
     
+}
+
+// 缓启动函数
+static void CHASSIS_F_SoftStart(TYPEDEF_MOTOR *MOTOR)
+{
+    // 4个电机逐步实现目标值
+    for(uint8_t i = 0; i < 4; i++)
+    {
+        // 计算目标值与当前值的差距
+        float target_aim = MOTOR[MOTOR_D_CHASSIS_1 + i].DATA.AIM;
+        float aim_diff = target_aim - last_motor_aim[i];
+        
+        // 如果是首次使用或差值很小，直接赋值
+        if(!soft_start_init || fabsf(aim_diff) < SOFT_START_THRESHOLD)
+        {
+            last_motor_aim[i] = target_aim;
+        }
+        else
+        {
+            // 限制每次更新的最大变化量，实现平滑过渡
+            last_motor_aim[i] += aim_diff * SOFT_START_RATE;
+        }
+        
+        // 应用平滑后的目标值
+        MOTOR[MOTOR_D_CHASSIS_1 + i].DATA.AIM = last_motor_aim[i];
+    }
+    
+    // 标记为已初始化
+    soft_start_init = 1;
 }
