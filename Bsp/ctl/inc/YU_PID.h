@@ -22,5 +22,7 @@ void Feedforward_Init(Feedforward_t *ffc,float max_out,float *c,float lpf_rc,uin
 float Feedforward_Calculate(Feedforward_t *ffc, float ref);
 
 extern float vision_aim;
+extern float current[2];
+void PID_F_Current(TYPEDEF_MOTOR *MOTOR, float aim_currnet);
 
 #endif // !__PID_H__

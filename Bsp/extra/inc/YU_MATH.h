@@ -16,4 +16,9 @@ float spinLittleRound(double *input);
 float mouseFilter(float last, float now, float thresholdValue);
 int abs_int(int16_t data);
 float SectionLimit_f(float max , float min , float data);
+
+float YU_MATH_LowPassFilter(float alpha, float *input);
+float YU_MATH_LowPassFilter_MC(float alpha, float *input, uint8_t channel);
+
+
 #endif // !__MATH_H__

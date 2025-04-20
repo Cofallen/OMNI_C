@@ -251,12 +251,14 @@ void Vofa_intergrate(uint8_t mod)
                 watch[6], watch[7], watch[8]);
         break;
     case 1:
-        VOFA_T_SendTemp(6, 1.0f,
+        VOFA_T_SendTemp(8, 1.0f,
                 (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
                 (float)TOP.roll[5],
                 (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
 				(float)TOP.yaw[3],
-                (float)DBUS_V_DATA.IS_OFF
+                (float)DBUS_V_DATA.IS_OFF,
+                (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CURRENT,
+                current[0]
 				);
         break;
     case 2:
@@ -303,6 +305,14 @@ void Vofa_intergrate(uint8_t mod)
             (int16_t)DBUS_V_DATA.is_front_lifted,                     // y2
             0,                                                       // y3
             0, 0, 0,                                                // z1-z3
+            0);  
+        break;
+    case 6:
+        niming(0xF1, 
+            (int16_t)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
+            (int16_t)TOP.yaw[3], 
+            0, 0, 0, 0,                        // y3
+            0, 0, 0,                                              // z1-z3
             0);  
         break;
     default:

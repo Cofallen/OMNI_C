@@ -161,3 +161,65 @@ float SectionLimit_f(float max , float min , float data)
 		}
 	}
 }
+
+
+/**
+ * @brief           一阶低通滤波器
+ * @details         使用一阶IIR滤波算法实现低通滤波，可有效去除信号中的高频噪声
+ * @param alpha   : 滤波系数 (0.0-1.0)
+ *                  - 值越小，滤波效果越强，平滑度越高，但响应越慢
+ *                  - 值越大，响应越快，但平滑效果越差
+ *                  - 推荐值范围: 0.01-0.3
+ * @param input   : 当前输入值
+ * @return          滤波后的输出值
+ */
+float YU_MATH_LowPassFilter(float alpha, float *input)
+{
+    // 首次调用时直接使用输入值初始化
+    if (input[LAST] == 0.0f && input[NOW] != 0.0f) {
+        input[LAST] = input[NOW];
+        return input[NOW];
+    }
+    
+    // 计算新的滤波输出: y[n] = alpha * x[n] + (1-alpha) * y[n-1]
+    float output = alpha * input[NOW] + (1.0f - alpha) * input[LAST];
+    
+    // 更新上一次的输出
+    input[LAST] = output;
+    
+    return output;
+}
+
+/**
+ * @brief           具有多通道支持的一阶低通滤波器
+ * @details         多通道版本，可同时处理多路不同信号
+ * @param alpha   : 滤波系数 (0.0-1.0)
+ * @param input   : 输入数组，input[NOW]为当前值，input[LAST]存储滤波后结果
+ * @param channel : 通道号 (0-7)，用于区分不同信号
+ * @return          滤波后的输出值
+ */
+float YU_MATH_LowPassFilter_MC(float alpha, float *input, uint8_t channel)
+{
+    // 定义多个通道的上一次输出，仅用于初始化
+    static uint8_t initialized[8] = {0};
+    
+    // 确保通道号在有效范围内
+    if (channel >= 8) {
+        channel = 0;
+    }
+    
+    // 首次调用特定通道时初始化
+    if (!initialized[channel]) {
+        input[LAST] = input[NOW];
+        initialized[channel] = 1;
+        return input[NOW];
+    }
+    
+    // 计算新的滤波输出: y[n] = alpha * x[n] + (1-alpha) * y[n-1]
+    float output = alpha * input[NOW] + (1.0f - alpha) * input[LAST];
+    
+    // 更新上一次的输出
+    input[LAST] = output;
+    
+    return output;
+}
