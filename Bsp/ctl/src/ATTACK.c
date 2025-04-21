@@ -166,7 +166,7 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
 
     // @veision 3, final code, this code is a stable speed
     // if (DBUS_V_DATA.REMOTE.S1_u8 == 1 || DBUS_V_DATA.REMOTE.S2_u8 == 2)  // 3 is the fire button
-    if (DBUS_V_DATA.KEY_BOARD.CTRL == 1 || DBUS_V_DATA.REMOTE.S2_u8 == 2)  // 3 is the fire button
+    if (DBUS_V_DATA.KEY_BOARD.CTRL == 1 || DBUS_V_DATA.REMOTE.S2_u8 == 8)  // 3 is the fire button
     {
         MOTOR->DATA.AIM = ATTACK_V_PARAM.SPEED;
     }

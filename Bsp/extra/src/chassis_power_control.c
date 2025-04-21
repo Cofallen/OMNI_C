@@ -28,8 +28,8 @@ void chassis_power_control(uint8_t cap_state, uint8_t is_flying)
 {
     //*可编辑部分*begin*//
     const uint16_t PowerCompensation = 60;  //正常模式下的功率补偿
-    const uint16_t SuperMaxPower = 50;	    //超级电容下的功率补偿
-    const uint16_t capValt = 140;	         //强制退出的电压阈值
+    const uint16_t SuperMaxPower = 100;	    //飞坡电容下的功率补偿
+    const uint16_t capValt = 12;	         //强制退出的电压阈值
     //*可编辑部分*end*//
 
     #ifdef LIFTED_DEBUG
@@ -52,13 +52,12 @@ void chassis_power_control(uint8_t cap_state, uint8_t is_flying)
 	fp32 chassis_power = 0.0f;
 	fp32 chassis_power_buffer = 0.0f;
 
-    chassis_power = user_data.power_heat_data.chassis_power;		// 得到底盘功率
     chassis_power_buffer = user_data.power_heat_data.buffer_energy;	// 得到缓冲能量
     max_power_limit = user_data.robot_status.chassis_power_limit;   // 得到最大功率限制
     PID_buffer_init(&PID_Buffer);
     PID_buffer(&PID_Buffer, chassis_power_buffer, 40);  // 缓冲能量闭环
 
-    chassis_max_power = input_power;
+    // chassis_max_power = input_power;
 
     input_power = max_power_limit - PID_Buffer.All_out;  // 加入缓冲能量
 
@@ -67,14 +66,14 @@ void chassis_power_control(uint8_t cap_state, uint8_t is_flying)
         if(cap_state == 0)
         {
             chassis_max_power = input_power + PowerCompensation;
-            CapSend_new( user_data.power_heat_data.buffer_energy ,  user_data.power_heat_data.chassis_voltage);    // 功率设置略大于最大输入功率，提高电容能量利用率
+              // 功率设置略大于最大输入功率，提高电容能量利用率
         }else{
             chassis_max_power = input_power + SuperMaxPower;
-            CapSend_new( user_data.power_heat_data.buffer_energy ,  user_data.power_heat_data.chassis_voltage);        // 开启电容
+      // 开启电容
         }
     }else{
         chassis_max_power = input_power;
-        CapSend_new( user_data.power_heat_data.buffer_energy ,  user_data.power_heat_data.chassis_voltage);    // 电容电量低或电容离线时无补偿
+       
     }
 
     //得到初始电机功率

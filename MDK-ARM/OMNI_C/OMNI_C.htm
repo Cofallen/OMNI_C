@@ -3,9 +3,9 @@
 <title>Static Call Graph - [OMNI_C\OMNI_C.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image OMNI_C\OMNI_C.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6180002: Last Updated: Mon Apr 21 04:02:08 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6180002: Last Updated: Tue Apr 22 01:12:50 2025
 <BR><P>
-<H3>Maximum Stack Usage =        720 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        736 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 StartGimbalTask &rArr; Vofa_intergrate &rArr; niming &rArr; HAL_UART_Transmit_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
 <P>
@@ -848,7 +848,6 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CapSend_new
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartAttackTask
 <LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartGimbalTask
-<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartChassisTask
 </UL>
 
 <P><STRONG><a name="[c0]"></a>CAN_Filter_Init</STRONG> (Thumb, 228 bytes, Stack size 48 bytes, can_dev.o(.text.CAN_Filter_Init))
@@ -902,7 +901,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN_F_Send
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chassis_power_control
+<BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartChassisTask
 </UL>
 
 <P><STRONG><a name="[d6]"></a>ControltoVision</STRONG> (Thumb, 206 bytes, Stack size 24 bytes, vision.o(.text.ControltoVision))
@@ -2551,17 +2550,17 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.rodata..L__const.MX_FREERTOS_Init.os_thread_def_attackTask)
 </UL>
-<P><STRONG><a name="[83]"></a>StartChassisTask</STRONG> (Thumb, 92 bytes, Stack size 24 bytes, robot.o(.text.StartChassisTask))
-<BR><BR>[Stack]<UL><LI>Max Depth = 448<LI>Call Chain = StartChassisTask &rArr; CHASSIS_F_Ctl &rArr; chassis_power_control &rArr; chassis_power_limit &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+<P><STRONG><a name="[83]"></a>StartChassisTask</STRONG> (Thumb, 68 bytes, Stack size 16 bytes, robot.o(.text.StartChassisTask))
+<BR><BR>[Stack]<UL><LI>Max Depth = 440<LI>Call Chain = StartChassisTask &rArr; CHASSIS_F_Ctl &rArr; chassis_power_control &rArr; chassis_power_limit &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CHASSIS_F_Ctl
-<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN_F_Send
+<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CapSend_new
 <LI><a href="#[1db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> freertos.o(.rodata..L__const.MX_FREERTOS_Init.os_thread_def_chassisTask)
 </UL>
-<P><STRONG><a name="[84]"></a>StartGimbalTask</STRONG> (Thumb, 150 bytes, Stack size 32 bytes, robot.o(.text.StartGimbalTask))
-<BR><BR>[Stack]<UL><LI>Max Depth = 720<LI>Call Chain = StartGimbalTask &rArr; Vofa_intergrate &rArr; niming &rArr; HAL_UART_Transmit_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
+<P><STRONG><a name="[84]"></a>StartGimbalTask</STRONG> (Thumb, 148 bytes, Stack size 24 bytes, robot.o(.text.StartGimbalTask))
+<BR><BR>[Stack]<UL><LI>Max Depth = 736<LI>Call Chain = StartGimbalTask &rArr; Vofa_intergrate &rArr; niming &rArr; HAL_UART_Transmit_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
 </UL>
 <BR>[Calls]<UL><LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DWT_GetDeltaT
 <LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GIMBAL_F_Ctl
@@ -3480,8 +3479,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ControltoVision
 </UL>
 
-<P><STRONG><a name="[1dd]"></a>Vofa_intergrate</STRONG> (Thumb, 1760 bytes, Stack size 536 bytes, vofa.o(.text.Vofa_intergrate))
-<BR><BR>[Stack]<UL><LI>Max Depth = 688<LI>Call Chain = Vofa_intergrate &rArr; niming &rArr; HAL_UART_Transmit_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
+<P><STRONG><a name="[1dd]"></a>Vofa_intergrate</STRONG> (Thumb, 1840 bytes, Stack size 560 bytes, vofa.o(.text.Vofa_intergrate))
+<BR><BR>[Stack]<UL><LI>Max Depth = 712<LI>Call Chain = Vofa_intergrate &rArr; niming &rArr; HAL_UART_Transmit_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
 </UL>
 <BR>[Calls]<UL><LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VOFA_T_SendTemp
 <LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
@@ -3721,11 +3720,10 @@ Global Symbols
 <LI><a href="#[220]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ui_proc_string_frame
 </UL>
 
-<P><STRONG><a name="[d4]"></a>chassis_power_control</STRONG> (Thumb, 664 bytes, Stack size 88 bytes, chassis_power_control.o(.text.chassis_power_control))
+<P><STRONG><a name="[d4]"></a>chassis_power_control</STRONG> (Thumb, 592 bytes, Stack size 88 bytes, chassis_power_control.o(.text.chassis_power_control))
 <BR><BR>[Stack]<UL><LI>Max Depth = 280<LI>Call Chain = chassis_power_control &rArr; chassis_power_limit &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CapSend_new
-<LI><a href="#[229]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chassis_power_limit
+<BR>[Calls]<UL><LI><a href="#[229]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chassis_power_limit
 <LI><a href="#[228]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_initial_power
 <LI><a href="#[227]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_buffer
 <LI><a href="#[226]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_buffer_init

@@ -21,7 +21,7 @@ void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, TYPEDEF_VISION *VISI
     case 3:; case 1:  // 遥控
         {
             #ifdef LIFTED_DEBUG
-            MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += (-(float)DBUS->REMOTE.CH2_int16 * 0.006f - MATH_D_LIMIT(15, -15, DBUS->MOUSE.X_FLT * 0.08f) + (float) (-DBUS->KEY_BOARD.E + DBUS->KEY_BOARD.Q ) * 15.0f);
+            MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += (-(float)DBUS->REMOTE.CH2_int16 * 0.009f - MATH_D_LIMIT(15, -15, DBUS->MOUSE.X_FLT * 0.08f) + (float) (-DBUS->KEY_BOARD.E + DBUS->KEY_BOARD.Q ) * 15.0f);
             #else
             MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += (-(float)DBUS->REMOTE.CH2_int16 * 0.03f - MATH_D_LIMIT(25, -25, DBUS->MOUSE.X_FLT * 0.5f) + (float) (-DBUS->KEY_BOARD.E + DBUS->KEY_BOARD.Q ) * 30.0f + (float)yawAngle);
             #endif

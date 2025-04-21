@@ -251,15 +251,16 @@ void Vofa_intergrate(uint8_t mod)
                 watch[6], watch[7], watch[8]);
         break;
     case 1:
-        VOFA_T_SendTemp(8, 1.0f,
+        VOFA_T_SendTemp(10, 1.0f,
                 (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
                 (float)TOP.roll[5],
                 (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
 				(float)TOP.yaw[3],
                 (float)DBUS_V_DATA.IS_OFF,
                 (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CURRENT,
-                current[0]
-				);
+                current[0],
+                (float)user_data.power_heat_data.buffer_energy,
+				(float)user_data.robot_status.chassis_power_limit);
         break;
     case 2:
         VOFA_T_SendTemp(10, 0.0f,
