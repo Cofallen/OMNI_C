@@ -75,4 +75,5 @@ omni_c/vision.o: ..\Bsp\extra\src\VISION.c ..\Core\Inc\main.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdio.h \
   ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_core.h \
   ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h \
-  ..\Bsp\extra\inc\YU_MATH.h ..\Bsp\extra\inc\robot.h
+  ..\Bsp\extra\inc\YU_MATH.h ..\Bsp\extra\inc\robot.h \
+  ..\Bsp\ctl\inc\DBUS.h

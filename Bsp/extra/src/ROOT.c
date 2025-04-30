@@ -9,6 +9,7 @@
 #include "YU_PID.h"
 #include "ATTACK.h"
 #include "TOP.h"
+#include "ui_update.h"
 
 uint8_t ROOT_V_MONITOR_DBUS = 0; // 离线判断参数
 TYPEDEF_MOTOR_PID FOLLOW_PID = {0};  // 底盘跟随
@@ -39,9 +40,9 @@ uint8_t ROOT_F_PIDinit()
 	//const float PID_V_GIMBAL_YAW_SPEED[5] = {600.0f, 0.0f, 0.5f, 100.0f, 10000.0f};//正常值
 //	const float PID_V_GIMBAL_YAW_SPEED[5] = {17.0f, 0.0f, 0.5f, 100.0f, 10000.0f};//正常值
 //    const float PID_V_GIMBAL_YAW_ANGLE[5] = {9.0f, 0.0f, 0.0f, 200.0f, 5000.0f};
-    const float PID_V_GIMBAL_YAW_CURRENT[5] = {1.71f, 0.0f, 0.0f, 2000.0f, 30000.0f};
-    const float PID_V_GIMBAL_YAW_SPEED[5] = {610.0f, 0.0f, 0.0f, 100.0f, 30000.0f};//正常值
-    const float PID_V_GIMBAL_YAW_ANGLE[5] = {1.3f, 0.001f, 0.0f, 80.0f, 10000.0f};
+    const float PID_V_GIMBAL_YAW_CURRENT[5] = {1.20f, 0.0f, 0.0f, 2000.0f, 30000.0f};
+    const float PID_V_GIMBAL_YAW_SPEED[5] = {600.0f, 0.0f, 0.0f, 100.0f, 30000.0f};//正常值
+    const float PID_V_GIMBAL_YAW_ANGLE[5] = {1.3f, 0.002f, 0.2f, 300.0f, 10000.0f};
 
 
 //电流控制6020实验
@@ -53,14 +54,14 @@ uint8_t ROOT_F_PIDinit()
 //    const float PID_V_GIMBAL_PIT_SPEED[5] = {130.0f, 0.0f, 0, 1000.0f, 20000.0f};
 //    const float PID_V_GIMBAL_PIT_ANGLE[5] = {0.85f, 0.0007f, 0, 1000.0f, 3000.0f};
 	const float PID_V_GIMBAL_PIT_SPEED[5] = {200.0f, 0.02f, 0, 1000.0f, 20000.0f};
-    const float PID_V_GIMBAL_PIT_ANGLE[5] = {35.0f, 0.0f, 0, 1000.0f, 10000.0f};
+    const float PID_V_GIMBAL_PIT_ANGLE[5] = {25.0f, 0.0f, 0, 1000.0f, 10000.0f};
 	
     const float PID_V_ATTACK_L_SPEED[5] = {14.0f, 0, 0, 1000.0f, 30000.0f};
     const float PID_V_ATTACK_R_SPEED[5] = {14.0f, 0, 0, 1000.0f, 30000.0f};
-    const float PID_V_ATTACK_G_SPEED[5] = {10.0f, 0, 0, 1000.0f, 20000.0f};
+    const float PID_V_ATTACK_G_SPEED[5] = {10.0f, 0, 0, 1000.0f, 12000.0f};
     const float PID_V_ATTACK_G_ANGLE[5] = {1.0f, 0, 0, 1000.0f, 4500.0f};  // 拨盘角度AIM控制弹频，3000-13.3Hz,4500-16.99Hz,5000(2single)-23.3Hz占比约1/3
-    const float PID_V_ATTACK_L_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
-    const float PID_V_ATTACK_R_CURRENT[5] = {3.0f, 0, 0, 1000.0f, 3000.0f};
+    const float PID_V_ATTACK_L_CURRENT[5] = {1.0f, 0, 0, 1000.0f, 3000.0f};
+    const float PID_V_ATTACK_R_CURRENT[5] = {1.0f, 0, 0, 1000.0f, 3000.0f};
 
     const float FOLLOW_PID_V[5] = {0.5f, 0.0f, 0.0f, 0.0f, 6000.0f};
     const float PID_V_TOP_OFF_S[5] = {100.5f, 0.0f, 0.0f, 0.0f, 30000.0f};
@@ -115,7 +116,7 @@ void ROOT_F_Init()
 {
     ROOT_F_PIDinit();
     ATTACK_F_Init(MOTOR_V_ATTACK);
-    _ui_init_default_init6_0();
+    ui_init_default_init6();
     #ifdef OLDHEAD
     MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 3422.0f;  // 云台初始化角度
     MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM = 0.0f;

@@ -31,6 +31,7 @@ union RUI_U_VISION_SEND
     bool COLOR;             // TRUE是蓝色，FALSE是红色
     uint32_t TIME;
     uint8_t bulletSpeed;//
+    uint8_t is_buff; // 0:自瞄 1:打符
   };
   uint8_t DATA[21];
 };

@@ -15,19 +15,21 @@
 #include "robot.h"
 #include "YU_PID.h"
 #include "ROOT.h"
+#include "usbd_cdc_if.h"
+#include "ATTACK.h"
 
 union 
 {
     float DATA[11];
-    int8_t TAIL[44];
+    uint8_t TAIL[44];
 }VOFA_T_DATA={0};
 
-struct Data
+union 
 {
-    float *data;
-    char *tail;
-};
-    
+    float DATA[11];
+    uint8_t TAIL[44];
+}data_temp={0};
+
 // 发送VOFA数据包
 void VOFA_F_Send(TYPEDEF_VOFA_UNION *VOFA, TYPEDEF_MOTOR *MOTOR)
 {
@@ -53,38 +55,37 @@ void VOFA_F_Send(TYPEDEF_VOFA_UNION *VOFA, TYPEDEF_MOTOR *MOTOR)
 // VOFA 使用 huart1 发送任意个数数据
 // 先使用定长数组接收 @TODO 使用malloc分配内存，释放内存
 //                  @update 暂时完成
-uint8_t VOFA_T_Send(int n, ...)
+uint8_t VOFA_T_Send(uint8_t type, int n, float a1, float a2, float a3, float a4, float a5, float a6, float a7, float a8, float a9, float a10)
 {
-    va_list list;
-    va_start(list, n);
+    if (n > 10 || n < 0) return ROOT_ERROR;
+
+    data_temp.DATA[0] = a1;
+    data_temp.DATA[1] = a2;
+    data_temp.DATA[2] = a3;
+    data_temp.DATA[3] = a4;
+    data_temp.DATA[4] = a5;
+    data_temp.DATA[5] = a6;
+    data_temp.DATA[6] = a7;
+    data_temp.DATA[7] = a8;
+    data_temp.DATA[8] = a9;
+    data_temp.DATA[9] = a10;
+
+    if (type == 0)
+        CDC_Transmit_FS(data_temp.TAIL, 44); // 发送到虚拟串口
+    else if (type == 1)
+        HAL_UART_Transmit_DMA(&huart1, data_temp.TAIL, 44);
     
-    struct Data *VOFA_T_DATA = (struct Data *)calloc(1, sizeof(struct Data));
-    VOFA_T_DATA->data = (float *)calloc(n, sizeof(float));
-    VOFA_T_DATA->tail = (char *)calloc(4, sizeof(char));
-
-    for (int i = 0; i < n; i++)
-    {
-        VOFA_T_DATA->data[i] = (float)va_arg(list, double);
-    }
-    va_end(list);
-
-    VOFA_T_DATA->tail[0] = 0x00;
-    VOFA_T_DATA->tail[1] = 0x00;
-    VOFA_T_DATA->tail[2] = 0x80;
-    VOFA_T_DATA->tail[3] = 0x7f;
-
-//    HAL_UART_Transmit_IT(&huart1, (uint8_t *)VOFA_T_DATA, sizeof(struct Data));
-		HAL_UART_Transmit_DMA(&huart1, (uint8_t *)VOFA_T_DATA, sizeof(struct Data));
-
-    free(VOFA_T_DATA->data);
-    free(VOFA_T_DATA->tail);
-    free(VOFA_T_DATA);
-
     return ROOT_READY;
 }
 
-uint8_t VOFA_T_SendTemp(int n, ...)
+/// @brief 
+/// @param n 
+/// @param type 类型 0:虚拟串口 1:USART1
+/// @param  
+/// @return 
+uint8_t VOFA_T_SendTemp(uint8_t type, int n, ...)
 {
+    if (n > 10 || n < 0) return ROOT_ERROR;    
     va_list list;
     va_start(list, n);
     
@@ -98,12 +99,15 @@ uint8_t VOFA_T_SendTemp(int n, ...)
     {
         VOFA_T_DATA.DATA[i] = 0.0f;
     }
-    VOFA_T_DATA.TAIL[0] = 0x00;
-    VOFA_T_DATA.TAIL[1] = 0x00;
-    VOFA_T_DATA.TAIL[2] = 0x80;
-    VOFA_T_DATA.TAIL[3] = 0x7f;
-    
-    HAL_UART_Transmit_DMA(&huart1, (uint8_t *)VOFA_T_DATA.TAIL, sizeof(VOFA_T_DATA));
+    VOFA_T_DATA.TAIL[40] = 0x00;
+    VOFA_T_DATA.TAIL[41] = 0x00;
+    VOFA_T_DATA.TAIL[42] = 0x80;
+    VOFA_T_DATA.TAIL[43] = 0x7f;
+
+    if (type == 0)
+        CDC_Transmit_FS((uint8_t *)VOFA_T_DATA.TAIL, sizeof(VOFA_T_DATA));
+    else if (type == 1)
+        HAL_UART_Transmit_DMA(&huart1, (uint8_t *)VOFA_T_DATA.TAIL, sizeof(VOFA_T_DATA));
 
     return ROOT_READY;
 }
@@ -246,12 +250,12 @@ void Vofa_intergrate(uint8_t mod)
     switch (mod)
     {
     case 0:
-        VOFA_T_SendTemp(10, 0.0f,
+        VOFA_T_SendTemp(0, 10, 0.0f,
                 watch[0], watch[1], watch[2], watch[3], watch[4], watch[5], 
                 watch[6], watch[7], watch[8]);
         break;
     case 1:
-        VOFA_T_SendTemp(10, 1.0f,
+        VOFA_T_SendTemp(0, 10, 1.0f,
                 (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
                 (float)TOP.roll[5],
                 (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
@@ -263,7 +267,7 @@ void Vofa_intergrate(uint8_t mod)
 				(float)user_data.robot_status.chassis_power_limit);
         break;
     case 2:
-        VOFA_T_SendTemp(10, 0.0f,
+        VOFA_T_SendTemp(0, 10, 0.0f,
                 (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CURRENT,
                 (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CURRENT,
                 (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CURRENT,
@@ -275,18 +279,19 @@ void Vofa_intergrate(uint8_t mod)
                 (float)MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.AIM);
         break;
     case 3:
-        VOFA_T_SendTemp(9, 0.0f,  // debug yaw pid with top[3]
+        VOFA_T_SendTemp(0, 10, 0.0f,  // debug yaw pid with top[3]
                 (float)user_data.shoot_data.initial_speed,
                 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW,
                 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.SPEED_NOW,
                 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.AIM,
                 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM,
                 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE,
-                (float)DBUS_V_DATA.IS_OFF,
+                (float)ATTACK_V_PARAM.COUNT,
+                (float)ATTACK_V_PARAM.TIME,
                 1.0f);
         break;
     case 4:
-        VOFA_T_SendTemp(10, 0.0f,
+        VOFA_T_SendTemp(0, 10, 0.0f,
             (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
             (float)vision_aim,
             (float)VISION_V_DATA.RECEIVE.fire,
@@ -315,6 +320,18 @@ void Vofa_intergrate(uint8_t mod)
             0, 0, 0, 0,                        // y3
             0, 0, 0,                                              // z1-z3
             0);  
+        break;
+    case 7:
+        VOFA_T_Send(0, 10, 1.0f,
+            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
+            (float)TOP.roll[5],
+            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,
+            (float)TOP.yaw[3],
+            (float)DBUS_V_DATA.IS_OFF,
+            (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CURRENT,
+            current[0],
+            (float)user_data.power_heat_data.buffer_energy,
+            (float)user_data.robot_status.chassis_power_limit);
         break;
     default:
         break;

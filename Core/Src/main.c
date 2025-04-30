@@ -143,7 +143,7 @@ int main(void)
 
   printf("ok\r\n");  // huart1 
   HAL_UART_Transmit_DMA(&huart1, (uint8_t *)sd_v_buff, sizeof(sd_v_buff));
-  
+  HAL_UART_Receive_DMA(&huart1, (uint8_t *)VISION_V_DATA.OriginData, sizeof(VISION_V_DATA.OriginData));
   HAL_TIM_Base_Start_IT(&htim2);
   HAL_Delay(30);
 
@@ -252,8 +252,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 1 */
   if (htim->Instance == TIM2) // 底盘 1ms
     {     
-      // CDC_Transmit_FS(sd_v_buff, 16);
-      ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff, 0);
+      ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff, 1);
       RunTime ++;
       VISION_V_DATA.SEND.TIME = RunTime;
     }

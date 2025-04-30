@@ -73,11 +73,9 @@ void CanManage_cap_new(uint8_t* can_data , struct capData_JHB_Receive* data)
 }
 void CapSend_new(uint8_t powerBuffer , uint16_t volt)
 {
-		
 	capData_JHB.Send_data_typedef.Send_data.powerLimit = (uint32_t)user_data.robot_status.chassis_power_limit;	//锟斤拷锟斤拷锟?
 		// capData_JHB.Send_data_typedef.Send_data.powerLimit = 55;
-//	capData_JHB.Send_data_typedef.Send_data.robotStatus = (user_data.robot_status.current_HP > 0) ? 1 : 0;
-	capData_JHB.Send_data_typedef.Send_data.robotStatus = 1;
+	capData_JHB.Send_data_typedef.Send_data.robotStatus = (user_data.robot_status.current_HP > 0) ? 1 : 0;
 	capData_JHB.Send_data_typedef.Send_data.switchControl = (DBUS_V_DATA.REMOTE.S2_u8 == 1) ? 0 : 1; //
 	capData_JHB.Send_data_typedef.Send_data.bufferEnergy = (uint32_t) powerBuffer;		
 	capData_JHB.Send_data_typedef.Send_data.Verify = 0xAA;//标志位仅供人参考，不做校验

@@ -73,4 +73,13 @@ omni_c/vofa.o: ..\Bsp\extra\src\VOFA.c ..\Core\Inc\main.h \
   ..\CMSIS\DSP\Inc\dsp\utils.h \
   ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
   ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h ..\Bsp\extra\inc\robot.h \
-  ..\Bsp\ctl\inc\YU_PID.h ..\Bsp\extra\inc\ROOT.h
+  ..\Bsp\ctl\inc\YU_PID.h ..\Bsp\extra\inc\ROOT.h \
+  ..\USB_DEVICE\App\usbd_cdc_if.h \
+  ..\Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Inc\usbd_cdc.h \
+  ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ioreq.h \
+  ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_def.h \
+  ..\USB_DEVICE\Target\usbd_conf.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdio.h \
+  ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_core.h \
+  ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h \
+  ..\Bsp\ctl\inc\ATTACK.h ..\Bsp\extra\inc\JUDGEMENT.h

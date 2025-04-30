@@ -83,17 +83,10 @@ void StartGimbalTask(void const * argument)
                 MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
                 0,
                 MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND);
-      // CAN_F_Send(&hcan2, 0x1FE, 0,
-      //           MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.CAN_SEND,
-      //           0,
-      //           MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND);
       // 自瞄查看数据
-      Vofa_intergrate(1);
-      // ATTACK_T_FIT(20);
+      // Vofa_intergrate(3);
       dt_pc = (float)DWT_GetDeltaT(&INS_DWT_Count);
-//      xSemaphoreGive(binarySemHandle);
-//    }
-    vTaskDelay(1);
+      vTaskDelay(1);
   }
 }
 
@@ -114,7 +107,6 @@ void StartMonitorTask(void const * argument)
 {
   for(;;)
   {  
-
     ROOT_F_MONITOR_DBUS(&DBUS_V_DATA);
     TOP_T_Monitor();
     // VISION_F_Monitor();
@@ -130,13 +122,13 @@ void StartvisionTask(void const * argument)
   for(;;)
   {
       // input
-      // RobotUI_Dynamic();
+      RobotUI_Dynamic();
       RobotUI_Static_Init();
 	  // if(xSemaphoreTake(binarySemHandle, pdMS_TO_TICKS(1000)) == pdTRUE)
     //   {  
     //   // ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff, 1);
     //   xSemaphoreGive(binarySemHandle);
 	  // }
-    vTaskDelay(2000);
+    vTaskDelay(1);
   }
 }

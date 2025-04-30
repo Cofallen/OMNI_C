@@ -19,10 +19,12 @@
 #include "CAN_DEV.h"
 #include "can.h"
 
-#define ATTACK_D_TIMEOUT 100
+#define ATTACK_D_TIMEOUT 500
 #define ATTACK_D_SPEED 10
 
 TYPEDEF_ATTACK_PARAM ATTACK_V_PARAM = {0};
+
+double param[5] = {0};
 
 int IOTA = 0; // test
 double M;     // test
@@ -34,7 +36,7 @@ uint8_t ATTACK_F_Init(TYPEDEF_MOTOR *MOTOR)
 
     // 数据初始化
     ATTACK_V_PARAM.SINGLE_ANGLE = 36864.0f;
-    ATTACK_V_PARAM.SPEED = 8300.0f;
+    ATTACK_V_PARAM.SPEED = 7200.0f;
 
     ATTACK_V_PARAM.FLAG = 1;
     ATTACK_V_PARAM.LOCK = 1; // 默认上锁，保证在未收到遥控数据时拨盘不动
@@ -56,47 +58,59 @@ uint8_t ATTACK_F_Init(TYPEDEF_MOTOR *MOTOR)
  */
 float ATTACK_F_JAM_Aim(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, uint8_t autofire)
 {
-    // 单发模式处理
-    if ((DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SINGLE || DBUS->MOUSE.L_STATE == 1) && ATTACK_V_PARAM.LOCK == 0)
+    // 记录上一次的遥控器和鼠标状态
+    static uint8_t prev_S1_state = DBUS_D_MOD_SHUT;
+    
+    // 单发模式处理 (通过状态变化检测)
+    if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SINGLE)
     {
-        if (autofire == 0 || ((autofire ==1) && VISION_V_DATA.RECEIVE.fire))
+        // 检测遥控器模式切换到单发
+        if (prev_S1_state != DBUS_D_MOD_SINGLE)
         {
-            // 检测到单发请求且当前未锁定
-            ATTACK_V_PARAM.COUNT = 1;     // 增加一个弹丸的角度
-            ATTACK_V_PARAM.LOCK = 1;       // 锁定，防止连续触发
+            if (autofire == 0 || ((autofire == 1) && VISION_V_DATA.RECEIVE.fire))
+            {
+                ATTACK_V_PARAM.COUNT = 1;  // 增加一个弹丸的角度
+            }
+        }
+    }
+    // 鼠标单发处理
+    else if (DBUS->MOUSE.L_STATE == 1 && ATTACK_V_PARAM.PREV_MOUSE_STATE != 1)
+    {
+        if (autofire == 0 || ((autofire == 1) && VISION_V_DATA.RECEIVE.fire))
+        {
+            ATTACK_V_PARAM.COUNT = 1;  // 检测到鼠标左键按下事件，发射一个弹丸
         }
     }
     // 连发模式处理
     else if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_CONSIST || DBUS->MOUSE.L_STATE == 2)
     {
-        if (autofire == 0 || ((autofire ==1) && VISION_V_DATA.RECEIVE.fire))
+        if (autofire == 0 || ((autofire == 1) && VISION_V_DATA.RECEIVE.fire))
         {
             // 视觉允许开火且为连发模式
-            ATTACK_V_PARAM.COUNT = 1; // 持续小量增加目标角度，形成连续转动
-            ATTACK_V_PARAM.LOCK = 0;       // 连发模式不锁定
+            ATTACK_V_PARAM.COUNT = 1;  // 持续小量增加目标角度，形成连续转动
         }
     }
     // 关闭发射处理
-    else if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SHUT || DBUS->MOUSE.L_STATE == 0)
+    else if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SHUT)
     {
-        ATTACK_V_PARAM.LOCK = 0;       // 解锁
-        ATTACK_V_PARAM.COUNT = 0;
+        ATTACK_V_PARAM.COUNT = 0;  // 关闭状态不增加角度
     }
-
-    // 处理锁定状态
-    if (ATTACK_V_PARAM.LOCK == 1)
-    {
-        // 当处于锁定状态，检查是否可以解锁
-        if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SHUT || DBUS->MOUSE.L_STATE == 0)
-        {
-            ATTACK_V_PARAM.LOCK = 0;   // 解锁，为下一次发射做准备
-        }
-        // 锁定状态下保持当前目标值
-        return MOTOR->DATA.AIM;
-    }
-
+    
     // 计算新的电机目标角度
-    MOTOR->DATA.AIM = (float)MOTOR->DATA.ANGLE_INFINITE - ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.COUNT;
+    if (ATTACK_V_PARAM.COUNT > 0 && ATTACK_V_PARAM.fire_wheel_status)
+    {
+        MOTOR->DATA.AIM = (float)MOTOR->DATA.ANGLE_INFINITE - ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.COUNT;
+        // 单发模式下，处理完一次后重置COUNT
+        if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SINGLE || DBUS->MOUSE.L_STATE == 1)
+        {
+            ATTACK_V_PARAM.COUNT = 0;
+        }
+    }
+    
+    // 保存当前状态用于下一次比较
+    ATTACK_V_PARAM.PREV_MOUSE_STATE = DBUS->MOUSE.L_STATE;
+    prev_S1_state = DBUS->REMOTE.S1_u8;
+
     return MOTOR->DATA.AIM;
 }
 
@@ -132,6 +146,7 @@ uint8_t ATTACK_F_JAM_Check(TYPEDEF_MOTOR *MOTOR)
 // @TODO 电机当前转速也值得加入，但这之后再说
 float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
 {
+    static uint8_t fire_mouse_status = 0;
     // @veision 1 拟合
     // float a = 0.0f, b = 0.0f;
     // ATTACK_V_PARAM.SPEED = user_data.shoot_data.initial_speed * a + b;
@@ -165,15 +180,19 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
     // return MOTOR->DATA.AIM;
 
     // @veision 3, final code, this code is a stable speed
-    // if (DBUS_V_DATA.REMOTE.S1_u8 == 1 || DBUS_V_DATA.REMOTE.S2_u8 == 2)  // 3 is the fire button
-    if (DBUS_V_DATA.KEY_BOARD.CTRL == 1 || DBUS_V_DATA.REMOTE.S2_u8 == 8)  // 3 is the fire button
+    if (( fire_mouse_status == 1 )|| DBUS_V_DATA.REMOTE.S2_u8 == 2)  // 3 is the fire button
     {
         MOTOR->DATA.AIM = ATTACK_V_PARAM.SPEED;
-    }
-    else
+        ATTACK_V_PARAM.fire_wheel_status = 1;
+    } else
     {
         MOTOR->DATA.AIM = 0.0f;
+        ATTACK_V_PARAM.fire_wheel_status = 0;
     }
+    if (DBUS_V_DATA.MOUSE.R_STATE && !DBUS_V_DATA.MOUSE.R_PRESS_NUMBER) {
+        fire_mouse_status = !fire_mouse_status;
+    }
+    DBUS_V_DATA.MOUSE.R_PRESS_NUMBER = DBUS_V_DATA.MOUSE.R_STATE; // 更新鼠标状态
     return MOTOR->DATA.AIM;
 }
 
@@ -181,7 +200,7 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
 // 总控制函数
 uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {
-    if ((MATH_D_ABS(MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE - MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM)) < 50.0f)
+    if ((MATH_D_ABS(MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE - MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM)) < 5000.0f)
     {
         ATTACK_V_PARAM.STATUS = 0;
     }
@@ -199,14 +218,15 @@ uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     }
     // shooting case when opposite to you l-r
     
-    MOTOR[MOTOR_D_ATTACK_L].DATA.AIM =  ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_L]);
-    MOTOR[MOTOR_D_ATTACK_R].DATA.AIM = -ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_R]);
+    MOTOR[MOTOR_D_ATTACK_L].DATA.AIM = -ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_L]);
+    MOTOR[MOTOR_D_ATTACK_R].DATA.AIM =  ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_R]);
 
+    ATTACK_T_FIT(40);
     // pid
-    // PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_L]);
-    // PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_R]);
-    PID_F_S(&MOTOR[MOTOR_D_ATTACK_L]);
-    PID_F_S(&MOTOR[MOTOR_D_ATTACK_R]);
+    PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_L]);
+    PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_R]);
+    // PID_F_S(&MOTOR[MOTOR_D_ATTACK_L]);
+    // PID_F_S(&MOTOR[MOTOR_D_ATTACK_R]);
     PID_F_AS(&MOTOR[MOTOR_D_ATTACK_G]);
 
     return ROOT_READY;
@@ -259,27 +279,20 @@ double *ATTACK_T_FIT(int size)
     //             MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW * 0.001f);
 
     // Simply cauculate the param a,b
-    double *bufferA = (double *)malloc(size * sizeof(double));
-    double *bufferB = (double *)malloc(size * sizeof(double));
+    // 使用静态数组代替动态分配
+    static double bufferA[50];
+    static double bufferB[50];
     static int32_t count = 0;  // help IOTA replace
 
-    if (bufferA == NULL || bufferB == NULL)
-    {
-        return NULL;
-    }
-
-    for (int i = 0; i < size; i++)
-    {
-        bufferA[i] = 0.0f;
-        bufferB[i] = 0.0f;
-    }
+    // 限制size不超过静态数组大小
+    if (size > 50) size = 50;
     
     bufferA[IOTA]   = user_data.shoot_data.initial_speed;
     bufferB[IOTA++] = MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW;
     count++;
 
     // choose special line by Least Squares Method
-    double *array = (double *)calloc(2, sizeof(double));
+    double array[2] = {0};
     if (count > (size - 1))
     {
         double sumX = 0.0f, sumY = 0.0f, sumXY = 0.0f, sumXX = 0.0f;
@@ -290,7 +303,7 @@ double *ATTACK_T_FIT(int size)
             sumXY += bufferA[i] * bufferB[i];
             sumXX += bufferA[i] * bufferA[i];
         }
-        if (size * sumXX - sumX * sumX != 0 && size > 0)
+        if (size * sumXX - sumX * sumX != 0.0f && size > 0)
         { 
             array[0] = (size * sumXY - sumX * sumY) / (size * sumXX - sumX * sumX);
             array[1] = (sumY - array[0] * sumX) / size;
@@ -304,12 +317,15 @@ double *ATTACK_T_FIT(int size)
             IOTA = 0;  // replace the head of array
         double error = array[0] * user_data.shoot_data.initial_speed + array[1] - MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW;
 
-        VOFA_T_SendTemp(5, array[0], array[1], error, user_data.shoot_data.initial_speed, 5.0f);  // the place is not sure
-    }
+        VOFA_T_Send(0, 10, array[0], array[1], user_data.shoot_data.initial_speed, MOTOR_V_ATTACK[2].DATA.SPEED_NOW,
+                            error, 0, 0, 0, 0, 0);  // the place is not sure
 
-    free (bufferA);
-    free (bufferB);
-    free (array);
+        param[0] = array[0];  // a
+        param[1] = array[1];  // b
+        param[2] = error;    // error
+        param[3] = user_data.shoot_data.initial_speed;  // speed
+        param[4] = MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW;  // speed now
+    }
 
     return &M;
 }

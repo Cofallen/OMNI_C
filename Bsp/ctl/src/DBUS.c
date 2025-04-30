@@ -7,7 +7,6 @@
 
 // 遥控全局变量
 TYPEDEF_DBUS DBUS_V_DATA = {0};
-TYPEDEF_DBUS DBUS_V_DATA_LAST = {0};
 TYPEDEF_DBUS_UNION DBUS_V_UNION = {0}; // 共用体整合数据，待简化下成局部变量
 
 /**
@@ -41,6 +40,8 @@ void DBUS_F_Cal(TYPEDEF_DBUS *DBUS)
     DBUS->KEY_BOARD.X = (uint8_t)(DBUS_V_UNION.DATA_NEATEN.KEY_X);
     DBUS->KEY_BOARD.C = (uint8_t)(DBUS_V_UNION.DATA_NEATEN.KEY_C);
 
+    DBUS->KEY_BOARD.F = (uint8_t)(DBUS_V_UNION.DATA_NEATEN.KEY_F);
+    DBUS->KEY_BOARD.G = (uint8_t)(DBUS_V_UNION.DATA_NEATEN.KEY_G);
     DBUS->KEY_BOARD.CTRL = (uint8_t)(DBUS_V_UNION.DATA_NEATEN.KEY_CTRL);
 
     // @TODO mouse to add
@@ -62,13 +63,11 @@ void DBUS_F_Cal(TYPEDEF_DBUS *DBUS)
         DBUS->MOUSE.L_PRESS_TIME = 0;
         DBUS->MOUSE.L_STATE = 0; // 无按
     }
-    //鼠标右键无需长按判断，控制自瞄
+    //鼠标右键无需长按判断，控制发射
     DBUS->MOUSE.R_STATE = DBUS_V_UNION.DATA_NEATEN.MOUSE_R;
-
+    
     // @TODO l/r flag to control atatck
     DBUS_V_DATA.IS_OFF = 0;
-
-    memcpy(&DBUS_V_DATA_LAST, &DBUS_V_DATA, sizeof(DBUS_V_DATA));
 }
 
 /**
@@ -81,3 +80,4 @@ void DBUS_F_Offline(TYPEDEF_DBUS *DBUS)
     memset(DBUS, 0, sizeof(TYPEDEF_DBUS));
     DBUS->IS_OFF = 1;
 }
+

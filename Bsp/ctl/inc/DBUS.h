@@ -35,6 +35,8 @@ typedef struct TYPEDEF_DBUS // 遥控器数据结构体
         uint8_t L_STATE : 4;
         uint8_t R_PRESS_TIME;
         uint8_t L_PRESS_TIME;
+        uint8_t R_PRESS_NUMBER : 1;
+        uint8_t L_PRESS_NUMBER : 1;
     } MOUSE;
     struct __packed
     {
@@ -66,9 +68,19 @@ typedef struct TYPEDEF_DBUS // 遥控器数据结构体
         uint8_t Z_PREE_NUMBER : 1;
         uint8_t X_PREE_NUMBER : 1;
         uint8_t C_PREE_NUMBER : 1;
+        uint8_t V_PREE_NUMBER : 1;
         uint8_t SHIFT_PREE_NUMBER : 1;
         uint8_t CTRL_PREE_NUMBER : 1;
+        uint8_t B_PREE_NUMBER : 1;
     } KEY_BOARD;
+    struct __packed
+    {
+        uint16_t w;
+        uint16_t s;
+        uint16_t a;
+        uint16_t d;
+        uint16_t shift;
+    } key_flitter;
 } TYPEDEF_DBUS;
 
 typedef union TYPEDEF_DBUS_UNION // 使用共用体整合数据
@@ -118,7 +130,6 @@ typedef union TYPEDEF_DBUS_UNION // 使用共用体整合数据
 
 extern TYPEDEF_DBUS DBUS_V_DATA;
 extern TYPEDEF_DBUS_UNION DBUS_V_UNION;
-extern TYPEDEF_DBUS DBUS_V_DATA_LAST;
 
 extern void DBUS_F_Cal(TYPEDEF_DBUS *DBUS);
 void DBUS_F_Offline(TYPEDEF_DBUS *DBUS);

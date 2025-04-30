@@ -68,4 +68,12 @@ omni_c/root.o: ..\Bsp\extra\src\ROOT.c ..\Core\Inc\main.h \
   ..\CMSIS\DSP\Inc\arm_math_memory.h ..\CMSIS\DSP\Inc\dsp\none.h \
   ..\CMSIS\DSP\Inc\dsp\utils.h \
   ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
-  ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h
+  ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h \
+  ..\Bsp\extra\inc\ui_update.h ..\UI\ui_default_init1_0.h \
+  ..\UI\ui_interface.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdio.h \
+  ..\UI\ui_types.h ..\Core\Inc\usart.h ..\UI\ui_default_init2_0.h \
+  ..\UI\ui_default_init3_0.h ..\UI\ui_default_init4_0.h \
+  ..\UI\ui_default_init5_0.h ..\UI\ui_default_init5_1.h \
+  ..\UI\ui_default_init5_2.h ..\UI\ui_default_init5_3.h \
+  ..\UI\ui_default_init6_0.h

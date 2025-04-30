@@ -8,6 +8,7 @@
 #include "usbd_cdc_if.h"
 #include "YU_MATH.h"
 #include "robot.h"
+#include "DBUS.h"
 
 #define VISION_D_SEND 16
 #define VISION_D_RECV 15
@@ -55,6 +56,8 @@ uint8_t VISION_F_Cal(uint8_t *RxData, uint8_t type)
 
 void VisionSendInit(union RUI_U_VISION_SEND*  Send_t)
 {
+    static uint8_t buff_flag = 0;
+
     Send_t->PIT_DATA = TOP.roll[5];     // @note c板侧放，如果想用pitch建议改imu_temp...c中的IMU_QuaternionEKF_Update参数顺序和正负
     Send_t->YAW_DATA = TOP.yaw[5];
     Send_t->INIT_FIRING_RATE =user_data.shoot_data.initial_speed;
@@ -62,6 +65,11 @@ void VisionSendInit(union RUI_U_VISION_SEND*  Send_t)
     Send_t->COLOR = VISION_V_DATA.SEND.COLOR;
     Send_t->TIME = VISION_V_DATA.SEND.TIME;
     Send_t->bulletSpeed = (uint8_t)user_data.shoot_data.initial_speed;
+
+    if (DBUS_V_DATA.KEY_BOARD.B && !DBUS_V_DATA.KEY_BOARD.B_PREE_NUMBER) // 按下B键
+        buff_flag = !buff_flag; // 切换打符模式
+    
+    Send_t->is_buff = buff_flag;
 }
 
 /// @brief 视觉发送
@@ -91,7 +99,8 @@ int ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff, uint8_t ty
     // setbit(&buff[9], 0, Send_t->COLOR &0x01);
     // //2023-06-02 22:54 | 颜色
 	// setbit(&buff[9] , 3 , Send_t->COLOR >> 4);
-    buff[9] = 9;
+    // 自瞄0 打符1
+    buff[9] = Send_t->is_buff;
     data_tackle.I = (uint32_t)Send_t->TIME; // 视觉自瞄和能量机关切换标志位
 	buff[10] = data_tackle.U[0];
 	buff[11] = data_tackle.U[1];

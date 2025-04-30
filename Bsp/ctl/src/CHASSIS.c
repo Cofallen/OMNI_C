@@ -47,7 +47,7 @@ float watch[10] = {0};
 
 
 // 添加缓启动相关参数
-#define SOFT_START_RATE      0.08f   // 缓启动速率系数 (0.0-1.0)，越小越平滑
+#define SOFT_START_RATE      0.5f   // 缓启动速率系数 (0.0-1.0)，越小越平滑
 #define SOFT_START_THRESHOLD 20.0f   // 小于此阈值时直接到达目标值
 
 // 上一次的电机目标值
@@ -66,30 +66,21 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     spinLittleRound(&ANGLE_Relative);
     ANGLE_Rad = ANGLE_Relative * MATH_D_RELATIVE_PARAM;
 
-    VX =  (float)((DBUS->REMOTE.CH0_int16) + (DBUS->KEY_BOARD.D - DBUS->KEY_BOARD.A) * 660.0f) * 10.0f;
-    VY =  (float)((DBUS->REMOTE.CH1_int16) + (DBUS->KEY_BOARD.W - DBUS->KEY_BOARD.S) * 660.0f) * 10.0f;
+    VX =  (float)((DBUS->REMOTE.CH0_int16) + (DBUS->KEY_BOARD.D - DBUS->KEY_BOARD.A) * 660.0f) * 8.0f;
+    VY =  (float)((DBUS->REMOTE.CH1_int16) + (DBUS->KEY_BOARD.W - DBUS->KEY_BOARD.S) * 660.0f) * 8.0f;
     VR = -(float)((DBUS->REMOTE.DIR_int16) + (DBUS->KEY_BOARD.SHIFT) * 660.0f) * 3.0f;
 
-    if (DBUS->KEY_BOARD.V)
+    if (DBUS->KEY_BOARD.G)
     {
-//        VR *= 0.4f;
+        VR *= 0.1f;  
+        VX *= 0.1f;
+        VY *= 0.1f;
     }
     
     // @TODO 2. VR的负号和-ANGLE_Relative的负号测试是否可以全换成正号
     if (DBUS->REMOTE.S2_u8 != 1)
     {
         (!((DBUS->REMOTE.DIR_int16)||(DBUS->KEY_BOARD.SHIFT)))?(PRIDICT = DBUS->REMOTE.CH2_int16 * 5.0f,VR = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative)):(PRIDICT = 0.0f);     // 分离 滚轮影响小陀螺
-    }
-    
-
-    if (DBUS->REMOTE.S2_u8 == 1)
-    {
-    //    VR = 440.0f;
-    //    VISION_V_DATA.RECEIVE.fire = 1;
-    }
-    else
-    {
-//        VISION_V_DATA.RECEIVE.fire = 0;
     }
     
     // rotate matrix
@@ -115,14 +106,29 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     PID_F_SC(&MOTOR[MOTOR_D_CHASSIS_2]);
     PID_F_SC(&MOTOR[MOTOR_D_CHASSIS_3]);
     PID_F_SC(&MOTOR[MOTOR_D_CHASSIS_4]);
-    // mod = (((DBUS_V_DATA.REMOTE.S1_u8 - 1) == 0) ? 1 : 0);
-	// 		if(DBUS_V_DATA.REMOTE.S1_u8 == 1)
-    //          chassis_power_control(1);
-	// 		else
-	chassis_power_control(DBUS_V_DATA.REMOTE.S2_u8 == 1, DBUS->is_front_lifted);
 
     //正常使用电容
-    // chassis_power_control(DBUS_V_DATA.REMOTE.S1_u8 == 1 && capData_t.capSetData.dataNeaten.power_key ==1 &&capData_t.capSetData.dataNeaten.out_switch == 1) ;
+    static uint8_t cap_mode_ctrl = 0;
+    if (DBUS->KEY_BOARD.C && !DBUS->KEY_BOARD.C_PREE_NUMBER) {
+        cap_mode_ctrl = !cap_mode_ctrl;  // 切换电容模式
+    }
+
+    static uint8_t user_lifted = 0;
+    if (DBUS->KEY_BOARD.F && !DBUS->KEY_BOARD.F_PREE_NUMBER) {
+        user_lifted = !user_lifted;  
+    }
+
+    DBUS->KEY_BOARD.C_PREE_NUMBER = DBUS->KEY_BOARD.C;  
+    DBUS->KEY_BOARD.F_PREE_NUMBER = DBUS->KEY_BOARD.F;  
+    DBUS->KEY_BOARD.G_PREE_NUMBER = DBUS->KEY_BOARD.G;  
+
+    if (user_lifted) {
+        MOTOR[FRONT_LEFT].DATA.AIM  *= 0.7f;
+        MOTOR[FRONT_RIGHT].DATA.AIM *= 0.7f;
+        MOTOR[REAR_LEFT].DATA.AIM   *= 1.4f;
+        MOTOR[REAR_RIGHT].DATA.AIM  *= 1.4f;
+    }
+    chassis_power_control(cap_mode_ctrl, DBUS->is_front_lifted) ;
 			
 }
 
@@ -191,10 +197,10 @@ static void CHASSIS_F_Lifited(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
         rear_power_scale =  fmaxf(REAR_POWER_BOOST, 1.0f + (boost_factor - 1.0f) * (1.0f - front_power_scale));
         
         // 应用功率调整
-        MOTOR[FRONT_LEFT].DATA.AIM *= front_power_scale;
+        MOTOR[FRONT_LEFT].DATA.AIM  *= front_power_scale;
         MOTOR[FRONT_RIGHT].DATA.AIM *= front_power_scale;
-        MOTOR[REAR_LEFT].DATA.AIM *= rear_power_scale;
-        MOTOR[REAR_RIGHT].DATA.AIM *= rear_power_scale;
+        MOTOR[REAR_LEFT].DATA.AIM   *= rear_power_scale;
+        MOTOR[REAR_RIGHT].DATA.AIM  *= rear_power_scale;
         // MOTOR[FRONT_LEFT].DATA.AIM *= FRONT_POWER_POWER;
         // MOTOR[FRONT_RIGHT].DATA.AIM *= FRONT_POWER_POWER;
         // MOTOR[REAR_LEFT].DATA.AIM *= REAR_POWER_BOOST;
