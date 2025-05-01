@@ -29,6 +29,7 @@ double param[5] = {0};
 int IOTA = 0; // test
 double M;     // test
 
+float tt, countttt = 0.0f; // test
 // @TODO 整合到整个ROOT_init函数中, 记得Init 时间 && 摩擦轮目标值应根据裁判系统拟合
 uint8_t ATTACK_F_Init(TYPEDEF_MOTOR *MOTOR)
 {
@@ -189,7 +190,7 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
         MOTOR->DATA.AIM = 0.0f;
         ATTACK_V_PARAM.fire_wheel_status = 0;
     }
-    if (DBUS_V_DATA.REMOTE.S2_u8 == 1 || DBUS_V_DATA.REMOTE.S2_u8 == 2)
+    if ( DBUS_V_DATA.REMOTE.S2_u8 == 2)
     {
         fire_mouse_status = 0;
     } else {
@@ -215,7 +216,7 @@ uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     if (!ATTACK_F_JAM_Check(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_G]))
     {
         // 卡弹
-        MOTOR[MOTOR_D_ATTACK_G].DATA.AIM = (float)MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE + ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.FLAG * 2;
+        MOTOR[MOTOR_D_ATTACK_G].DATA.AIM = (float)MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE + ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.FLAG;
         ATTACK_V_PARAM.FLAG = -ATTACK_V_PARAM.FLAG;
         ATTACK_V_PARAM.TIME = 0; // 重置时间
     }
@@ -225,7 +226,7 @@ uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     MOTOR[MOTOR_D_ATTACK_R].DATA.AIM =  ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_R]);
     
     ATTACK_F_JAM_Disable(&MOTOR[MOTOR_D_ATTACK_G]);
-    ATTACK_T_FIT(40);
+    // ATTACK_T_FIT(40);
     // pid
     PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_L]);
     PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_R]);
@@ -342,7 +343,7 @@ double *ATTACK_T_FIT(int size)
 uint8_t ATTACK_F_JAM_Disable(TYPEDEF_MOTOR *MOTOR) 
 {
     // 定义卡弹持续时间阈值(3秒)
-    const float JAM_DISABLE_THRESHOLD = 3.0f;  // 单位：秒
+    const float JAM_DISABLE_THRESHOLD = 5.0f;  // 单位：秒
     static uint8_t jam_disable_flag = 0;       // 记录是否已经失能
     static float jam_start_time = 0.0f;        // 记录卡弹开始时间
     static uint8_t last_jam_status = 0;        // 记录上一次卡弹状态
@@ -358,13 +359,13 @@ uint8_t ATTACK_F_JAM_Disable(TYPEDEF_MOTOR *MOTOR)
         
         // 计算卡弹持续时间
         float jam_duration = current_time - jam_start_time;
-        
+        tt = jam_duration;  // 调试用，记录卡弹持续时间
         // 如果卡弹持续超过阈值
         if (jam_duration >= JAM_DISABLE_THRESHOLD && !jam_disable_flag) {
             // 失能拨弹电机
              MOTOR->DATA.ENABLE = 0;
             jam_disable_flag = 1;  // 标记已失能
-            
+            countttt++;
             return ROOT_READY;  // 返回成功状态
         }
     } 

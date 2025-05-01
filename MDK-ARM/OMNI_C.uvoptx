@@ -159,7 +159,7 @@
           <Type>0</Type>
           <LineNumber>68</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134230916</Address>
+          <Address>134230956</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -189,25 +189,9 @@
         <Bp>
           <Number>2</Number>
           <Type>0</Type>
-          <LineNumber>370</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
-          <Address>134222308</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Bsp\ctl\src\ATTACK.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\OMNI_C\../Bsp/ctl/src/ATTACK.c\370</Expression>
-        </Bp>
-        <Bp>
-          <Number>3</Number>
-          <Type>0</Type>
           <LineNumber>85</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134267664</Address>
+          <Address>134267824</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -484,6 +468,21 @@
           <count>52</count>
           <WinNumber>1</WinNumber>
           <ItemText>cap_off</ItemText>
+        </Ww>
+        <Ww>
+          <count>53</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>jam_duration</ItemText>
+        </Ww>
+        <Ww>
+          <count>54</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>tt</ItemText>
+        </Ww>
+        <Ww>
+          <count>55</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>countttt</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>

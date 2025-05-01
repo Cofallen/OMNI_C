@@ -70,6 +70,11 @@ uint8_t VOFA_T_Send(uint8_t type, int n, float a1, float a2, float a3, float a4,
     data_temp.DATA[8] = a9;
     data_temp.DATA[9] = a10;
 
+    data_temp.TAIL[40] = 0x00;
+    data_temp.TAIL[41] = 0x00;
+    data_temp.TAIL[42] = 0x80;
+    data_temp.TAIL[43] = 0x7f;
+
     if (type == 0)
         CDC_Transmit_FS(data_temp.TAIL, 44); // 发送到虚拟串口
     else if (type == 1)
@@ -332,7 +337,18 @@ void Vofa_intergrate(uint8_t mod)
             current[0],
             (float)user_data.power_heat_data.buffer_energy,
             (float)user_data.robot_status.chassis_power_limit);
-        break;
+        break; 
+    case 8:
+        VOFA_T_Send(0, 10, (float)ATTACK_V_PARAM.COUNT,
+            (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW,
+            (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.SPEED_NOW,
+            (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.AIM,
+            (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM,
+            (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE,
+            (float)ATTACK_V_PARAM.STATUS,
+            (float)ATTACK_V_PARAM.jam_dwt_time,
+            (float)ATTACK_V_PARAM.TIME,
+            1.0f);
     default:
         break;
     }
