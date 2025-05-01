@@ -13,7 +13,7 @@
 
 #include "VOFA.h"
 #include "stdlib.h"
-
+#include "bsp_dwt.h"
 
 // delete later
 #include "CAN_DEV.h"
@@ -97,7 +97,7 @@ float ATTACK_F_JAM_Aim(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, uint8_t autofir
     }
     
     // 计算新的电机目标角度
-    if (ATTACK_V_PARAM.COUNT > 0 && ATTACK_V_PARAM.fire_wheel_status)
+    if (ATTACK_V_PARAM.COUNT > 0) // @debug  && ATTACK_V_PARAM.fire_wheel_status
     {
         MOTOR->DATA.AIM = (float)MOTOR->DATA.ANGLE_INFINITE - ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.COUNT;
         // 单发模式下，处理完一次后重置COUNT
@@ -180,7 +180,7 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
     // return MOTOR->DATA.AIM;
 
     // @veision 3, final code, this code is a stable speed
-    if (( fire_mouse_status == 1 )|| DBUS_V_DATA.REMOTE.S2_u8 == 2)  // 3 is the fire button
+    if ( fire_mouse_status == 1 )  // 3 is the fire button
     {
         MOTOR->DATA.AIM = ATTACK_V_PARAM.SPEED;
         ATTACK_V_PARAM.fire_wheel_status = 1;
@@ -189,8 +189,11 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
         MOTOR->DATA.AIM = 0.0f;
         ATTACK_V_PARAM.fire_wheel_status = 0;
     }
-    if (DBUS_V_DATA.MOUSE.R_STATE && !DBUS_V_DATA.MOUSE.R_PRESS_NUMBER) {
-        fire_mouse_status = !fire_mouse_status;
+    if (DBUS_V_DATA.REMOTE.S2_u8 == 1 || DBUS_V_DATA.REMOTE.S2_u8 == 2)
+    {
+        fire_mouse_status = 0;
+    } else {
+        fire_mouse_status = 1;
     }
     DBUS_V_DATA.MOUSE.R_PRESS_NUMBER = DBUS_V_DATA.MOUSE.R_STATE; // 更新鼠标状态
     return MOTOR->DATA.AIM;
@@ -200,14 +203,14 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
 // 总控制函数
 uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {
-    if ((MATH_D_ABS(MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE - MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM)) < 5000.0f)
+    if ((MATH_D_ABS(MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE - MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM)) < 50.0f)
     {
         ATTACK_V_PARAM.STATUS = 0;
     }
     
     if (ATTACK_V_PARAM.STATUS == 0)
     {
-        MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM = ATTACK_F_JAM_Aim(&MOTOR[MOTOR_D_ATTACK_G], DBUS, 0);
+        MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM = ATTACK_F_JAM_Aim(&MOTOR[MOTOR_D_ATTACK_G], DBUS, DBUS->MOUSE.R_STATE);
     }
     if (!ATTACK_F_JAM_Check(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_G]))
     {
@@ -220,7 +223,8 @@ uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     
     MOTOR[MOTOR_D_ATTACK_L].DATA.AIM = -ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_L]);
     MOTOR[MOTOR_D_ATTACK_R].DATA.AIM =  ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_R]);
-
+    
+    ATTACK_F_JAM_Disable(&MOTOR[MOTOR_D_ATTACK_G]);
     ATTACK_T_FIT(40);
     // pid
     PID_F_SC(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_L]);
@@ -328,4 +332,51 @@ double *ATTACK_T_FIT(int size)
     }
 
     return &M;
+}
+
+/**
+ * @brief 卡弹处理函数 - 累计3秒后失能拨弹电机，重新启动需要手动拨到目标位置
+ * @param MOTOR 拨弹电机指针
+ * @return 返回电机状态 1表示已失能 0表示未失能
+ */
+uint8_t ATTACK_F_JAM_Disable(TYPEDEF_MOTOR *MOTOR) 
+{
+    // 定义卡弹持续时间阈值(3秒)
+    const float JAM_DISABLE_THRESHOLD = 3.0f;  // 单位：秒
+    static uint8_t jam_disable_flag = 0;       // 记录是否已经失能
+    static float jam_start_time = 0.0f;        // 记录卡弹开始时间
+    static uint8_t last_jam_status = 0;        // 记录上一次卡弹状态
+    float current_time = DWT_GetTimeline_s();
+    
+    // 如果检测到卡弹
+    if (ATTACK_V_PARAM.STATUS == 1) {
+        // 卡弹状态开始（从无卡弹到有卡弹的转变）
+        if (last_jam_status == 0) {
+            jam_start_time = current_time;  // 记录卡弹开始时间
+            last_jam_status = 1;
+        }
+        
+        // 计算卡弹持续时间
+        float jam_duration = current_time - jam_start_time;
+        
+        // 如果卡弹持续超过阈值
+        if (jam_duration >= JAM_DISABLE_THRESHOLD && !jam_disable_flag) {
+            // 失能拨弹电机
+             MOTOR->DATA.ENABLE = 0;
+            jam_disable_flag = 1;  // 标记已失能
+            
+            return ROOT_READY;  // 返回成功状态
+        }
+    } 
+    else {
+        // 卡弹解除
+        if (last_jam_status == 1) {
+            // 状态从有卡弹变为无卡弹
+            last_jam_status = 0;
+        }
+            MOTOR->DATA.ENABLE = 1;
+            jam_disable_flag = 0;
+    }
+    
+    return ROOT_ERROR;  // 返回未失能状态
 }

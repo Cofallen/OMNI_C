@@ -132,7 +132,6 @@ int main(void)
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
    ROOT_F_Init();
-   HAL_Delay(10);
   CAN_Filter_Init();
 
   __HAL_UART_ENABLE_IT(&huart6, UART_IT_IDLE);
@@ -145,7 +144,6 @@ int main(void)
   HAL_UART_Transmit_DMA(&huart1, (uint8_t *)sd_v_buff, sizeof(sd_v_buff));
   HAL_UART_Receive_DMA(&huart1, (uint8_t *)VISION_V_DATA.OriginData, sizeof(VISION_V_DATA.OriginData));
   HAL_TIM_Base_Start_IT(&htim2);
-  HAL_Delay(30);
 
   /* USER CODE END 2 */
 

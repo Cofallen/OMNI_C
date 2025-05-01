@@ -123,7 +123,7 @@ void StartvisionTask(void const * argument)
   {
       // input
       RobotUI_Dynamic();
-      RobotUI_Static_Init();
+      // RobotUI_Static_Init();
 	  // if(xSemaphoreTake(binarySemHandle, pdMS_TO_TICKS(1000)) == pdTRUE)
     //   {  
     //   // ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff, 1);

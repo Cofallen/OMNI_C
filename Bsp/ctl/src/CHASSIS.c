@@ -68,7 +68,7 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 
     VX =  (float)((DBUS->REMOTE.CH0_int16) + (DBUS->KEY_BOARD.D - DBUS->KEY_BOARD.A) * 660.0f) * 8.0f;
     VY =  (float)((DBUS->REMOTE.CH1_int16) + (DBUS->KEY_BOARD.W - DBUS->KEY_BOARD.S) * 660.0f) * 8.0f;
-    VR = -(float)((DBUS->REMOTE.DIR_int16) + (DBUS->KEY_BOARD.SHIFT) * 660.0f) * 3.0f;
+    VR = -(float)((DBUS->REMOTE.DIR_int16) + (DBUS->KEY_BOARD.SHIFT) * 660.0f) * 8.0f;
 
     if (DBUS->KEY_BOARD.G)
     {
@@ -80,7 +80,7 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     // @TODO 2. VR的负号和-ANGLE_Relative的负号测试是否可以全换成正号
     if (DBUS->REMOTE.S2_u8 != 1)
     {
-        (!((DBUS->REMOTE.DIR_int16)||(DBUS->KEY_BOARD.SHIFT)))?(PRIDICT = DBUS->REMOTE.CH2_int16 * 5.0f,VR = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative)):(PRIDICT = 0.0f);     // 分离 滚轮影响小陀螺
+        (!((DBUS->REMOTE.DIR_int16)||(DBUS->KEY_BOARD.SHIFT)))?(PRIDICT = DBUS->REMOTE.CH2_int16 * 6.0f,VR = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative)):(PRIDICT = 0.0f);     // 分离 滚轮影响小陀螺
     }
     
     // rotate matrix
@@ -101,35 +101,32 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     CHASSIS_F_SoftStart(MOTOR);
     CHASSIS_F_Lifited(MOTOR, DBUS);
 
-    // pid 解算
-    PID_F_SC(&MOTOR[MOTOR_D_CHASSIS_1]);
-    PID_F_SC(&MOTOR[MOTOR_D_CHASSIS_2]);
-    PID_F_SC(&MOTOR[MOTOR_D_CHASSIS_3]);
-    PID_F_SC(&MOTOR[MOTOR_D_CHASSIS_4]);
-
     //正常使用电容
     static uint8_t cap_mode_ctrl = 0;
     if (DBUS->KEY_BOARD.C && !DBUS->KEY_BOARD.C_PREE_NUMBER) {
         cap_mode_ctrl = !cap_mode_ctrl;  // 切换电容模式
     }
 
-    static uint8_t user_lifted = 0;
-    if (DBUS->KEY_BOARD.F && !DBUS->KEY_BOARD.F_PREE_NUMBER) {
-        user_lifted = !user_lifted;  
-    }
-
     DBUS->KEY_BOARD.C_PREE_NUMBER = DBUS->KEY_BOARD.C;  
     DBUS->KEY_BOARD.F_PREE_NUMBER = DBUS->KEY_BOARD.F;  
     DBUS->KEY_BOARD.G_PREE_NUMBER = DBUS->KEY_BOARD.G;  
 
-    if (user_lifted) {
+    if (DBUS->KEY_BOARD.F) {
         MOTOR[FRONT_LEFT].DATA.AIM  *= 0.7f;
         MOTOR[FRONT_RIGHT].DATA.AIM *= 0.7f;
         MOTOR[REAR_LEFT].DATA.AIM   *= 1.4f;
         MOTOR[REAR_RIGHT].DATA.AIM  *= 1.4f;
     }
-    chassis_power_control(cap_mode_ctrl, DBUS->is_front_lifted) ;
-			
+
+
+    // pid 解算
+    PID_F_SC(&MOTOR[MOTOR_D_CHASSIS_1]);
+    PID_F_SC(&MOTOR[MOTOR_D_CHASSIS_2]);
+    PID_F_SC(&MOTOR[MOTOR_D_CHASSIS_3]);
+    PID_F_SC(&MOTOR[MOTOR_D_CHASSIS_4]);
+    chassis_power_control(cap_mode_ctrl, DBUS->is_front_lifted);
+
+
 }
 
 

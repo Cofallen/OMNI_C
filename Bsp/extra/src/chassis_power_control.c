@@ -10,7 +10,7 @@ PID_buffer_t PID_Buffer;
 fp32 scaled_give_power[4];
 
 fp32 toque_coefficient = 1.99688994e-6f; // // (20/16384)*(0.3)*(187/3591)/9.55 力矩电流系数
-fp32 a = 1.1e-07;						 // k1
+fp32 a = 1.23e-07;						 // k1
 fp32 k2 = 1.453e-07;					 // k2
 fp32 constant = 4.081f;                  // a 增大这个系数可以减小功率，反之增加
 

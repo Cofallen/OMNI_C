@@ -28,6 +28,7 @@ typedef struct TYPEDEF_MOTOR_DATA
     int ANGLE_INIT; // 云台初始角度
     int ANGLE_MAX;  // 云台最大角度
     int ANGLE_MIN;  // 云台最小角度
+    uint8_t ENABLE;
 } TYPEDEF_MOTOR_DATA;
 
 // PID参数打印模板

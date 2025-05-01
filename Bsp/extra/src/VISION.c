@@ -59,7 +59,7 @@ void VisionSendInit(union RUI_U_VISION_SEND*  Send_t)
     static uint8_t buff_flag = 0;
 
     Send_t->PIT_DATA = TOP.roll[5];     // @note c板侧放，如果想用pitch建议改imu_temp...c中的IMU_QuaternionEKF_Update参数顺序和正负
-    Send_t->YAW_DATA = TOP.yaw[5];
+    Send_t->YAW_DATA = -TOP.yaw[5];
     Send_t->INIT_FIRING_RATE =user_data.shoot_data.initial_speed;
     Send_t->FLAG = VISION_V_DATA.SEND.FLAG;
     Send_t->COLOR = VISION_V_DATA.SEND.COLOR;
@@ -68,7 +68,7 @@ void VisionSendInit(union RUI_U_VISION_SEND*  Send_t)
 
     if (DBUS_V_DATA.KEY_BOARD.B && !DBUS_V_DATA.KEY_BOARD.B_PREE_NUMBER) // 按下B键
         buff_flag = !buff_flag; // 切换打符模式
-    
+    DBUS_V_DATA.KEY_BOARD.B_PREE_NUMBER = DBUS_V_DATA.KEY_BOARD.B;
     Send_t->is_buff = buff_flag;
 }
 

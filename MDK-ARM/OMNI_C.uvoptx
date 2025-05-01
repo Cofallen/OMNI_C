@@ -159,7 +159,7 @@
           <Type>0</Type>
           <LineNumber>68</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134230220</Address>
+          <Address>134230916</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -173,25 +173,25 @@
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>298</LineNumber>
+          <LineNumber>15</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134222364</Address>
+          <Address>52</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Bsp\ctl\src\ATTACK.c</Filename>
+          <Filename>..\UI\ui_interface.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\\../Bsp/ctl/src/ATTACK.c\298</Expression>
+          <Expression>\\OMNI_C\../UI/ui_interface.c\15</Expression>
         </Bp>
         <Bp>
           <Number>2</Number>
           <Type>0</Type>
-          <LineNumber>299</LineNumber>
+          <LineNumber>370</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134222440</Address>
+          <Address>134222308</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -200,7 +200,23 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\Bsp\ctl\src\ATTACK.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\\../Bsp/ctl/src/ATTACK.c\299</Expression>
+          <Expression>\\OMNI_C\../Bsp/ctl/src/ATTACK.c\370</Expression>
+        </Bp>
+        <Bp>
+          <Number>3</Number>
+          <Type>0</Type>
+          <LineNumber>85</LineNumber>
+          <EnabledFlag>0</EnabledFlag>
+          <Address>134267664</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\Bsp\ctl\src\YU_PID.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\OMNI_C\../Bsp/ctl/src/YU_PID.c\85</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -307,7 +323,7 @@
         <Ww>
           <count>20</count>
           <WinNumber>1</WinNumber>
-          <ItemText>VISION_V_DATA</ItemText>
+          <ItemText>VISION_V_DATA,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>21</count>
@@ -438,6 +454,36 @@
           <count>46</count>
           <WinNumber>1</WinNumber>
           <ItemText>capData_JHB,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>47</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>tt</ItemText>
+        </Ww>
+        <Ww>
+          <count>48</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>ll</ItemText>
+        </Ww>
+        <Ww>
+          <count>49</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>tn</ItemText>
+        </Ww>
+        <Ww>
+          <count>50</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>jam_start_time</ItemText>
+        </Ww>
+        <Ww>
+          <count>51</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>cap_mode_ctrl</ItemText>
+        </Ww>
+        <Ww>
+          <count>52</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>cap_off</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>

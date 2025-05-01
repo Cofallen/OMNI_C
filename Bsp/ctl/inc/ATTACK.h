@@ -18,7 +18,7 @@ typedef struct
     int8_t STATUS;      // jam status
     uint8_t PREV_MOUSE_STATE; // 上次左鼠标状态，控制拨盘旋转
     uint8_t fire_wheel_status; // 摩擦轮状态
-
+    float jam_dwt_time;
 }TYPEDEF_ATTACK_PARAM;
 
 extern TYPEDEF_ATTACK_PARAM ATTACK_V_PARAM;
@@ -26,5 +26,5 @@ extern TYPEDEF_ATTACK_PARAM ATTACK_V_PARAM;
 uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS);
 uint8_t ATTACK_F_Init(TYPEDEF_MOTOR *MOTOR);
 double *ATTACK_T_FIT(int size);
-
+uint8_t ATTACK_F_JAM_Disable(TYPEDEF_MOTOR *MOTOR);
 #endif // !__ATTACK_H__

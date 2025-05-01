@@ -63,12 +63,12 @@ uint8_t ROOT_F_PIDinit()
     const float PID_V_ATTACK_L_CURRENT[5] = {1.0f, 0, 0, 1000.0f, 3000.0f};
     const float PID_V_ATTACK_R_CURRENT[5] = {1.0f, 0, 0, 1000.0f, 3000.0f};
 
-    const float FOLLOW_PID_V[5] = {0.5f, 0.0f, 0.0f, 0.0f, 6000.0f};
+    const float FOLLOW_PID_V[5] = {0.5f, 0.0f, 0.0f, 0.0f, 3000.0f};
     const float PID_V_TOP_OFF_S[5] = {100.5f, 0.0f, 0.0f, 0.0f, 30000.0f};
     const float PID_V_TOP_OFF_A[5] = {1.5f, 0.0f, 0.0f, 0.0f, 2000.0f};
 	
-    const float PID_V_VISION_YAW_SPEED[5] = {500.0f, 0.0f, 0.0f, 0.0f, 29000.0f};
-    const float PID_V_VISION_YAW_ANGLE[5] = {2.1f, 0.0f, 0.0f, 320.0f, 12000.0f};
+    const float PID_V_VISION_YAW_SPEED[5] = {800.0f, 0.0f, 0.0f, 0.0f, 29000.0f};
+    const float PID_V_VISION_YAW_ANGLE[5] = {6.0f, 0.0f, 0.0f, 320.0f, 8000.0f};
     const float PID_V_VISION_PIT_SPEED[5] = {300.0f, 0.02f, 0, 1000.0f, 20000.0f};
     const float PID_V_VISION_PIT_ANGLE[5] = {10.0f, 0.0025f, 0, 420.0f, 10000.0f};
 
@@ -116,10 +116,11 @@ void ROOT_F_Init()
 {
     ROOT_F_PIDinit();
     ATTACK_F_Init(MOTOR_V_ATTACK);
-    ui_init_default_init6();
+    RobotUI_Static_Init();
     #ifdef OLDHEAD
     MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 3422.0f;  // 云台初始化角度
     MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM = 0.0f;
+	MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ENABLE = 1; 
 	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS = 1;   // @TODO when yaw init, aim 0->angle_init, make yaw shaking.
 	#endif
 
