@@ -69,4 +69,5 @@ omni_c/ui_default_init6_0.o: ..\UI\ui_default_init6_0.c \
   ..\CMSIS\DSP\Inc\arm_math_memory.h ..\CMSIS\DSP\Inc\dsp\none.h \
   ..\CMSIS\DSP\Inc\dsp\utils.h \
   ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
-  ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h ..\Bsp\extra\inc\define.h
+  ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h ..\Bsp\extra\inc\define.h \
+  ..\Bsp\extra\inc\YU_MATH.h ..\Bsp\ctl\inc\CAP.h

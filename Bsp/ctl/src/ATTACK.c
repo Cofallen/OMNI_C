@@ -119,9 +119,9 @@ float ATTACK_F_JAM_Aim(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, uint8_t autofir
 uint8_t ATTACK_F_JAM_Check(TYPEDEF_MOTOR *MOTOR)
 {
     float DIFF = MOTOR->DATA.AIM - (float)MOTOR->DATA.ANGLE_INFINITE;
-    float EDGE = MATH_D_ABS((ATTACK_V_PARAM.SINGLE_ANGLE / 300.0f));
+    float EDGE = MATH_D_ABS((ATTACK_V_PARAM.SINGLE_ANGLE / 600.0f));
 
-    if (((MATH_D_ABS(DIFF) >= EDGE) && ((MATH_D_ABS(MOTOR->DATA.SPEED_NOW)) <= 20)))
+    if (((MATH_D_ABS(DIFF) >= EDGE) && ((MATH_D_ABS(MOTOR->DATA.SPEED_NOW)) <= ATTACK_D_SPEED)))
     {
         if (ATTACK_V_PARAM.TIME >= ATTACK_D_TIMEOUT)
         {
@@ -181,7 +181,7 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
     // return MOTOR->DATA.AIM;
 
     // @veision 3, final code, this code is a stable speed
-    if ( fire_mouse_status == 1 )  // 3 is the fire button
+    if ( fire_mouse_status == 1  &&  DBUS_V_DATA.REMOTE.S2_u8 == 3)  // 3 is the fire button
     {
         MOTOR->DATA.AIM = ATTACK_V_PARAM.SPEED;
         ATTACK_V_PARAM.fire_wheel_status = 1;
@@ -190,13 +190,12 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
         MOTOR->DATA.AIM = 0.0f;
         ATTACK_V_PARAM.fire_wheel_status = 0;
     }
-    if ( DBUS_V_DATA.REMOTE.S2_u8 == 2)
+    if (DBUS_V_DATA.KEY_BOARD.CTRL  && !DBUS_V_DATA.KEY_BOARD.CTRL_PREE_NUMBER)
     {
-        fire_mouse_status = 0;
-    } else {
-        fire_mouse_status = 1;
+        fire_mouse_status = !fire_mouse_status;
     }
-    DBUS_V_DATA.MOUSE.R_PRESS_NUMBER = DBUS_V_DATA.MOUSE.R_STATE; // 更新鼠标状态
+    DBUS_V_DATA.KEY_BOARD.CTRL_PREE_NUMBER = DBUS_V_DATA.KEY_BOARD.CTRL;
+    
     return MOTOR->DATA.AIM;
 }
 
@@ -216,7 +215,7 @@ uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     if (!ATTACK_F_JAM_Check(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_G]))
     {
         // 卡弹
-        MOTOR[MOTOR_D_ATTACK_G].DATA.AIM = (float)MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE + ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.FLAG;
+        MOTOR[MOTOR_D_ATTACK_G].DATA.AIM = (float)MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE; //  @debug + ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.FLAG
         ATTACK_V_PARAM.FLAG = -ATTACK_V_PARAM.FLAG;
         ATTACK_V_PARAM.TIME = 0; // 重置时间
     }
@@ -343,7 +342,7 @@ double *ATTACK_T_FIT(int size)
 uint8_t ATTACK_F_JAM_Disable(TYPEDEF_MOTOR *MOTOR) 
 {
     // 定义卡弹持续时间阈值(3秒)
-    const float JAM_DISABLE_THRESHOLD = 5.0f;  // 单位：秒
+    const float JAM_DISABLE_THRESHOLD = 7.0f;  // 单位：秒
     static uint8_t jam_disable_flag = 0;       // 记录是否已经失能
     static float jam_start_time = 0.0f;        // 记录卡弹开始时间
     static uint8_t last_jam_status = 0;        // 记录上一次卡弹状态

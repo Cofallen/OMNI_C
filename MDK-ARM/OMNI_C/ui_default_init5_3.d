@@ -57,4 +57,6 @@ omni_c/ui_default_init5_3.o: ..\UI\ui_default_init5_3.c \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\semphr.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\event_groups.h \
   ..\Bsp\extra\inc\vision.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h \
+  ..\Bsp\ctl\inc\GIMBAL.h ..\Bsp\ctl\inc\MOTOR.h \
+  ..\Bsp\ctl\inc\feedforward.h ..\LIB\user_lib.h ..\Bsp\ctl\inc\DBUS.h

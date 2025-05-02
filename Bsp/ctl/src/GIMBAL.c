@@ -11,15 +11,15 @@
 
 float DBUS_V_CH2[5] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f}; // last now error 3-count 4-status 
 
+uint8_t auto_aim_enabled = 0;  // 0表示关闭自瞄，1表示开启自瞄
 
 // 2. 增加pid_f_vision_pitch，用四套pid
 void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, TYPEDEF_VISION *VISION)
 {
     static float yawAngle = 0.0f, pitAngle = 0.0f;
-    static uint8_t auto_aim_enabled = 0;  // 0表示关闭自瞄，1表示开启自瞄
-    
+
     // 检测鼠标右键点击（上升沿）
-    (DBUS->MOUSE.R_STATE) ? (auto_aim_enabled = 1) : (auto_aim_enabled = 0);
+    (DBUS->MOUSE.R_STATE || VISION_V_DATA.SEND.is_buff) ? (auto_aim_enabled = 1) : (auto_aim_enabled = 0);
     
     // 根据自瞄状态执行相应的控制逻辑
     if((auto_aim_enabled || (DBUS->REMOTE.S2_u8==2)) && VISION_V_DATA.RECEIVE.TARGET ) {
@@ -34,8 +34,8 @@ void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, TYPEDEF_VISION *VISI
     {
         (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM = TOP.yaw[3]) : (MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM = MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM); 
         (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = TOP.roll[5]) : (MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM);
-        PID_F_G(&MOTOR[MOTOR_D_GIMBAL_YAW]);
-        PID_F_P_T(&MOTOR[MOTOR_D_GIMBAL_PIT]);
+        PID_F_VISION_YAW(&MOTOR[MOTOR_D_GIMBAL_YAW]);
+        PID_F_VISION_PIT(&MOTOR[MOTOR_D_GIMBAL_PIT]);
     } 
     else {
         // 手动控制模式或自瞄无目标
