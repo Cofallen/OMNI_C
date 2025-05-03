@@ -21,7 +21,7 @@
 #include "can.h"
 
 #define ATTACK_D_TIMEOUT 500
-#define ATTACK_D_SPEED 100
+#define ATTACK_D_SPEED 30.0f
 
 TYPEDEF_ATTACK_PARAM ATTACK_V_PARAM = {0};
 
@@ -31,7 +31,7 @@ int IOTA = 0; // test
 double M;     // test
 
 float tt, countttt = 0.0f; // test    
-float aim_get_edge = 0.0f;
+float aim_get_edge = 0.0f,tttt=1.0f,aaaa;
 // @TODO 整合到整个ROOT_init函数中, 记得Init 时间 && 摩擦轮目标值应根据裁判系统拟合
 uint8_t ATTACK_F_Init(TYPEDEF_MOTOR *MOTOR)
 {
@@ -120,10 +120,11 @@ float ATTACK_F_JAM_Aim(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, uint8_t autofir
 // 判断卡弹 @TODO 将超时判断改为ETC时钟 &&
 uint8_t ATTACK_F_JAM_Check(TYPEDEF_MOTOR *MOTOR)
 {
-    float DIFF = MOTOR->DATA.AIM - (float)MOTOR->DATA.ANGLE_INFINITE;
-    float EDGE = MATH_D_ABS((ATTACK_V_PARAM.SINGLE_ANGLE / 300.0f));
+    float DIFF = fabsf(MOTOR->DATA.AIM - (float)MOTOR->DATA.ANGLE_INFINITE);
+    float EDGE = (float)(ATTACK_V_PARAM.SINGLE_ANGLE / 300.0f);
 
-    if (((MATH_D_ABS(DIFF) >= EDGE) && ((MATH_D_ABS(MOTOR->DATA.SPEED_NOW)) <= ATTACK_D_SPEED)))
+    tttt = DIFF;
+    if (((DIFF >= EDGE) && ((fabsf((float)MOTOR->DATA.SPEED_NOW)) <= ATTACK_D_SPEED)))
     {
         if (ATTACK_V_PARAM.TIME >= ATTACK_D_TIMEOUT)
         {
@@ -220,13 +221,13 @@ uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     {
         MOTOR[MOTOR_D_ATTACK_G].DATA.AIM = ATTACK_F_JAM_Aim(&MOTOR[MOTOR_D_ATTACK_G], DBUS, DBUS->MOUSE.R_STATE);
     }
-    // if (!ATTACK_F_JAM_Check(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_G]))
-    // {
-    //     // 卡弹
-    //     MOTOR[MOTOR_D_ATTACK_G].DATA.AIM = (float)MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE+ ATTACK_V_PARAM.SINGLE_ANGLE; //  @debug  * ATTACK_V_PARAM.FLAG
-    //     // ATTACK_V_PARAM.FLAG = -ATTACK_V_PARAM.FLAG;
-    //     ATTACK_V_PARAM.TIME = 0; // 重置时间
-    // }
+    if (!ATTACK_F_JAM_Check(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_G]))
+    {
+        // 卡弹
+        MOTOR[MOTOR_D_ATTACK_G].DATA.AIM = (float)MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE+ ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.FLAG; //  @debug  * ATTACK_V_PARAM.FLAG
+        ATTACK_V_PARAM.FLAG = -ATTACK_V_PARAM.FLAG;
+        ATTACK_V_PARAM.TIME = 0; // 重置时间
+    }
     // shooting case when opposite to you l-r
     
     MOTOR[MOTOR_D_ATTACK_L].DATA.AIM = -ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_L]);
@@ -390,11 +391,12 @@ uint8_t ATTACK_F_JAM_Disable(TYPEDEF_MOTOR *MOTOR)
             (float)jam_start_time,
             (float)current_time,
             (float)tt,
-            (float)countttt,
             (float)MOTOR->DATA.ENABLE, 
             (float)MOTOR->DATA.AIM, 
             (float)MOTOR->DATA.ANGLE_INFINITE, 
-            aim_get_edge, 0
+            (float)ATTACK_V_PARAM.TIME, 
+            (float)tttt,
+            (float)MOTOR->DATA.SPEED_NOW
         );
     return ROOT_ERROR;  // 返回未失能状态
 }
