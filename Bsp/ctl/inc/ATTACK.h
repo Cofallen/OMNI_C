@@ -15,10 +15,11 @@ typedef struct
     float SPEED;        // 摩擦轮角度
     int COUNT;
     int8_t LOCK;
-    int8_t STATUS;      // jam status
+    uint8_t STATUS[2];      // 拨盘到达 status 0到达 1未到
     uint8_t PREV_MOUSE_STATE; // 上次左鼠标状态，控制拨盘旋转
     uint8_t fire_wheel_status; // 摩擦轮状态
     float jam_dwt_time;
+    uint8_t is_jam;      // 卡弹状态
 }TYPEDEF_ATTACK_PARAM;
 
 extern TYPEDEF_ATTACK_PARAM ATTACK_V_PARAM;

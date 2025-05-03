@@ -14,13 +14,14 @@
 #include "VOFA.h"
 #include "stdlib.h"
 #include "bsp_dwt.h"
+#include <math.h>
 
 // delete later
 #include "CAN_DEV.h"
 #include "can.h"
 
 #define ATTACK_D_TIMEOUT 500
-#define ATTACK_D_SPEED 10
+#define ATTACK_D_SPEED 100
 
 TYPEDEF_ATTACK_PARAM ATTACK_V_PARAM = {0};
 
@@ -29,7 +30,8 @@ double param[5] = {0};
 int IOTA = 0; // test
 double M;     // test
 
-float tt, countttt = 0.0f; // test
+float tt, countttt = 0.0f; // test    
+float aim_get_edge = 0.0f;
 // @TODO 整合到整个ROOT_init函数中, 记得Init 时间 && 摩擦轮目标值应根据裁判系统拟合
 uint8_t ATTACK_F_Init(TYPEDEF_MOTOR *MOTOR)
 {
@@ -119,13 +121,13 @@ float ATTACK_F_JAM_Aim(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, uint8_t autofir
 uint8_t ATTACK_F_JAM_Check(TYPEDEF_MOTOR *MOTOR)
 {
     float DIFF = MOTOR->DATA.AIM - (float)MOTOR->DATA.ANGLE_INFINITE;
-    float EDGE = MATH_D_ABS((ATTACK_V_PARAM.SINGLE_ANGLE / 600.0f));
+    float EDGE = MATH_D_ABS((ATTACK_V_PARAM.SINGLE_ANGLE / 300.0f));
 
     if (((MATH_D_ABS(DIFF) >= EDGE) && ((MATH_D_ABS(MOTOR->DATA.SPEED_NOW)) <= ATTACK_D_SPEED)))
     {
         if (ATTACK_V_PARAM.TIME >= ATTACK_D_TIMEOUT)
         {
-            ATTACK_V_PARAM.STATUS = 1;
+            ATTACK_V_PARAM.is_jam = 1;
             return ROOT_ERROR;
         }
         else
@@ -134,10 +136,10 @@ uint8_t ATTACK_F_JAM_Check(TYPEDEF_MOTOR *MOTOR)
             return ROOT_READY;
         }
     }
-    else
-    {
+    else // edge到&&速度很小(到达) / edge到&&速度很大(连发) / edge不到&&速度很大(正在转)
+    { 
         ATTACK_V_PARAM.TIME = 0;
-        // ATTACK_V_PARAM.STATUS = 0;
+        ATTACK_V_PARAM.is_jam = 0;
         return ROOT_READY;
     }
 }
@@ -203,22 +205,28 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
 // 总控制函数
 uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {
-    if ((MATH_D_ABS(MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE - MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM)) < 50.0f)
-    {
-        ATTACK_V_PARAM.STATUS = 0;
+    if (!MOTOR[MOTOR_D_ATTACK_G].is_off[NOW] && MOTOR[MOTOR_D_ATTACK_G].is_off[LAST]) {
+        MOTOR[MOTOR_D_ATTACK_G].DATA.AIM = MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE;
     }
+    MOTOR[MOTOR_D_ATTACK_G].is_off[LAST] = MOTOR[MOTOR_D_ATTACK_G].is_off[NOW];
     
-    if (ATTACK_V_PARAM.STATUS == 0)
+
+    aim_get_edge = fabs((MOTOR[MOTOR_D_ATTACK_G].DATA.AIM) - (float)MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE);
+    if (aim_get_edge < 5000.0f)
+        ATTACK_V_PARAM.STATUS[NOW] = 0;
+    else ATTACK_V_PARAM.STATUS[NOW] = 1;
+    
+    if (ATTACK_V_PARAM.STATUS[NOW] == 0)
     {
-        MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM = ATTACK_F_JAM_Aim(&MOTOR[MOTOR_D_ATTACK_G], DBUS, DBUS->MOUSE.R_STATE);
+        MOTOR[MOTOR_D_ATTACK_G].DATA.AIM = ATTACK_F_JAM_Aim(&MOTOR[MOTOR_D_ATTACK_G], DBUS, DBUS->MOUSE.R_STATE);
     }
-    if (!ATTACK_F_JAM_Check(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_G]))
-    {
-        // 卡弹
-        MOTOR[MOTOR_D_ATTACK_G].DATA.AIM = (float)MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE; //  @debug + ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.FLAG
-        ATTACK_V_PARAM.FLAG = -ATTACK_V_PARAM.FLAG;
-        ATTACK_V_PARAM.TIME = 0; // 重置时间
-    }
+    // if (!ATTACK_F_JAM_Check(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_G]))
+    // {
+    //     // 卡弹
+    //     MOTOR[MOTOR_D_ATTACK_G].DATA.AIM = (float)MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE+ ATTACK_V_PARAM.SINGLE_ANGLE; //  @debug  * ATTACK_V_PARAM.FLAG
+    //     // ATTACK_V_PARAM.FLAG = -ATTACK_V_PARAM.FLAG;
+    //     ATTACK_V_PARAM.TIME = 0; // 重置时间
+    // }
     // shooting case when opposite to you l-r
     
     MOTOR[MOTOR_D_ATTACK_L].DATA.AIM = -ATTACK_F_FIRE_Aim(&MOTOR[MOTOR_D_ATTACK_L]);
@@ -338,18 +346,19 @@ double *ATTACK_T_FIT(int size)
  * @brief 卡弹处理函数 - 累计3秒后失能拨弹电机，重新启动需要手动拨到目标位置
  * @param MOTOR 拨弹电机指针
  * @return 返回电机状态 1表示已失能 0表示未失能
+ * @note 部分参数名称别看，瞎写的
  */
 uint8_t ATTACK_F_JAM_Disable(TYPEDEF_MOTOR *MOTOR) 
 {
     // 定义卡弹持续时间阈值(3秒)
-    const float JAM_DISABLE_THRESHOLD = 7.0f;  // 单位：秒
+    const float JAM_DISABLE_THRESHOLD = 10.0f;  // 单位：秒
     static uint8_t jam_disable_flag = 0;       // 记录是否已经失能
     static float jam_start_time = 0.0f;        // 记录卡弹开始时间
-    static uint8_t last_jam_status = 0;        // 记录上一次卡弹状态
+    static uint8_t last_jam_status = {0};        // 记录上一次卡弹状态
     float current_time = DWT_GetTimeline_s();
     
     // 如果检测到卡弹
-    if (ATTACK_V_PARAM.STATUS == 1) {
+    if (ATTACK_V_PARAM.STATUS[NOW] == 1) {
         // 卡弹状态开始（从无卡弹到有卡弹的转变）
         if (last_jam_status == 0) {
             jam_start_time = current_time;  // 记录卡弹开始时间
@@ -377,6 +386,15 @@ uint8_t ATTACK_F_JAM_Disable(TYPEDEF_MOTOR *MOTOR)
             MOTOR->DATA.ENABLE = 1;
             jam_disable_flag = 0;
     }
-    
+    VOFA_T_Send(0, 10, (float)ATTACK_V_PARAM.STATUS[NOW],
+            (float)jam_start_time,
+            (float)current_time,
+            (float)tt,
+            (float)countttt,
+            (float)MOTOR->DATA.ENABLE, 
+            (float)MOTOR->DATA.AIM, 
+            (float)MOTOR->DATA.ANGLE_INFINITE, 
+            aim_get_edge, 0
+        );
     return ROOT_ERROR;  // 返回未失能状态
 }

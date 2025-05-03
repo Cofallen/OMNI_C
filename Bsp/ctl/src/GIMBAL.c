@@ -21,19 +21,21 @@ void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, TYPEDEF_VISION *VISI
     // 检测鼠标右键点击（上升沿）
     (DBUS->MOUSE.R_STATE || VISION_V_DATA.SEND.is_buff) ? (auto_aim_enabled = 1) : (auto_aim_enabled = 0);
     
+    if (!DBUS->MOUSE.R_STATE && DBUS->MOUSE.R_PRESS_NUMBER)
+        MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM = TOP.yaw[3];
+    DBUS->MOUSE.R_PRESS_NUMBER = DBUS->MOUSE.R_STATE; 
+
     // 根据自瞄状态执行相应的控制逻辑
     if((auto_aim_enabled || (DBUS->REMOTE.S2_u8==2)) && VISION_V_DATA.RECEIVE.TARGET ) {
         // 自瞄模式开启且有目标
         PID_F_VISION_YAW(&MOTOR[MOTOR_D_GIMBAL_YAW]);
         PID_F_VISION_PIT(&MOTOR[MOTOR_D_GIMBAL_PIT]);
-        
+
         yawAngle = TOP.yaw[3];
-        pitAngle = (float)MOTOR[MOTOR_D_GIMBAL_PIT].DATA.ANGLE_NOW;
+        pitAngle = TOP.roll[5];
     } 
     else if ((auto_aim_enabled || (DBUS->REMOTE.S2_u8==2)) && !VISION_V_DATA.RECEIVE.TARGET )
     {
-        (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM = TOP.yaw[3]) : (MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM = MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM); 
-        (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = TOP.roll[5]) : (MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM);
         PID_F_VISION_YAW(&MOTOR[MOTOR_D_GIMBAL_YAW]);
         PID_F_VISION_PIT(&MOTOR[MOTOR_D_GIMBAL_PIT]);
     } 
@@ -44,6 +46,7 @@ void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, TYPEDEF_VISION *VISI
         case 3:; case 1:  // 遥控
             {
                 #ifdef LIFTED_DEBUG
+                
                 MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += (-(float)DBUS->REMOTE.CH2_int16 * 0.009f - MATH_D_LIMIT(15, -15, DBUS->MOUSE.X_FLT * 0.08f) + (float) (-DBUS->KEY_BOARD.E + DBUS->KEY_BOARD.Q ) * 3.0f);
                 #else
                 MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM += (-(float)DBUS->REMOTE.CH2_int16 * 0.03f - MATH_D_LIMIT(25, -25, DBUS->MOUSE.X_FLT * 0.5f) + (float) (-DBUS->KEY_BOARD.E + DBUS->KEY_BOARD.Q ) * 30.0f + (float)yawAngle);
@@ -58,7 +61,7 @@ void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, TYPEDEF_VISION *VISI
             }
             break;
 
-		case 0:; case 2:  // 离线后/视觉看不到 会进入
+		case 0:; case 2:  // 离线后 会进入
             {
                 (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM = TOP.yaw[3]) : (MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM = MOTOR[MOTOR_D_GIMBAL_YAW].DATA.AIM); 
                 (DBUS->IS_OFF) ? (MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = TOP.roll[5]) : (MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM = MOTOR[MOTOR_D_GIMBAL_PIT].DATA.AIM);

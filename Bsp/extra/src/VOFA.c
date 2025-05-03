@@ -345,10 +345,10 @@ void Vofa_intergrate(uint8_t mod)
             (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.AIM,
             (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM,
             (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE,
-            (float)ATTACK_V_PARAM.STATUS,
+            (float)ATTACK_V_PARAM.STATUS[NOW],
             (float)ATTACK_V_PARAM.jam_dwt_time,
             (float)ATTACK_V_PARAM.TIME,
-            1.0f);
+            (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].is_off[NOW]);
     default:
         break;
     }

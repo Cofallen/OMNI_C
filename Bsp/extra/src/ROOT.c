@@ -10,6 +10,7 @@
 #include "ATTACK.h"
 #include "TOP.h"
 #include "ui_update.h"
+#include "bsp_dwt.h"
 
 uint8_t ROOT_V_MONITOR_DBUS = 0; // 离线判断参数
 TYPEDEF_MOTOR_PID FOLLOW_PID = {0};  // 底盘跟随
@@ -122,6 +123,8 @@ void ROOT_F_Init()
     MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM = 0.0f;
 	MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ENABLE = 1; 
 	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS = 1;   // @TODO when yaw init, aim 0->angle_init, make yaw shaking.
+    DWT_Delay(30);
+    MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM = (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE;
 	#endif
 
     #ifdef OMNI

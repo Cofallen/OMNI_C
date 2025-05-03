@@ -41,7 +41,7 @@ typedef struct TYPEDEF_VISION
   union RUI_U_VISION_RECEIVE RECEIVE;
   union RUI_U_VISION_SEND SEND;
   uint8_t OriginData[15];
-  uint8_t RECV_FLAG;
+  uint8_t RECV_FLAG[2];
   int RECV_OutTime;
   uint32_t block_Time;
 }TYPEDEF_VISION;

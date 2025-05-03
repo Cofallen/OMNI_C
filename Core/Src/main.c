@@ -131,9 +131,9 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-   ROOT_F_Init();
+  
   CAN_Filter_Init();
-
+  ROOT_F_Init();
   __HAL_UART_ENABLE_IT(&huart6, UART_IT_IDLE);
   HAL_UART_Receive_DMA(&huart6, (uint8_t*)ALL_RX.Data, 255);
 

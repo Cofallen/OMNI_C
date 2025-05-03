@@ -157,9 +157,25 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
+          <LineNumber>169</LineNumber>
+          <EnabledFlag>0</EnabledFlag>
+          <Address>16</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\OMNI_C\../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c\169</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
           <LineNumber>68</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134229588</Address>
+          <Address>134229612</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -171,7 +187,7 @@
           <Expression>\\OMNI_C\../LIB/bsp_dwt.c\68</Expression>
         </Bp>
         <Bp>
-          <Number>1</Number>
+          <Number>2</Number>
           <Type>0</Type>
           <LineNumber>1182</LineNumber>
           <EnabledFlag>0</EnabledFlag>
@@ -187,20 +203,20 @@
           <Expression>\\OMNI_C\../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c\1182</Expression>
         </Bp>
         <Bp>
-          <Number>2</Number>
+          <Number>3</Number>
           <Type>0</Type>
           <LineNumber>85</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134266472</Address>
+          <Address>0</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
+          <BreakIfRCount>0</BreakIfRCount>
           <Filename>..\Bsp\ctl\src\YU_PID.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\OMNI_C\../Bsp/ctl/src/YU_PID.c\85</Expression>
+          <Expression></Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -483,6 +499,21 @@
           <count>55</count>
           <WinNumber>1</WinNumber>
           <ItemText>countttt</ItemText>
+        </Ww>
+        <Ww>
+          <count>56</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>errcount</ItemText>
+        </Ww>
+        <Ww>
+          <count>57</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>VisionMonitor[VISION_D_MONITOR_LEN]</ItemText>
+        </Ww>
+        <Ww>
+          <count>58</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>VisionMonitor</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>

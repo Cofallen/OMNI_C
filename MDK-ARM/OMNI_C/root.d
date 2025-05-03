@@ -76,4 +76,4 @@ omni_c/root.o: ..\Bsp\extra\src\ROOT.c ..\Core\Inc\main.h \
   ..\UI\ui_default_init3_0.h ..\UI\ui_default_init4_0.h \
   ..\UI\ui_default_init5_0.h ..\UI\ui_default_init5_1.h \
   ..\UI\ui_default_init5_2.h ..\UI\ui_default_init5_3.h \
-  ..\UI\ui_default_init6_0.h
+  ..\UI\ui_default_init6_0.h ..\LIB\bsp_dwt.h

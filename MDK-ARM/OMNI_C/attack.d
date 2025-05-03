@@ -61,4 +61,6 @@ omni_c/attack.o: ..\Bsp\ctl\src\ATTACK.c ..\Core\Inc\main.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h \
   ..\Bsp\extra\inc\VOFA.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdlib.h \
-  ..\LIB\bsp_dwt.h ..\Bsp\dev\inc\CAN_DEV.h ..\Core\Inc\can.h
+  ..\LIB\bsp_dwt.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\math.h \
+  ..\Bsp\dev\inc\CAN_DEV.h ..\Core\Inc\can.h

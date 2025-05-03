@@ -13,10 +13,10 @@
 #define VISION_D_SEND 16
 #define VISION_D_RECV 15
 
-#define VISION_D_MONITOR_LEN 30
+#define VISION_D_MONITOR_LEN 10
 union ReceiveDataUnion_typedef	data_tackle ={0};
 TYPEDEF_VISION VISION_V_DATA = {0};
-float VisionMonitor[VISION_D_MONITOR_LEN] = {0}; // 只看YAW数据是否变化判断离线
+float VisionMonitor[VISION_D_MONITOR_LEN] = {0}; // 只看pit数据是否变化判断离线
 int VISION_Monitor_IOTA = 0;
 
 /// @brief 视觉接收
@@ -47,7 +47,7 @@ uint8_t VISION_F_Cal(uint8_t *RxData, uint8_t type)
         VISION_V_DATA.RECEIVE.TARGET= (VISION_V_DATA.OriginData[9] & 0x10)>>4;//识别成功标志位
         VISION_V_DATA.RECEIVE.fire = (VISION_V_DATA.OriginData[9] & 0x08)>>3;
         VISION_V_DATA.RECEIVE.state = (VISION_V_DATA.OriginData[9] & 0x07); 
-        VISION_V_DATA.RECV_FLAG = ROOT_READY;
+        VISION_V_DATA.RECV_FLAG[NOW] = ROOT_READY;
 
         return ROOT_READY;
     }
@@ -120,7 +120,9 @@ int ControltoVision(union RUI_U_VISION_SEND*  Send_t , uint8_t *buff, uint8_t ty
 int errcount = 0;
 void VISION_F_Monitor()
 {
-    if (VISION_V_DATA.RECV_FLAG == ROOT_ERROR)
+    VISION_V_DATA.RECV_FLAG[LAST] = VISION_V_DATA.RECV_FLAG[NOW]; // 上一帧数据
+
+    if (VISION_V_DATA.RECV_FLAG[NOW] == ROOT_ERROR)
     {
         VISION_V_DATA.RECV_OutTime++;
         if (VISION_V_DATA.RECV_OutTime >= 1000000)  // 防止越界
@@ -129,12 +131,12 @@ void VISION_F_Monitor()
         }
         
     }
-    if (VISION_V_DATA.RECV_FLAG == ROOT_READY)
+    if (VISION_V_DATA.RECV_FLAG[NOW] == ROOT_READY)
     {
         VISION_V_DATA.RECV_OutTime = 0;
     }
 
-    VisionMonitor[VISION_Monitor_IOTA++] = VISION_V_DATA.RECEIVE.YAW_DATA;
+    VisionMonitor[VISION_Monitor_IOTA++] = VISION_V_DATA.RECEIVE.PIT_DATA;
     if (VISION_Monitor_IOTA >= (VISION_D_MONITOR_LEN - 1))
     {
         VISION_Monitor_IOTA = 0;
@@ -151,7 +153,7 @@ void VISION_F_Monitor()
       
     if ((VISION_V_DATA.RECV_OutTime >= 500) || (err >= (VISION_D_MONITOR_LEN - 3))) // 500ms
     {
-        VISION_V_DATA.RECV_FLAG = ROOT_ERROR;
-        memset(&VISION_V_DATA.RECEIVE, 0, sizeof(VISION_V_DATA.RECEIVE));
+        VISION_V_DATA.RECV_FLAG[NOW] = ROOT_ERROR;
+        
     }
 }
