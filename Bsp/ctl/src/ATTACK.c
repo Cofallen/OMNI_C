@@ -20,7 +20,7 @@
 #include "CAN_DEV.h"
 #include "can.h"
 
-#define ATTACK_D_TIMEOUT 500
+#define ATTACK_D_TIMEOUT 300
 #define ATTACK_D_SPEED 30.0f
 
 TYPEDEF_ATTACK_PARAM ATTACK_V_PARAM = {0};
@@ -30,8 +30,10 @@ double param[5] = {0};
 int IOTA = 0; // test
 double M;     // test
 
-float tt, countttt = 0.0f; // test    
-float aim_get_edge = 0.0f,tttt=1.0f,aaaa;
+float jam_duration_debug, disable_count_debug = 0.0f; // test    
+float aim_get_edge = 0.0f;
+float initial_speed[2] = {0};
+
 // @TODO 整合到整个ROOT_init函数中, 记得Init 时间 && 摩擦轮目标值应根据裁判系统拟合
 uint8_t ATTACK_F_Init(TYPEDEF_MOTOR *MOTOR)
 {
@@ -100,7 +102,7 @@ float ATTACK_F_JAM_Aim(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, uint8_t autofir
     }
     
     // 计算新的电机目标角度
-    if (ATTACK_V_PARAM.COUNT > 0) // @debug  && ATTACK_V_PARAM.fire_wheel_status
+    if (ATTACK_V_PARAM.COUNT > 0 && ATTACK_V_PARAM.fire_wheel_status) // @debug  
     {
         MOTOR->DATA.AIM = (float)MOTOR->DATA.ANGLE_INFINITE - ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.COUNT;
         // 单发模式下，处理完一次后重置COUNT
@@ -123,7 +125,6 @@ uint8_t ATTACK_F_JAM_Check(TYPEDEF_MOTOR *MOTOR)
     float DIFF = fabsf(MOTOR->DATA.AIM - (float)MOTOR->DATA.ANGLE_INFINITE);
     float EDGE = (float)(ATTACK_V_PARAM.SINGLE_ANGLE / 300.0f);
 
-    tttt = DIFF;
     if (((DIFF >= EDGE) && ((fabsf((float)MOTOR->DATA.SPEED_NOW)) <= ATTACK_D_SPEED)))
     {
         if (ATTACK_V_PARAM.TIME >= ATTACK_D_TIMEOUT)
@@ -159,29 +160,36 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
     // @version 2, Use this code, this code is get the fire speed by judgement system
     // but the weakness is that the speed is not stable
     
-    // float TEMP = 0.0f;
-    // if(user_data.shoot_data.initial_speed <= 27.5f)
-    // {
-    //     TEMP += 50;
-    // }
-    // else if (user_data.shoot_data.initial_speed > 27.5f && user_data.shoot_data.initial_speed <= 28.5f)
-    // {
-    //     TEMP += 5;
-    // }
-    // else if (user_data.shoot_data.initial_speed > 28.5f && user_data.shoot_data.initial_speed <= 29.5f)
-    // {
-    //     TEMP += 0;
-    // }
-    // else if (user_data.shoot_data.initial_speed > 29.5f && user_data.shoot_data.initial_speed <= 30.0f)
-    // {
-    //     TEMP -= 5;
-    // }
-    // else if (user_data.shoot_data.initial_speed > 30.0f)
-    // {
-    //     TEMP -= 50;
-    // }
-    // MOTOR->DATA.AIM = 8000.0f + TEMP;
-    // return MOTOR->DATA.AIM;
+    static float TEMP = 0.0f;
+//    initial_speed[NOW] = user_data.shoot_data.initial_speed;
+    initial_speed[LAST] = initial_speed[NOW]; // 保证attack速度只在更新时修改摩擦轮转速
+    initial_speed[NOW] = user_data.shoot_data.initial_speed; // 更新摩擦轮转速
+    if (initial_speed[NOW] != initial_speed[LAST])
+    {
+        if(user_data.shoot_data.initial_speed <= 23.6f)
+        {
+            TEMP += 4;
+        }
+        else if (user_data.shoot_data.initial_speed > 23.6f && user_data.shoot_data.initial_speed <= 23.9f)
+        {
+            TEMP += 0.5f;
+        }
+        else if (user_data.shoot_data.initial_speed > 23.9f && user_data.shoot_data.initial_speed <= 24.1f)
+        {
+            TEMP += 0;
+        }
+        else if (user_data.shoot_data.initial_speed > 24.1f && user_data.shoot_data.initial_speed <= 24.5f)
+        {
+            TEMP -= 2;
+        }
+        else if (user_data.shoot_data.initial_speed > 24.5f)
+        {
+            TEMP -= 10;
+        }
+    }
+    
+    ATTACK_V_PARAM.SPEED = 7030.0f + TEMP;
+    ATTACK_V_PARAM.SPEED = MATH_D_LIMIT(7060.f, 6980.0f, ATTACK_V_PARAM.SPEED);
 
     // @veision 3, final code, this code is a stable speed
     if ( fire_mouse_status == 1  &&  DBUS_V_DATA.REMOTE.S2_u8 == 3)  // 3 is the fire button
@@ -213,13 +221,13 @@ uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     
 
     aim_get_edge = fabs((MOTOR[MOTOR_D_ATTACK_G].DATA.AIM) - (float)MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE);
-    if (aim_get_edge < 5000.0f)
+    if (aim_get_edge < 500.0f) // @debug 5000.0f
         ATTACK_V_PARAM.STATUS[NOW] = 0;
     else ATTACK_V_PARAM.STATUS[NOW] = 1;
     
-    if (ATTACK_V_PARAM.STATUS[NOW] == 0)
+    if (ATTACK_V_PARAM.STATUS[NOW] == 0 && ATTACK_F_HeatControl(&MOTOR[MOTOR_D_ATTACK_G]))
     {
-        MOTOR[MOTOR_D_ATTACK_G].DATA.AIM = ATTACK_F_JAM_Aim(&MOTOR[MOTOR_D_ATTACK_G], DBUS, DBUS->MOUSE.R_STATE);
+        MOTOR[MOTOR_D_ATTACK_G].DATA.AIM = ATTACK_F_JAM_Aim(&MOTOR[MOTOR_D_ATTACK_G], DBUS, 0);
     }
     if (!ATTACK_F_JAM_Check(&MOTOR_V_ATTACK[MOTOR_D_ATTACK_G]))
     {
@@ -368,13 +376,13 @@ uint8_t ATTACK_F_JAM_Disable(TYPEDEF_MOTOR *MOTOR)
         
         // 计算卡弹持续时间
         float jam_duration = current_time - jam_start_time;
-        tt = jam_duration;  // 调试用，记录卡弹持续时间
+        jam_duration_debug = jam_duration;  // 调试用，记录卡弹持续时间
         // 如果卡弹持续超过阈值
         if (jam_duration >= JAM_DISABLE_THRESHOLD && !jam_disable_flag) {
             // 失能拨弹电机
              MOTOR->DATA.ENABLE = 0;
             jam_disable_flag = 1;  // 标记已失能
-            countttt++;
+            disable_count_debug++;
             return ROOT_READY;  // 返回成功状态
         }
     } 
@@ -387,16 +395,106 @@ uint8_t ATTACK_F_JAM_Disable(TYPEDEF_MOTOR *MOTOR)
             MOTOR->DATA.ENABLE = 1;
             jam_disable_flag = 0;
     }
-    VOFA_T_Send(0, 10, (float)ATTACK_V_PARAM.STATUS[NOW],
-            (float)jam_start_time,
-            (float)current_time,
-            (float)tt,
-            (float)MOTOR->DATA.ENABLE, 
-            (float)MOTOR->DATA.AIM, 
-            (float)MOTOR->DATA.ANGLE_INFINITE, 
-            (float)ATTACK_V_PARAM.TIME, 
-            (float)tttt,
-            (float)MOTOR->DATA.SPEED_NOW
-        );
+    // 失能后 5s+10s*n 重新启动拨弹电机
+    
+    // VOFA_T_Send(0, 10, (float)ATTACK_V_PARAM.STATUS[NOW],
+    //         (float)jam_start_time,
+    //         (float)current_time,
+    //         (float)jam_duration_debug,
+    //         (float)MOTOR->DATA.ENABLE, 
+    //         (float)MOTOR->DATA.AIM, 
+    //         (float)MOTOR->DATA.ANGLE_INFINITE, 
+    //         (float)ATTACK_V_PARAM.TIME, 
+    //         (float)(1.0f/jam_duration_debug),
+    //         (float)user_data.shoot_data.launching_frequency
+    //     );
     return ROOT_ERROR;  // 返回未失能状态
+}
+
+/**
+ * @brief 弹频拟合函数
+ * 
+ */
+void ATTACK_F_FireRate_Control(TYPEDEF_MOTOR *motor, float hz, uint8_t type)
+{
+    switch (type)
+    {
+    case 1: {// 线性拟合
+        // 线性拟合 (y = ax + b):      x = np.array([3000.0, 4500.0, 5000.0])
+        //                            y = np.array([13.3, 16.99, 23.3])
+        //                            方程: y = 0.0044x + -0.5277
+        //                            R² = 0.8253
+        float a = 0.0044f, b = -0.5277f;
+        float y = a * hz + b;
+        motor->PID_S.IN.ALL_LIT = y;
+        break;
+    }
+       
+    case 2: {// 二次拟合
+        float a = 0.0f, b = 0.0f, c = 0.0f;
+        float y = a * hz * hz + b * hz + c;
+        motor->PID_S.IN.ALL_LIT = y;
+        break;
+    }
+
+    default:
+        break;
+    }
+}
+
+uint8_t ATTACK_F_HeatControl(TYPEDEF_MOTOR *motor) 
+{
+    float d = 10.0f, shoot_time = 0.0f, shoot_speed = 0.0f;           
+    float a = (float)(user_data.robot_status.shooter_barrel_cooling_value); // 冷却值 /s
+    float m = fabsf((float)(user_data.robot_status.shooter_barrel_heat_limit - user_data.power_heat_data.shooter_17mm_1_barrel_heat)); // 剩余可发热量 20*n
+    uint16_t leastbullet = (uint16_t)m / 10;
+    VOFA_T_Send(0, 10, (float)a, m, 
+                       (float)user_data.robot_status.shooter_barrel_heat_limit, 
+                       (float)user_data.power_heat_data.shooter_17mm_1_barrel_heat, 
+                       shoot_time, (float)leastbullet, (float)ATTACK_V_PARAM.SPEED, 0, 0, 0); // @TODO 发送数据到VOFA
+    switch (user_data.robot_status.robot_level)
+    {
+        case 1:
+        {
+            if (leastbullet >=4) return 1;
+            else return 0;
+        }
+            break;
+        case 2:
+        {
+            if (leastbullet >= 4) return 1;
+            else return 0;
+        }
+            break;
+        case 3:case 4:
+        {
+            if (leastbullet >= 5) return 1;
+            else return 0;
+        }
+            break;
+        case 5:case 6:
+        {
+            if (leastbullet >= 5) return 1;
+            else return 0;
+        }
+            break;
+        case 7:case 8:
+        {
+            if (leastbullet >= 3) return 1;
+            else return 0;
+        }
+            break;
+        case 9:case 10:
+        {
+            if (leastbullet >= 3) return 1;
+            else return 0;
+        }
+            break;
+        default:
+        {
+            return 1;
+        }
+            break;
+        }
+    
 }

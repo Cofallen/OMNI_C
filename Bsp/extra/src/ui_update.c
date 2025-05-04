@@ -17,17 +17,17 @@
 
 uint8_t RobotUI_Static_Init()
 {
-    _ui_init_default_init0_0(); osDelay(34);
-    _ui_init_default_init0_2(); osDelay(34);
-    _ui_init_default_init1_0(); osDelay(34);
-    _ui_init_default_init2_0(); osDelay(34);
-    _ui_init_default_init3_0(); osDelay(34);
-    _ui_init_default_init4_0(); osDelay(34);
-    _ui_init_default_init5_0(); osDelay(34);
-    _ui_init_default_init5_1(); osDelay(34);
-    _ui_init_default_init5_2(); osDelay(34);
-    _ui_init_default_init5_3(); osDelay(34);
-    _ui_init_default_init6_0(); osDelay(34);
+    _ui_init_default_init0_0(); vTaskDelay(43);
+    _ui_init_default_init0_2(); vTaskDelay(43);
+    _ui_init_default_init1_0(); vTaskDelay(43);
+    _ui_init_default_init2_0(); vTaskDelay(43);
+    _ui_init_default_init3_0(); vTaskDelay(43);
+    _ui_init_default_init4_0(); vTaskDelay(43);
+    _ui_init_default_init5_0(); vTaskDelay(43);
+    _ui_init_default_init5_1(); vTaskDelay(43);
+    _ui_init_default_init5_2(); vTaskDelay(43);
+    _ui_init_default_init5_3(); vTaskDelay(43);
+    _ui_init_default_init6_0(); vTaskDelay(43);
     return 1;
 }
 
@@ -63,7 +63,7 @@ void RobotUI_Dynamic()
     ui_default_init6_Dynamic6->_c++;
 
     //动态UI刷新
-    _ui_update_default_init5_3(); osDelay(34);
-    _ui_update_default_init6_0(); osDelay(34);
-    osDelay(34);
+    _ui_update_default_init5_3(); vTaskDelay(43);
+    _ui_update_default_init6_0(); vTaskDelay(43);
+    vTaskDelay(43);
 }

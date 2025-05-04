@@ -147,7 +147,10 @@ uint8_t PID_F_S(TYPEDEF_MOTOR *MOTOR)
 
 uint8_t PID_F_VISION_YAW(TYPEDEF_MOTOR *MOTOR)
 {
-    (VISION_V_DATA.RECV_FLAG[NOW]) ?(vision_aim = (-VISION_V_DATA.RECEIVE.YAW_DATA)) : (vision_aim = TOP.yaw[5]); // 
+    // (VISION_V_DATA.RECV_FLAG[NOW]) ?(vision_aim = (-VISION_V_DATA.RECEIVE.YAW_DATA)) : (vision_aim = TOP.yaw[5]); // 
+    vision_aim = -VISION_V_DATA.RECEIVE.YAW_DATA; 
+    if(vision_aim -(TOP.yaw[5]) < -180.0f) vision_aim += 360.0f;
+    if(vision_aim -(TOP.yaw[5]) > 180.0f)  vision_aim -= 360.0f;
     MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&VISION_PID_YAW_ANGLE, vision_aim, (TOP.yaw[5]));
     MOTOR->DATA.CAN_SEND = (int16_t)PID_F_Cal(&VISION_PID_YAW_SPEED, MOTOR->PID_A.OUT.ALL_OUT, ((float)QEKF_INS.Gyro[2] * 50.0f));
     return ROOT_READY;

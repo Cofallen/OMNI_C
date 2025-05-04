@@ -10,6 +10,8 @@
 #include "VOFA.h"
 #include "ROOT.h"
 #include "VISION.h"
+#include "ATTACK.h"
+#include "DEFINE.h"
 
 #define BUFFER_SIZE (255)
 
@@ -48,6 +50,7 @@ void USAR_UART_JudgeCallback(UART_HandleTypeDef *huart)
     memset((uint8_t *)ALL_RX.Data, 0, data_length); // 清零接收缓冲区
     data_length = 0;
     HAL_UART_Receive_DMA(&huart6, (uint8_t *)ALL_RX.Data, 255); // 重启开始DMA传输 每次255字节数据
+
     __HAL_DMA_DISABLE_IT(huart6.hdmarx, DMA_IT_HT);
 }
 
