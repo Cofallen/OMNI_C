@@ -123,7 +123,7 @@ float ATTACK_F_JAM_Aim(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, uint8_t autofir
 uint8_t ATTACK_F_JAM_Check(TYPEDEF_MOTOR *MOTOR)
 {
     float DIFF = fabsf(MOTOR->DATA.AIM - (float)MOTOR->DATA.ANGLE_INFINITE);
-    float EDGE = (float)(ATTACK_V_PARAM.SINGLE_ANGLE / 10.0f);
+    float EDGE = (float)(ATTACK_V_PARAM.SINGLE_ANGLE / 5.0f);
 
     if (((DIFF >= EDGE) && ((fabsf((float)MOTOR->DATA.SPEED_NOW)) <= ATTACK_D_SPEED)))
     {
@@ -479,7 +479,7 @@ uint8_t ATTACK_F_HeatControl(TYPEDEF_MOTOR *motor)
             break;
         case 2:
         {
-            if (leastbullet >= 4) return 1;
+            if (leastbullet >= 3) return 1;
             else return 0;
         }
             break;
