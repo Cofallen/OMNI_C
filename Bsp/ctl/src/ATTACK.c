@@ -33,7 +33,7 @@ double M;     // test
 float jam_duration_debug, disable_count_debug = 0.0f; // test    
 float aim_get_edge = 0.0f;
 float initial_speed[2] = {0};
-
+float compensation_hz ;
 // @TODO 整合到整个ROOT_init函数中, 记得Init 时间 && 摩擦轮目标值应根据裁判系统拟合
 uint8_t ATTACK_F_Init(TYPEDEF_MOTOR *MOTOR)
 {
@@ -123,7 +123,7 @@ float ATTACK_F_JAM_Aim(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, uint8_t autofir
 uint8_t ATTACK_F_JAM_Check(TYPEDEF_MOTOR *MOTOR)
 {
     float DIFF = fabsf(MOTOR->DATA.AIM - (float)MOTOR->DATA.ANGLE_INFINITE);
-    float EDGE = (float)(ATTACK_V_PARAM.SINGLE_ANGLE / 300.0f);
+    float EDGE = (float)(ATTACK_V_PARAM.SINGLE_ANGLE / 10.0f);
 
     if (((DIFF >= EDGE) && ((fabsf((float)MOTOR->DATA.SPEED_NOW)) <= ATTACK_D_SPEED)))
     {
@@ -221,11 +221,11 @@ uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     
 
     aim_get_edge = fabs((MOTOR[MOTOR_D_ATTACK_G].DATA.AIM) - (float)MOTOR[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE);
-    if (aim_get_edge < 500.0f) // @debug 5000.0f
+    if (aim_get_edge < 5000.0f) // @debug 5000.0f
         ATTACK_V_PARAM.STATUS[NOW] = 0;
     else ATTACK_V_PARAM.STATUS[NOW] = 1;
     
-    if (ATTACK_V_PARAM.STATUS[NOW] == 0 && ATTACK_F_HeatControl(&MOTOR[MOTOR_D_ATTACK_G]))
+    if (ATTACK_F_HeatControl(&MOTOR[MOTOR_D_ATTACK_G]) && ATTACK_V_PARAM.STATUS[NOW] == 0)    // 判断方向优先考虑热量
     {
         MOTOR[MOTOR_D_ATTACK_G].DATA.AIM = ATTACK_F_JAM_Aim(&MOTOR[MOTOR_D_ATTACK_G], DBUS, 0);
     }
@@ -397,17 +397,17 @@ uint8_t ATTACK_F_JAM_Disable(TYPEDEF_MOTOR *MOTOR)
     }
     // 失能后 5s+10s*n 重新启动拨弹电机
     
-    // VOFA_T_Send(0, 10, (float)ATTACK_V_PARAM.STATUS[NOW],
-    //         (float)jam_start_time,
-    //         (float)current_time,
-    //         (float)jam_duration_debug,
-    //         (float)MOTOR->DATA.ENABLE, 
-    //         (float)MOTOR->DATA.AIM, 
-    //         (float)MOTOR->DATA.ANGLE_INFINITE, 
-    //         (float)ATTACK_V_PARAM.TIME, 
-    //         (float)(1.0f/jam_duration_debug),
-    //         (float)user_data.shoot_data.launching_frequency
-    //     );
+    VOFA_T_Send(0, 10, (float)ATTACK_V_PARAM.STATUS[NOW],
+            (float)jam_start_time,
+            (float)current_time,
+            (float)jam_duration_debug,
+            (float)MOTOR->DATA.ENABLE, 
+            (float)MOTOR->DATA.AIM, 
+            (float)MOTOR->DATA.ANGLE_INFINITE, 
+            (float)ATTACK_V_PARAM.TIME, 
+            (float)(1.0f/jam_duration_debug),
+            (float)user_data.shoot_data.launching_frequency
+        );
     return ROOT_ERROR;  // 返回未失能状态
 }
 
@@ -436,22 +436,39 @@ void ATTACK_F_FireRate_Control(TYPEDEF_MOTOR *motor, float hz, uint8_t type)
         motor->PID_S.IN.ALL_LIT = y;
         break;
     }
+    case 3: { // 考虑退弹卡弹
+        const float TASK_RUN_TIME = 1.1f, JAM_COUNT = 2.0f; // 任务运行时间ms，JAM_COUNTs内卡弹次数
+        float a = ATTACK_D_TIMEOUT * TASK_RUN_TIME / 1000.0f, b = 1.0f / (hz * JAM_COUNT); // 假设卡弹一次0.5s 卡弹概率为2s内一发
+        float fact_hz = 1.0f / ((hz - 1.0f) * 1.0f / (hz * hz) + b * 2 * a);      // 考虑卡弹实际频率
 
+        compensation_hz = ATTACK_Calc_Hz_From_FactHz(hz, a, JAM_COUNT);
+        compensation_hz = MATH_D_LIMIT(25.0f, 12.0f, compensation_hz); // 限制最大值
+        motor->PID_S.IN.ALL_LIT = compensation_hz * 60.0f * 4.5f;
+        break;
+    }
+    case 4: {
+        motor->PID_S.IN.ALL_LIT = hz * 60.0f * 4.5f;
+    }
     default:
         break;
     }
 }
-
+   TYPEDEF_MOTOR aaa = {0};
 uint8_t ATTACK_F_HeatControl(TYPEDEF_MOTOR *motor) 
 {
     float d = 10.0f, shoot_time = 0.0f, shoot_speed = 0.0f;           
     float a = (float)(user_data.robot_status.shooter_barrel_cooling_value); // 冷却值 /s
     float m = fabsf((float)(user_data.robot_status.shooter_barrel_heat_limit - user_data.power_heat_data.shooter_17mm_1_barrel_heat)); // 剩余可发热量 20*n
     uint16_t leastbullet = (uint16_t)m / 10;
-    VOFA_T_Send(0, 10, (float)a, m, 
-                       (float)user_data.robot_status.shooter_barrel_heat_limit, 
-                       (float)user_data.power_heat_data.shooter_17mm_1_barrel_heat, 
-                       shoot_time, (float)leastbullet, (float)ATTACK_V_PARAM.SPEED, 0, 0, 0); // @TODO 发送数据到VOFA
+
+ 
+    ATTACK_F_FireRate_Control(&aaa, 18.0f, 3);
+
+    // VOFA_T_Send(0, 10, (float)a, m, 
+    //                    (float)user_data.robot_status.shooter_barrel_heat_limit, 
+    //                    (float)user_data.power_heat_data.shooter_17mm_1_barrel_heat, 
+    //                    shoot_time, (float)leastbullet, (float)ATTACK_V_PARAM.SPEED, 
+    //                    (float)aaa.PID_S.IN.ALL_LIT, compensation_hz, 0); // @TODO 发送数据到VOFA
     switch (user_data.robot_status.robot_level)
     {
         case 1:
@@ -497,4 +514,56 @@ uint8_t ATTACK_F_HeatControl(TYPEDEF_MOTOR *motor)
             break;
         }
     
+}
+
+/**
+ * @brief 反算设置频率 hz，使得考虑卡弹后实际频率为 fact_hz
+ * @param fact_hz 目标实际频率 (Hz)
+ * @param a      卡弹时间系数 = ATTACK_D_TIMEOUT * TASK_RUN_TIME / 1000.0f
+ * @param jam_count 卡弹次数参数 (JAM_COUNT)
+ * @return 计算得到的 hz 值（>0），若无实根返回 0
+ * @note    原公式  fact_hz = 1 / ( (hz-1)/(hz²) + 2·a/(J·hz) )
+ *                 J·hz² – fact_hz·(J+2·a)·hz + fact_hz·J = 0
+ */
+float ATTACK_Calc_Hz_From_FactHz(float fact_hz, float a, float jam_count)
+{
+    // 二次方程系数 A·hz² + B·hz + C = 0
+    // A = J
+    // B = -fact_hz*(J + 2a)
+    // C = fact_hz*J
+    float J = jam_count;
+    float F = fact_hz;
+
+    float A = J;
+    float B = -F * (J + 2.0f * a);
+    float C = F * J;
+
+    // 判别式
+    float D = B * B - 4.0f * A * C;
+    if (D < 0.0f) {
+        return 0.0f;
+    }
+
+    float sqrtD = sqrtf(D);
+    float hz1 = (-B + sqrtD) / (2.0f * A);
+    float hz2 = (-B - sqrtD) / (2.0f * A);
+
+    // 返回正解
+    if ((hz1 > 10.0f && hz1 <= 18.0f) && (hz2 <= 10.0f && hz2 > 18.0f)) {
+        return hz1;
+    } else if (hz1 <= 10.0f && hz1 > 18.0f && (hz2 > 10.0f && hz2 <= 18.0f)) {
+        return hz2;
+    } else if (hz1 > 10.0f && hz1 <= 18.0f && (hz2 > 10.0f && hz2 <= 18.0f)) {
+        if (fabsf(hz1 - fact_hz) < fabsf(hz2 - fact_hz)) {
+            return hz1;
+        } else {
+            return hz2;
+        }
+    } else {
+            return fact_hz;
+    }
+    
+    if (hz1 > 0.0f) return hz1;
+    if (hz2 > 0.0f) return hz2;
+    return 0.0f;
 }

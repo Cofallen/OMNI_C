@@ -59,7 +59,7 @@ uint8_t ROOT_F_PIDinit()
 	
     const float PID_V_ATTACK_L_SPEED[5] = {14.0f, 0, 0, 1000.0f, 30000.0f};
     const float PID_V_ATTACK_R_SPEED[5] = {14.0f, 0, 0, 1000.0f, 30000.0f};
-    const float PID_V_ATTACK_G_SPEED[5] = {14.0f, 0, 0, 1000.0f, 20000.0f};
+    const float PID_V_ATTACK_G_SPEED[5] = {12.0f, 0.001f, 0, 1000.0f, 20000.0f};
     const float PID_V_ATTACK_G_ANGLE[5] = {1.0f, 0, 0, 1000.0f, 3500.0f};  // 拨盘角度AIM控制弹频，3000-13.3Hz,4500-16.99Hz,5000(2single)-23.3Hz占比约1/3
     const float PID_V_ATTACK_L_CURRENT[5] = {1.0f, 0, 0, 1000.0f, 29000.0f};
     const float PID_V_ATTACK_R_CURRENT[5] = {1.0f, 0, 0, 1000.0f, 29000.0f};
@@ -119,7 +119,7 @@ void ROOT_F_Init()
     ATTACK_F_Init(MOTOR_V_ATTACK);
 
     #ifdef OLDHEAD
-    MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 3422.0f;  // 云台初始化角度
+    MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 3422.0f + 4096.0f;  // 云台初始化角度
     MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM = 0.0f;
 	MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ENABLE = 1; 
 	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS = 1;   // @TODO when yaw init, aim 0->angle_init, make yaw shaking.

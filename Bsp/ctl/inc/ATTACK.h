@@ -31,5 +31,6 @@ double *ATTACK_T_FIT(int size);
 uint8_t ATTACK_F_JAM_Disable(TYPEDEF_MOTOR *MOTOR);
 void ATTACK_F_FireRate_Control(TYPEDEF_MOTOR *motor, float hz, uint8_t type);
 uint8_t ATTACK_F_HeatControl(TYPEDEF_MOTOR *motor);
+float ATTACK_Calc_Hz_From_FactHz(float fact_hz, float a, float jam_count);
 
 #endif // !__ATTACK_H__
