@@ -121,6 +121,8 @@
 "omni_c\ui_default_init5_3.o"
 "omni_c\ui_default_init6_0.o"
 "omni_c\ui_interface.o"
+"omni_c\ui_default_init5_4.o"
+"omni_c\ui_default_init5_5.o"
 --library_type=microlib --strict --scatter "OMNI_C\OMNI_C.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

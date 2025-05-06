@@ -2920,6 +2920,16 @@
               <FileType>1</FileType>
               <FilePath>..\UI\ui_interface.c</FilePath>
             </File>
+            <File>
+              <FileName>ui_default_init5_4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UI\ui_default_init5_4.c</FilePath>
+            </File>
+            <File>
+              <FileName>ui_default_init5_5.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UI\ui_default_init5_5.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

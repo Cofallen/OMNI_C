@@ -54,6 +54,8 @@ float watch[10] = {0};
 static float last_motor_aim[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 static uint8_t soft_start_init = 0;  // 是否已初始化
 
+uint8_t cap_mode_ctrl[2] = {0}; // ui 查看 这里的now last 对比用于节省ui时间
+uint8_t chassis_control[2][2] = {0}; // ui 查看 0f 1g
 
 void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 {
@@ -68,14 +70,15 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 
     VX =  (float)((DBUS->REMOTE.CH0_int16) + (DBUS->KEY_BOARD.D - DBUS->KEY_BOARD.A) * 660.0f) * 8.0f;
     VY =  (float)((DBUS->REMOTE.CH1_int16) + (DBUS->KEY_BOARD.W - DBUS->KEY_BOARD.S) * 660.0f) * 8.0f;
-    VR = -(float)((DBUS->REMOTE.DIR_int16) + (DBUS->KEY_BOARD.SHIFT) * 660.0f) * 8.0f;
+    VR = -(float)((DBUS->REMOTE.DIR_int16) + (DBUS->KEY_BOARD.SHIFT) * 660.0f) * 5.0f;
 
     if (DBUS->KEY_BOARD.G)
     {
+        chassis_control[1][NOW] = 1;
         VR *= 0.1f;  
         VX *= 0.1f;
         VY *= 0.1f;
-    }
+    } else chassis_control[1][NOW] = 0;
     
     // @TODO 2. VR的负号和-ANGLE_Relative的负号测试是否可以全换成正号
     if (DBUS->REMOTE.S2_u8 != 1)
@@ -102,9 +105,8 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     CHASSIS_F_Lifited(MOTOR, DBUS);
 
     //正常使用电容
-    static uint8_t cap_mode_ctrl = 0;
     if (DBUS->KEY_BOARD.C && !DBUS->KEY_BOARD.C_PREE_NUMBER) {
-        cap_mode_ctrl = !cap_mode_ctrl;  // 切换电容模式
+        cap_mode_ctrl[NOW] = !cap_mode_ctrl[NOW];  // 切换电容模式
     }
 
     DBUS->KEY_BOARD.C_PREE_NUMBER = DBUS->KEY_BOARD.C;  
@@ -112,11 +114,12 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     DBUS->KEY_BOARD.G_PREE_NUMBER = DBUS->KEY_BOARD.G;  
 
     if (DBUS->KEY_BOARD.F) {
+        chassis_control[0][NOW] = 1;
         MOTOR[FRONT_LEFT].DATA.AIM  *= 0.7f;
         MOTOR[FRONT_RIGHT].DATA.AIM *= 0.7f;
         MOTOR[REAR_LEFT].DATA.AIM   *= 1.4f;
         MOTOR[REAR_RIGHT].DATA.AIM  *= 1.4f;
-    }
+    } else chassis_control[0][NOW] = 0;
 
 
     // pid 解算
@@ -124,7 +127,7 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     PID_F_SC(&MOTOR[MOTOR_D_CHASSIS_2]);
     PID_F_SC(&MOTOR[MOTOR_D_CHASSIS_3]);
     PID_F_SC(&MOTOR[MOTOR_D_CHASSIS_4]);
-    chassis_power_control(cap_mode_ctrl, DBUS->is_front_lifted);
+    chassis_power_control(cap_mode_ctrl[NOW], DBUS->is_front_lifted);
 
 
 }

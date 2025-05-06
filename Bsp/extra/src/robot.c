@@ -120,11 +120,11 @@ void StartMonitorTask(void const * argument)
 
 void StartvisionTask(void const * argument)
 {
-  RobotUI_Static_Init();
+  RobotUI_Static_Init(34);
   for(;;)
   {
       // input
-      RobotUI_Dynamic();
+      RobotUI_Dynamic(34);
 	  // if(xSemaphoreTake(binarySemHandle, pdMS_TO_TICKS(1000)) == pdTRUE)
     //   {  
     //   // ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff, 1);

@@ -4,14 +4,6 @@
             "path": "."
         }
     ],
-    "settings": {
-        "files.associations": {
-            "*.h": "cpp",
-            "cstddef": "c",
-            "type_traits": "c",
-            "limits": "c"
-        },
-        "cortex-debug.variableUseNaturalFormat": true
-    },
+    "settings": {},
     "extensions": {}
 }

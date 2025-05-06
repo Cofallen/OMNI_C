@@ -3,8 +3,8 @@
 
 #include "main.h"
 
-uint8_t RobotUI_Static_Init();
-void RobotUI_Dynamic();
+uint8_t RobotUI_Static_Init(uint8_t tim);
+void RobotUI_Dynamic(uint8_t tim);
 
 
 #define ui_init_default_init0() \

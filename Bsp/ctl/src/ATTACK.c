@@ -105,7 +105,7 @@ float ATTACK_F_JAM_Aim(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, uint8_t autofir
     if (ATTACK_V_PARAM.COUNT > 0 && ATTACK_V_PARAM.fire_wheel_status) // @debug  
     {
         MOTOR->DATA.AIM = (float)MOTOR->DATA.ANGLE_INFINITE - ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.COUNT;
-        // 单发模式下，处理完一次后重置COUNT
+		// 单发模式下，处理完一次后重置COUNT
         if (DBUS->REMOTE.S1_u8 == DBUS_D_MOD_SINGLE || DBUS->MOUSE.L_STATE == 1)
         {
             ATTACK_V_PARAM.COUNT = 0;
@@ -168,11 +168,11 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
     {
         if(user_data.shoot_data.initial_speed <= 23.6f)
         {
-            TEMP += 4;
+            TEMP += 5;
         }
         else if (user_data.shoot_data.initial_speed > 23.6f && user_data.shoot_data.initial_speed <= 23.9f)
         {
-            TEMP += 0.5f;
+            TEMP += 2;
         }
         else if (user_data.shoot_data.initial_speed > 23.9f && user_data.shoot_data.initial_speed <= 24.1f)
         {
@@ -180,11 +180,11 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
         }
         else if (user_data.shoot_data.initial_speed > 24.1f && user_data.shoot_data.initial_speed <= 24.5f)
         {
-            TEMP -= 2;
+            TEMP -= 5;
         }
         else if (user_data.shoot_data.initial_speed > 24.5f)
         {
-            TEMP -= 10;
+            TEMP -= 15;
         }
     }
     
@@ -437,7 +437,7 @@ void ATTACK_F_FireRate_Control(TYPEDEF_MOTOR *motor, float hz, uint8_t type)
         break;
     }
     case 3: { // 考虑退弹卡弹
-        const float TASK_RUN_TIME = 1.1f, JAM_COUNT = 2.0f; // 任务运行时间ms，JAM_COUNTs内卡弹次数
+        const float TASK_RUN_TIME = 1.1f, JAM_COUNT = 10.0f; // 任务运行时间ms，JAM_COUNTs内卡弹1次数
         float a = ATTACK_D_TIMEOUT * TASK_RUN_TIME / 1000.0f, b = 1.0f / (hz * JAM_COUNT); // 假设卡弹一次0.5s 卡弹概率为2s内一发
         float fact_hz = 1.0f / ((hz - 1.0f) * 1.0f / (hz * hz) + b * 2 * a);      // 考虑卡弹实际频率
 

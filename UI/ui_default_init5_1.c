@@ -4,6 +4,8 @@
 
 #include "ui_default_init5_1.h"
 #include "string.h"
+#include "CHASSIS.h"
+#include "DEFINE.h"
 
 #define FRAME_ID 0
 #define GROUP_ID 5
@@ -26,7 +28,7 @@ void _ui_init_default_init5_1() {
     ui_default_init5_1.option.color = 8;
     ui_default_init5_1.option.str_length = 1;
     ui_default_init5_1.option.width = 2;
-    strcpy(ui_default_init5_static53->string, "B");
+    strcpy(ui_default_init5_static53->string, "F");
 
     ui_proc_string_frame(&ui_default_init5_1);
     SEND_MESSAGE((uint8_t *) &ui_default_init5_1, sizeof(ui_default_init5_1));
@@ -35,6 +37,29 @@ void _ui_init_default_init5_1() {
 void _ui_update_default_init5_1() {
     ui_default_init5_1.option.operate_tpyel = 2;
 
+    if (chassis_control[0][NOW] == 1)
+    {
+        ui_default_init5_1.option.figure_tpye = 7;
+        ui_default_init5_1.option.layer = 5;
+        ui_default_init5_1.option.font_size = 20;
+        ui_default_init5_1.option.start_x = 949;
+        ui_default_init5_1.option.start_y = 273;
+        ui_default_init5_1.option.color = 2;
+        ui_default_init5_1.option.str_length = 2;
+        ui_default_init5_1.option.width = 2;
+        strcpy(ui_default_init5_static53->string, "F");
+    } else {
+        ui_default_init5_1.option.figure_tpye = 7;
+        ui_default_init5_1.option.layer = 5;
+        ui_default_init5_1.option.font_size = 20;
+        ui_default_init5_1.option.start_x = 949;
+        ui_default_init5_1.option.start_y = 273;
+        ui_default_init5_1.option.color = 1;
+        ui_default_init5_1.option.str_length = 1;
+        ui_default_init5_1.option.width = 2;
+        strcpy(ui_default_init5_static53->string, "F");
+    }
+    
     ui_proc_string_frame(&ui_default_init5_1);
     SEND_MESSAGE((uint8_t *) &ui_default_init5_1, sizeof(ui_default_init5_1));
 }

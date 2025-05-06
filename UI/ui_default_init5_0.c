@@ -4,6 +4,8 @@
 
 #include "ui_default_init5_0.h"
 #include "string.h"
+#include "CHASSIS.h"
+#include "DEFINE.h"
 
 #define FRAME_ID 0
 #define GROUP_ID 5
@@ -26,7 +28,7 @@ void _ui_init_default_init5_0() {
     ui_default_init5_0.option.color = 8;
     ui_default_init5_0.option.str_length = 1;
     ui_default_init5_0.option.width = 2;
-    strcpy(ui_default_init5_static52->string, "A");
+    strcpy(ui_default_init5_static52->string, "C");
 
     ui_proc_string_frame(&ui_default_init5_0);
     SEND_MESSAGE((uint8_t *) &ui_default_init5_0, sizeof(ui_default_init5_0));
@@ -35,6 +37,29 @@ void _ui_init_default_init5_0() {
 void _ui_update_default_init5_0() {
     ui_default_init5_0.option.operate_tpyel = 2;
 
+    if (cap_mode_ctrl[NOW] == 0)
+    {
+        ui_default_init5_0.option.figure_tpye = 7;
+        ui_default_init5_0.option.layer = 5;
+        ui_default_init5_0.option.font_size = 20;
+        ui_default_init5_0.option.start_x = 881;
+        ui_default_init5_0.option.start_y = 273;
+        ui_default_init5_0.option.color = 2;
+        ui_default_init5_0.option.str_length = 1;
+        ui_default_init5_0.option.width = 2;
+        strcpy(ui_default_init5_static52->string, "C");
+    } else {
+        ui_default_init5_0.option.figure_tpye = 7;
+        ui_default_init5_0.option.layer = 5;
+        ui_default_init5_0.option.font_size = 20;
+        ui_default_init5_0.option.start_x = 881;
+        ui_default_init5_0.option.start_y = 273;
+        ui_default_init5_0.option.color = 1;
+        ui_default_init5_0.option.str_length = 1;
+        ui_default_init5_0.option.width = 2;
+        strcpy(ui_default_init5_static52->string, "C");
+    }
+    
     ui_proc_string_frame(&ui_default_init5_0);
     SEND_MESSAGE((uint8_t *) &ui_default_init5_0, sizeof(ui_default_init5_0));
 }

@@ -61,4 +61,7 @@ omni_c/ui_update.o: ..\Bsp\extra\src\ui_update.c \
   ..\UI\ui_default_init5_2.h ..\UI\ui_default_init5_3.h \
   ..\UI\ui_default_init6_0.h ..\UI\ui_default_init0_0.h \
   ..\UI\ui_default_init0_1.h ..\UI\ui_default_init0_2.h \
-  ..\Bsp\ctl\inc\DBUS.h
+  ..\UI\ui_default_init5_4.h ..\UI\ui_default_init5_5.h \
+  ..\Bsp\ctl\inc\DBUS.h ..\Bsp\ctl\inc\CHASSIS.h ..\Bsp\ctl\inc\MOTOR.h \
+  ..\Bsp\ctl\inc\feedforward.h ..\LIB\user_lib.h \
+  ..\Bsp\extra\inc\DEFINE.h

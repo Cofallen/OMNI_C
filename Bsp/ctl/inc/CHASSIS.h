@@ -12,6 +12,9 @@ extern double ANGLE_Rad, ANGLE_Relative;
 
 extern float watch[10];
 
+extern uint8_t cap_mode_ctrl[2]; // ui 查看
+extern uint8_t chassis_control[2][2]; // ui 查看
+
 static void CHASSIS_F_SoftStart(TYPEDEF_MOTOR *MOTOR);
 
 #endif // !__CHASSIS_H__

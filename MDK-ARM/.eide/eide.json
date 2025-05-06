@@ -519,6 +519,12 @@
           },
           {
             "path": "../UI/ui_interface.c"
+          },
+          {
+            "path": "../UI/ui_default_init5_4.c"
+          },
+          {
+            "path": "../UI/ui_default_init5_5.c"
           }
         ],
         "folders": []

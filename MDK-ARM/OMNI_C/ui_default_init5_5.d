@@ -1,5 +1,5 @@
-omni_c/ui_default_init5_1.o: ..\UI\ui_default_init5_1.c \
-  ..\UI\ui_default_init5_1.h ..\UI\ui_interface.h \
+omni_c/ui_default_init5_5.o: ..\UI\ui_default_init5_5.c \
+  ..\UI\ui_default_init5_5.h ..\UI\ui_interface.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdio.h \
   ..\UI\ui_types.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdint.h \
@@ -57,6 +57,6 @@ omni_c/ui_default_init5_1.o: ..\UI\ui_default_init5_1.c \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\semphr.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\event_groups.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\string.h \
-  ..\Bsp\ctl\inc\CHASSIS.h ..\Bsp\ctl\inc\DBUS.h ..\Bsp\ctl\inc\MOTOR.h \
+  ..\Bsp\dev\inc\TIM_DEV.h ..\Bsp\ctl\inc\MOTOR.h \
   ..\Bsp\ctl\inc\feedforward.h ..\LIB\user_lib.h \
   ..\Bsp\extra\inc\DEFINE.h

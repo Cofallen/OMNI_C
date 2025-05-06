@@ -55,29 +55,29 @@ void _ui_update_default_init5_3() {
     for (int i = 0; i < OBJ_NUM; i++) {
         ui_default_init5_3.data[i].operate_tpyel = 2;
     }
-if (auto_aim_enabled == 1)//自瞄模式开指示，从遥控器读取
-{
-    ui_default_init5_static51->figure_tpye = 0;
-    ui_default_init5_static51->layer = 5;
-    ui_default_init5_static51->start_x = 1428;
-    ui_default_init5_static51->start_y = 164;
-    ui_default_init5_static51->end_x = 1307;
-    ui_default_init5_static51->end_y = 326;
-    ui_default_init5_static51->color = 2;
-    ui_default_init5_static51->width = 2;
-}
-if (auto_aim_enabled == 0)//自瞄模式关
-{
-    ui_default_init5_static50->figure_tpye = 0;
-    ui_default_init5_static50->layer = 5;
-    ui_default_init5_static50->start_x = 492;
-    ui_default_init5_static50->start_y = 164;
-    ui_default_init5_static50->end_x = 613;
-    ui_default_init5_static50->end_y = 326;
-    ui_default_init5_static50->color = 2;
-    ui_default_init5_static50->width = 2;
+// if (auto_aim_enabled == 1)//自瞄模式开指示，从遥控器读取
+// {
+//     ui_default_init5_static51->figure_tpye = 0;
+//     ui_default_init5_static51->layer = 5;
+//     ui_default_init5_static51->start_x = 1428;
+//     ui_default_init5_static51->start_y = 164;
+//     ui_default_init5_static51->end_x = 1307;
+//     ui_default_init5_static51->end_y = 326;
+//     ui_default_init5_static51->color = 2;
+//     ui_default_init5_static51->width = 2;
+// }
+// if (auto_aim_enabled == 0)//自瞄模式关
+// {
+//     ui_default_init5_static50->figure_tpye = 0;
+//     ui_default_init5_static50->layer = 5;
+//     ui_default_init5_static50->start_x = 492;
+//     ui_default_init5_static50->start_y = 164;
+//     ui_default_init5_static50->end_x = 613;
+//     ui_default_init5_static50->end_y = 326;
+//     ui_default_init5_static50->color = 2;
+//     ui_default_init5_static50->width = 2;
 
-}
+// }
     CAT(ui_proc_, CAT(FRAME_OBJ_NUM, _frame))(&ui_default_init5_3);
     SEND_MESSAGE((uint8_t *) &ui_default_init5_3, sizeof(ui_default_init5_3));
 }
