@@ -75,11 +75,11 @@ typedef struct TYPEDEF_DBUS // 遥控器数据结构体
     } KEY_BOARD;
     struct __packed
     {
-        uint16_t w;
-        uint16_t s;
-        uint16_t a;
-        uint16_t d;
-        uint16_t shift;
+        float w;
+        float s;
+        float a;
+        float d;
+        float shift;
     } key_flitter;
 } TYPEDEF_DBUS;
 

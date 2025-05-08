@@ -54,8 +54,8 @@ uint8_t ROOT_F_PIDinit()
 
 //    const float PID_V_GIMBAL_PIT_SPEED[5] = {130.0f, 0.0f, 0, 1000.0f, 20000.0f};
 //    const float PID_V_GIMBAL_PIT_ANGLE[5] = {0.85f, 0.0007f, 0, 1000.0f, 3000.0f};
-	const float PID_V_GIMBAL_PIT_SPEED[5] = {200.0f, 0.02f, 0, 1000.0f, 20000.0f};
-    const float PID_V_GIMBAL_PIT_ANGLE[5] = {25.0f, 0.02f, 0, 1000.0f, 10000.0f};
+	const float PID_V_GIMBAL_PIT_SPEED[5] = {57.0f, 0.1f, 0, 3000.0f, 29000.0f};
+    const float PID_V_GIMBAL_PIT_ANGLE[5] = {220.0f, 0.5f, 0, 1000.0f, 10000.0f};
 	
     const float PID_V_ATTACK_L_SPEED[5] = {14.0f, 0, 0, 1000.0f, 30000.0f};
     const float PID_V_ATTACK_R_SPEED[5] = {14.0f, 0, 0, 1000.0f, 30000.0f};
@@ -64,7 +64,7 @@ uint8_t ROOT_F_PIDinit()
     const float PID_V_ATTACK_L_CURRENT[5] = {1.0f, 0, 0, 1000.0f, 29000.0f};
     const float PID_V_ATTACK_R_CURRENT[5] = {1.0f, 0, 0, 1000.0f, 29000.0f};
 
-    const float FOLLOW_PID_V[5] = {0.5f, 0.0f, 0.0f, 0.0f, 45000.0f};
+    const float FOLLOW_PID_V[5] = {0.5f, 0.0f, 0.0f, 0.0f, 450.0f};
     const float PID_V_TOP_OFF_S[5] = {100.5f, 0.0f, 0.0f, 0.0f, 30000.0f};
     const float PID_V_TOP_OFF_A[5] = {1.5f, 0.0f, 0.0f, 0.0f, 2000.0f};
 	
@@ -119,7 +119,7 @@ void ROOT_F_Init()
     ATTACK_F_Init(MOTOR_V_ATTACK);
 
     #ifdef OLDHEAD
-    MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 3422.0f + 4096.0f;  // 云台初始化角度
+    MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT = 3422.0f;  // 云台初始化角度
     MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM = 0.0f;
 	MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ENABLE = 1; 
 	MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.LAPS = 1;   // @TODO when yaw init, aim 0->angle_init, make yaw shaking.

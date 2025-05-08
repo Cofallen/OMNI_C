@@ -26,7 +26,7 @@ void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, TYPEDEF_VISION *VISI
     DBUS->MOUSE.R_PRESS_NUMBER = DBUS->MOUSE.R_STATE; 
 
     // 根据自瞄状态执行相应的控制逻辑
-    if((auto_aim_enabled || (DBUS->REMOTE.S2_u8==2)) && VISION_V_DATA.RECEIVE.TARGET ) {
+    if((auto_aim_enabled) && VISION_V_DATA.RECEIVE.TARGET ) {
         // 自瞄模式开启且有目标
         PID_F_VISION_YAW(&MOTOR[MOTOR_D_GIMBAL_YAW]);
         PID_F_VISION_PIT(&MOTOR[MOTOR_D_GIMBAL_PIT]);
@@ -34,7 +34,7 @@ void GIMBAL_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, TYPEDEF_VISION *VISI
         yawAngle = TOP.yaw[3];
         pitAngle = TOP.roll[5];
     } 
-    else if ((auto_aim_enabled || (DBUS->REMOTE.S2_u8==2)) && !VISION_V_DATA.RECEIVE.TARGET )
+    else if ((auto_aim_enabled) && !VISION_V_DATA.RECEIVE.TARGET )
     {
         PID_F_VISION_YAW(&MOTOR[MOTOR_D_GIMBAL_YAW]);
         PID_F_VISION_PIT(&MOTOR[MOTOR_D_GIMBAL_PIT]);

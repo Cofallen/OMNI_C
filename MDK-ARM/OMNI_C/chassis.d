@@ -71,4 +71,5 @@ omni_c/chassis.o: ..\Bsp\ctl\src\CHASSIS.c ..\Core\Inc\main.h \
   ..\CMSIS\DSP\Inc\dsp\utils.h \
   ..\CMSIS\DSP\Inc\dsp\fast_math_functions.h \
   ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h \
-  ..\Bsp\extra\inc\chassis_power_control.h ..\Bsp\ctl\inc\CAP.h
+  ..\Bsp\extra\inc\chassis_power_control.h ..\Bsp\ctl\inc\CAP.h \
+  ..\Bsp\extra\inc\VOFA.h

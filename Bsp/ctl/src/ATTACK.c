@@ -102,7 +102,7 @@ float ATTACK_F_JAM_Aim(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS, uint8_t autofir
     }
     
     // 计算新的电机目标角度
-    if (ATTACK_V_PARAM.COUNT > 0 && ATTACK_V_PARAM.fire_wheel_status) // @debug  
+    if (ATTACK_V_PARAM.COUNT > 0 && ATTACK_V_PARAM.fire_wheel_status && MOTOR->DATA.ENABLE) // @debug  
     {
         MOTOR->DATA.AIM = (float)MOTOR->DATA.ANGLE_INFINITE - ATTACK_V_PARAM.SINGLE_ANGLE * ATTACK_V_PARAM.COUNT;
 		// 单发模式下，处理完一次后重置COUNT
@@ -192,7 +192,7 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
     ATTACK_V_PARAM.SPEED = MATH_D_LIMIT(7060.f, 6980.0f, ATTACK_V_PARAM.SPEED);
 
     // @veision 3, final code, this code is a stable speed
-    if ( fire_mouse_status == 1  &&  DBUS_V_DATA.REMOTE.S2_u8 == 3)  // 3 is the fire button
+    if (( fire_mouse_status == 1 && DBUS_V_DATA.REMOTE.S2_u8 == 3)|| DBUS_V_DATA.REMOTE.S2_u8 == 2)  // 3 is the fire button
     {
         MOTOR->DATA.AIM = ATTACK_V_PARAM.SPEED;
         ATTACK_V_PARAM.fire_wheel_status = 1;
@@ -225,7 +225,7 @@ uint8_t ATTACK_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
         ATTACK_V_PARAM.STATUS[NOW] = 0;
     else ATTACK_V_PARAM.STATUS[NOW] = 1;
     
-    if (ATTACK_F_HeatControl(&MOTOR[MOTOR_D_ATTACK_G]) && ATTACK_V_PARAM.STATUS[NOW] == 0)    // 判断方向优先考虑热量
+    if (ATTACK_F_HeatControl(&MOTOR[MOTOR_D_ATTACK_G], 0) && ATTACK_V_PARAM.STATUS[NOW] == 0)    // 判断方向优先考虑热量
     {
         MOTOR[MOTOR_D_ATTACK_G].DATA.AIM = ATTACK_F_JAM_Aim(&MOTOR[MOTOR_D_ATTACK_G], DBUS, 0);
     }
@@ -366,6 +366,14 @@ uint8_t ATTACK_F_JAM_Disable(TYPEDEF_MOTOR *MOTOR)
     static uint8_t last_jam_status = {0};        // 记录上一次卡弹状态
     float current_time = DWT_GetTimeline_s();
     
+    // V键手动强制恢复电机
+    if (DBUS_V_DATA.KEY_BOARD.V && !DBUS_V_DATA.KEY_BOARD.V_PREE_NUMBER) {
+        jam_disable_flag = 0;
+        jam_start_time   = 0.0f;
+        MOTOR->DATA.ENABLE = 1;      // 重新使能
+    }
+    DBUS_V_DATA.KEY_BOARD.V_PREE_NUMBER = DBUS_V_DATA.KEY_BOARD.V;
+
     // 如果检测到卡弹
     if (ATTACK_V_PARAM.STATUS[NOW] == 1) {
         // 卡弹状态开始（从无卡弹到有卡弹的转变）
@@ -380,11 +388,12 @@ uint8_t ATTACK_F_JAM_Disable(TYPEDEF_MOTOR *MOTOR)
         // 如果卡弹持续超过阈值
         if (jam_duration >= JAM_DISABLE_THRESHOLD && !jam_disable_flag) {
             // 失能拨弹电机
-             MOTOR->DATA.ENABLE = 0;
+            MOTOR->DATA.ENABLE = 0;
             jam_disable_flag = 1;  // 标记已失能
             disable_count_debug++;
             return ROOT_READY;  // 返回成功状态
         }
+        
     } 
     else {
         // 卡弹解除
@@ -397,17 +406,17 @@ uint8_t ATTACK_F_JAM_Disable(TYPEDEF_MOTOR *MOTOR)
     }
     // 失能后 5s+10s*n 重新启动拨弹电机
     
-    VOFA_T_Send(0, 10, (float)ATTACK_V_PARAM.STATUS[NOW],
-            (float)jam_start_time,
-            (float)current_time,
-            (float)jam_duration_debug,
-            (float)MOTOR->DATA.ENABLE, 
-            (float)MOTOR->DATA.AIM, 
-            (float)MOTOR->DATA.ANGLE_INFINITE, 
-            (float)ATTACK_V_PARAM.TIME, 
-            (float)(1.0f/jam_duration_debug),
-            (float)user_data.shoot_data.launching_frequency
-        );
+    // VOFA_T_Send(0, 10, (float)ATTACK_V_PARAM.STATUS[NOW],
+    //         (float)jam_start_time,
+    //         (float)current_time,
+    //         (float)jam_duration_debug,
+    //         (float)MOTOR->DATA.ENABLE, 
+    //         (float)MOTOR->DATA.AIM, 
+    //         (float)MOTOR->DATA.ANGLE_INFINITE, 
+    //         (float)ATTACK_V_PARAM.TIME, 
+    //         (float)(1.0f/jam_duration_debug),
+    //         (float)user_data.shoot_data.launching_frequency
+    //     );
     return ROOT_ERROR;  // 返回未失能状态
 }
 
@@ -415,7 +424,7 @@ uint8_t ATTACK_F_JAM_Disable(TYPEDEF_MOTOR *MOTOR)
  * @brief 弹频拟合函数
  * 
  */
-void ATTACK_F_FireRate_Control(TYPEDEF_MOTOR *motor, float hz, uint8_t type)
+float ATTACK_F_FireRate_Control(TYPEDEF_MOTOR *motor, float hz, uint8_t type)
 {
     switch (type)
     {
@@ -426,42 +435,63 @@ void ATTACK_F_FireRate_Control(TYPEDEF_MOTOR *motor, float hz, uint8_t type)
         //                            R² = 0.8253
         float a = 0.0044f, b = -0.5277f;
         float y = a * hz + b;
-        motor->PID_S.IN.ALL_LIT = y;
+        motor->PID_A.IN.ALL_LIT = y;
         break;
     }
        
     case 2: {// 二次拟合
         float a = 0.0f, b = 0.0f, c = 0.0f;
         float y = a * hz * hz + b * hz + c;
-        motor->PID_S.IN.ALL_LIT = y;
+        motor->PID_A.IN.ALL_LIT = y;
         break;
     }
     case 3: { // 考虑退弹卡弹
         const float TASK_RUN_TIME = 1.1f, JAM_COUNT = 10.0f; // 任务运行时间ms，JAM_COUNTs内卡弹1次数
-        float a = ATTACK_D_TIMEOUT * TASK_RUN_TIME / 1000.0f, b = 1.0f / (hz * JAM_COUNT); // 假设卡弹一次0.5s 卡弹概率为2s内一发
-        float fact_hz = 1.0f / ((hz - 1.0f) * 1.0f / (hz * hz) + b * 2 * a);      // 考虑卡弹实际频率
+        float a = ATTACK_D_TIMEOUT * TASK_RUN_TIME / 1000.0f, P = 1.0f / (hz * JAM_COUNT); // 假设卡弹一次0.5s 卡弹概率为2s内一发
+        float fact_hz = 1.0f / ((1.0f - P) * 1.0f / hz + P * 2 * a);      // 考虑卡弹实际频率
 
-        compensation_hz = ATTACK_Calc_Hz_From_FactHz(hz, a, JAM_COUNT);
+        compensation_hz = ATTACK_Calc_Hz_From_FactHz(hz, a, P);
         compensation_hz = MATH_D_LIMIT(25.0f, 12.0f, compensation_hz); // 限制最大值
-        motor->PID_S.IN.ALL_LIT = compensation_hz * 60.0f * 4.5f;
+        motor->PID_A.IN.ALL_LIT = compensation_hz * 60.0f * 4.5f;
         break;
     }
     case 4: {
-        motor->PID_S.IN.ALL_LIT = hz * 60.0f * 4.5f;
+        motor->PID_A.IN.ALL_LIT = hz * 60.0f * 4.5f;
     }
     default:
         break;
     }
+    return motor->PID_A.IN.ALL_LIT;
 }
-   TYPEDEF_MOTOR aaa = {0};
-uint8_t ATTACK_F_HeatControl(TYPEDEF_MOTOR *motor) 
+
+TYPEDEF_MOTOR aaa = {0};
+
+enum {
+    overhigh = 0,
+    high = 1,
+    medium = 2,
+    low = 3,
+    overlow = 4,
+}heat;
+uint8_t heatstatus = overlow;
+
+/**
+ * @brief 
+ * 
+ * @param motor 
+ * @param type 类型选择 0停转 1减频
+ * @return uint8_t 
+ * @note type为0时，代码调用在获取拨弹目标值上，保证热量不足时不获取拨弹目标值
+ * @note type为1时，代码直接调用，根据当前等级和热量控制弹频
+ */
+uint8_t ATTACK_F_HeatControl(TYPEDEF_MOTOR *motor, uint8_t type) 
 {
     float d = 10.0f, shoot_time = 0.0f, shoot_speed = 0.0f;           
     float a = (float)(user_data.robot_status.shooter_barrel_cooling_value); // 冷却值 /s
     float m = fabsf((float)(user_data.robot_status.shooter_barrel_heat_limit - user_data.power_heat_data.shooter_17mm_1_barrel_heat)); // 剩余可发热量 20*n
     uint16_t leastbullet = (uint16_t)m / 10;
+    float rate = (m+a)/(float)user_data.robot_status.shooter_barrel_heat_limit;
 
- 
     ATTACK_F_FireRate_Control(&aaa, 18.0f, 3);
 
     // VOFA_T_Send(0, 10, (float)a, m, 
@@ -469,101 +499,82 @@ uint8_t ATTACK_F_HeatControl(TYPEDEF_MOTOR *motor)
     //                    (float)user_data.power_heat_data.shooter_17mm_1_barrel_heat, 
     //                    shoot_time, (float)leastbullet, (float)ATTACK_V_PARAM.SPEED, 
     //                    (float)aaa.PID_S.IN.ALL_LIT, compensation_hz, 0); // @TODO 发送数据到VOFA
-    switch (user_data.robot_status.robot_level)
+    if (type == 0)
     {
-        case 1:
+        switch (user_data.robot_status.robot_level)
         {
-            if (leastbullet >=4) return 1;
-            else return 0;
+            case 1:
+            {
+                if (leastbullet >=4) return 1;
+                else return 0;
+            }
+                break;
+            case 2:
+            {
+                if (leastbullet >= 3) return 1;
+                else return 0;
+            }
+                break;
+            case 3:case 4:
+            {
+                if (leastbullet >= 5) return 1;
+                else return 0;
+            }
+                break;
+            case 5:case 6:
+            {
+                if (leastbullet >= 5) return 1;
+                else return 0;
+            }
+                break;
+            case 7:case 8:
+            {
+                if (leastbullet >= 3) return 1;
+                else return 0;
+            }
+                break;
+            case 9:case 10:
+            {
+                if (leastbullet >= 3) return 1;
+                else return 0;
+            }
+                break;
+            default:
+            {
+                return 1;
+            }
+                break;
+            }
         }
-            break;
-        case 2:
+    else if (type == 1)
+    {
+        if (rate <= 0) // 超热量
         {
-            if (leastbullet >= 3) return 1;
-            else return 0;
+            
         }
-            break;
-        case 3:case 4:
-        {
-            if (leastbullet >= 5) return 1;
-            else return 0;
-        }
-            break;
-        case 5:case 6:
-        {
-            if (leastbullet >= 5) return 1;
-            else return 0;
-        }
-            break;
-        case 7:case 8:
-        {
-            if (leastbullet >= 3) return 1;
-            else return 0;
-        }
-            break;
-        case 9:case 10:
-        {
-            if (leastbullet >= 3) return 1;
-            else return 0;
-        }
-            break;
-        default:
-        {
-            return 1;
-        }
-            break;
-        }
-    
+        
+    }
 }
 
 /**
  * @brief 反算设置频率 hz，使得考虑卡弹后实际频率为 fact_hz
- * @param fact_hz 目标实际频率 (Hz)
- * @param a      卡弹时间系数 = ATTACK_D_TIMEOUT * TASK_RUN_TIME / 1000.0f
- * @param jam_count 卡弹次数参数 (JAM_COUNT)
- * @return 计算得到的 hz 值（>0），若无实根返回 0
- * @note    原公式  fact_hz = 1 / ( (hz-1)/(hz²) + 2·a/(J·hz) )
- *                 J·hz² – fact_hz·(J+2·a)·hz + fact_hz·J = 0
+ *        原公式：fact_hz = 1 / ( (1-P)/hz + 2 * a * P )
+ * @param fact_hz    目标实际频率
+ * @param a          卡弹时间系数 = ATTACK_D_TIMEOUT * TASK_RUN_TIME / 1000.0f
+ * @param P          卡弹概率系数 = 1.0f / (hz * JAM_COUNT)
+ * @return 反算得到的 hz 值 (>0)，否则返回 0
  */
-float ATTACK_Calc_Hz_From_FactHz(float fact_hz, float a, float jam_count)
+float ATTACK_Calc_Hz_From_FactHz(float fact_hz, float a, float P)
 {
-    // 二次方程系数 A·hz² + B·hz + C = 0
-    // A = J
-    // B = -fact_hz*(J + 2a)
-    // C = fact_hz*J
-    float J = jam_count;
-    float F = fact_hz;
-
-    float A = J;
-    float B = -F * (J + 2.0f * a);
-    float C = F * J;
-
-    // 判别式
-    float D = B * B - 4.0f * A * C;
-    if (D < 0.0f) {
+    if (fact_hz <= 0.0f || P >= 1.0f) {
         return 0.0f;
     }
-
-    float sqrtD = sqrtf(D);
-    float hz1 = (-B + sqrtD) / (2.0f * A);
-    float hz2 = (-B - sqrtD) / (2.0f * A);
-
-    // 返回正解
-    if ((hz1 > 10.0f && hz1 <= 18.0f) && (hz2 <= 10.0f && hz2 > 18.0f)) {
-        return hz1;
-    } else if (hz1 <= 10.0f && hz1 > 18.0f && (hz2 > 10.0f && hz2 <= 18.0f)) {
-        return hz2;
-    } else if (hz1 > 10.0f && hz1 <= 18.0f && (hz2 > 10.0f && hz2 <= 18.0f)) {
-        if (fabsf(hz1 - fact_hz) < fabsf(hz2 - fact_hz)) {
-            return hz1;
-        } else {
-            return hz2;
-        }
-    } else {
-            return fact_hz;
+    // 1/fact_hz = (1-P)/hz + 2*a*P
+    // (1-P)/hz = 1/fact_hz - 2*a*P
+    // hz = (1-P) / (1/fact_hz - 2*a*P)
+    float denom = 1.0f / fact_hz - 2.0f * a * P;
+    if (denom <= 0.0f) {
+        return 0.0f;
     }
-    
-    if (hz1 > 0.0f) return hz1;
-    if (hz2 > 0.0f) return hz2;
-    return 0.0f;
+    return (1.0f - P) / denom;
 }

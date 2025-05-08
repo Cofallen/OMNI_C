@@ -260,7 +260,7 @@ void Vofa_intergrate(uint8_t mod)
                 watch[6], watch[7], watch[8]);
         break;
     case 1:
-        VOFA_T_SendTemp(0, 10, 1.0f,
+        VOFA_T_Send(0, 10, 1.0f,
                 (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.AIM,
                 (float)TOP.roll[5],
                 (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.AIM,

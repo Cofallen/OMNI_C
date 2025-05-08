@@ -175,7 +175,7 @@
           <Type>0</Type>
           <LineNumber>68</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134231284</Address>
+          <Address>134231716</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -508,6 +508,11 @@
           <count>60</count>
           <WinNumber>1</WinNumber>
           <ItemText>hz2</ItemText>
+        </Ww>
+        <Ww>
+          <count>61</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>MOTOR_V_CHASSIS,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>

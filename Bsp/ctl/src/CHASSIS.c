@@ -15,6 +15,7 @@
 #include "YU_MATH.h"
 #include "TOP.h"
 #include "chassis_power_control.h"
+#include "VOFA.h"
 
 double ANGLE_Rad = 0.0f;
 double ANGLE_Relative = 0.0f;
@@ -68,10 +69,16 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     spinLittleRound(&ANGLE_Relative);
     ANGLE_Rad = ANGLE_Relative * MATH_D_RELATIVE_PARAM;
 
-    VX =  (float)((DBUS->REMOTE.CH0_int16) + (DBUS->KEY_BOARD.D - DBUS->KEY_BOARD.A) * 660.0f) * 8.0f;
-    VY =  (float)((DBUS->REMOTE.CH1_int16) + (DBUS->KEY_BOARD.W - DBUS->KEY_BOARD.S) * 660.0f) * 8.0f;
-    VR = -(float)((DBUS->REMOTE.DIR_int16) + (DBUS->KEY_BOARD.SHIFT) * 660.0f) * 5.0f;
+    DBUS->key_flitter.w += 0.05f * (DBUS->KEY_BOARD.W - DBUS->key_flitter.w);
+    DBUS->key_flitter.s += 0.05f * (DBUS->KEY_BOARD.S - DBUS->key_flitter.s);
+    DBUS->key_flitter.a += 0.05f * (DBUS->KEY_BOARD.A - DBUS->key_flitter.a);
+    DBUS->key_flitter.d += 0.05f * (DBUS->KEY_BOARD.D - DBUS->key_flitter.d);
+    DBUS->key_flitter.shift += 0.05f * (DBUS->KEY_BOARD.SHIFT - DBUS->key_flitter.shift);
 
+    VX =  (float)((DBUS->REMOTE.CH0_int16) + (DBUS->key_flitter.d - DBUS->key_flitter.a) * 660.0f) * 2.0f;
+    VR = -(float)((DBUS->REMOTE.DIR_int16) + (DBUS->key_flitter.shift) * 660.0f) * 1.0f;
+    (VR == 0) ? (VY =  (float)((DBUS->REMOTE.CH1_int16) + (DBUS->key_flitter.w - DBUS->key_flitter.s) * 660.0f) * 16.0f) : (VY =  (float)((DBUS->REMOTE.CH1_int16) + (DBUS->key_flitter.w - DBUS->key_flitter.s) * 660.0f) * 4.0f);
+    
     if (DBUS->KEY_BOARD.G)
     {
         chassis_control[1][NOW] = 1;
@@ -83,7 +90,7 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     // @TODO 2. VR的负号和-ANGLE_Relative的负号测试是否可以全换成正号
     if (DBUS->REMOTE.S2_u8 != 1)
     {
-        (!((DBUS->REMOTE.DIR_int16)||(DBUS->KEY_BOARD.SHIFT)))?(PRIDICT = DBUS->REMOTE.CH2_int16 * 6.0f,VR = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative)):(PRIDICT = 0.0f);     // 分离 滚轮影响小陀螺
+        (!((DBUS->REMOTE.DIR_int16)||(DBUS->KEY_BOARD.SHIFT)))?(PRIDICT = DBUS->REMOTE.CH2_int16 * 3.0f,VR = PID_F_Cal(&FOLLOW_PID, 0, -ANGLE_Relative)):(PRIDICT = 0.0f);     // 分离 滚轮影响小陀螺
     }
     
     // rotate matrix
