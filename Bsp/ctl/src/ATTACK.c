@@ -360,10 +360,10 @@ double *ATTACK_T_FIT(int size)
 uint8_t ATTACK_F_JAM_Disable(TYPEDEF_MOTOR *MOTOR) 
 {
     // 定义卡弹持续时间阈值(3秒)
-    const float JAM_DISABLE_THRESHOLD = 10.0f;  // 单位：秒
+    const float JAM_DISABLE_THRESHOLD = 8.0f;  // 单位：秒
     static uint8_t jam_disable_flag = 0;       // 记录是否已经失能
     static float jam_start_time = 0.0f;        // 记录卡弹开始时间
-    static uint8_t last_jam_status = {0};        // 记录上一次卡弹状态
+    static uint8_t last_jam_status = 0;        // 记录上一次卡弹状态
     float current_time = DWT_GetTimeline_s();
     
     // V键手动强制恢复电机
@@ -371,6 +371,7 @@ uint8_t ATTACK_F_JAM_Disable(TYPEDEF_MOTOR *MOTOR)
         jam_disable_flag = 0;
         jam_start_time   = 0.0f;
         MOTOR->DATA.ENABLE = 1;      // 重新使能
+        MOTOR->DATA.AIM = MOTOR->DATA.ANGLE_INFINITE;
     }
     DBUS_V_DATA.KEY_BOARD.V_PREE_NUMBER = DBUS_V_DATA.KEY_BOARD.V;
 
@@ -495,11 +496,11 @@ uint8_t ATTACK_F_HeatControl(TYPEDEF_MOTOR *motor, uint8_t type)
     
     ATTACK_F_FireRate_Control(&aaa, 18.0f, 3);
 
-    VOFA_T_Send(0, 10, (float)a, m, 
-                       (float)user_data.robot_status.shooter_barrel_heat_limit, 
-                       (float)user_data.power_heat_data.shooter_17mm_1_barrel_heat, 
-                       shoot_time, (float)leastbullet, (float)ATTACK_V_PARAM.SPEED, 
-                       (float)aaa.PID_S.IN.ALL_LIT, compensation_hz, 0); // @TODO 发送数据到VOFA
+    // VOFA_T_Send(0, 10, (float)a, m, 
+    //                    (float)user_data.robot_status.shooter_barrel_heat_limit, 
+    //                    (float)user_data.power_heat_data.shooter_17mm_1_barrel_heat, 
+    //                    shoot_time, (float)leastbullet, (float)ATTACK_V_PARAM.SPEED, 
+    //                    (float)aaa.PID_S.IN.ALL_LIT, compensation_hz, 0); // @TODO 发送数据到VOFA
     if (type == 0)
     {
         switch (user_data.robot_status.robot_level)

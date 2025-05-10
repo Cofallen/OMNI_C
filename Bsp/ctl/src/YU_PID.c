@@ -113,9 +113,9 @@ uint8_t PID_F_G(TYPEDEF_MOTOR *MOTOR)
     {
         // MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&MOTOR->PID_A, MOTOR->DATA.AIM, TOP.yaw[3]);
         // MOTOR->DATA.CAN_SEND = (int16_t)PID_F_Cal(&MOTOR->PID_S, MOTOR->PID_A.OUT.ALL_OUT, ((float)QEKF_INS.Gyro[2] * 50.0f));
-        // Feedforward_Calculate(&MOTOR->PID_F, MOTOR->DATA.AIM);
+        Feedforward_Calculate(&MOTOR->PID_F, MOTOR->DATA.AIM);
         current[NOW] = (float)MOTOR->DATA.CURRENT;
-        MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&MOTOR->PID_A, MOTOR->DATA.AIM, TOP.yaw[3]);
+        MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&MOTOR->PID_A, MOTOR->DATA.AIM, TOP.yaw[3]) + 0;
         MOTOR->PID_S.OUT.ALL_OUT = PID_F_Cal(&MOTOR->PID_S, MOTOR->PID_A.OUT.ALL_OUT, ((float)QEKF_INS.Gyro[2] * 50.0f));
         MOTOR->DATA.CAN_SEND     = (int16_t)PID_F_Cal(&MOTOR->PID_C, MOTOR->PID_S.OUT.ALL_OUT, YU_MATH_LowPassFilter(0.06f, current));
     }

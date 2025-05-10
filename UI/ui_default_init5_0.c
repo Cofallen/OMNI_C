@@ -37,7 +37,7 @@ void _ui_init_default_init5_0() {
 void _ui_update_default_init5_0() {
     ui_default_init5_0.option.operate_tpyel = 2;
 
-    if (cap_mode_ctrl[NOW] == 0)
+    if (cap_mode_ctrl[NOW] == 1)
     {
         ui_default_init5_0.option.figure_tpye = 7;
         ui_default_init5_0.option.layer = 5;

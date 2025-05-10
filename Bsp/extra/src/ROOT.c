@@ -43,7 +43,7 @@ uint8_t ROOT_F_PIDinit()
 //    const float PID_V_GIMBAL_YAW_ANGLE[5] = {9.0f, 0.0f, 0.0f, 200.0f, 5000.0f};
     const float PID_V_GIMBAL_YAW_CURRENT[5] = {1.20f, 0.0f, 0.0f, 2000.0f, 30000.0f};
     const float PID_V_GIMBAL_YAW_SPEED[5] = {600.0f, 0.0f, 0.0f, 100.0f, 30000.0f};//正常值
-    const float PID_V_GIMBAL_YAW_ANGLE[5] = {1.3f, 0.002f, 0.2f, 300.0f, 10000.0f};
+    const float PID_V_GIMBAL_YAW_ANGLE[5] = {0.4f, 0.0f, 0.0f, 300.0f, 1000.0f};
 
 
 //电流控制6020实验

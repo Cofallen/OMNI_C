@@ -32,17 +32,11 @@ void chassis_power_control(uint8_t cap_state, uint8_t is_flying)
     const uint16_t capValt = 12;	         //强制退出的电压阈值
     //*可编辑部分*end*//
 
-    #ifdef LIFTED_DEBUG
 	uint16_t max_power_limit = 60;  //最大功率限制
+    // static uint8_t cap_flag = 0;
+    // if (capData_JHB.Receive_data_typedef.capVolt <= 12.0f) cap_flag = 0;
+    // else if (capData_JHB.Receive_data_typedef.capVolt >= 22.0f) cap_flag = 1;
 
-    #else
-    uint16_t max_power_limit = 120;  //最大功率限制
-    if (capData_JHB.Receive_data_typedef.capVolt < 12.0f) // 电压低于12V时，电容不工作
-    {
-        max_power_limit = 55;
-    }
-    #endif // LIFTED_DEBUG
-    
     limitedPower = (fp32)max_power_limit;
 	fp32 chassis_max_power = 0;
 	fp32 input_power = 0;		    // 输入功率（裁判系统）
@@ -63,15 +57,32 @@ void chassis_power_control(uint8_t cap_state, uint8_t is_flying)
 
     if(capData_JHB.Receive_data_typedef.capVolt > capValt)
 	{
+    //     if(cap_state == 0)
+    //     {
+    //         if (cap_flag == 1)
+    //         {
+    //             chassis_max_power = input_power + PowerCompensation;
+    //         } else {
+    //             chassis_max_power = input_power;
+    //         }
+    //     }else if (cap_state == 1){
+    //         if (cap_flag == 1)
+    //         {
+    //             chassis_max_power = input_power + SuperMaxPower;
+    //         } else {
+    //             chassis_max_power = input_power;
+    //         }
+    //   // 开启电容
+    //     }
         if(cap_state == 0)
         {
             chassis_max_power = input_power + PowerCompensation;
-              // 功率设置略大于最大输入功率，提高电容能量利用率
-        }else{
+        }else if (cap_state == 1) { 
             chassis_max_power = input_power + SuperMaxPower;
-      // 开启电容
+    // 开启电容
         }
     }else{
+        
         chassis_max_power = input_power;
        
     }

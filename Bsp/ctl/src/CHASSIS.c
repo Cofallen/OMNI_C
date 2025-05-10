@@ -82,8 +82,8 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     if (DBUS->KEY_BOARD.G)
     {
         chassis_control[1][NOW] = 1;
-        VR *= 0.4f;  
-        VX *= 0.8f;
+        VR *= 0.2f;  
+        VX *= 0.2f;
         VY *= 0.2f;
     } else chassis_control[1][NOW] = 0;
     
