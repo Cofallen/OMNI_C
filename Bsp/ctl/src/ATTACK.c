@@ -168,11 +168,11 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
     {
         if(user_data.shoot_data.initial_speed <= 23.6f)
         {
-            TEMP += 5;
+            TEMP += 4;
         }
         else if (user_data.shoot_data.initial_speed > 23.6f && user_data.shoot_data.initial_speed <= 23.9f)
         {
-            TEMP += 2;
+            TEMP += 1.5f;
         }
         else if (user_data.shoot_data.initial_speed > 23.9f && user_data.shoot_data.initial_speed <= 24.1f)
         {
@@ -188,8 +188,8 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
         }
     }
     
-    ATTACK_V_PARAM.SPEED = 7030.0f + TEMP;
-    ATTACK_V_PARAM.SPEED = MATH_D_LIMIT(7060.f, 6980.0f, ATTACK_V_PARAM.SPEED);
+    ATTACK_V_PARAM.SPEED = 6500.0f + TEMP;
+    ATTACK_V_PARAM.SPEED = MATH_D_LIMIT(6570.0f, 6380.0f, ATTACK_V_PARAM.SPEED);
 
     // @veision 3, final code, this code is a stable speed
     if (( fire_mouse_status == 1 && DBUS_V_DATA.REMOTE.S2_u8 == 3)|| DBUS_V_DATA.REMOTE.S2_u8 == 2)  // 3 is the fire button
@@ -489,8 +489,8 @@ uint8_t ATTACK_F_HeatControl(TYPEDEF_MOTOR *motor, uint8_t type)
     float d = 10.0f, shoot_time = 0.0f, shoot_speed = 0.0f;           
     float a = (float)(user_data.robot_status.shooter_barrel_cooling_value); // 冷却值 /s
     float m = fabsf((float)(user_data.robot_status.shooter_barrel_heat_limit - user_data.power_heat_data.shooter_17mm_1_barrel_heat)); // 剩余可发热量 10*n
-    uint16_t leastbullet = (uint16_t)(m + a/10.0f) / 10;
-    float rate = (m+a/10.0f)/(float)user_data.robot_status.shooter_barrel_heat_limit;
+    uint16_t leastbullet = (uint16_t)(m + a * 0.1f) / 10;
+    float rate = (m+a * 0.1f)/(float)user_data.robot_status.shooter_barrel_heat_limit;
     if (a == 0) rate = 2.0f;  // 收不到裁判系统数据，设置为错误数据
     
     ATTACK_F_FireRate_Control(&aaa, 18.0f, 3);
@@ -562,7 +562,7 @@ uint8_t ATTACK_F_HeatControl(TYPEDEF_MOTOR *motor, uint8_t type)
         if (fq <= 0.0f) {
             fq = 0.0f;
         }
-        // ATTACK_F_FireRate_Control(motor, fq, 3);
+        ATTACK_F_FireRate_Control(motor, fq, 3);
     }
     return 1;
 }

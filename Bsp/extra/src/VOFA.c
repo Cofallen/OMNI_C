@@ -349,7 +349,18 @@ void Vofa_intergrate(uint8_t mod)
             (float)ATTACK_V_PARAM.jam_dwt_time,
             (float)ATTACK_V_PARAM.TIME,
             (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].is_off[NOW]);
-    default:
+    case 9:
+        VOFA_T_Send(0, 10, (float)user_data.shoot_data.initial_speed,
+            (float)user_data.shoot_data.launching_frequency,
+            (float)user_data.robot_status.shooter_barrel_cooling_value,
+            (float)user_data.robot_status.shooter_barrel_heat_limit,
+            (float)user_data.power_heat_data.shooter_17mm_1_barrel_heat,
+            (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW,
+            (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.SPEED_NOW,
+            (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.AIM,
+            (float)0,
+            (float)0);
+        default:
         break;
     }
 }
