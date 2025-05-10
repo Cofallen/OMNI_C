@@ -18,7 +18,7 @@
  * 
  *      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * 
- *                ÉñÊŞ±£ÓÓ            ÓÀÎŞBUG
+ *                ï¿½ï¿½ï¿½Ş±ï¿½ï¿½ï¿½            ï¿½ï¿½ï¿½ï¿½BUG
  */
 
 /*
@@ -43,33 +43,27 @@ User_Data_T user_data={0};
 uint16_t Data_length = 0;
 uint8_t zhanbaoshuliang = 0;
 
-//¿ÕÏĞÖĞ¶Ïğ¤°ü´¦Àíº¯Êı
+//ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void Read_Data_first(ALL_RX_Data_T *ALL_RX_Data , User_Data_T *user_data , uint16_t length)
 {
-	/*Ö»´¦ÀíÁË0x201Óë0x202Êı¾İ°üµÄğ¤°üÇé¿ö£¬ºóĞø·¢ÏÖÆäËûÊı¾İ°üğ¤°üµÄÇé¿öÇë·ÂÕÕÏÂÁĞ¸ñÊ½×ÔĞĞÌí¼Ó´¦Àí¡£*/
-//	if(length == 47)//0x201Óë0x202Êı¾İ°üµÄğ¤°ü´¦Àí
-//	{
-//		Read_Data_system(ALL_RX_Data , user_data);
-//		memcpy(&ALL_RX_Data->Data[0] , &ALL_RX_Data->Data[25] , 22);
-//		Read_Data_system(ALL_RX_Data , user_data);
-//	}
-//	else
-//	{
-//		Read_Data_system(ALL_RX_Data , user_data);
-//	}
-	
-	/*Í¨½â£¬²»Ò»¶¨ÄÜÓÃ£¬Ö»²âÊÔ¹ı0x201Óë0x202Êı¾İ°üµÄğ¤°üÇé¿ö*/
-	Data_length = Read_Data_system(ALL_RX_Data , user_data);
-	uint8_t i;
-	for(i = 0; i<length ; i++)
-	{
-		if(ALL_RX_Data->Data[i] == 0xA5)
-		{
-			memcpy(&ALL_RX_Data->Data[0] , &ALL_RX_Data->Data[i] , 150);
-			Data_length = Read_Data_system(ALL_RX_Data , user_data);
-		}
-	}
-	
+	uint16_t i;
+    uint16_t Data_result = 0;//æ•°æ®åŒ…ä¸ªæ•°
+    uint16_t Data_length;//æ•°æ®é•¿åº¦
+    ALL_RX_Data_T ALL_RX_Data_Tmp;
+    for(i = 0; i<length ; i++)
+    {
+        if(ALL_RX_Data->Data[i] == 0xA5)
+        {
+            memcpy(&ALL_RX_Data_Tmp.Data[0] , &ALL_RX_Data->Data[i] , 150);
+            Data_length = Read_Data_system(&ALL_RX_Data_Tmp , user_data);
+
+            if(Data_length < 60000)
+            {
+                Data_result++;
+                i += Data_length+8;
+            }
+        }
+    }
 }
 
 /**
@@ -78,7 +72,7 @@ void Read_Data_first(ALL_RX_Data_T *ALL_RX_Data , User_Data_T *user_data , uint1
  * @param {ALL_RX_Data_T} *ALL_RX_Data
  * @performance: 
  * @enter: 
- * @return {0£¬1£¬2}
+ * @return {0ï¿½ï¿½1ï¿½ï¿½2}
  */
 uint16_t Read_Data_system(ALL_RX_Data_T *ALL_RX_Data , User_Data_T *user_data)
 {
@@ -405,13 +399,13 @@ uint16_t Read_Data_system(ALL_RX_Data_T *ALL_RX_Data , User_Data_T *user_data)
             }break;
             
             default:
-                return 65534;   //Ã»ÓĞ¶ÔÓ¦µÄID
+                return 65534;   //Ã»ï¿½Ğ¶ï¿½Ó¦ï¿½ï¿½ID
         }
-		ALL_RX_Data->Data[0]++;//·ÀÖ¹´¦ÀíÖØ¸´Êı¾İ
+		ALL_RX_Data->Data[0]++;//ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½Ø¸ï¿½ï¿½ï¿½ï¿½ï¿½
     }
     else
     {
-        return 65533;   //Ğ£Ñé²»Í¨¹ı
+        return 65533;   //Ğ£ï¿½é²»Í¨ï¿½ï¿½
     }
     return ALL_RX_Data->RX_Data_head.frame_header.DataLenth;
     
