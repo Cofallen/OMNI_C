@@ -489,30 +489,30 @@ uint8_t ATTACK_F_HeatControl(TYPEDEF_MOTOR *motor, uint8_t type)
     float d = 10.0f, shoot_time = 0.0f, shoot_speed = 0.0f;           
     float a = (float)(user_data.robot_status.shooter_barrel_cooling_value); // 冷却值 /s
     float m = fabsf((float)(user_data.robot_status.shooter_barrel_heat_limit - user_data.power_heat_data.shooter_17mm_1_barrel_heat)); // 剩余可发热量 10*n
-    uint16_t leastbullet = (uint16_t)(m + a * 0.1f) / 10;
+    uint16_t leastbullet = (uint16_t)(m) / 10;
     float rate = (m+a * 0.1f)/(float)user_data.robot_status.shooter_barrel_heat_limit;
     if (a == 0) rate = 2.0f;  // 收不到裁判系统数据，设置为错误数据
     
     ATTACK_F_FireRate_Control(&aaa, 18.0f, 3);
 
-    // VOFA_T_Send(0, 10, (float)a, m, 
-    //                    (float)user_data.robot_status.shooter_barrel_heat_limit, 
-    //                    (float)user_data.power_heat_data.shooter_17mm_1_barrel_heat, 
-    //                    shoot_time, (float)leastbullet, (float)ATTACK_V_PARAM.SPEED, 
-    //                    (float)aaa.PID_S.IN.ALL_LIT, compensation_hz, 0); // @TODO 发送数据到VOFA
+    VOFA_T_Send(0, 10, (float)a, m, 
+                       (float)user_data.robot_status.shooter_barrel_heat_limit, 
+                       (float)user_data.power_heat_data.shooter_17mm_1_barrel_heat, 
+                       shoot_time, (float)leastbullet, (float)ATTACK_V_PARAM.SPEED, 
+                       (float)aaa.PID_S.IN.ALL_LIT, compensation_hz, 0); // @TODO 发送数据到VOFA
     if (type == 0)
     {
         switch (user_data.robot_status.robot_level)
         {
             case 1:
             {
-                if (leastbullet >=4) return 1;
+                if (leastbullet >=5) return 1;
                 else return 0;
             }
                 break;
             case 2:
             {
-                if (leastbullet >= 3) return 1;
+                if (leastbullet >= 5) return 1;
                 else return 0;
             }
                 break;
