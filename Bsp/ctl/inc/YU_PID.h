@@ -23,6 +23,9 @@ float Feedforward_Calculate(Feedforward_t *ffc, float ref);
 
 extern float vision_aim;
 extern float current[2];
+
+extern float smooth_w;
+ 
 void PID_F_Current(TYPEDEF_MOTOR *MOTOR, float aim_currnet);
 
 #endif // !__PID_H__

@@ -11,6 +11,7 @@
 #include "YU_MATH.h"
 #include "CAP.h"
 #include "VISION.h"
+#include "CHASSIS.h"
 
 #define FRAME_ID 0
 #define GROUP_ID 6
@@ -122,7 +123,7 @@ void _ui_update_default_init6_0() {
     for (int i = 0; i < OBJ_NUM; i++) {
         ui_default_init6_0.data[i].operate_tpyel = 2;
     }
-    angle_relative = ((float) TOP.yaw[1] - (float)MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_YAW].DATA.ANGLE_INIT) / 22.755f;
+    angle_relative = ANGLE_Relative / 22.7555f;
     ui_default_init6_Dynamic2->figure_tpye = 4;
     ui_default_init6_Dynamic2->layer = 2;
     ui_default_init6_Dynamic2->rx = 92;

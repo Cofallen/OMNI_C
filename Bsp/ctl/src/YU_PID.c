@@ -13,6 +13,13 @@
 float vision_aim = 0;
 float current[2] = {0.0f, 0.0f};
 
+#define FILTER_N 10
+
+float buffer_s[FILTER_N] = {0};
+uint32_t idx = 0;
+float sum = 0;
+float smooth_w = 0;
+
 /**
  * @brief               自己写的PID初始化，不用读配置文件
  * @details             传入PID基本参数， 通过数组
@@ -93,6 +100,7 @@ uint8_t PID_F_AS(TYPEDEF_MOTOR *MOTOR)
 // 速度电流双环pid
 uint8_t PID_F_SC(TYPEDEF_MOTOR *MOTOR)
 {
+    smooth_w = YU_MATH_MeanFilter((float)MOTOR->DATA.SPEED_NOW, buffer_s, &idx, FILTER_N, &sum);
     MOTOR->PID_S.OUT.ALL_OUT = PID_F_Cal(&MOTOR->PID_S, MOTOR->DATA.AIM, MOTOR->DATA.SPEED_NOW);
     MOTOR->DATA.CAN_SEND = (int16_t)PID_F_Cal(&MOTOR->PID_C, MOTOR->PID_S.OUT.ALL_OUT, MOTOR->DATA.CURRENT);
     return ROOT_READY;
@@ -167,7 +175,8 @@ uint8_t PID_F_VISION_PIT(TYPEDEF_MOTOR *MOTOR)
 
 uint8_t PID_F_P_T(TYPEDEF_MOTOR *MOTOR)
 {
-    MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&MOTOR->PID_A, MOTOR->DATA.AIM, TOP.roll[5]);
+    Feedforward_Calculate(&MOTOR->PID_F, MOTOR->DATA.AIM);
+    MOTOR->PID_A.OUT.ALL_OUT = PID_F_Cal(&MOTOR->PID_A, MOTOR->DATA.AIM, TOP.roll[5]) + MOTOR->PID_F.Output;
     MOTOR->DATA.CAN_SEND = (int16_t)PID_F_Cal(&MOTOR->PID_S, -MOTOR->PID_A.OUT.ALL_OUT, (float)QEKF_INS.Gyro[0] * 100.0f);
     return ROOT_READY;
 }

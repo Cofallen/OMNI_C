@@ -422,7 +422,7 @@ uint8_t ATTACK_F_JAM_Disable(TYPEDEF_MOTOR *MOTOR)
 
 /**
  * @brief 弹频拟合函数
- * 
+ * @param type 1:线性拟合 2:二次拟合 3:考虑卡弹 4:不考虑卡弹
  */
 float ATTACK_F_FireRate_Control(TYPEDEF_MOTOR *motor, float hz, uint8_t type)
 {
@@ -488,10 +488,11 @@ uint8_t ATTACK_F_HeatControl(TYPEDEF_MOTOR *motor, uint8_t type)
 {
     float d = 10.0f, shoot_time = 0.0f, shoot_speed = 0.0f;           
     float a = (float)(user_data.robot_status.shooter_barrel_cooling_value); // 冷却值 /s
-    float m = fabsf((float)(user_data.robot_status.shooter_barrel_heat_limit - user_data.power_heat_data.shooter_17mm_1_barrel_heat)); // 剩余可发热量 20*n
-    uint16_t leastbullet = (uint16_t)m / 10;
-    float rate = (m+a)/(float)user_data.robot_status.shooter_barrel_heat_limit;
-
+    float m = fabsf((float)(user_data.robot_status.shooter_barrel_heat_limit - user_data.power_heat_data.shooter_17mm_1_barrel_heat)); // 剩余可发热量 10*n
+    uint16_t leastbullet = (uint16_t)(m + a/10.0f) / 10;
+    float rate = (m+a/10.0f)/(float)user_data.robot_status.shooter_barrel_heat_limit;
+    if (a == 0) rate = 2.0f;  // 收不到裁判系统数据，设置为错误数据
+    
     ATTACK_F_FireRate_Control(&aaa, 18.0f, 3);
 
     // VOFA_T_Send(0, 10, (float)a, m, 
@@ -548,12 +549,22 @@ uint8_t ATTACK_F_HeatControl(TYPEDEF_MOTOR *motor, uint8_t type)
         }
     else if (type == 1)
     {
+        static float fq = 15.0f;
         if (rate <= 0) // 超热量
         {
-            
+            fq = 0.0f;
+        } else if (rate >0 && rate <= 1.0f) {
+            // rate 0->1 0->18
+            fq = -0.0586 * rate - 0.0431f;
+        } else {
+            fq = 15.0f; // 如果收不到裁判系统数据，定值
         }
-        
+        if (fq <= 0.0f) {
+            fq = 0.0f;
+        }
+        // ATTACK_F_FireRate_Control(motor, fq, 3);
     }
+    return 1;
 }
 
 /**

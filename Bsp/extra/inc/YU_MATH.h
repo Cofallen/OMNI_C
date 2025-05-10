@@ -19,6 +19,6 @@ float SectionLimit_f(float max , float min , float data);
 
 float YU_MATH_LowPassFilter(float alpha, float *input);
 float YU_MATH_LowPassFilter_MC(float alpha, float *input, uint8_t channel);
-
+float YU_MATH_MeanFilter(float input, float *buffer, uint32_t *idx, uint32_t size, float *sum);
 
 #endif // !__MATH_H__

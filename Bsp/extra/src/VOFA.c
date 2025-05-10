@@ -288,12 +288,12 @@ void Vofa_intergrate(uint8_t mod)
                 (float)user_data.shoot_data.initial_speed,
                 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_L].DATA.SPEED_NOW,
                 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.SPEED_NOW,
+                smooth_w,
                 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_R].DATA.AIM,
                 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.AIM,
                 (float)MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ANGLE_INFINITE,
                 (float)ATTACK_V_PARAM.COUNT,
-                (float)ATTACK_V_PARAM.TIME,
-                1.0f);
+                (float)ATTACK_V_PARAM.TIME);
         break;
     case 4:
         VOFA_T_SendTemp(0, 10, 0.0f,

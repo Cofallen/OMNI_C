@@ -84,7 +84,7 @@ void StartGimbalTask(void const * argument)
                 0,
                 MOTOR_V_GIMBAL[MOTOR_D_GIMBAL_PIT].DATA.CAN_SEND);
       // 自瞄查看数据
-      Vofa_intergrate(1);
+      Vofa_intergrate(3);
       dt_pc = (float)DWT_GetDeltaT(&INS_DWT_Count);
       vTaskDelay(1);
   }

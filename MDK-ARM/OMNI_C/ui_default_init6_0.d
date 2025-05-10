@@ -72,4 +72,5 @@ omni_c/ui_default_init6_0.o: ..\UI\ui_default_init6_0.c \
   ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h ..\Bsp\extra\inc\define.h \
   ..\Bsp\extra\inc\YU_MATH.h ..\Bsp\ctl\inc\CAP.h \
   ..\Bsp\extra\inc\VISION.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h \
+  ..\Bsp\ctl\inc\CHASSIS.h ..\Bsp\ctl\inc\DBUS.h

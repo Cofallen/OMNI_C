@@ -223,3 +223,30 @@ float YU_MATH_LowPassFilter_MC(float alpha, float *input, uint8_t channel)
     
     return output;
 }
+
+
+/**
+ * @brief   N 点滑动均值滤波（重新实现）
+ * @param   input   : 新的输入采样值
+ * @param   buffer  : 滤波缓冲区，长度必须为 size
+ * @param   idx     : 缓冲区当前位置索引（调用前请置 0）
+ * @param   size    : 缓冲区大小 N
+ * @param   sum     : 累加和变量（调用前请置 0）
+ * @return  滤波后的平均值
+ */
+float YU_MATH_MeanFilter(float input,
+    float *buffer, 
+    uint32_t *idx,
+    uint32_t size,
+    float *sum)
+{
+   buffer[*idx] = input; // 将新的输入值存入缓冲区
+   *sum += input; // 更新累加和
+   if (*idx < size - 1) {
+       (*idx)++; // 移动到下一个索引
+   } else {
+       *idx = 0; // 循环回到缓冲区开头
+   }
+   return *sum / size; // 返回当前平均值
+
+}

@@ -82,9 +82,9 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
     if (DBUS->KEY_BOARD.G)
     {
         chassis_control[1][NOW] = 1;
-        VR *= 0.1f;  
-        VX *= 0.1f;
-        VY *= 0.1f;
+        VR *= 0.4f;  
+        VX *= 0.8f;
+        VY *= 0.2f;
     } else chassis_control[1][NOW] = 0;
     
     // @TODO 2. VR的负号和-ANGLE_Relative的负号测试是否可以全换成正号

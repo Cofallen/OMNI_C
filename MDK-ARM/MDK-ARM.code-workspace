@@ -4,6 +4,11 @@
             "path": "."
         }
     ],
-    "settings": {},
+    "settings": {
+        "files.associations": {
+            "*.h": "cpp",
+            "initializer_list": "c"
+        }
+    },
     "extensions": {}
 }
