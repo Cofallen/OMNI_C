@@ -28,8 +28,8 @@ float limitedPower = 0; // 电容代码使用全局变量
 void chassis_power_control(uint8_t cap_state, uint8_t is_flying)
 {
     //*可编辑部分*begin*//
-    const uint16_t PowerCompensation = 5;  //正常模式下的功率补偿
-    const uint16_t SuperMaxPower = 180;	    //飞坡电容下的功率补偿
+    const uint16_t PowerCompensation = 10;  //正常模式下的功率补偿
+    const uint16_t SuperMaxPower = 100;	    //飞坡电容下的功率补偿
     const uint16_t capValt = 12;	         //强制退出的电压阈值
     //*可编辑部分*end*//
 

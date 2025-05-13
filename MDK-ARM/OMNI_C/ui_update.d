@@ -64,4 +64,4 @@ omni_c/ui_update.o: ..\Bsp\extra\src\ui_update.c \
   ..\UI\ui_default_init5_4.h ..\UI\ui_default_init5_5.h \
   ..\Bsp\ctl\inc\DBUS.h ..\Bsp\ctl\inc\CHASSIS.h ..\Bsp\ctl\inc\MOTOR.h \
   ..\Bsp\ctl\inc\feedforward.h ..\LIB\user_lib.h \
-  ..\Bsp\extra\inc\DEFINE.h
+  ..\Bsp\extra\inc\DEFINE.h ..\JUDGE\Read_Data.h

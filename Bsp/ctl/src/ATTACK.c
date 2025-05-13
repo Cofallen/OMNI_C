@@ -166,30 +166,30 @@ float ATTACK_F_FIRE_Aim(TYPEDEF_MOTOR *MOTOR)
     initial_speed[NOW] = user_data.shoot_data.initial_speed; // 更新摩擦轮转速
     if (initial_speed[NOW] != initial_speed[LAST])
     {
-        if(user_data.shoot_data.initial_speed <= 23.6f)
+        if(user_data.shoot_data.initial_speed <= 22.9f)
         {
             TEMP += 4;
         }
-        else if (user_data.shoot_data.initial_speed > 23.6f && user_data.shoot_data.initial_speed <= 23.9f)
+        else if (user_data.shoot_data.initial_speed > 22.9f && user_data.shoot_data.initial_speed <= 23.2f)
         {
             TEMP += 1.5f;
         }
-        else if (user_data.shoot_data.initial_speed > 23.9f && user_data.shoot_data.initial_speed <= 24.1f)
+        else if (user_data.shoot_data.initial_speed > 23.2f && user_data.shoot_data.initial_speed <= 23.5f)
         {
             TEMP += 0;
         }
-        else if (user_data.shoot_data.initial_speed > 24.1f && user_data.shoot_data.initial_speed <= 24.5f)
+        else if (user_data.shoot_data.initial_speed > 23.5f && user_data.shoot_data.initial_speed <= 23.9f)
         {
             TEMP -= 5;
         }
-        else if (user_data.shoot_data.initial_speed > 24.5f)
+        else if (user_data.shoot_data.initial_speed > 23.9f)
         {
             TEMP -= 15;
         }
     }
     
-    ATTACK_V_PARAM.SPEED = 6500.0f + TEMP;
-    ATTACK_V_PARAM.SPEED = MATH_D_LIMIT(6570.0f, 6380.0f, ATTACK_V_PARAM.SPEED);
+    ATTACK_V_PARAM.SPEED = 6300.0f + TEMP;
+    ATTACK_V_PARAM.SPEED = MATH_D_LIMIT(6370.0f, 6180.0f, ATTACK_V_PARAM.SPEED);
 
     // @veision 3, final code, this code is a stable speed
     if (( fire_mouse_status == 1 && DBUS_V_DATA.REMOTE.S2_u8 == 3)|| DBUS_V_DATA.REMOTE.S2_u8 == 2)  // 3 is the fire button
@@ -529,15 +529,15 @@ uint8_t ATTACK_F_HeatControl(TYPEDEF_MOTOR *motor, uint8_t type)
                 else return 0;
             }
                 break;
-            case 7:case 8:
+            case 7:
             {
                 if (leastbullet >= 3) return 1;
                 else return 0;
             }
                 break;
-            case 9:case 10:
+            case 8:case 9:case 10:
             {
-                if (leastbullet >= 3) return 1;
+                if (leastbullet >= 4) return 1;
                 else return 0;
             }
                 break;

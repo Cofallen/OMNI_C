@@ -22,12 +22,12 @@ void _ui_init_default_init5_5() {
     ui_default_init5_5.option.operate_tpyel = 1;
     ui_default_init5_5.option.figure_tpye = 7;
     ui_default_init5_5.option.layer = 5;
-    ui_default_init5_5.option.font_size = 30;
+    ui_default_init5_5.option.font_size = 50;
     ui_default_init5_5.option.start_x = 180;
     ui_default_init5_5.option.start_y = 660;
     ui_default_init5_5.option.color = 2;
     ui_default_init5_5.option.str_length = 1;
-    ui_default_init5_5.option.width = 2;
+    ui_default_init5_5.option.width = 10;
     strcpy(ui_default_init5_static56->string, "V");
 
     ui_proc_string_frame(&ui_default_init5_5);
@@ -40,23 +40,23 @@ void _ui_update_default_init5_5() {
     if (MOTOR_V_ATTACK[MOTOR_D_ATTACK_G].DATA.ENABLE == 1) {
         ui_default_init5_5.option.figure_tpye = 7;
         ui_default_init5_5.option.layer = 5;
-        ui_default_init5_5.option.font_size = 30;
+        ui_default_init5_5.option.font_size = 50;
         ui_default_init5_5.option.start_x = 180;
         ui_default_init5_5.option.start_y = 660;
         ui_default_init5_5.option.color = 2;
-        ui_default_init5_5.option.str_length = 2;
-        ui_default_init5_5.option.width = 2;
+        ui_default_init5_5.option.str_length = 1;
+        ui_default_init5_5.option.width = 10;
         strcpy(ui_default_init5_static56->string, "V");
     } else
     {
         ui_default_init5_5.option.figure_tpye = 7;
         ui_default_init5_5.option.layer = 5;
-        ui_default_init5_5.option.font_size = 30;
+        ui_default_init5_5.option.font_size = 50;
         ui_default_init5_5.option.start_x = 180;
         ui_default_init5_5.option.start_y = 660;
         ui_default_init5_5.option.color = 1;
         ui_default_init5_5.option.str_length = 1;
-        ui_default_init5_5.option.width = 2;
+        ui_default_init5_5.option.width = 10;
         strcpy(ui_default_init5_static56->string, "V");
     }
     

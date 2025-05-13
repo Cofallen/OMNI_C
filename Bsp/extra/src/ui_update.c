@@ -18,9 +18,12 @@
 #include "DBUS.h"
 #include "CHASSIS.h"
 #include "DEFINE.h"
+#include "ui_interface.h"
+#include "Read_Data.h"
 
 uint8_t RobotUI_Static_Init(uint8_t tim)
 {
+    ui_self_id = user_data.robot_status.robot_id;
     _ui_init_default_init0_0(); vTaskDelay(tim);
     _ui_init_default_init0_2(); vTaskDelay(tim);
     _ui_init_default_init1_0(); vTaskDelay(tim);
