@@ -627,7 +627,7 @@ typedef union
         uint16_t frame_tail;    
     }RX_Data_remote_control;
 
-    uint8_t Data[512];
+    uint8_t Data[256];
     
 }ALL_RX_Data_T;
 

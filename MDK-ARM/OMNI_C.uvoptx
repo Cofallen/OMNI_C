@@ -191,7 +191,7 @@
           <Type>0</Type>
           <LineNumber>68</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134231988</Address>
+          <Address>134232032</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -359,7 +359,7 @@
         <Ww>
           <count>24</count>
           <WinNumber>1</WinNumber>
-          <ItemText>capData_JHB,0x10</ItemText>
+          <ItemText>capData_JHB,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>25</count>
@@ -440,6 +440,11 @@
           <count>40</count>
           <WinNumber>1</WinNumber>
           <ItemText>gyro_correct</ItemText>
+        </Ww>
+        <Ww>
+          <count>41</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>cap_mode_ctrl</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>

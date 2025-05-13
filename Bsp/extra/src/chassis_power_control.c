@@ -4,14 +4,15 @@
 #include "DEFINE.h"
 #include "math.h"
 #include "YU_MATH.h"
+#include "CHASSIS.h"
 
 PID_buffer_t PID_Buffer;
 	
 fp32 scaled_give_power[4];
 
 fp32 toque_coefficient = 1.99688994e-6f; // // (20/16384)*(0.3)*(187/3591)/9.55 力矩电流系数
-fp32 a = 1.23e-07;						 // k1
-fp32 k2 = 1.453e-07;					 // k2
+fp32 a = 1.3e-07;						 // k1
+fp32 k2 = 1.3e-07;					 // k2
 fp32 constant = 4.081f;                  // a 增大这个系数可以减小功率，反之增加
 
 
@@ -27,8 +28,8 @@ float limitedPower = 0; // 电容代码使用全局变量
 void chassis_power_control(uint8_t cap_state, uint8_t is_flying)
 {
     //*可编辑部分*begin*//
-    const uint16_t PowerCompensation = 60;  //正常模式下的功率补偿
-    const uint16_t SuperMaxPower = 150;	    //飞坡电容下的功率补偿
+    const uint16_t PowerCompensation = 5;  //正常模式下的功率补偿
+    const uint16_t SuperMaxPower = 180;	    //飞坡电容下的功率补偿
     const uint16_t capValt = 12;	         //强制退出的电压阈值
     //*可编辑部分*end*//
 
@@ -49,13 +50,13 @@ void chassis_power_control(uint8_t cap_state, uint8_t is_flying)
     chassis_power_buffer = user_data.power_heat_data.buffer_energy;	// 得到缓冲能量
     max_power_limit = user_data.robot_status.chassis_power_limit;   // 得到最大功率限制
     PID_buffer_init(&PID_Buffer);
-    PID_buffer(&PID_Buffer, chassis_power_buffer, 40);  // 缓冲能量闭环
+    PID_buffer(&PID_Buffer, chassis_power_buffer, 45);  // 缓冲能量闭环
 
     // chassis_max_power = input_power;
 
     input_power = max_power_limit - PID_Buffer.All_out;  // 加入缓冲能量
 
-    if(capData_JHB.Receive_data_typedef.capVolt > capValt)
+    if(capData_JHB.Send_data_typedef.Send_data.switchControl == 1)
 	{
     //     if(cap_state == 0)
     //     {
@@ -74,11 +75,19 @@ void chassis_power_control(uint8_t cap_state, uint8_t is_flying)
     //         }
     //   // 开启电容
     //     }
-        if(cap_state == 0)
+        if(cap_state == 0 && capData_JHB.Receive_data_typedef.capVolt > capValt)
         {
             chassis_max_power = input_power + PowerCompensation;
         }else if (cap_state == 1) { 
             chassis_max_power = input_power + SuperMaxPower;
+            if (capData_JHB.Receive_data_typedef.capVolt < 12.5f || input_power <= 40.0f)
+                // cap_mode_ctrl[NOW] = 0;
+                chassis_max_power = input_power - 5.0f;
+            // if(cap_state == 0)
+            // {
+            //     chassis_max_power = input_power + PowerCompensation;
+            // }else if (cap_state == 1) { 
+            //     chassis_max_power = input_power + SuperMaxPower;
     // 开启电容
         }
     }else{

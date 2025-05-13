@@ -70,7 +70,7 @@
 #define LIFTED_DEBUG 0
 
 // 云台限度
-#define GIMBAL_PIT_MAX 17 //-100
+#define GIMBAL_PIT_MAX 35 //-100
 #define GIMBAL_PIT_MIN -17  //300
 #define OMNI_PIT_MAX 5200
 #define OMNI_PIT_MIN 4270

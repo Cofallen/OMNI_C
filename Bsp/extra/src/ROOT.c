@@ -42,7 +42,7 @@ uint8_t ROOT_F_PIDinit()
 //	const float PID_V_GIMBAL_YAW_SPEED[5] = {17.0f, 0.0f, 0.5f, 100.0f, 10000.0f};//正常值
 //    const float PID_V_GIMBAL_YAW_ANGLE[5] = {9.0f, 0.0f, 0.0f, 200.0f, 5000.0f};
     const float PID_V_GIMBAL_YAW_CURRENT[5] = {1.20f, 0.0f, 0.0f, 2000.0f, 30000.0f};
-    const float PID_V_GIMBAL_YAW_SPEED[5] = {600.0f, 0.0f, 0.0f, 100.0f, 30000.0f};//正常值
+    const float PID_V_GIMBAL_YAW_SPEED[5] = {400.0f, 0.0f, 0.0f, 100.0f, 30000.0f};//正常值
     const float PID_V_GIMBAL_YAW_ANGLE[5] = {0.4f, 0.0f, 0.0f, 300.0f, 1000.0f};
 
 
@@ -60,7 +60,7 @@ uint8_t ROOT_F_PIDinit()
     const float PID_V_ATTACK_L_SPEED[5] = {14.0f, 0, 0, 1000.0f, 30000.0f};
     const float PID_V_ATTACK_R_SPEED[5] = {14.0f, 0, 0, 1000.0f, 30000.0f};
     const float PID_V_ATTACK_G_SPEED[5] = {12.0f, 0.001f, 0, 1000.0f, 20000.0f};
-    const float PID_V_ATTACK_G_ANGLE[5] = {1.0f, 0, 0, 1000.0f, 3200.0f};  // 拨盘角度AIM控制弹频，3000-13.3Hz,4500-16.99Hz,5000(2single)-23.3Hz占比约1/3
+    const float PID_V_ATTACK_G_ANGLE[5] = {1.0f, 0, 0, 1000.0f, 3000.0f};  // 拨盘角度AIM控制弹频，3000-13.3Hz,4500-16.99Hz,5000(2single)-23.3Hz占比约1/3
     const float PID_V_ATTACK_L_CURRENT[5] = {1.0f, 0, 0, 1000.0f, 29000.0f};
     const float PID_V_ATTACK_R_CURRENT[5] = {1.0f, 0, 0, 1000.0f, 29000.0f};
 

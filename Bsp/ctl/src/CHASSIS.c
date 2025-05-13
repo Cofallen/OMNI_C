@@ -23,8 +23,8 @@ double ANGLE_Relative = 0.0f;
 int mod = 0;
 		
 // 新增宏定义
-#define FRONT_POWER_POWER       0.7f     // 前轮功率最高降低系数
-#define REAR_POWER_BOOST        1.4f     // 后轮功率最低提升系数
+#define FRONT_POWER_POWER       0.1f     // 前轮功率最高降低系数
+#define REAR_POWER_BOOST        1.9f     // 后轮功率最低提升系数
 
 #define FILTER_COEF 0.9f         // 低通滤波系数
 #define FRONT_LIFT_THRESHOLD 3000.0f  // 前后轮电流差阈值
@@ -122,10 +122,10 @@ void CHASSIS_F_Ctl(TYPEDEF_MOTOR *MOTOR, TYPEDEF_DBUS *DBUS)
 
     if (DBUS->KEY_BOARD.F) {
         chassis_control[0][NOW] = 1;
-        MOTOR[FRONT_LEFT].DATA.AIM  *= 0.7f;
-        MOTOR[FRONT_RIGHT].DATA.AIM *= 0.7f;
-        MOTOR[REAR_LEFT].DATA.AIM   *= 1.4f;
-        MOTOR[REAR_RIGHT].DATA.AIM  *= 1.4f;
+        MOTOR[FRONT_LEFT].DATA.AIM  *= 0.4f;
+        MOTOR[FRONT_RIGHT].DATA.AIM *= 0.4f;
+        MOTOR[REAR_LEFT].DATA.AIM   *= 1.6f;
+        MOTOR[REAR_RIGHT].DATA.AIM  *= 1.6f;
     } else chassis_control[0][NOW] = 0;
 
 

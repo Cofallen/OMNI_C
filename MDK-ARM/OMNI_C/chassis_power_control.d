@@ -56,4 +56,5 @@ omni_c/chassis_power_control.o: ..\Bsp\extra\src\chassis_power_control.c \
   ..\Bsp\ctl\inc\feedforward.h ..\LIB\user_lib.h ..\Bsp\ctl\inc\CAP.h \
   ..\Bsp\extra\inc\yu_math.h ..\JUDGE\Read_Data.h ..\Core\Inc\usart.h \
   ..\Bsp\dev\inc\TIM_DEV.h ..\Bsp\extra\inc\DEFINE.h \
-  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\math.h
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\math.h \
+  ..\Bsp\ctl\inc\CHASSIS.h ..\Bsp\ctl\inc\DBUS.h

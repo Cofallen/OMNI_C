@@ -46,24 +46,29 @@ uint8_t zhanbaoshuliang = 0;
 //�����ж�����������
 void Read_Data_first(ALL_RX_Data_T *ALL_RX_Data , User_Data_T *user_data , uint16_t length)
 {
-	uint16_t i;
-    uint16_t Data_result = 0;//数据包个数
-    uint16_t Data_length;//数据长度
-    ALL_RX_Data_T ALL_RX_Data_Tmp;
-    for(i = 0; i<length ; i++)
-    {
-        if(ALL_RX_Data->Data[i] == 0xA5)
-        {
-            memcpy(&ALL_RX_Data_Tmp.Data[0] , &ALL_RX_Data->Data[i] , 150);
-            Data_length = Read_Data_system(&ALL_RX_Data_Tmp , user_data);
-
-            if(Data_length < 60000)
-            {
-                Data_result++;
-                i += Data_length+8;
-            }
-        }
-    }
+	/*只处理了0x201与0x202数据包的黏包情况，后续发现其他数据包黏包的情况请仿照下列格式自行添加处理。*/
+//	if(length == 47)//0x201与0x202数据包的黏包处理
+//	{
+//		Read_Data_system(ALL_RX_Data , user_data);
+//		memcpy(&ALL_RX_Data->Data[0] , &ALL_RX_Data->Data[25] , 22);
+//		Read_Data_system(ALL_RX_Data , user_data);
+//	}
+//	else
+//	{
+//		Read_Data_system(ALL_RX_Data , user_data);
+//	}
+	
+	/*通解，不一定能用，只测试过0x201与0x202数据包的黏包情况*/
+	Data_length = Read_Data_system(ALL_RX_Data , user_data);
+	uint8_t i;
+	for(i = 0; i<length ; i++)
+	{
+		if(ALL_RX_Data->Data[i] == 0xA5)
+		{
+			memcpy(&ALL_RX_Data->Data[0] , &ALL_RX_Data->Data[i] , 150);
+			Data_length = Read_Data_system(ALL_RX_Data , user_data);
+		}
+	}
 }
 
 /**
