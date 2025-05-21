@@ -60,7 +60,8 @@ omni_c/chassis.o: ..\Bsp\ctl\src\CHASSIS.c ..\Core\Inc\main.h \
   ..\Bsp\extra\inc\VISION.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h \
   ..\JUDGE\Read_Data.h ..\Core\Inc\usart.h ..\Bsp\extra\inc\ROOT.h \
-  ..\Bsp\ctl\inc\TOP.h ..\LIB\QuaternionEKF.h ..\LIB\kalman_filter.h \
+  ..\Bsp\extra\inc\VT13.h ..\Bsp\ctl\inc\TOP.h ..\LIB\QuaternionEKF.h \
+  ..\LIB\kalman_filter.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdlib.h \
   ..\CMSIS\DSP\Inc\dsp\matrix_functions.h \
   ..\CMSIS\DSP\Inc\arm_math_types.h \

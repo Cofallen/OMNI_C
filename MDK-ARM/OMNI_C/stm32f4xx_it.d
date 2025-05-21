@@ -56,4 +56,5 @@ omni_c/stm32f4xx_it.o: ..\Core\Src\stm32f4xx_it.c ..\Core\Inc\main.h \
   ..\Bsp\dev\inc\USART_DEV.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdio.h \
   ..\Bsp\extra\inc\ROOT.h ..\Bsp\ctl\inc\MOTOR.h \
-  ..\Bsp\ctl\inc\feedforward.h ..\LIB\user_lib.h
+  ..\Bsp\ctl\inc\feedforward.h ..\LIB\user_lib.h ..\Bsp\extra\inc\VT13.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h

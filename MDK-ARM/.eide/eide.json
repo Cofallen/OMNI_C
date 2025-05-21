@@ -273,6 +273,9 @@
           },
           {
             "path": "../Bsp/extra/src/ui_update.c"
+          },
+          {
+            "path": "../Bsp/extra/src/VT13.c"
           }
         ],
         "folders": []

@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx,ARM_MATH_CM4</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Bsp/ctl/inc;../Bsp/dev/inc;../Bsp/extra/inc;../LIB;../JUDGE;../CMSIS/Core/Inc;../CMSIS/DSP/Inc/dsp;../CMSIS/DSP/Inc;../CMSIS/DSP/PrivateInclude;../USB_DEVICE/App;../USB_DEVICE/Target;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;../Bsp/robot/inc;..\UI</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Bsp/ctl/inc;../Bsp/dev/inc;../Bsp/extra/inc;../LIB;../JUDGE;../CMSIS/Core/Inc;../CMSIS/DSP/Inc/dsp;../CMSIS/DSP/Inc;../CMSIS/DSP/PrivateInclude;../USB_DEVICE/App;../USB_DEVICE/Target;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;../Bsp/robot/inc;../UI</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1274,6 +1274,11 @@
               <FileName>ui_update.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Bsp\extra\src\ui_update.c</FilePath>
+            </File>
+            <File>
+              <FileName>VT13.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Bsp\extra\src\VT13.c</FilePath>
             </File>
           </Files>
         </Group>

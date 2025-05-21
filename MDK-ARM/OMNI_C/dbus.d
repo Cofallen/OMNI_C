@@ -54,5 +54,6 @@ omni_c/dbus.o: ..\Bsp\ctl\src\DBUS.c ..\Core\Inc\main.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\event_groups.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\string.h \
   ..\Bsp\ctl\inc\DBUS.h ..\Bsp\extra\inc\ROOT.h ..\Bsp\ctl\inc\MOTOR.h \
-  ..\Bsp\ctl\inc\feedforward.h ..\LIB\user_lib.h \
+  ..\Bsp\ctl\inc\feedforward.h ..\LIB\user_lib.h ..\Bsp\extra\inc\VT13.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h \
   ..\Bsp\extra\inc\YU_MATH.h

@@ -4,6 +4,7 @@
 #include "DBUS.h"
 #include "ROOT.h"
 #include "YU_MATH.h"
+#include "VT13.h"
 
 // 遥控全局变量
 TYPEDEF_DBUS DBUS_V_DATA = {0};

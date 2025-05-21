@@ -28,8 +28,9 @@ float limitedPower = 0; // 电容代码使用全局变量
 void chassis_power_control(uint8_t cap_state, uint8_t is_flying)
 {
     //*可编辑部分*begin*//
-    const uint16_t PowerCompensation = 10;  //正常模式下的功率补偿
-    const uint16_t SuperMaxPower = 100;	    //飞坡电容下的功率补偿
+    const uint16_t PowerCompensation = 0;  //正常模式下的功率补偿
+    const uint16_t SuperMaxPower = 40;	    //疾跑下的功率补偿
+    const uint16_t LiftPower = 180;         //飞坡功率补偿
     const uint16_t capValt = 12;	         //强制退出的电压阈值
     //*可编辑部分*end*//
 
@@ -89,6 +90,11 @@ void chassis_power_control(uint8_t cap_state, uint8_t is_flying)
             // }else if (cap_state == 1) { 
             //     chassis_max_power = input_power + SuperMaxPower;
     // 开启电容
+        }else if (cap_state == 2)
+        {
+            chassis_max_power = input_power + LiftPower;
+            if (capData_JHB.Receive_data_typedef.capVolt < 12.5f || input_power <= 40.0f)
+                chassis_max_power = input_power - 5.0f;
         }
     }else{
         

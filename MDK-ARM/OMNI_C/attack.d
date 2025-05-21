@@ -56,10 +56,10 @@ omni_c/attack.o: ..\Bsp\ctl\src\ATTACK.c ..\Core\Inc\main.h \
   ..\Bsp\ctl\inc\feedforward.h ..\LIB\user_lib.h ..\Bsp\ctl\inc\DBUS.h \
   ..\Bsp\extra\inc\JUDGEMENT.h ..\Bsp\extra\inc\DEFINE.h \
   ..\Bsp\ctl\inc\YU_PID.h ..\Bsp\dev\inc\TIM_DEV.h \
-  ..\Bsp\extra\inc\ROOT.h ..\Bsp\extra\inc\YU_MATH.h \
-  ..\JUDGE\Read_Data.h ..\Core\Inc\usart.h ..\Bsp\extra\inc\VISION.h \
+  ..\Bsp\extra\inc\ROOT.h ..\Bsp\extra\inc\VT13.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h \
-  ..\Bsp\extra\inc\VOFA.h \
+  ..\Bsp\extra\inc\YU_MATH.h ..\JUDGE\Read_Data.h ..\Core\Inc\usart.h \
+  ..\Bsp\extra\inc\VISION.h ..\Bsp\extra\inc\VOFA.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdlib.h \
   ..\LIB\bsp_dwt.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\math.h \

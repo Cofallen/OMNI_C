@@ -56,4 +56,5 @@ omni_c/cap.o: ..\Bsp\ctl\src\CAP.c ..\Bsp\ctl\inc\CAP.h \
   ..\Core\Inc\usart.h ..\Bsp\extra\inc\define.h \
   ..\Bsp\extra\inc\YU_MATH.h ..\Bsp\extra\inc\chassis_power_control.h \
   ..\Bsp\ctl\inc\MOTOR.h ..\Bsp\ctl\inc\feedforward.h ..\LIB\user_lib.h \
-  ..\Bsp\ctl\inc\DBUS.h
+  ..\Bsp\ctl\inc\DBUS.h ..\Bsp\extra\inc\VT13.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h

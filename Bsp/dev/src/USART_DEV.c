@@ -12,6 +12,7 @@
 #include "VISION.h"
 #include "ATTACK.h"
 #include "DEFINE.h"
+#include "VT13.h"
 
 #define BUFFER_SIZE (255)
 
@@ -80,8 +81,13 @@ void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
 
     if (huart->Instance == USART1) // 视觉模块/VOFA测试模块 tx: white rx: purple
     {
-        VISION_F_Cal(VISION_V_DATA.OriginData, 1);
-        HAL_UART_Receive_DMA(&huart1, (uint8_t *)VISION_V_DATA.OriginData, sizeof(VISION_V_DATA.OriginData));
+        // VISION_F_Cal(VISION_V_DATA.OriginData, 1);
+        // // HAL_UART_Receive_DMA(&huart1, (uint8_t *)VISION_V_DATA.OriginData, sizeof(VISION_V_DATA.OriginData));
+        __HAL_UART_CLEAR_IDLEFLAG(&huart1);
+        HAL_UART_DMAStop(&huart1);
+
+        VT13_Resovled(VT13_V_UNION.GetData, &VT_V_DATA);
+        HAL_UART_Receive_DMA(&huart1, (uint8_t *)VT13_V_UNION.GetData, sizeof(VT13_V_UNION.GetData));
     }
 }
 

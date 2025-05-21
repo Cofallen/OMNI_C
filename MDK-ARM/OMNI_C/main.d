@@ -79,7 +79,7 @@ omni_c/main.o: ..\Core\Src\main.c ..\Core\Inc\main.h \
   ..\CMSIS\DSP\Inc\dsp\basic_math_functions.h ..\Bsp\dev\inc\TIM_DEV.h \
   ..\Bsp\dev\inc\CAN_DEV.h ..\Bsp\dev\inc\USART_DEV.h \
   ..\Bsp\extra\inc\VOFA.h ..\Bsp\extra\inc\YU_MATH.h \
-  ..\Bsp\extra\inc\ROOT.h ..\JUDGE\Read_Data.h \
+  ..\Bsp\extra\inc\ROOT.h ..\Bsp\extra\inc\VT13.h ..\JUDGE\Read_Data.h \
   ..\USB_DEVICE\App\usbd_cdc_if.h \
   ..\Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Inc\usbd_cdc.h \
   ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ioreq.h \

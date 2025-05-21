@@ -50,6 +50,7 @@
 #include "ROOT.h"
 #include "Read_Data.h"
 #include "usbd_cdc_if.h"
+#include "VT13.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -140,9 +141,9 @@ int main(void)
   __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
   HAL_UART_Receive_DMA(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, sizeof(DBUS_V_UNION.GET_DATA));
 
-  printf("ok\r\n");  // huart1 
-  HAL_UART_Transmit_DMA(&huart1, (uint8_t *)sd_v_buff, sizeof(sd_v_buff));
-  HAL_UART_Receive_DMA(&huart1, (uint8_t *)VISION_V_DATA.OriginData, sizeof(VISION_V_DATA.OriginData));
+  // printf("ok\r\n");  // huart1 
+  __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
+  HAL_UART_Receive_DMA(&huart1, (uint8_t *)VT13_V_UNION.GetData, sizeof(VT13_V_UNION.GetData));
   HAL_TIM_Base_Start_IT(&htim2);
 
   /* USER CODE END 2 */
@@ -250,9 +251,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 1 */
   if (htim->Instance == TIM2) // 底盘 1ms
     {     
-      ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff, 1);
-      RunTime ++;
-      VISION_V_DATA.SEND.TIME = RunTime;
+      // ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff, 1);
+      // RunTime ++;
+      // VISION_V_DATA.SEND.TIME = RunTime;
     }
   /* USER CODE END Callback 1 */
 }

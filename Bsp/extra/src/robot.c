@@ -21,6 +21,9 @@
 #include "tim.h"
 #include "niming.h"
 
+#include "VT13.h"
+#include "string.h"
+#include "math.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "cmsis_os.h"
@@ -29,6 +32,7 @@
 #include "bsp_dwt.h"
 
 #include "ui_update.h"
+#include "VT13.h"
 
 // @todo 放到结构体里
 float dt_pc = 0;
@@ -59,10 +63,10 @@ void StartChassisTask(void const * argument)
   for(;;)
   {
     CHASSIS_F_Ctl(MOTOR_V_CHASSIS, &DBUS_V_DATA);
-    CAN_F_Send(&hcan1, 0x200, MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
-                MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
-                MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
-                MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
+//    CAN_F_Send(&hcan1, 0x200, MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_1].DATA.CAN_SEND,
+//                MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_2].DATA.CAN_SEND,
+//                MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_3].DATA.CAN_SEND,
+//                MOTOR_V_CHASSIS[MOTOR_D_CHASSIS_4].DATA.CAN_SEND);
 		// CapSendInit(40 , user_data.power_heat_data.chassis_power , user_data.power_heat_data.chassis_voltage);
     CapSend_new( user_data.power_heat_data.buffer_energy ,  user_data.power_heat_data.chassis_voltage);    // 电容电量低或电容离线时无补偿
     vTaskDelay(1);
@@ -108,6 +112,7 @@ void StartMonitorTask(void const * argument)
   for(;;)
   {  
     ROOT_F_MONITOR_DBUS(&DBUS_V_DATA);
+    // ROOT_F_MONITOR_VT(&VT_V_DATA);
     TOP_T_Monitor();
     VISION_F_Monitor();
     TOP_T_Cal();

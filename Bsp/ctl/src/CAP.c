@@ -9,6 +9,7 @@
 #include "YU_MATH.h"
 #include "chassis_power_control.h"
 #include "DBUS.h"
+#include "VT13.h"
 
 float  Inter=0;
 int  temp_cap_time=0;
@@ -74,7 +75,7 @@ void CanManage_cap_new(uint8_t* can_data , struct capData_JHB_Receive* data)
 void CapSend_new(uint8_t powerBuffer , uint16_t volt)
 {
 	static uint8_t cap_open = 1;
-	if (DBUS_V_DATA.KEY_BOARD.X && !DBUS_V_DATA.KEY_BOARD.X_PREE_NUMBER) {
+	if ((DBUS_V_DATA.KEY_BOARD.X && !DBUS_V_DATA.KEY_BOARD.X_PREE_NUMBER) || (VT_V_DATA.KeyBoard.X&&!VT_V_DATA.KeyBoard.X_PreeNumber)) {
 		cap_open = !cap_open;  
 	}
 	capData_JHB.Send_data_typedef.Send_data.powerLimit = (uint32_t)user_data.robot_status.chassis_power_limit;	//锟斤拷锟斤拷锟?
@@ -90,4 +91,5 @@ void CapSend_new(uint8_t powerBuffer , uint16_t volt)
 	CAN_F_Send(&hcan1 , 0x252 , capData_JHB.Send_data_typedef.Data[0] , capData_JHB.Send_data_typedef.Data[1], \
 		capData_JHB.Send_data_typedef.Data[2], 0 );	
 	DBUS_V_DATA.KEY_BOARD.X_PREE_NUMBER = DBUS_V_DATA.KEY_BOARD.X;
+	VT_V_DATA.KeyBoard.X_PreeNumber = VT_V_DATA.KeyBoard.X;
 }

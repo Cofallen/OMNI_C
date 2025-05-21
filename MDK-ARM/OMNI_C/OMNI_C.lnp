@@ -59,6 +59,7 @@
 "omni_c\robot.o"
 "omni_c\niming.o"
 "omni_c\ui_update.o"
+"omni_c\vt13.o"
 "omni_c\bmi088driver.o"
 "omni_c\bmi088middleware.o"
 "omni_c\bsp_imu_pwm.o"

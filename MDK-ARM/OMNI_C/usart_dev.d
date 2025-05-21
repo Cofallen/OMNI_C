@@ -57,7 +57,7 @@ omni_c/usart_dev.o: ..\Bsp\dev\src\USART_DEV.c ..\Core\Inc\usart.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\string.h \
   ..\JUDGE\Read_Data.h ..\Bsp\extra\inc\VOFA.h ..\Bsp\ctl\inc\MOTOR.h \
   ..\Bsp\ctl\inc\feedforward.h ..\LIB\user_lib.h ..\Bsp\extra\inc\ROOT.h \
-  ..\Bsp\extra\inc\VISION.h \
+  ..\Bsp\extra\inc\VT13.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h \
-  ..\Bsp\ctl\inc\ATTACK.h ..\Bsp\extra\inc\JUDGEMENT.h \
-  ..\Bsp\extra\inc\DEFINE.h
+  ..\Bsp\extra\inc\VISION.h ..\Bsp\ctl\inc\ATTACK.h \
+  ..\Bsp\extra\inc\JUDGEMENT.h ..\Bsp\extra\inc\DEFINE.h

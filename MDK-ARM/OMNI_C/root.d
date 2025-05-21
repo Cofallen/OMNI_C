@@ -54,7 +54,8 @@ omni_c/root.o: ..\Bsp\extra\src\ROOT.c ..\Core\Inc\main.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\event_groups.h \
   D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\string.h \
   ..\Bsp\extra\inc\ROOT.h ..\Bsp\ctl\inc\DBUS.h ..\Bsp\ctl\inc\MOTOR.h \
-  ..\Bsp\ctl\inc\feedforward.h ..\LIB\user_lib.h \
+  ..\Bsp\ctl\inc\feedforward.h ..\LIB\user_lib.h ..\Bsp\extra\inc\VT13.h \
+  D:\RoboMaster\SoftWare\MDK537\ARM\ARMCLANG\Bin\..\include\stdbool.h \
   ..\Bsp\dev\inc\TIM_DEV.h ..\Bsp\extra\inc\DEFINE.h \
   ..\Bsp\ctl\inc\YU_PID.h ..\Bsp\ctl\inc\ATTACK.h \
   ..\Bsp\extra\inc\JUDGEMENT.h ..\Bsp\ctl\inc\TOP.h \
