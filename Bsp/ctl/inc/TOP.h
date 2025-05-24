@@ -32,6 +32,7 @@ typedef struct TYPEDEF_TOP
 {
     float yaw[6];   // add by yu 1-now 0-last 2-laps 3-infinite 4-0-close/1-open
     float pitch[6]; // add by yu 1-now 0-last 2-laps 3-infinite 4-0-close/1-open
+    float roll[6];  // add by yu 1-now 0-last 2-laps 3-infinite 4-0-close/1-open
 }TYPEDEF_TOP;
 
 extern float yaw, pitch, roll;

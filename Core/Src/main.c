@@ -19,7 +19,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "adc.h"
 #include "can.h"
+#include "crc.h"
 #include "dma.h"
 #include "spi.h"
 #include "tim.h"
@@ -48,6 +50,7 @@
 #include "ROOT.h"
 #include "Read_Data.h"
 #include "usbd_cdc_if.h"
+#include "VT13.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -89,6 +92,7 @@ static void MX_NVIC_Init(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -120,35 +124,38 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART6_UART_Init();
   MX_TIM10_Init();
+  MX_ADC1_Init();
+  MX_ADC3_Init();
+  MX_TIM4_Init();
+  MX_CRC_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-   ROOT_F_Init();
-   HAL_Delay(10);
+  
   CAN_Filter_Init();
-
+  ROOT_F_Init();
   __HAL_UART_ENABLE_IT(&huart6, UART_IT_IDLE);
   HAL_UART_Receive_DMA(&huart6, (uint8_t*)ALL_RX.Data, 255);
 
   __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
   HAL_UART_Receive_DMA(&huart3, (uint8_t *)DBUS_V_UNION.GET_DATA, sizeof(DBUS_V_UNION.GET_DATA));
 
-  printf("ok\r\n");  // huart1 
-  HAL_UART_Transmit_DMA(&huart1, (uint8_t *)sd_v_buff, sizeof(sd_v_buff));
-  
+  // printf("ok\r\n");  // huart1 
+  __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
+  HAL_UART_Receive_DMA(&huart1, (uint8_t *)VT13_V_UNION.GetData, sizeof(VT13_V_UNION.GetData));
   HAL_TIM_Base_Start_IT(&htim2);
-  HAL_Delay(30);
 
   /* USER CODE END 2 */
 
-  /* Call init function for freertos objects (in freertos.c) */
+  /* Call init function for freertos objects (in cmsis_os2.c) */
   MX_FREERTOS_Init();
 
   /* Start scheduler */
   osKernelStart();
 
   /* We should never get here as control is now taken by the scheduler */
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -237,14 +244,16 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 0 */
 
   /* USER CODE END Callback 0 */
-  if (htim->Instance == TIM1) {
+  if (htim->Instance == TIM1)
+  {
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
   if (htim->Instance == TIM2) // 底盘 1ms
     {     
-      // CDC_Transmit_FS(sd_v_buff, 16);
-      ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff, 0);
+      // ControltoVision(&VISION_V_DATA.SEND ,sd_v_buff, 1);
+      // RunTime ++;
+      // VISION_V_DATA.SEND.TIME = RunTime;
     }
   /* USER CODE END Callback 1 */
 }

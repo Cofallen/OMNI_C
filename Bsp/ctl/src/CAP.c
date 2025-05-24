@@ -9,6 +9,7 @@
 #include "YU_MATH.h"
 #include "chassis_power_control.h"
 #include "DBUS.h"
+#include "VT13.h"
 
 float  Inter=0;
 int  temp_cap_time=0;
@@ -73,14 +74,22 @@ void CanManage_cap_new(uint8_t* can_data , struct capData_JHB_Receive* data)
 }
 void CapSend_new(uint8_t powerBuffer , uint16_t volt)
 {
+	static uint8_t cap_open = 1;
+	if ((DBUS_V_DATA.KEY_BOARD.X && !DBUS_V_DATA.KEY_BOARD.X_PREE_NUMBER) || (VT_V_DATA.KeyBoard.X&&!VT_V_DATA.KeyBoard.X_PreeNumber)) {
+		cap_open = !cap_open;  
+	}
+	capData_JHB.Send_data_typedef.Send_data.powerLimit = (uint32_t)user_data.robot_status.chassis_power_limit;	//锟斤拷锟斤拷锟?
+		// capData_JHB.Send_data_typedef.Send_data.powerLimit = 55;
+		// user_data.robot_status.power_management_chassis_output == 1;
+		// if (DBUS_V_DATA.REMOTE.S1_u8 == 3) user_data.robot_status.power_management_chassis_output = 1;
+		// else if (DBUS_V_DATA.REMOTE.S1_u8 == 2) user_data.robot_status.power_management_chassis_output = 0;
 		
-	// capData_JHB.Send_data_typedef.Send_data.powerLimit = (uint32_t)user_data.robot_status.chassis_power_limit/1.2f;	//锟斤拷锟斤拷锟?
-		capData_JHB.Send_data_typedef.Send_data.powerLimit = 55;
-	// capData_JHB.Send_data_typedef.Send_data.robotStatus = (user_data.robot_status.current_HP > 0) ? 1 : 0;
-	capData_JHB.Send_data_typedef.Send_data.robotStatus = 0x01;
-	// capData_JHB.Send_data_typedef.Send_data.bufferEnergy = (uint32_t) powerBuffer;	
-	capData_JHB.Send_data_typedef.Send_data.bufferEnergy = (uint32_t) powerBuffer;	
+	capData_JHB.Send_data_typedef.Send_data.robotStatus = (user_data.robot_status.current_HP > 0 && user_data.robot_status.power_management_chassis_output == 1) ? 1 : 0;
+	capData_JHB.Send_data_typedef.Send_data.switchControl = (DBUS_V_DATA.REMOTE.S2_u8 == 3) ? ( user_data.robot_status.current_HP > 0 && cap_open): 0;
+	capData_JHB.Send_data_typedef.Send_data.bufferEnergy = (uint32_t) powerBuffer;		
 	capData_JHB.Send_data_typedef.Send_data.Verify = 0xAA;//标志位仅供人参考，不做校验
 	CAN_F_Send(&hcan1 , 0x252 , capData_JHB.Send_data_typedef.Data[0] , capData_JHB.Send_data_typedef.Data[1], \
-		0xAA, 0 );
+		capData_JHB.Send_data_typedef.Data[2], 0 );	
+	DBUS_V_DATA.KEY_BOARD.X_PREE_NUMBER = DBUS_V_DATA.KEY_BOARD.X;
+	VT_V_DATA.KeyBoard.X_PreeNumber = VT_V_DATA.KeyBoard.X;
 }

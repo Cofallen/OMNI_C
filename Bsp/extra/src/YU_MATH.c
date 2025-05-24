@@ -63,6 +63,19 @@ float spinLittleRound(double *input)
     return *input;
 }
 
+// -180-180 走小圈
+// float spinLittleRound_l(double *input)
+// {
+// 	if (input[NOW] - input[LAST] > 180)
+// 	{
+// 		input[NOW] -= 360;
+// 	}
+// 	else if (input[NOW] - input[LAST] < -180)
+// 	{
+// 		input[NOW] -= 360;
+// 	}
+// 	return input[NOW];
+// }
 void setbit(uint8_t* byte , int position , int value)
 {
 	unsigned char mask = 1 << position;  // 生成一个只有指定位置为1的掩码
@@ -147,4 +160,93 @@ float SectionLimit_f(float max , float min , float data)
 			return data;
 		}
 	}
+}
+
+
+/**
+ * @brief           一阶低通滤波器
+ * @details         使用一阶IIR滤波算法实现低通滤波，可有效去除信号中的高频噪声
+ * @param alpha   : 滤波系数 (0.0-1.0)
+ *                  - 值越小，滤波效果越强，平滑度越高，但响应越慢
+ *                  - 值越大，响应越快，但平滑效果越差
+ *                  - 推荐值范围: 0.01-0.3
+ * @param input   : 当前输入值
+ * @return          滤波后的输出值
+ */
+float YU_MATH_LowPassFilter(float alpha, float *input)
+{
+    // 首次调用时直接使用输入值初始化
+    if (input[LAST] == 0.0f && input[NOW] != 0.0f) {
+        input[LAST] = input[NOW];
+        return input[NOW];
+    }
+    
+    // 计算新的滤波输出: y[n] = alpha * x[n] + (1-alpha) * y[n-1]
+    float output = alpha * input[NOW] + (1.0f - alpha) * input[LAST];
+    
+    // 更新上一次的输出
+    input[LAST] = output;
+    
+    return output;
+}
+
+/**
+ * @brief           具有多通道支持的一阶低通滤波器
+ * @details         多通道版本，可同时处理多路不同信号
+ * @param alpha   : 滤波系数 (0.0-1.0)
+ * @param input   : 输入数组，input[NOW]为当前值，input[LAST]存储滤波后结果
+ * @param channel : 通道号 (0-7)，用于区分不同信号
+ * @return          滤波后的输出值
+ */
+float YU_MATH_LowPassFilter_MC(float alpha, float *input, uint8_t channel)
+{
+    // 定义多个通道的上一次输出，仅用于初始化
+    static uint8_t initialized[8] = {0};
+    
+    // 确保通道号在有效范围内
+    if (channel >= 8) {
+        channel = 0;
+    }
+    
+    // 首次调用特定通道时初始化
+    if (!initialized[channel]) {
+        input[LAST] = input[NOW];
+        initialized[channel] = 1;
+        return input[NOW];
+    }
+    
+    // 计算新的滤波输出: y[n] = alpha * x[n] + (1-alpha) * y[n-1]
+    float output = alpha * input[NOW] + (1.0f - alpha) * input[LAST];
+    
+    // 更新上一次的输出
+    input[LAST] = output;
+    
+    return output;
+}
+
+
+/**
+ * @brief   N 点滑动均值滤波（重新实现）
+ * @param   input   : 新的输入采样值
+ * @param   buffer  : 滤波缓冲区，长度必须为 size
+ * @param   idx     : 缓冲区当前位置索引（调用前请置 0）
+ * @param   size    : 缓冲区大小 N
+ * @param   sum     : 累加和变量（调用前请置 0）
+ * @return  滤波后的平均值
+ */
+float YU_MATH_MeanFilter(float input,
+    float *buffer, 
+    uint32_t *idx,
+    uint32_t size,
+    float *sum)
+{
+   buffer[*idx] = input; // 将新的输入值存入缓冲区
+   *sum += input; // 更新累加和
+   if (*idx < size - 1) {
+       (*idx)++; // 移动到下一个索引
+   } else {
+       *idx = 0; // 循环回到缓冲区开头
+   }
+   return *sum / size; // 返回当前平均值
+
 }

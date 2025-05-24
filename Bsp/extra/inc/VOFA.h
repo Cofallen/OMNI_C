@@ -34,10 +34,11 @@ typedef union
 } TYPEDEF_VOFA_UNION;
 
 extern void VOFA_F_Send(TYPEDEF_VOFA_UNION *VOFA, TYPEDEF_MOTOR *MOTOR);
-extern uint8_t VOFA_T_Send(int n, ...);
-extern uint8_t VOFA_T_SendTemp(int n, ...);
+extern uint8_t VOFA_T_Send(uint8_t type, int n, float a1, float a2, float a3, float a4, float a5, float a6, float a7, float a8, float a9, float a10);
+extern uint8_t VOFA_T_SendTemp(uint8_t type, int n, ...);
 extern void VOFA_T_Vision();
 
 void niming(int16_t id, int16_t x1, int16_t x2, int16_t x3, int16_t y1, int16_t y2, int16_t y3, int16_t z1, int16_t z2, int16_t z3, int16_t w);
+void Vofa_intergrate(uint8_t mod);
 
 #endif // !__VOFA_H__

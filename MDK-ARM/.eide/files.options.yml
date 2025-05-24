@@ -14,4 +14,37 @@
 #   '**/*.c':             -O2 -gnu ...
 
 version: "2.0"
-options: {}
+options:
+    OMNI_C:
+        files: {}
+        virtualPathFiles:
+            <virtual_root>/Application/User/Core/freertos.c: ""
+            <virtual_root>/Application/User/Core/adc.c: ""
+            <virtual_root>/Application/User/Core/crc.c: ""
+            <virtual_root>/Application/User/Core/stm32f4xx_hal_timebase_tim.c: ""
+            <virtual_root>/Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_pcd.c: ""
+            <virtual_root>/Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_pcd_ex.c: ""
+            <virtual_root>/Drivers/STM32F4xx_HAL_Driver/stm32f4xx_ll_usb.c: ""
+            <virtual_root>/Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_adc.c: ""
+            <virtual_root>/Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_adc_ex.c: ""
+            <virtual_root>/Drivers/STM32F4xx_HAL_Driver/stm32f4xx_ll_adc.c: ""
+            <virtual_root>/Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_crc.c: ""
+            <virtual_root>/LIB/pid.c: ""
+            <virtual_root>/Application/User/USB_DEVICE/App/usb_device.c: ""
+            <virtual_root>/Application/User/USB_DEVICE/App/usbd_desc.c: ""
+            <virtual_root>/Application/User/USB_DEVICE/App/usbd_cdc_if.c: ""
+            <virtual_root>/Application/User/USB_DEVICE/Target/usbd_conf.c: ""
+            <virtual_root>/Middlewares/FreeRTOS/croutine.c: ""
+            <virtual_root>/Middlewares/FreeRTOS/event_groups.c: ""
+            <virtual_root>/Middlewares/FreeRTOS/list.c: ""
+            <virtual_root>/Middlewares/FreeRTOS/queue.c: ""
+            <virtual_root>/Middlewares/FreeRTOS/stream_buffer.c: ""
+            <virtual_root>/Middlewares/FreeRTOS/tasks.c: ""
+            <virtual_root>/Middlewares/FreeRTOS/timers.c: ""
+            <virtual_root>/Middlewares/FreeRTOS/cmsis_os.c: ""
+            <virtual_root>/Middlewares/FreeRTOS/heap_4.c: ""
+            <virtual_root>/Middlewares/FreeRTOS/port.c: ""
+            <virtual_root>/Middlewares/USB_Device_Library/usbd_core.c: ""
+            <virtual_root>/Middlewares/USB_Device_Library/usbd_ctlreq.c: ""
+            <virtual_root>/Middlewares/USB_Device_Library/usbd_ioreq.c: ""
+            <virtual_root>/Middlewares/USB_Device_Library/usbd_cdc.c: ""

@@ -50,16 +50,15 @@ struct capData_JHB_Receive
 
 union capData_JHB_Send
 {
-	struct 
+	struct __packed
 	{
 	uint32_t  powerLimit :8;
 	uint32_t  switchControl :8;
 
 	uint32_t robotStatus :8;
 	int32_t bufferEnergy:8;
-	
-	
-	
+
+	uint8_t extra; // 占位，实际位置相反
 	uint8_t Verify;
 	}Send_data;
 	

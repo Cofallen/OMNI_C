@@ -4,7 +4,7 @@
 
 #include "ui_default_init5_3.h"
 #include "vision.h"
-
+#include "GIMBAL.h"
 
 
 #define FRAME_ID 0
@@ -55,7 +55,7 @@ void _ui_update_default_init5_3() {
     for (int i = 0; i < OBJ_NUM; i++) {
         ui_default_init5_3.data[i].operate_tpyel = 2;
     }
-// if (VISION_V_DATA.RECEIVE.TARGET == 1)//自瞄模式开指示，从遥控器读取
+// if (auto_aim_enabled == 1)//自瞄模式开指示，从遥控器读取
 // {
 //     ui_default_init5_static51->figure_tpye = 0;
 //     ui_default_init5_static51->layer = 5;
@@ -64,9 +64,9 @@ void _ui_update_default_init5_3() {
 //     ui_default_init5_static51->end_x = 1307;
 //     ui_default_init5_static51->end_y = 326;
 //     ui_default_init5_static51->color = 2;
-//     ui_default_init5_static51->width = 2
+//     ui_default_init5_static51->width = 2;
 // }
-// if (VISION_V_DATA.RECEIVE.TARGET == 0)//自瞄模式关
+// if (auto_aim_enabled == 0)//自瞄模式关
 // {
 //     ui_default_init5_static50->figure_tpye = 0;
 //     ui_default_init5_static50->layer = 5;

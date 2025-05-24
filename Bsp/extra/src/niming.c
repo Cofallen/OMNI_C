@@ -1,6 +1,7 @@
 #include "niming.h"
 #include "main.h"
 #include <stdlib.h>
+#include "string.h"
 
 void flex_frame_init(FlexFrame *frame, uint8_t frame_id, uint8_t s_addr, uint8_t d_addr) {
     frame->frame_id = frame_id;

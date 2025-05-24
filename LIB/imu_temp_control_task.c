@@ -15,7 +15,7 @@
 #define IMU_temp_PWM(pwm)  imu_pwm_set(pwm)                    //pwm给定
 
 #define TEMPERATURE_PID_KP 800.0f //kp of temperature control PID 
-#define TEMPERATURE_PID_KI 0.02f    //ki of temperature control PID 
+#define TEMPERATURE_PID_KI 0.0f    //ki of temperature control PID 
 #define TEMPERATURE_PID_KD 5.0f    //kd of temperature control PID 
 
 #define TEMPERATURE_PID_MAX_OUT 4500.0f  //max out of temperature control PID 
@@ -111,37 +111,37 @@ void INS_Task()
             gyro_correct[1]+= gyro[1];
             gyro_correct[2]+= gyro[2];
 			
-			gyro_correct[0] = -0.00311695272;
-			gyro_correct[1] = -0.00446876744;
-			gyro_correct[2] = -7.66990706e-05;
+			gyro_correct[0] = -0.000757403148;
+			gyro_correct[1] = -0.00152013125;
+			gyro_correct[2] = 0.00156594021;
 			attitude_flag=2; //go to 2 state
 			
-            // correct_times++;
-            // if(correct_times>=correct_Time_define)
-            // {
-            //   gyro_correct[0]/=correct_Time_define;
-            //   gyro_correct[1]/=correct_Time_define;
-            //   gyro_correct[2]/=correct_Time_define;
-            //   attitude_flag=2; //go to 2 state
-            // }
+//            correct_times++;
+//            if(correct_times>=correct_Time_define)
+//            {
+//              gyro_correct[0]/=correct_Time_define;
+//              gyro_correct[1]/=correct_Time_define;
+//              gyro_correct[2]/=correct_Time_define;
+//              attitude_flag=2; //go to 2 state
+//            }
         }
     }
 // temperature control
-    // if ((count % 10) == 0)
-    // {
-    //     // 100hz 的温度控制pid
-    //     IMU_Temperature_Ctrl();
-    //     static uint32_t temp_Ticks=0;
-    //     // if((fabsf(temp-Destination_TEMPERATURE)<0.5f)&&attitude_flag==0) //接近额定温度之差小于0.5° 开始计数
-    //     // {
-		//   // attitude_flag=1;  //go to correct state
-    //       temp_Ticks++;
-    //       if(temp_Ticks>temp_times)   //计数达到一定次数后 才进入0飘初始化 说明温度已经达到目标
-    //       {
-    //         attitude_flag=1;  //go to correct state
-    //       }
-    //     // }
-    // }
-    count++;
+//    if ((count % 10) == 0)
+//    {
+        // 100hz 的温度控制pid
+//        IMU_Temperature_Ctrl();
+//        static uint32_t temp_Ticks=0;
+        // if((fabsf(temp-Destination_TEMPERATURE)<0.5f)&&attitude_flag==0) //接近额定温度之差小于0.5° 开始计数
+        // {
+		  // attitude_flag=1;  //go to correct state
+//          temp_Ticks++;
+//          if(temp_Ticks>temp_times)   //计数达到一定次数后 才进入0飘初始化 说明温度已经达到目标
+//          {
+//            attitude_flag=1;  //go to correct state
+//          }
+        // }
+//    }
+//    count++;
 }
 

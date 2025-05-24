@@ -265,7 +265,7 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
   USBD_CDC_ReceivePacket(&hUsbDeviceFS);
   //可能要判断包长度
-   VISION_F_Cal(Buf, 0);
+  //  VISION_F_Cal(Buf, 0);
   return (USBD_OK);
   /* USER CODE END 6 */
 }
